@@ -77,13 +77,14 @@ export default {
     organizationName: String,
     username: String,
   },
-  methods: {
-    getInitials(s) {
+  setup() {
+    const getInitials = (s) => {
       return s
         .split(" ")
         .map((n) => n.substring(0, 1).toUpperCase())
         .join("");
-    },
+    };
+    return { getInitials };
   },
 };
 </script>
