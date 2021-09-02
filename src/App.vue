@@ -61,7 +61,8 @@
             </TransitionChild>
             <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
               <Logo />
-              <Context
+              <!-- TODO: replace with correct data -->
+              <ContextMenus
                 organizationName="test organization"
                 username="Christian Rotzoll"
               />
@@ -71,17 +72,17 @@
                   :key="item.name"
                   :href="item.href"
                   :class="[
-                    item.current
-                      ? 'bg-gray-100 text-gray-900'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                    isCurrent(item.href)
+                      ? 'bg-gray-200 text-gray-900'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
                     'group flex items-center px-2 py-2 text-base font-medium rounded-md',
                   ]"
                 >
                   <component
                     :is="item.icon"
                     :class="[
-                      item.current
-                        ? 'text-gray-500'
+                      isCurrent(item.href)
+                        ? 'text-gray-700'
                         : 'text-gray-400 group-hover:text-gray-500',
                       'mr-4 flex-shrink-0 h-6 w-6',
                     ]"
@@ -108,7 +109,7 @@
         >
           <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <Logo />
-            <Context
+            <ContextMenus
               organizationName="test organization"
               username="Christian Rotzoll"
             />
@@ -118,17 +119,17 @@
                 :key="item.name"
                 :href="item.href"
                 :class="[
-                  item.current
-                    ? 'bg-gray-100 text-gray-900'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                  isCurrent(item.href)
+                    ? 'bg-gray-200 text-gray-900'
+                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
                   'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
                 ]"
               >
                 <component
                   :is="item.icon"
                   :class="[
-                    item.current
-                      ? 'text-gray-500'
+                    isCurrent(item.href)
+                      ? 'text-gray-700'
                       : 'text-gray-400 group-hover:text-gray-500',
                     'mr-3 flex-shrink-0 h-6 w-6',
                   ]"
@@ -186,7 +187,7 @@
 
 <script>
 import Logo from "@/components/Logo.vue";
-import Context from "@/components/Context.vue";
+import ContextMenus from "@/components/ContextMenus.vue";
 import { ref } from "vue";
 import {
   Dialog,
@@ -207,17 +208,20 @@ import {
 } from "@heroicons/vue/outline";
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: ChartBarIcon, current: true },
-  { name: "Team", href: "/team", icon: UserGroupIcon, current: false },
-  { name: "Sites", href: "/sites", icon: LocationMarkerIcon, current: false },
-  { name: "Rooms", href: "/rooms", icon: CubeIcon, current: false },
+  {
+    name: "Dashboard",
+    href: "/",
+    icon: ChartBarIcon,
+  },
+  { name: "Team", href: "/team", icon: UserGroupIcon },
+  { name: "Sites", href: "/sites", icon: LocationMarkerIcon },
+  { name: "Rooms", href: "/rooms", icon: CubeIcon },
   {
     name: "Installations",
     href: "/installations",
     icon: AdjustmentsIcon,
-    current: false,
   },
-  { name: "Sensors", href: "/sensors", icon: ChipIcon, current: false },
+  { name: "Sensors", href: "/sensors", icon: ChipIcon },
 ];
 
 export default {
@@ -230,13 +234,15 @@ export default {
     ChevronDownIcon,
     XIcon,
     Logo,
-    Context,
+    ContextMenus,
   },
   setup() {
+    const isCurrent = (href) => window.location.href.endsWith(href);
     const sidebarOpen = ref(false);
     return {
       navigation,
       sidebarOpen,
+      isCurrent,
     };
   },
 };
