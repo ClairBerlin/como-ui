@@ -1,10 +1,8 @@
 module.exports = {
   extends: [
-    "plugin:prettier/recommended",
-    "eslint:recommended",
-    "plugin:vue/vue3-recommended",
-    "plugin:vue/vue3-essential",
     "plugin:vue/vue3-strongly-recommended",
+    "eslint:recommended",
+    "@vue/prettier",
   ],
   rules: {
     "vue/no-unused-vars": "error",
