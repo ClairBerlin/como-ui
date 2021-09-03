@@ -1,0 +1,113 @@
+<template>
+  <div class="w-full">
+    <Popover v-slot="{ open }" class="relative">
+      <PopoverButton
+        :class="open ? '' : 'text-opacity-90'"
+        class="
+          inline-flex
+          items-center
+          p-2
+          m-2
+          text-base
+          font-medium
+          text-black
+          bg-orange-700
+          rounded-md
+          group
+          hover:text-opacity-100 hover:bg-gray-100
+          focus:outline-none
+          focus-visible:ring-2
+          focus-visible:ring-black
+          focus-visible:ring-opacity-75
+        "
+      >
+        <component
+          v-if="title.icon"
+          :is="title.icon"
+          :class="[
+            'text-gray-400 group-hover:text-gray-500',
+            'mr-3 flex-shrink-0 h-6 w-6',
+          ]"
+          aria-hidden="true"
+        />
+        <span>{{ title.text }}</span>
+        <ChevronDownIcon
+          :class="open ? '' : 'text-opacity-70'"
+          class="
+            w-5
+            h-5
+            ml-2
+            transition
+            duration-150
+            ease-in-out
+            group-hover:text-opacity-80
+          "
+          aria-hidden="true"
+        />
+      </PopoverButton>
+
+      <transition
+        enter-active-class="transition duration-200 ease-out"
+        enter-from-class="translate-y-1 opacity-0"
+        enter-to-class="translate-y-0 opacity-100"
+        leave-active-class="transition duration-150 ease-in"
+        leave-from-class="translate-y-0 opacity-100"
+        leave-to-class="translate-y-1 opacity-0"
+      >
+        <PopoverPanel class="w-full absolute z-10 px-4 mt-3 left-2 sm:px-0">
+          <div class="shadow-lg ring-1 ring-black ring-opacity-5">
+            <div class="relative grid gap-8 bg-white p-7 rounded-md">
+              <a
+                v-for="item in options"
+                :key="item.name"
+                :href="item.href"
+                class="
+                  flex
+                  items-center
+                  p-2
+                  -m-3
+                  transition
+                  duration-150
+                  ease-in-out
+                  rounded-md
+                  hover:bg-gray-100
+                  focus:outline-none
+                  focus-visible:ring
+                  focus-visible:ring-orange-500
+                  focus-visible:ring-opacity-50
+                "
+              >
+                <div class="">
+                  <p class="text-sm font-medium text-gray-900">
+                    {{ item.name }}
+                  </p>
+                  <p class="text-sm text-gray-500">
+                    {{ item.description }}
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </PopoverPanel>
+      </transition>
+    </Popover>
+  </div>
+</template>
+
+<script>
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { ChevronDownIcon } from "@heroicons/vue/solid";
+
+export default {
+  components: {
+    Popover,
+    PopoverButton,
+    PopoverPanel,
+    ChevronDownIcon,
+  },
+  props: { icon: Object, title: String, options: Array },
+  setup() {
+    return {};
+  },
+};
+</script>

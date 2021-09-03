@@ -61,11 +61,6 @@
             </TransitionChild>
             <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
               <Logo />
-              <!-- TODO: replace with correct data -->
-              <ContextMenus
-                organizationName="test organization"
-                username="Christian Rotzoll"
-              />
               <nav class="mt-5 px-2 space-y-1">
                 <a
                   v-for="item in navigation"
@@ -109,10 +104,9 @@
         >
           <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
             <Logo />
-            <ContextMenus
-              organizationName="test organization"
-              username="Christian Rotzoll"
-            />
+            <div class="w-full px-3 my-1 border-b border-gray-200"></div>
+            <OrganizationMenu class="w-1/2" />
+            <div class="w-full px-3 my-1 border-b border-gray-200"></div>
             <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
               <a
                 v-for="item in navigation"
@@ -187,7 +181,6 @@
 
 <script>
 import Logo from "@/components/Logo.vue";
-import ContextMenus from "@/components/ContextMenus.vue";
 import { ref } from "vue";
 import {
   Dialog,
@@ -206,6 +199,7 @@ import {
   XIcon,
   ChevronDownIcon,
 } from "@heroicons/vue/outline";
+import OrganizationMenu from "./components/OrganizationMenu.vue";
 
 const navigation = [
   {
@@ -234,7 +228,7 @@ export default {
     ChevronDownIcon,
     XIcon,
     Logo,
-    ContextMenus,
+    OrganizationMenu,
   },
   setup() {
     const isCurrent = (href) => window.location.href.endsWith(href);
