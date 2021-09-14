@@ -8,21 +8,18 @@ import { OfficeBuildingIcon } from "@heroicons/vue/outline";
 
 export default {
   components: { OfficeBuildingIcon, PopoverMenu },
-  // props: { title: String, options: Array },
-  setup() {
+  props: { title: String },
+  // TODO: get list of organizations and allow to switch directly from the context menu
+  setup(props) {
     return {
-      menu: { text: "OrgMenu", icon: OfficeBuildingIcon },
+      menu: { text: props.title, icon: OfficeBuildingIcon },
       options: [
         {
-          name: "Item 1",
+          name: "Change organization",
           href: "##",
         },
         {
-          name: "Item 2",
-          href: "##",
-        },
-        {
-          name: "Item 3",
+          name: "Manage Organizations",
           href: "##",
         },
       ],

@@ -54,7 +54,7 @@
         leave-from-class="translate-y-0 opacity-100"
         leave-to-class="translate-y-1 opacity-0"
       >
-        <PopoverPanel class="w-full absolute z-10 px-4 mt-3 left-2 sm:px-0">
+        <PopoverPanel class="w-auto absolute z-10 px-4 mt-3 left-2 sm:px-0">
           <div class="shadow-lg ring-1 ring-black ring-opacity-5">
             <div class="relative grid gap-8 bg-white p-7 rounded-md">
               <a

@@ -102,10 +102,13 @@
         <div
           class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white"
         >
-          <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+          <div class="flex-1 flex flex-col pt-5 pb-4">
             <Logo />
             <div class="w-full px-3 my-1 border-b border-gray-200"></div>
-            <OrganizationMenu class="w-1/2" />
+            <div class="flex">
+              <OrganizationMenu title="Org" class="w-2/3" />
+              <ProfileMenu title="P" class="w-1/3" />
+            </div>
             <div class="w-full px-3 my-1 border-b border-gray-200"></div>
             <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
               <a
@@ -131,6 +134,7 @@
                 />
                 {{ item.name }}
               </a>
+              <div class="w-full px-3 my-1 border-b border-gray-200"></div>
             </nav>
           </div>
         </div>
@@ -200,7 +204,9 @@ import {
   ChevronDownIcon,
 } from "@heroicons/vue/outline";
 import OrganizationMenu from "./components/OrganizationMenu.vue";
+import ProfileMenu from "./components/ProfileMenu.vue";
 
+// TODO: what about feedback and help? (before this pointed to a Clair email/domain)
 const navigation = [
   {
     name: "Dashboard",
@@ -229,6 +235,7 @@ export default {
     XIcon,
     Logo,
     OrganizationMenu,
+    ProfileMenu,
   },
   setup() {
     const isCurrent = (href) => window.location.href.endsWith(href);
