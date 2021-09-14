@@ -106,8 +106,8 @@
             <Logo />
             <div class="w-full px-3 my-1 border-b border-gray-200"></div>
             <div class="flex">
-              <OrganizationMenu title="Org" class="w-2/3" />
-              <ProfileMenu title="P" class="w-1/3" />
+              <OrganizationMenu title="Org" class="w-1/2" />
+              <ProfileMenu title="Person" class="w-1/2" />
             </div>
             <div class="w-full px-3 my-1 border-b border-gray-200"></div>
             <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
