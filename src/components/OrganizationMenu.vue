@@ -1,5 +1,5 @@
 <template>
-  <PopoverMenu :title="menu" :options="options"></PopoverMenu>
+  <PopoverMenu :title="title" :icon="icon" :options="options"></PopoverMenu>
 </template>
 
 <script>
@@ -10,9 +10,9 @@ export default {
   components: { OfficeBuildingIcon, PopoverMenu },
   props: { title: String },
   // TODO: get list of organizations and allow to switch directly from the context menu
-  setup(props) {
+  setup() {
     return {
-      menu: { text: props.title, icon: OfficeBuildingIcon },
+      icon: OfficeBuildingIcon,
       options: [
         {
           name: "Change organization",

@@ -22,15 +22,15 @@
         "
       >
         <component
-          v-if="title.icon"
-          :is="title.icon"
+          v-if="icon"
+          :is="icon"
           :class="[
             'text-gray-400 group-hover:text-gray-500',
             'mr-3 flex-shrink-0 h-6 w-6',
           ]"
           aria-hidden="true"
         />
-        <span>{{ title.text }}</span>
+        <span>{{ title }}</span>
         <ChevronDownIcon
           :class="open ? '' : 'text-opacity-70'"
           class="
@@ -56,7 +56,7 @@
       >
         <PopoverPanel class="w-auto absolute z-10 px-4 mt-3 left-2 sm:px-0">
           <div class="shadow-lg ring-1 ring-black ring-opacity-5">
-            <div class="relative grid gap-8 bg-white p-7 rounded-md">
+            <div class="relative grid gap-8 bg-white p-8 rounded-md">
               <a
                 v-for="item in options"
                 :key="item.name"
@@ -105,7 +105,7 @@ export default {
     PopoverPanel,
     ChevronDownIcon,
   },
-  props: { icon: Object, title: String, options: Array },
+  props: { icon: Function, title: String, options: Array },
   setup() {
     return {};
   },
