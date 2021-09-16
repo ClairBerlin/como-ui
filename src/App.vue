@@ -185,7 +185,8 @@
 
 <script>
 import Logo from "@/components/Logo.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
 import {
   Dialog,
   DialogOverlay,
@@ -240,6 +241,12 @@ export default {
   setup() {
     const isCurrent = (href) => window.location.href.endsWith(href);
     const sidebarOpen = ref(false);
+    // https://next.vuex.vuejs.org/guide/composition-api.html
+    const store = useStore();
+    const fetchAuthenticatedUser = () =>
+      store.dispatch("authuser/fetchAuthenticatedUser");
+    // https://v3.vuejs.org/api/composition-api.html#setup
+    onMounted(async () => await fetchAuthenticatedUser());
     return {
       navigation,
       sidebarOpen,
