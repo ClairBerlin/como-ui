@@ -1,5 +1,9 @@
 <template>
-  <PopoverMenu :title="title" :icon="icon" :options="options"></PopoverMenu>
+  <PopoverMenu
+    :title="title"
+    :icon="icon"
+    :options="options"
+  />
 </template>
 
 <script>
