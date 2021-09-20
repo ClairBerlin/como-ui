@@ -1,9 +1,6 @@
 <template>
   <div class="h-screen flex overflow-hidden bg-gray-100">
-    <TransitionRoot
-      as="template"
-      :show="sidebarOpen"
-    >
+    <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog
         as="div"
         class="fixed inset-0 flex z-40 md:hidden"
@@ -58,10 +55,7 @@
                   @click="sidebarOpen = false"
                 >
                   <span class="sr-only">Close sidebar</span>
-                  <XIcon
-                    class="h-6 w-6 text-white"
-                    aria-hidden="true"
-                  />
+                  <XIcon class="h-6 w-6 text-white" aria-hidden="true" />
                 </button>
               </div>
             </TransitionChild>
@@ -112,14 +106,8 @@
             <Logo />
             <div class="w-full px-3 my-1 border-b border-gray-200" />
             <div class="flex">
-              <OrganizationMenu
-                title="Org"
-                class="w-1/2"
-              />
-              <ProfileMenu
-                title="Person"
-                class="w-1/2"
-              />
+              <OrganizationMenu title="Org" class="w-1/2" />
+              <ProfileMenu title="Person" class="w-1/2" />
             </div>
             <div class="w-full px-3 my-1 border-b border-gray-200" />
             <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
@@ -175,17 +163,11 @@
           @click="sidebarOpen = true"
         >
           <span class="sr-only">Open sidebar</span>
-          <MenuIcon
-            class="h-6 w-6"
-            aria-hidden="true"
-          />
+          <MenuIcon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        <header
-          class="bg-white shadow"
-          v-if="$route.meta.title"
-        >
+        <header class="bg-white shadow" v-if="$route.meta.title">
           <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold leading-tight text-gray-900">
               {{ $route.meta.title }}

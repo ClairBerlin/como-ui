@@ -8,17 +8,14 @@ const actions = {
     context.commit("START_MEMBERSHIPSLOADING");
     try {
       const userId = context.getters.getId;
-      const parent = { type: "users", id: userId };
-      // Load related organizations into the store.
-      await context.dispatch(
-        "Membership/loadRelated",
-        { parent: parent },
-        { root: true }
+      const { memberships } = await context.dispatch(
+        "jv/getRelated",
+        `users/${userId}/memberships`,
+        {
+          root: true,
+        }
       );
-      const memberships = context.rootGetters["Membership/related"]({
-        parent: parent,
-      });
-      context.commit("SET_MEMBERSHIPS", memberships);
+      context.commit("SET_MEMBERSHIPS", memberships || []);
     } catch (error) {
       context.commit("MARK_ERROR");
       throw error;
@@ -31,16 +28,11 @@ const actions = {
     try {
       const authUser = await axios.get("/api/v1/auth/user");
       const userId = authUser.data.data.id;
-      await context.dispatch(
-        "User/loadById",
-        { id: userId },
-        {
-          root: true,
-        }
-      );
-      const userInfo = context.rootGetters["User/byId"]({ id: userId });
+      const userDetails = await context.dispatch("jv/get", `users/${userId}/`, {
+        root: true,
+      });
       context.commit("SET_ID", userId);
-      context.commit("SET_AUTHUSER", userInfo.attributes);
+      context.commit("SET_AUTHUSER", userDetails._jv.attrs);
       context.dispatch("fetchMemberships");
       context.commit("MARK_SUCCESS");
     } catch (error) {

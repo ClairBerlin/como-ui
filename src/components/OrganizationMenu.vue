@@ -1,9 +1,5 @@
 <template>
-  <PopoverMenu
-    :title="title"
-    :icon="icon"
-    :options="options"
-  />
+  <PopoverMenu :title="title" :icon="icon" :options="options" />
 </template>
 
 <script>
@@ -11,7 +7,7 @@ import PopoverMenu from "./PopoverMenu.vue";
 import { OfficeBuildingIcon } from "@heroicons/vue/outline";
 
 export default {
-  components: { OfficeBuildingIcon, PopoverMenu },
+  components: { PopoverMenu },
   props: { title: String },
   // TODO: get list of organizations and allow to switch directly from the context menu
   setup() {
