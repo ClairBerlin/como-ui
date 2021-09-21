@@ -243,10 +243,10 @@ export default {
     const sidebarOpen = ref(false);
     // https://next.vuex.vuejs.org/guide/composition-api.html
     const store = useStore();
-    const fetchAuthenticatedUser = () =>
-      store.dispatch("authuser/fetchAuthenticatedUser");
     // https://v3.vuejs.org/api/composition-api.html#setup
-    onMounted(async () => await fetchAuthenticatedUser());
+    onMounted(
+      async () => await store.dispatch("authuser/fetchAuthenticatedUser")
+    );
     return {
       navigation,
       sidebarOpen,
