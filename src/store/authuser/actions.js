@@ -8,13 +8,23 @@ const actions = {
     context.commit("START_MEMBERSHIPSLOADING");
     try {
       const userId = context.getters.getId;
-      const { memberships } = await context.dispatch(
-        "jv/getRelated",
+      const data = await context.dispatch(
+        "jv/get",
         `users/${userId}/memberships`,
         {
           root: true,
         }
       );
+      const memberships = Object.keys(data).map((k) => {
+        const ms = data[k];
+        const attributes = ms._jv.attrs;
+        return {
+          id: k,
+          role: attributes.role,
+          orgName: attributes.organization_name,
+          orgId: ms._jv.relationships.organization.data.id,
+        };
+      });
       context.commit("SET_MEMBERSHIPS", memberships || []);
     } catch (error) {
       context.commit("MARK_ERROR");

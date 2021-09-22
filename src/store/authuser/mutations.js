@@ -27,17 +27,8 @@ const mutation = {
     authuser.userName = username;
   },
   SET_MEMBERSHIPS(authuser, memberships) {
-    // Simplify the memberhship objects.
     authuser.memberships = [];
-    for (const ms of memberships) {
-      const simplifiedMs = {
-        id: ms.id,
-        role: ms.attributes.role,
-        orgName: ms.attributes.organization_name,
-        orgId: ms.relationships.organization.data.id,
-      };
-      authuser.memberships.push(simplifiedMs);
-    }
+    authuser.memberships.push(...memberships);
   },
 };
 
