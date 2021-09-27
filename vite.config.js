@@ -16,7 +16,6 @@ export default defineConfig({
     },
   },
   server: {
-    open: true,
     proxy: {
       "/api": "http://localhost:8888/",
       "/accounts": "http://localhost:8888/",

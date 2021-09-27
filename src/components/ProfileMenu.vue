@@ -3,21 +3,31 @@
 </template>
 
 <script>
+import getInitials from "@/utils";
+import { computed } from "@vue/runtime-core";
+import { useStore } from "vuex";
 import PopoverMenu from "./PopoverMenu.vue";
 
 export default {
   components: { PopoverMenu },
-  props: { title: String },
   setup() {
+    const store = useStore();
     return {
+      title: computed(() => {
+        const { firstName, lastName } = store.state.authuser;
+        if (firstName && lastName) {
+          return getInitials(firstName, lastName);
+        }
+        return "...";
+      }),
       options: [
         {
           name: "Change Email",
-          href: "##",
+          href: "/accounts/email",
         },
         {
           name: "Change Password",
-          href: "##",
+          href: "/accounts/password/change",
         },
       ],
     };

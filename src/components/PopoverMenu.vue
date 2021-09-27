@@ -8,7 +8,7 @@
           items-center
           p-2
           m-2
-          text-base
+          text-sm
           font-medium
           text-black
           bg-orange-700
@@ -30,7 +30,21 @@
           ]"
           aria-hidden="true"
         />
-        <span>{{ title }}</span>
+        <span v-if="icon">{{ title }}</span>
+        <span
+          v-else
+          class="
+            rounded-full
+            bg-gray-700
+            h-8
+            w-8
+            flex
+            items-center
+            justify-center
+            text-white
+          "
+          >{{ title }}</span
+        >
         <ChevronDownIcon
           :class="open ? '' : 'text-opacity-70'"
           class="
@@ -105,7 +119,11 @@ export default {
     PopoverPanel,
     ChevronDownIcon,
   },
-  props: { icon: Function, title: String, options: Array },
+  props: {
+    icon: { type: Function, default: undefined },
+    title: { type: String, required: true },
+    options: { type: Array, required: true },
+  },
   setup() {
     return {};
   },
