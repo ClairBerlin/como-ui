@@ -7,7 +7,6 @@
           inline-flex
           items-center
           p-2
-          m-2
           text-sm
           font-medium
           text-black
@@ -30,21 +29,7 @@
           ]"
           aria-hidden="true"
         />
-        <span v-if="icon">{{ title }}</span>
-        <span
-          v-else
-          class="
-            rounded-full
-            bg-gray-700
-            h-8
-            w-8
-            flex
-            items-center
-            justify-center
-            text-white
-          "
-          >{{ title }}</span
-        >
+        <span class="text-left">{{ title }}</span>
         <ChevronDownIcon
           :class="open ? '' : 'text-opacity-70'"
           class="
@@ -68,18 +53,23 @@
         leave-from-class="translate-y-0 opacity-100"
         leave-to-class="translate-y-1 opacity-0"
       >
-        <PopoverPanel class="w-auto absolute z-10 px-4 mt-3 left-2 sm:px-0">
+        <PopoverPanel class="w-auto absolute z-10" v-slot="{ close }">
           <div class="shadow-lg ring-1 ring-black ring-opacity-5">
-            <div class="relative grid gap-8 bg-white p-8 rounded-md">
+            <div class="relative bg-white rounded-md">
               <a
                 v-for="item in options"
                 :key="item.name"
                 :href="item.href"
+                @click="
+                  () => {
+                    item.onClick();
+                    close();
+                  }
+                "
                 class="
                   flex
                   items-center
-                  p-2
-                  -m-3
+                  p-4
                   transition
                   duration-150
                   ease-in-out
@@ -92,7 +82,9 @@
                 "
               >
                 <div class="">
-                  <p class="text-sm font-medium text-gray-900">
+                  <p
+                    class="text-sm font-medium text-gray-900 whitespace-nowrap"
+                  >
                     {{ item.name }}
                   </p>
                   <p class="text-sm text-gray-500">

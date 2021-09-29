@@ -102,15 +102,12 @@
         <div
           class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white"
         >
-          <div class="flex-1 flex flex-col pt-5 pb-4">
+          <div class="flex-1 flex flex-col pt-6 pb-4">
             <Logo />
-            <div class="w-full px-3 my-1 border-b border-gray-200" />
-            <div class="flex items-center justify-center">
-              <OrganizationMenu class="w-2/3" />
-              <ProfileMenu class="w-1/3" />
-            </div>
-            <div class="w-full px-3 my-1 border-b border-gray-200" />
-            <nav class="mt-5 flex-1 px-2 bg-white space-y-1">
+            <div class="w-full px-3 border-b border-gray-200" />
+            <nav class="mt-1 flex-1 px-2 bg-white space-y-1">
+              <OrganizationMenu />
+              <div class="w-full px-3 my-1 border-b border-gray-200" />
               <a
                 v-for="item in navigation"
                 :key="item.name"
@@ -135,6 +132,7 @@
                 {{ item.name }}
               </a>
               <div class="w-full px-3 my-1 border-b border-gray-200" />
+              <ProfileMenu />
             </nav>
           </div>
         </div>
