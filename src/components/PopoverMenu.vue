@@ -54,8 +54,15 @@
         leave-to-class="translate-y-1 opacity-0"
       >
         <PopoverPanel class="w-auto absolute z-10" v-slot="{ close }">
-          <div class="shadow-lg ring-1 ring-black ring-opacity-5">
-            <div class="relative bg-white rounded-md">
+          <div class="shadow-lg rounded-lg ring-1 ring-gray-300">
+            <div class="relative bg-white text-xs rounded-lg">
+              <div class="flex items-center px-4 py-2 justify-between">
+                <div class="font-semibold">{{ contextTitle }}</div>
+                <XIcon
+                  class="h-4 w-4 text-gray-600 cursor-pointer"
+                  @click="close"
+                />
+              </div>
               <a
                 v-for="item in options"
                 :key="item.name"
@@ -69,26 +76,37 @@
                 class="
                   flex
                   items-center
-                  p-4
+                  px-4
+                  py-2
                   transition
                   duration-150
                   ease-in-out
-                  rounded-md
                   hover:bg-gray-100
                   focus:outline-none
                   focus-visible:ring
                   focus-visible:ring-orange-500
                   focus-visible:ring-opacity-50
+                  border-t border-gray-200
+                  cursor-pointer
                 "
               >
-                <div class="">
-                  <p
-                    class="text-sm font-medium text-gray-900 whitespace-nowrap"
-                  >
+                <div class="flex">
+                  <component
+                    v-if="item.icon"
+                    :is="item.icon"
+                    class="
+                      text-gray-400
+                      group-hover:text-gray-500
+                      mr-2
+                      flex-shrink-0
+                      h-4
+                      w-4
+                    "
+                    aria-hidden="true"
+                  />
+                  <div v-else class="w-6" />
+                  <p class="font-medium text-gray-900 whitespace-nowrap">
                     {{ item.name }}
-                  </p>
-                  <p class="text-sm text-gray-500">
-                    {{ item.description }}
                   </p>
                 </div>
               </a>
@@ -102,7 +120,7 @@
 
 <script>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { ChevronDownIcon } from "@heroicons/vue/solid";
+import { ChevronDownIcon, XIcon } from "@heroicons/vue/solid";
 
 export default {
   components: {
@@ -110,10 +128,12 @@ export default {
     PopoverButton,
     PopoverPanel,
     ChevronDownIcon,
+    XIcon,
   },
   props: {
     icon: { type: Function, default: undefined },
     title: { type: String, required: true },
+    contextTitle: { type: String, default: "" },
     options: { type: Array, required: true },
   },
   setup() {

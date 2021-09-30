@@ -1,5 +1,10 @@
 <template>
-  <PopoverMenu :title="title" :options="options" :icon="icon" />
+  <PopoverMenu
+    :context-title="contextTitle"
+    :title="title"
+    :options="options"
+    :icon="icon"
+  />
 </template>
 
 <script>
@@ -14,6 +19,7 @@ export default {
   setup() {
     const store = useStore();
     return {
+      contextTitle: "User Settings",
       title: computed(() => {
         const { firstName, lastName } = store.state.authuser;
         if (firstName && lastName) {
