@@ -56,7 +56,7 @@
         <PopoverPanel class="w-auto absolute z-10" v-slot="{ close }">
           <div class="shadow-lg rounded-lg ring-1 ring-gray-300">
             <div class="relative bg-white text-xs rounded-lg">
-              <div class="flex items-center px-4 py-2 justify-between">
+              <div class="flex items-center pl-4 pr-2 py-2 justify-between">
                 <div class="font-semibold">{{ contextTitle }}</div>
                 <XIcon
                   class="h-4 w-4 text-gray-600 cursor-pointer"
