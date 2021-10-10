@@ -212,7 +212,7 @@ const navigation = [
     href: "/",
     icon: ChartBarIcon,
   },
-  { name: "Team", href: "/team", icon: UserGroupIcon },
+  { name: "Teams", href: "/teams", icon: UserGroupIcon },
   { name: "Sites", href: "/sites", icon: LocationMarkerIcon },
   { name: "Rooms", href: "/rooms", icon: CubeIcon },
   {
