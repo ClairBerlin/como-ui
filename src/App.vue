@@ -61,7 +61,10 @@
             </TransitionChild>
             <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
               <Logo />
-              <nav class="mt-5 px-2 space-y-1">
+              <div class="w-full px-3 border-b border-gray-200" />
+              <nav class="mt-1 flex-1 px-2 space-y-1">
+                <OrganizationMenu />
+                <div class="w-full px-3 my-1 border-b border-gray-200" />
                 <a
                   v-for="item in navigation"
                   :key="item.name"
@@ -85,6 +88,8 @@
                   />
                   {{ item.name }}
                 </a>
+                <div class="w-full px-3 my-1 border-b border-gray-200" />
+                <ProfileMenu />
               </nav>
             </div>
           </div>
@@ -153,10 +158,8 @@
             rounded-md
             text-gray-500
             hover:text-gray-900
-            focus:outline-none
-            focus:ring-2
-            focus:ring-inset
-            focus:ring-indigo-500
+            focus:outline-none focus:ring-2 focus:ring-inset
+            focus-visible:ring-black focus-visible:ring-opacity-75
           "
           @click="sidebarOpen = true"
         >
