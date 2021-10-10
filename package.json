@@ -11,30 +11,31 @@
   "dependencies": {
     "@vueuse/core": "^6.0.0",
     "axios": "^0.22.0",
+    "daisyui": "^1.14.2",
     "js-cookie": "^3.0.1",
-    "jsonapi-vuex": "^5.3.0",
-    "vue": "^3.2.4",
-    "vue-i18n": "^9.1.7",
+    "jsonapi-vuex": "^5.4.0",
+    "vue": "^3.0.0",
+    "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.11",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.4.1",
     "@heroicons/vue": "^1.0.4",
-    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@tailwindcss/aspect-ratio": "^0.3.0",
     "@tailwindcss/forms": "^0.3.3",
     "@tailwindcss/line-clamp": "^0.2.1",
     "@tailwindcss/typography": "^0.4.1",
     "@types/tailwindcss": "^2.2.1",
-    "@vitejs/plugin-vue": "^1.4.0",
-    "@vue/compiler-sfc": "^3.2.4",
-    "autoprefixer": "^10.3.1",
-    "eslint": "^7.32.0",
+    "@vitejs/plugin-vue": "^1.9.3",
+    "@vue/compiler-sfc": "^3.2.20",
+    "autoprefixer": "^10.3.7",
+    "eslint": "^8.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^7.17.0",
+    "eslint-plugin-vue": "^7.19.1",
     "prettier": "^2.4.1",
     "tailwindcss": "^2.2.7",
-    "vite": "^2.5.0"
+    "vite": "^2.6.5"
   }
 }
