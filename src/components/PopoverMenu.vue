@@ -14,10 +14,7 @@
           rounded-md
           group
           hover:text-opacity-100 hover:bg-gray-100
-          focus:outline-none
-          focus-visible:ring-2
-          focus-visible:ring-black
-          focus-visible:ring-opacity-75
+          como-focus
         "
       >
         <component
@@ -57,7 +54,9 @@
           <div class="shadow-lg rounded-lg ring-1 ring-gray-300">
             <div class="relative bg-white text-xs rounded-lg">
               <div class="flex items-center pl-4 pr-2 py-2 justify-between">
-                <div class="font-semibold">{{ contextTitle }}</div>
+                <div class="font-semibold text-gray-500">
+                  {{ contextTitle }}
+                </div>
                 <XIcon
                   class="h-4 w-4 text-gray-600 cursor-pointer"
                   @click="close"
@@ -82,10 +81,7 @@
                   duration-150
                   ease-in-out
                   hover:bg-gray-100
-                  focus:outline-none
-                  focus-visible:ring
-                  focus-visible:ring-orange-500
-                  focus-visible:ring-opacity-50
+                  como-focus
                   border-t border-gray-200
                   cursor-pointer
                 "

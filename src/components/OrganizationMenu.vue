@@ -11,11 +11,9 @@
 import { computed, ref } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import PopoverMenu from "./PopoverMenu.vue";
-import {
-  OfficeBuildingIcon,
-  PlusIcon,
-  CheckIcon,
-} from "@heroicons/vue/outline";
+import { PlusIcon, CheckIcon } from "@heroicons/vue/outline";
+
+import { OfficeBuildingIcon } from "@heroicons/vue/solid";
 
 const defaultOptions = [
   {

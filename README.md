@@ -26,9 +26,9 @@ yarn dev
 
 ## Recommended Reading
 
-Since the previous version of this application is based on Vue 2, [clair-admin-ui](https://github.com/ClairBerlin/clair-admin-ui), here are some resources with regard to the changes in Vue 3:
-
 - [Composition API](https://v3.vuejs.org/api/composition-api.html)
   - [Setup](https://v3.vuejs.org/api/composition-api.html#setup)
   - [Lifecycle Hooks](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)
 - [Vuex + Composition API](https://next.vuex.vuejs.org/guide/composition-api.html)
+- [Nested Routes](https://router.vuejs.org/guide/essentials/nested-routes.html)
+- [Programmatic Navigation](https://router.vuejs.org/guide/essentials/navigation.html)

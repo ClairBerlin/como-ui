@@ -1,3 +1,15 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@layer components {
+  .como-focus {
+    @apply focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-20;
+  }
+  .gray-label {
+    @apply font-semibold text-sm text-white bg-gray-400 border-2 border-gray-400 border-opacity-20 rounded-full px-1 mx-2 select-none;
+  }
+  .gray-button {
+    @apply bg-gray-100 hover:bg-gray-200 text-black font-medium px-3 py-1 border border-black border-opacity-20 rounded-md shadow-sm como-focus;
+  }
+}

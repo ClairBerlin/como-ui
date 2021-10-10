@@ -47,10 +47,7 @@
                     h-10
                     w-10
                     rounded-full
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-inset
-                    focus:ring-white
+                    como-focus
                   "
                   @click="sidebarOpen = false"
                 >
@@ -65,15 +62,15 @@
               <nav class="mt-1 flex-1 px-2 space-y-1">
                 <OrganizationMenu />
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
-                <a
+                <router-link
                   v-for="item in navigation"
                   :key="item.name"
-                  :href="item.href"
+                  :to="item.href"
                   :class="[
                     isCurrent(item.href)
                       ? 'bg-gray-200 text-gray-900'
                       : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                    'group flex items-center px-2 py-2 text-base font-medium rounded-md',
+                    'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
                   ]"
                 >
                   <component
@@ -87,7 +84,7 @@
                     aria-hidden="true"
                   />
                   {{ item.name }}
-                </a>
+                </router-link>
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
                 <ProfileMenu />
               </nav>
@@ -121,7 +118,7 @@
                   isCurrent(item.href)
                     ? 'bg-gray-200 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md',
+                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md como-focus',
                 ]"
               >
                 <component
@@ -158,8 +155,7 @@
             rounded-md
             text-gray-500
             hover:text-gray-900
-            focus:outline-none focus:ring-2 focus:ring-inset
-            focus-visible:ring-black focus-visible:ring-opacity-75
+            como-focus
           "
           @click="sidebarOpen = true"
         >
@@ -201,9 +197,9 @@ import {
   AdjustmentsIcon,
   ChipIcon,
   MenuIcon,
-  UserGroupIcon,
   XIcon,
   ChevronDownIcon,
+  OfficeBuildingIcon,
 } from "@heroicons/vue/outline";
 import OrganizationMenu from "./components/OrganizationMenu.vue";
 import ProfileMenu from "./components/ProfileMenu.vue";
@@ -215,7 +211,7 @@ const navigation = [
     href: "/",
     icon: ChartBarIcon,
   },
-  { name: "Teams", href: "/teams", icon: UserGroupIcon },
+  { name: "Organizations", href: "/orgs", icon: OfficeBuildingIcon },
   { name: "Sites", href: "/sites", icon: LocationMarkerIcon },
   { name: "Rooms", href: "/rooms", icon: CubeIcon },
   {

@@ -1,5 +1,6 @@
 import Dashboard from "./views/Dashboard.vue";
-import Teams from "./views/Teams.vue";
+import Organizations from "./views/Organizations.vue";
+import Organization from "./views/Organization.vue";
 import NotFound from "./views/NotFound.vue";
 import Sites from "@/views/Sites.vue";
 import Rooms from "@/views/Rooms.vue";
@@ -9,7 +10,13 @@ import Sensors from "@/views/Sensors.vue";
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
   { path: "/", component: Dashboard, meta: { title: "COMo" } },
-  { path: "/teams", meta: { title: "Teams" }, component: Teams },
+  { path: "/orgs", meta: { title: "Organizations" }, component: Organizations },
+  {
+    path: "/orgs/:id",
+    name: "org",
+    meta: { title: "Organization" },
+    component: Organization,
+  },
   { path: "/sites", meta: { title: "Sites" }, component: Sites },
   { path: "/rooms", meta: { title: "Rooms" }, component: Rooms },
   {
