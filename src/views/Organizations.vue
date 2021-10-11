@@ -1,3 +1,12 @@
+<script setup>
+import { computed } from "@vue/reactivity";
+import { useStore } from "vuex";
+import { roleToString } from "@/utils";
+
+const store = useStore();
+const memberships = computed(() => store.state.authuser.memberships);
+</script>
+
 <template>
   <div class="ring-1 ring-gray-300 rounded-md bg-white">
     <div
@@ -34,19 +43,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import { computed } from "@vue/reactivity";
-import { useStore } from "vuex";
-import { roleToString } from "@/utils";
-
-export default {
-  setup() {
-    const store = useStore();
-    return {
-      roleToString,
-      memberships: computed(() => store.state.authuser.memberships),
-    };
-  },
-};
-</script>

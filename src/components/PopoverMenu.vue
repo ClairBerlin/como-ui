@@ -1,3 +1,14 @@
+<script setup>
+import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
+import { ChevronDownIcon, XIcon } from "@heroicons/vue/solid";
+const props = defineProps({
+  icon: { type: Function, default: undefined },
+  title: { type: String, required: true },
+  contextTitle: { type: String, default: "" },
+  options: { type: Array, required: true },
+});
+</script>
+
 <template>
   <div class="w-full">
     <Popover v-slot="{ open }" class="relative">
@@ -113,27 +124,3 @@
     </Popover>
   </div>
 </template>
-
-<script>
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { ChevronDownIcon, XIcon } from "@heroicons/vue/solid";
-
-export default {
-  components: {
-    Popover,
-    PopoverButton,
-    PopoverPanel,
-    ChevronDownIcon,
-    XIcon,
-  },
-  props: {
-    icon: { type: Function, default: undefined },
-    title: { type: String, required: true },
-    contextTitle: { type: String, default: "" },
-    options: { type: Array, required: true },
-  },
-  setup() {
-    return {};
-  },
-};
-</script>

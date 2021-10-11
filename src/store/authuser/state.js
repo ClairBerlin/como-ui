@@ -9,5 +9,6 @@ export default function () {
     lastName: undefined,
     userName: undefined,
     memberships: [],
+    selectedMembership: undefined,
   };
 }

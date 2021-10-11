@@ -25,6 +25,10 @@ const actions = {
           orgId: ms._jv.relationships.organization.data.id,
         };
       });
+      if (memberships) {
+        context.dispatch("setSelectedMembership", 0);
+      }
+      console.log({ memberships });
       context.commit("SET_MEMBERSHIPS", memberships || []);
     } catch (error) {
       context.commit("MARK_ERROR");
@@ -32,6 +36,9 @@ const actions = {
     } finally {
       context.commit("STOP_MEMBERSHIPSLOADING");
     }
+  },
+  async setSelectedMembership(context, orgId) {
+    context.commit("SET_SELECTEDMEMBERSHIP", orgId);
   },
   async fetchAuthenticatedUser(context) {
     context.commit("START_USERLOADING");

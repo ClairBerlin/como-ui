@@ -1,3 +1,50 @@
+<script setup>
+import Logo from "@/components/Logo.vue";
+import { onMounted, ref } from "vue";
+import { useStore } from "vuex";
+import {
+  Dialog,
+  DialogOverlay,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import {
+  LocationMarkerIcon,
+  CubeIcon,
+  ChartBarIcon,
+  AdjustmentsIcon,
+  ChipIcon,
+  MenuIcon,
+  XIcon,
+  OfficeBuildingIcon,
+} from "@heroicons/vue/outline";
+import OrganizationMenu from "./components/OrganizationMenu.vue";
+import ProfileMenu from "./components/ProfileMenu.vue";
+
+// TODO: what about feedback and help? (before this pointed to a Clair email/domain)
+const navigation = [
+  {
+    name: "Dashboard",
+    href: "/",
+    icon: ChartBarIcon,
+  },
+  { name: "Organizations", href: "/orgs", icon: OfficeBuildingIcon },
+  { name: "Sites", href: "/sites", icon: LocationMarkerIcon },
+  { name: "Rooms", href: "/rooms", icon: CubeIcon },
+  {
+    name: "Installations",
+    href: "/installations",
+    icon: AdjustmentsIcon,
+  },
+  { name: "Sensors", href: "/sensors", icon: ChipIcon },
+];
+
+const isCurrent = (href) => window.location.href.endsWith(href);
+const sidebarOpen = ref(false);
+const store = useStore();
+onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
+</script>
+
 <template>
   <div class="h-screen flex overflow-hidden bg-gray-100">
     <TransitionRoot as="template" :show="sidebarOpen">
@@ -179,76 +226,3 @@
     </div>
   </div>
 </template>
-
-<script>
-import Logo from "@/components/Logo.vue";
-import { onMounted, ref } from "vue";
-import { useStore } from "vuex";
-import {
-  Dialog,
-  DialogOverlay,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
-import {
-  LocationMarkerIcon,
-  CubeIcon,
-  ChartBarIcon,
-  AdjustmentsIcon,
-  ChipIcon,
-  MenuIcon,
-  XIcon,
-  ChevronDownIcon,
-  OfficeBuildingIcon,
-} from "@heroicons/vue/outline";
-import OrganizationMenu from "./components/OrganizationMenu.vue";
-import ProfileMenu from "./components/ProfileMenu.vue";
-
-// TODO: what about feedback and help? (before this pointed to a Clair email/domain)
-const navigation = [
-  {
-    name: "Dashboard",
-    href: "/",
-    icon: ChartBarIcon,
-  },
-  { name: "Organizations", href: "/orgs", icon: OfficeBuildingIcon },
-  { name: "Sites", href: "/sites", icon: LocationMarkerIcon },
-  { name: "Rooms", href: "/rooms", icon: CubeIcon },
-  {
-    name: "Installations",
-    href: "/installations",
-    icon: AdjustmentsIcon,
-  },
-  { name: "Sensors", href: "/sensors", icon: ChipIcon },
-];
-
-export default {
-  components: {
-    Dialog,
-    DialogOverlay,
-    TransitionChild,
-    TransitionRoot,
-    MenuIcon,
-    ChevronDownIcon,
-    XIcon,
-    Logo,
-    OrganizationMenu,
-    ProfileMenu,
-  },
-  setup() {
-    const isCurrent = (href) => window.location.href.endsWith(href);
-    const sidebarOpen = ref(false);
-    // https://next.vuex.vuejs.org/guide/composition-api.html
-    const store = useStore();
-    // https://v3.vuejs.org/api/composition-api.html#setup
-    onMounted(
-      async () => await store.dispatch("authuser/fetchAuthenticatedUser")
-    );
-    return {
-      navigation,
-      sidebarOpen,
-      isCurrent,
-    };
-  },
-};
-</script>

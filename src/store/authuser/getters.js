@@ -30,6 +30,9 @@ const getters = {
   getMembershipByOrgId: (authuser) => (orgId) => {
     return authuser.memberships.find((ms) => ms.orgId === orgId);
   },
+  getSelectedMembership(authuser) {
+    return authuser.selectedMembership;
+  },
 };
 
 export default getters;

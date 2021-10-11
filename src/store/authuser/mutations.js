@@ -11,6 +11,9 @@ const mutation = {
   STOP_MEMBERSHIPSLOADING(authuser) {
     authuser.membershipsAreLoading = false;
   },
+  SET_SELECTEDMEMBERSHIP(authuser, orgId) {
+    authuser.selectedMembership = orgId;
+  },
   MARK_ERROR(authuser) {
     authuser.error = true;
   },
