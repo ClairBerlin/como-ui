@@ -28,7 +28,6 @@ const actions = {
       if (memberships) {
         context.dispatch("setSelectedMembership", 0);
       }
-      console.log({ memberships });
       context.commit("SET_MEMBERSHIPS", memberships || []);
     } catch (error) {
       context.commit("MARK_ERROR");

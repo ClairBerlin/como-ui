@@ -2,19 +2,16 @@
 import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
-import { roleToString } from "../utils/index";
+import { useRoute } from "vue-router";
 
 const store = useStore();
-const router = useRouter();
 const route = useRoute();
 
 const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);
 
 onMounted(
-  async () =>
-    await store.dispatch("jv/get", `organizations/ ${route.params.id}`)
+  async () => await store.dispatch("jv/get", `organizations/${route.params.id}`)
 );
 
 const currentOrg = computed(() =>
@@ -27,10 +24,9 @@ const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.id)
 );
 
-const orgRole = computed(() => roleToString(orgMembership.value.role));
-const userCanUpdate = computed(() => orgRole === "Owner");
+const isOwner = computed(() => orgMembership.value?.role === "O");
 
-const updateOrganization = (event) => {
+const updateOrganization = () => {
   if (newOrgName.value || newOrgDescription.value) {
     let updatedOrg = {
       _jv: {
@@ -44,7 +40,6 @@ const updateOrganization = (event) => {
     if (newOrgDescription.value) {
       updatedOrg["description"] = newOrgDescription.value;
     }
-    console.log(updatedOrg);
     store.dispatch("jv/patch", [
       updatedOrg,
       { url: `organizations/${route.params.id}/` },
@@ -54,7 +49,7 @@ const updateOrganization = (event) => {
 </script>
 
 <template>
-  <div class="ring-1 ring-gray-300 rounded-md bg-white">
+  <div class="ring-1 ring-gray-300 rounded-md bg-white text-black">
     <div class="ring-1 ring-gray-300 rounded-md bg-white">
       <label>
         <span>Organization Name</span>
@@ -74,8 +69,6 @@ const updateOrganization = (event) => {
         :placeholder="currentOrg.description"
       ></textarea>
     </div>
-    <button :disabled="!userCanUpdate" @click="updateOrganization">
-      Update
-    </button>
+    <button v-if="isOwner" @click="updateOrganization">Update</button>
   </div>
 </template>
