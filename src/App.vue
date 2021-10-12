@@ -157,10 +157,10 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
             <nav class="mt-1 flex-1 px-2 bg-white space-y-1">
               <OrganizationMenu />
               <div class="w-full px-3 my-1 border-b border-gray-200" />
-              <a
+              <router-link
                 v-for="item in navigation"
                 :key="item.name"
-                :href="item.href"
+                :to="item.href"
                 :class="[
                   isCurrent(item.href)
                     ? 'bg-gray-200 text-gray-900'
@@ -179,7 +179,7 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
                   aria-hidden="true"
                 />
                 {{ item.name }}
-              </a>
+              </router-link>
               <div class="w-full px-3 my-1 border-b border-gray-200" />
               <ProfileMenu />
             </nav>
