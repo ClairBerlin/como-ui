@@ -25,7 +25,7 @@ const memberships = computed(() => store.state.authuser.memberships);
             {{ roleToString(m.role) }}
           </div>
         </div>
-        <div class="">
+        <div class="flex flex-row">
           <router-link
             class="gray-button"
             :to="{ name: 'org', params: { id: m.orgId } }"
