@@ -28,7 +28,7 @@ const memberships = computed(() => store.state.authuser.memberships);
         <div class="flex flex-row">
           <router-link
             class="gray-button"
-            :to="{ name: 'org', params: { id: m.orgId } }"
+            :to="{ name: 'editOrg', params: { id: m.orgId } }"
             >Settings</router-link
           >
           <button

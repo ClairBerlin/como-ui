@@ -1,6 +1,7 @@
 import Dashboard from "./views/Dashboard.vue";
 import Organizations from "./views/Organizations.vue";
 import Organization from "./views/Organization.vue";
+import EditOrganization from "./views/EditOrganization.vue";
 import NotFound from "./views/NotFound.vue";
 import Sites from "@/views/Sites.vue";
 import Rooms from "@/views/Rooms.vue";
@@ -16,6 +17,12 @@ export const routes = [
     name: "org",
     meta: { title: "Organization" },
     component: Organization,
+  },
+  {
+    path: "/orgs/:id/edit",
+    name: "editOrg",
+    meta: { title: "Organization" },
+    component: EditOrganization,
   },
   { path: "/sites", meta: { title: "Sites" }, component: Sites },
   { path: "/rooms", meta: { title: "Rooms" }, component: Rooms },
