@@ -40,6 +40,7 @@ const updateOrganization = () => {
     if (newOrgDescription.value) {
       updatedOrg["description"] = newOrgDescription.value;
     }
+    console.log({ updatedOrg });
     store.dispatch("jv/patch", [
       updatedOrg,
       { url: `organizations/${route.params.id}/` },
@@ -49,26 +50,35 @@ const updateOrganization = () => {
 </script>
 
 <template>
-  <div class="ring-1 ring-gray-300 rounded-md bg-white text-black">
-    <div class="ring-1 ring-gray-300 rounded-md bg-white">
-      <label>
-        <span>Organization Name</span>
+  <div class="m-2 p-2 card bg-base-content">
+    <div class="form-control bg-base-content">
+      <label class="label">
+        <span class="label-text text-black">Organization Name</span>
       </label>
       <input
         type="text"
         v-model.trim="newOrgName"
         :placeholder="currentOrg.name"
+        class="input rounded bg-white text-gray-600"
       />
     </div>
-    <div class="ring-1 ring-gray-300 rounded-md bg-white">
-      <label>
-        <span>Description</span>
+    <div class="form-control bg-base-content">
+      <label class="label">
+        <span class="label-text text-black">Description</span>
       </label>
-      <textarea
+      <input
+        type="text"
         v-model.trim="newOrgDescription"
         :placeholder="currentOrg.description"
-      ></textarea>
+        class="text-area rounded h-24 text-gray-600"
+      />
     </div>
-    <button v-if="isOwner" @click="updateOrganization">Update</button>
+    <button
+      class="mt-2 btn gray-button max-w-xs"
+      v-if="isOwner"
+      @click="updateOrganization"
+    >
+      Update
+    </button>
   </div>
 </template>

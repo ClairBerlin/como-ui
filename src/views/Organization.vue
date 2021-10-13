@@ -42,16 +42,16 @@ onMounted(async () => {
         <div
           v-for="member in members"
           :key="member.id"
-          class="flex justify-between border-b p-4"
+          class="flex items-center justify-between border-b p-4"
         >
-          <div>
+          <div class="flex flex-col flex-1">
             <div class="flex">
               {{ member.first_name }} {{ member.last_name }}
             </div>
             <div class="text-gray-700 text-sm">{{ member.username }}</div>
           </div>
-          <div>{{ member.email }}</div>
-          <div>role</div>
+          <div class="hidden sm:flex flex-1">{{ member.email }}</div>
+          <!-- <div class="flex flex-1">role</div> -->
           <OptionsButton :options="options" :icon="icon" />
         </div>
       </div>
