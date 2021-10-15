@@ -3,17 +3,18 @@ import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import dayjs from "dayjs";
+// TODO: update locale when language is changed via UI
+dayjs.locale('de');
+import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";
-import * as dayjs from "dayjs";
 import {
   Chart,
   LineElement,
   PointElement,
   LineController,
-//   CategoryScale,
   LinearScale,
   TimeScale,
-  TimeSeriesScale,
   Decimation,
   Filler,
   Legend,
@@ -25,10 +26,8 @@ Chart.register(
   LineElement,
   PointElement,
   LineController,
-//   CategoryScale,
   LinearScale,
   TimeScale,
-  TimeSeriesScale,
   Decimation,
   Filler,
   Legend,
@@ -38,7 +37,8 @@ Chart.register(
 
 const props = defineProps({
   installationId: { type: Number, required: true },
-  timeUnit: { type: String, required: true },
+  // day, week, month
+  displayScope: { type: String, required: true },
 });
 
 const route = useRoute();
@@ -58,47 +58,46 @@ const loadInstallation = async (from, to) => {
   ]);
 };
 
+const displayFrom = computed(() => {
+  if (props.displayScope === "month") {
+    return dayjs().startOf("month");
+  } else if (props.displayScope === "week") {
+    return dayjs().startOf("week");
+  } else {
+    return dayjs().startOf("day");
+  }
+});
+
+const displayTo = computed(() => {
+  return dayjs().endOf("day");
+});
+
+const displayTimeRange = computed(() => {
+  return { min: displayFrom.value.valueOf(), max: displayTo.value.valueOf() };
+});
+
 const installation = computed(() =>
   store.getters["jv/get"]({
     _jv: { type: "Installation", id: props.installationId },
   })
 );
 
-const timeseries = computed(() => installation.value.timeseries);
-
-// const chartData = {
-//   datasets: [
-//     {
-//       label: "CO2 concentration [PPM]",
-//       data: timeseries.value,
-//       parsing: {
-//         xAxisKey: "timestamp_s",
-//         yAxisKey: "co2_ppm",
-//       },
-//     },
-//   ],
-// };
+const timeseries = computed(() =>
+  installation.value.timeseries?.map((s) => {
+    return { x: s.timestamp_s * 1000, y: s.co2_ppm };
+  })
+);
 
 const chartData = computed(() => ({
-  //   labels: ["1", "3", "5", "7", "10", "12"],
   datasets: [
     {
-      label: "Test Data",
-      fill: false,
-      pointRadius: 2,
+      label: "CO2 concentration [PPM]",
+      pointRadius: 0,
       lineTension: 0,
       borderWidth: 2,
       borderColor: "#007cb0",
-    //   data: [10, 20, 15, 30, 5],
-          data: [
-          { x: 1, y: 10 },
-          { x: 2, y: 20 },
-          { x: 3, y: 15 },
-          { x: 4, y: 30 },
-          { x: 5, y: 5 },
-        ],
-        // xAxisID: "xAxis",
-      //   yAxisID: "yAxis",
+      data: timeseries.value,
+      parsing: false,
     },
   ],
 }));
@@ -107,42 +106,47 @@ const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   scales: {
-    x: [
-      {
-        type: "linear",
-        position: "bottom",
-        alignToPixels: true,
-        title: {
-          color: "red",
-          display: true,
-          text: "Time",
+    x: {
+      type: "time",
+      time: {
+        displayFormats: {
+          hour: "H",
         },
+        isoWeekday: true,
       },
-    ],
-    y: [
-      {
-        type: "linear",
-        position: "left",
-        alignToPixels: true,
-        title: {
-          color: "red",
-          display: true,
-          text: "CO2 [PPM]",
-        },
-        gridLines: {
-          color: [
-            "#27ff00",
-            "#95fe00",
-            "#d0fc00",
-            "#fff800",
-            "#ffd400",
-            "#ffaf00",
-            "#ff8700",
-            "#ff0000",
-          ].reverse(),
-        },
+      position: "bottom",
+      alignToPixels: true,
+      title: {
+        color: "red",
+        display: true,
+        text: "Time",
       },
-    ],
+      ...displayTimeRange.value,
+    },
+    y: {
+      type: "linear",
+      position: "left",
+      alignToPixels: true,
+      title: {
+        color: "red",
+        display: true,
+        text: "CO2-Concentration [PPM]",
+      },
+      suggestedmin: 400,
+      max: 1800,
+      grid: {
+        color: [
+          "#27ff00",
+          "#95fe00",
+          "#d0fc00",
+          "#fff800",
+          "#ffd400",
+          "#ffaf00",
+          "#ff8700",
+          "#ff0000",
+        ],
+      },
+    },
   },
 }));
 
@@ -157,10 +161,10 @@ onMounted(async () => loadInstallation(0, dayjs().unix()));
 <template>
   <div>{{ installationId }}</div>
   <div>{{ installation.sample_count }}</div>
+  <div>{{ dayjs().format() }}</div>
   <div v-if="timeseries">
     <div>{{ timeseries[0] }}</div>
     <div>{{ timeseries[timeseries.length - 1] }}</div>
   </div>
-  <!-- <LineChart v-bind="lineChartProps" /> -->
-  <LineChart :chart-data="chartData" :options="chartOptions"/>
+  <LineChart v-bind="lineChartProps" />
 </template>
