@@ -4,7 +4,7 @@ import App from "./App.vue";
 import { routes } from "./routes.js";
 import { createRouter, createWebHistory } from "vue-router";
 import { Store } from "./store";
-import { createI18n } from "vue-i18n";
+import { createI18n } from "vue-i18n/index";
 import messages from "./i18n";
 
 const router = createRouter({

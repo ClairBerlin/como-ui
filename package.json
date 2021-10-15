@@ -9,9 +9,10 @@
     "format": "prettier .  --write"
   },
   "dependencies": {
-    "@vueuse/core": "^6.6.2",
-    "axios": "^0.23.0",
-    "daisyui": "^1.14.5",
+    "@vueuse/core": "^6.0.0",
+    "axios": "^0.22.0",
+    "chart.js": "^3.5.1",
+    "daisyui": "^1.14.2",
     "dayjs": "^1.10.7",
     "js-cookie": "^3.0.1",
     "jsonapi-vuex": "^5.5.0",
