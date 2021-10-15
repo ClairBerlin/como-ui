@@ -24,4 +24,16 @@
       </h2>
     </div>
   </div>
+  <InstallationViz :installation-id=1 display-scope="day"></InstallationViz>
 </template>
+
+<script setup>
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import InstallationViz from "@/components/InstallationViz.vue";
+
+const route = useRoute();
+const store = useStore();
+const orgId = route.params.id;
+</script>

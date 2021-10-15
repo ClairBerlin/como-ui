@@ -4,8 +4,9 @@ import { computed } from "@vue/reactivity";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
+import 'dayjs/locale/de';
 // TODO: update locale when language is changed via UI
-dayjs.locale('de');
+dayjs.locale("de");
 import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";
 import {
@@ -110,7 +111,7 @@ const chartOptions = computed(() => ({
       type: "time",
       time: {
         displayFormats: {
-          hour: "H",
+          hour: "HZ",
         },
         isoWeekday: true,
       },
@@ -161,6 +162,7 @@ onMounted(async () => loadInstallation(0, dayjs().unix()));
 <template>
   <div>{{ installationId }}</div>
   <div>{{ installation.sample_count }}</div>
+  <div>{{ dayjs.locale() }}</div>
   <div>{{ dayjs().format() }}</div>
   <div v-if="timeseries">
     <div>{{ timeseries[0] }}</div>
