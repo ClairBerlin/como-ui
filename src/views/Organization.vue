@@ -1,14 +1,16 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { CogIcon } from "@heroicons/vue/outline";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import OptionsButton from "@/components/OptionsButton.vue";
+import Dropdown from "@/components/Dropdown.vue";
 
 const route = useRoute();
 const store = useStore();
 const orgId = route.params.id;
 const members = ref([]);
+const org = ref();
+const orgName = computed(() => org?.value?.name || "…");
 const icon = CogIcon;
 const options = [
   //TODO: adapt to correct urls/onclick actions
@@ -17,6 +19,7 @@ const options = [
 ];
 
 onMounted(async () => {
+  org.value = await store.dispatch("jv/get", `organizations/${orgId}`);
   const membersIds = await store.dispatch(
     "jv/get",
     `organizations/${orgId}/users`
@@ -27,16 +30,15 @@ onMounted(async () => {
     members.value.push(member);
   });
   await Promise.all(getMembers);
-  console.log({ members });
 });
 </script>
 
 <template>
   <div>
     <div class="text-black">
-      <div class="flex justify-between">
-        <div class="">{{ $route.params.id }}</div>
-        <div class="gray-button">Invite Members (btn)</div>
+      <div class="flex justify-between items-center">
+        <div class="">Members of the {{ orgName }}</div>
+        <div class="btn-sm m-2 gray-button font-semibold">Invite Members</div>
       </div>
       <div class="ring-1 ring-gray-300 rounded-md bg-white text-lg">
         <div
@@ -52,7 +54,7 @@ onMounted(async () => {
           </div>
           <div class="hidden sm:flex flex-1">{{ member.email }}</div>
           <!-- <div class="flex flex-1">role</div> -->
-          <OptionsButton :options="options" :icon="icon" />
+          <Dropdown :options="options" :icon="icon" />
         </div>
       </div>
     </div>

@@ -40,7 +40,6 @@ const updateOrganization = () => {
     if (newOrgDescription.value) {
       updatedOrg["description"] = newOrgDescription.value;
     }
-    console.log({ updatedOrg });
     store.dispatch("jv/patch", [
       updatedOrg,
       { url: `organizations/${route.params.id}/` },

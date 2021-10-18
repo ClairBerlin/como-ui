@@ -7,20 +7,35 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="dropdown dropdown-end">
-    <div tabindex="0" class="m-1 btn">
+  <div class="dropdown dropdown-end text-gray-900">
+    <div tabindex="0" class="m-1 btn gray-button">
       <component v-if="icon" :is="icon" class="h-5 w-5" />
       <div v-else>{{ buttonText }}</div>
     </div>
 
     <ul
       tabindex="0"
-      class="p-2 shadow menu dropdown-content bg-base-content rounded-box w-52"
+      class="
+        shadow-lg
+        rounded-lg
+        menu
+        dropdown-content
+        w-52
+        ring-1 ring-gray-200
+        bg-white
+        text-xs
+      "
     >
       <li
         v-for="option in options"
         :key="option.href"
-        class="rounded hover:bg-gray-300"
+        class="
+          font-medium
+          hover:bg-gray-100
+          border-b border-gray-200
+          last:border-none
+          como-focus
+        "
       >
         <router-link :to="option.href">{{ option.title }}</router-link>
       </li>
