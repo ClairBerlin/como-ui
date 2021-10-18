@@ -4,46 +4,29 @@ import { computed } from "@vue/reactivity";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
-import 'dayjs/locale/de';
+import "dayjs/locale/de";
+import DayjsMinMax from "dayjs/plugin/minMax";
 // TODO: update locale when language is changed via UI
 dayjs.locale("de");
-import "chartjs-adapter-dayjs";
-import { LineChart, useLineChart } from "vue-chart-3";
-import {
-  Chart,
-  LineElement,
-  PointElement,
-  LineController,
-  LinearScale,
-  TimeScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip,
-} from "chart.js";
+dayjs.extend(DayjsMinMax);
 
-Chart.register(
-  LineElement,
-  PointElement,
-  LineController,
-  LinearScale,
-  TimeScale,
-  Decimation,
-  Filler,
-  Legend,
-  Title,
-  Tooltip
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
+import Co2Graph from "@/components/Co2Graph.vue";
+
+const route = useRoute();
+const store = useStore();
+
+let selectedTab = ref(0);
+
+// The window of sample data to display is taken relative to this day
+const referenceDay = ref(dayjs().startOf("day"));
+const referenceDayFormatted = computed(() =>
+  referenceDay.value.format("YYYY-MM-DD")
 );
 
 const props = defineProps({
   installationId: { type: Number, required: true },
-  // day, week, month
-  displayScope: { type: String, required: true },
 });
-
-const route = useRoute();
-const store = useStore();
 
 const loadInstallation = async (from, to) => {
   const params = {
@@ -59,22 +42,11 @@ const loadInstallation = async (from, to) => {
   ]);
 };
 
-const displayFrom = computed(() => {
-  if (props.displayScope === "month") {
-    return dayjs().startOf("month");
-  } else if (props.displayScope === "week") {
-    return dayjs().startOf("week");
-  } else {
-    return dayjs().startOf("day");
-  }
-});
-
-const displayTo = computed(() => {
-  return dayjs().endOf("day");
-});
-
-const displayTimeRange = computed(() => {
-  return { min: displayFrom.value.valueOf(), max: displayTo.value.valueOf() };
+// By default, preload one month of sample data
+onMounted(async () => {
+  const from = referenceDay.value.startOf("month").unix();
+  const to = dayjs().unix();
+  loadInstallation(from, to);
 });
 
 const installation = computed(() =>
@@ -83,90 +55,102 @@ const installation = computed(() =>
   })
 );
 
-const timeseries = computed(() =>
-  installation.value.timeseries?.map((s) => {
-    return { x: s.timestamp_s * 1000, y: s.co2_ppm };
-  })
-);
-
-const chartData = computed(() => ({
-  datasets: [
-    {
-      label: "CO2 concentration [PPM]",
-      pointRadius: 0,
-      lineTension: 0,
-      borderWidth: 2,
-      borderColor: "#007cb0",
-      data: timeseries.value,
-      parsing: false,
-    },
-  ],
-}));
-
-const chartOptions = computed(() => ({
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    x: {
-      type: "time",
-      time: {
-        displayFormats: {
-          hour: "HZ",
-        },
-        isoWeekday: true,
-      },
-      position: "bottom",
-      alignToPixels: true,
-      title: {
-        color: "red",
-        display: true,
-        text: "Time",
-      },
-      ...displayTimeRange.value,
-    },
-    y: {
-      type: "linear",
-      position: "left",
-      alignToPixels: true,
-      title: {
-        color: "red",
-        display: true,
-        text: "CO2-Concentration [PPM]",
-      },
-      suggestedmin: 400,
-      max: 1800,
-      grid: {
-        color: [
-          "#27ff00",
-          "#95fe00",
-          "#d0fc00",
-          "#fff800",
-          "#ffd400",
-          "#ffaf00",
-          "#ff8700",
-          "#ff0000",
-        ],
-      },
-    },
-  },
-}));
-
-const { lineChartProps, lineChartRef } = useLineChart({
-  chartData: chartData,
-  options: chartOptions,
+const oldestInstantInStore = computed(() => {
+  // samples are ordered from oldest to latest
+  return installation.value.timeseries[0]?.timestamp_s;
+});
+const oldestInstantFormatted = computed(() => {
+  return dayjs.unix(oldestInstantInStore.value);
 });
 
-onMounted(async () => loadInstallation(0, dayjs().unix()));
+const latestInstantInStore = computed(() => {
+  // samples are ordered from oldest to latest
+  const sc = installation.value.timeseries.length;
+  return installation.value.timeseries[sc - 1]?.timestamp_s;
+});
+const latestInstantFormatted = computed(() => {
+  return dayjs.unix(latestInstantInStore.value);
+});
+
+function tabChanged(index) {
+  // 0 = day, 1 = week, 2 = month
+  selectedTab.value = index;
+}
+
+function previousInstant() {
+  let prev = referenceDay.value;
+  if (selectedTab.value == 0) {
+    prev = referenceDay.value.subtract(1, "d");
+  } else if (selectedTab.value == 1) {
+    prev = referenceDay.value.subtract(1, "w");
+  } else {
+    prev = referenceDay.value.subtract(1, "M");
+  }
+  if (prev.unix() < oldestInstantInStore.value) {
+    loadInstallation(prev.startOf("month").unix(), oldestInstantInStore.value);
+  }
+  referenceDay.value = prev;
+}
+
+function nowInstant() {
+  referenceDay.value = dayjs().startOf("day");
+}
+
+function nextInstant() {
+  let next = dayjs();
+  if (selectedTab.value == 0) {
+    next = referenceDay.value.add(1, "d");
+  } else if (selectedTab.value == 1) {
+    next = referenceDay.value.add(1, "w");
+  } else {
+    next = referenceDay.value.add(1, "M");
+  }
+  referenceDay.value = dayjs.min(next, dayjs().startOf("day"));
+}
 </script>
 
 <template>
-  <div>{{ installationId }}</div>
-  <div>{{ installation.sample_count }}</div>
-  <div>{{ dayjs.locale() }}</div>
-  <div>{{ dayjs().format() }}</div>
-  <div v-if="timeseries">
-    <div>{{ timeseries[0] }}</div>
-    <div>{{ timeseries[timeseries.length - 1] }}</div>
+  <div>{{ referenceDayFormatted }}</div>
+  <!-- <div>{{ oldestInstantFormatted }}</div>
+  <div>{{ latestInstantFormatted }}</div> -->
+  <div>{{ selectedTab }}</div>
+  <TabGroup @change="tabChanged">
+    <TabList>
+      <Tab>Day</Tab>
+      <Tab>Week</Tab>
+      <Tab>Month</Tab>
+    </TabList>
+    <TabPanels>
+      <TabPanel>
+        <Co2Graph
+          :installation-id="props.installationId"
+          :referenceInstant="referenceDay"
+          displayScope="day"
+        ></Co2Graph>
+      </TabPanel>
+      <TabPanel>
+        <Co2Graph
+          :installation-id="props.installationId"
+          :referenceInstant="referenceDay"
+          displayScope="week"
+        ></Co2Graph>
+      </TabPanel>
+      <TabPanel>
+        <Co2Graph
+          :installation-id="props.installationId"
+          :referenceInstant="referenceDay"
+          displayScope="month"
+        ></Co2Graph>
+      </TabPanel>
+    </TabPanels>
+  </TabGroup>
+  <div>
+    <button @click="previousInstant">Previous</button>
   </div>
-  <LineChart v-bind="lineChartProps" />
+  <div>
+    <button @click="nowInstant">Now</button>
+  </div>
+  <div>
+    <button @click="nextInstant">Next</button>
+  </div>
 </template>

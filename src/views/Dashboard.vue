@@ -24,7 +24,7 @@
       </h2>
     </div>
   </div>
-  <InstallationViz :installation-id=1 display-scope="day"></InstallationViz>
+  <InstallationViz :installation-id=1></InstallationViz>
 </template>
 
 <script setup>
