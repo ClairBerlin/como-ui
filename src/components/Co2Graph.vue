@@ -7,9 +7,11 @@ import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";
 import {
   Chart,
+  PointElement,
   LineElement,
   LineController,
   TimeScale,
+  LinearScale,
   Legend,
   Title,
   Tooltip,
@@ -17,8 +19,10 @@ import {
 
 Chart.register(
   LineElement,
+  PointElement,
   LineController,
   TimeScale,
+  LinearScale,
   Legend,
   Title,
   Tooltip
