@@ -8,12 +8,8 @@ import { LineChart, useLineChart } from "vue-chart-3";
 import {
   Chart,
   LineElement,
-  PointElement,
   LineController,
-  LinearScale,
   TimeScale,
-  Decimation,
-  Filler,
   Legend,
   Title,
   Tooltip,
@@ -21,12 +17,8 @@ import {
 
 Chart.register(
   LineElement,
-  PointElement,
   LineController,
-  LinearScale,
   TimeScale,
-  Decimation,
-  Filler,
   Legend,
   Title,
   Tooltip
@@ -42,6 +34,7 @@ const props = defineProps({
       return dayjs();
     },
   },
+  samplePool: { type: Array, required: true },
 });
 
 const store = useStore();
@@ -80,14 +73,8 @@ const displayUnit = computed(() => {
   }
 });
 
-const installation = computed(() =>
-  store.getters["jv/get"]({
-    _jv: { type: "Installation", id: props.installationId },
-  })
-);
-
 const timeseries = computed(() =>
-  installation.value.timeseries?.map((s) => {
+  props.samplePool?.map((s) => {
     return { x: s.timestamp_s * 1000, y: s.co2_ppm };
   })
 );
@@ -171,13 +158,5 @@ const { lineChartProps, lineChartRef } = useLineChart({
 </script>
 
 <template>
-  <div>{{ installationId }}</div>
-  <div>{{ installation.sample_count }}</div>
-  <div>{{ dayjs.locale() }}</div>
-  <div>{{ dayjs().format() }}</div>
-  <div v-if="timeseries">
-    <div>{{ timeseries[0] }}</div>
-    <div>{{ timeseries[timeseries.length - 1] }}</div>
-  </div>
   <LineChart v-bind="lineChartProps" />
 </template>

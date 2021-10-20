@@ -17,6 +17,7 @@ const route = useRoute();
 const store = useStore();
 
 let selectedTab = ref(0);
+let samplePool = ref([]);
 
 // The window of sample data to display is taken relative to this day
 const referenceDay = ref(dayjs().startOf("day"));
@@ -28,25 +29,38 @@ const props = defineProps({
   installationId: { type: Number, required: true },
 });
 
-const loadInstallation = async (from, to) => {
+const loadInstallation = (async) => {
+  store.dispatch("jv/get", [`installations/${props.installationId}`]);
+};
+
+const loadSamples = async (from, to) => {
   const params = {
     include_timeseries: 1,
     "filter[from]": from,
     "filter[to]": to,
   };
-  await store.dispatch("jv/get", [
+  console.log(
+    `Fetching sample data from ${dayjs.unix(
+      params["filter[from]"]
+    )} to ${dayjs.unix(params["filter[to]"])}`
+  );
+  // jv/search bypasses the vuex store.
+  const installation = await store.dispatch("jv/search", [
     `installations/${props.installationId}`,
     {
       params: params,
     },
   ]);
+  return installation.timeseries;
 };
 
 // By default, preload one month of sample data
 onMounted(async () => {
+  await loadInstallation; // Fetch installation information into the store.
   const from = referenceDay.value.startOf("month").unix();
   const to = dayjs().unix();
-  loadInstallation(from, to);
+  // Fetch samples of the installation, bypass the store.
+  samplePool.value = await loadSamples(from, to);
 });
 
 const installation = computed(() =>
@@ -55,30 +69,35 @@ const installation = computed(() =>
   })
 );
 
-const oldestInstantInStore = computed(() => {
+const oldestSampleInstant = computed(() => {
   // samples are ordered from oldest to latest
-  return installation.value.timeseries[0]?.timestamp_s;
+  return samplePool.value[0]?.timestamp_s;
 });
-const oldestInstantFormatted = computed(() => {
-  return dayjs.unix(oldestInstantInStore.value);
-});
-
-const latestInstantInStore = computed(() => {
+const latestSampleInstant = computed(() => {
   // samples are ordered from oldest to latest
-  const sc = installation.value.timeseries.length;
-  return installation.value.timeseries[sc - 1]?.timestamp_s;
-});
-const latestInstantFormatted = computed(() => {
-  return dayjs.unix(latestInstantInStore.value);
+  const sc = samplePool.value.length;
+  return samplePool.value[sc - 1]?.timestamp_s;
 });
 
 function tabChanged(index) {
   // 0 = day, 1 = week, 2 = month
   selectedTab.value = index;
+  console.log(`Select tab ${index}`);
 }
 
-function previousInstant() {
+async function addOldSamplesToPool(from) {
+  if (oldestSampleInstant.value > from) {
+    const prevSamples = await loadSamples(from, oldestSampleInstant.value - 1);
+    if (prevSamples.length > 0) {
+      console.log(`Prepending ${prevSamples.length} to the sample pool`);
+      samplePool.value = [...prevSamples, ...samplePool.value];
+    }
+  }
+}
+
+async function previousInstant() {
   let prev = referenceDay.value;
+  console.log(`Current reference day: ${prev}`);
   if (selectedTab.value == 0) {
     prev = referenceDay.value.subtract(1, "d");
   } else if (selectedTab.value == 1) {
@@ -86,18 +105,42 @@ function previousInstant() {
   } else {
     prev = referenceDay.value.subtract(1, "M");
   }
-  if (prev.unix() < oldestInstantInStore.value) {
-    loadInstallation(prev.startOf("month").unix(), oldestInstantInStore.value);
-  }
   referenceDay.value = prev;
+  console.log(`New reference day: ${referenceDay.value}`);
+  if (oldestSampleInstant.value > prev.unix()) {
+    addOldSamplesToPool(prev.startOf("month").unix());
+  }
 }
 
-function nowInstant() {
+async function addNewSamplesToPool() {
+  if (!latestSampleInstant) {
+    // In case the sample pool is still empty.
+    return;
+  }
+  const now = dayjs().unix();
+  if (latestSampleInstant.value < now) {
+    console.log(
+      `Current time: ${dayjs.unix(now)}. Latest sample instant: ${dayjs.unix(
+        latestSampleInstant.value
+      )}`
+    );
+
+    const nextSamples = await loadSamples(latestSampleInstant.value + 1, now);
+    if (nextSamples.length > 0) {
+      console.log(`Appending ${nextSamples.length} to the sample pool`);
+      samplePool.value = [...samplePool.value, ...nextSamples];
+    }
+  }
+}
+
+async function nowInstant() {
+  addNewSamplesToPool();
   referenceDay.value = dayjs().startOf("day");
 }
 
 function nextInstant() {
-  let next = dayjs();
+  let next = referenceDay.value;
+  console.log(`Current reference day: ${next}`);
   if (selectedTab.value == 0) {
     next = referenceDay.value.add(1, "d");
   } else if (selectedTab.value == 1) {
@@ -105,15 +148,15 @@ function nextInstant() {
   } else {
     next = referenceDay.value.add(1, "M");
   }
+  addNewSamplesToPool();
   referenceDay.value = dayjs.min(next, dayjs().startOf("day"));
+  console.log(`New reference day: ${referenceDay.value}`);
 }
 </script>
 
 <template>
-  <div>{{ referenceDayFormatted }}</div>
-  <!-- <div>{{ oldestInstantFormatted }}</div>
-  <div>{{ latestInstantFormatted }}</div> -->
-  <div>{{ selectedTab }}</div>
+  <div>Installation-ID: {{ installationId }}</div>
+  <div>Reference day for display: {{ referenceDayFormatted }}</div>
   <TabGroup @change="tabChanged">
     <TabList>
       <Tab>Day</Tab>
@@ -126,6 +169,7 @@ function nextInstant() {
           :installation-id="props.installationId"
           :referenceInstant="referenceDay"
           displayScope="day"
+          :sample-pool="samplePool"
         ></Co2Graph>
       </TabPanel>
       <TabPanel>
@@ -133,6 +177,7 @@ function nextInstant() {
           :installation-id="props.installationId"
           :referenceInstant="referenceDay"
           displayScope="week"
+          :sample-pool="samplePool"
         ></Co2Graph>
       </TabPanel>
       <TabPanel>
@@ -140,6 +185,7 @@ function nextInstant() {
           :installation-id="props.installationId"
           :referenceInstant="referenceDay"
           displayScope="month"
+          :sample-pool="samplePool"
         ></Co2Graph>
       </TabPanel>
     </TabPanels>
