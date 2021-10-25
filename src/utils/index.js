@@ -1,8 +1,6 @@
 export const getInitials = (...args) =>
   args.map((a) => a[0].toUpperCase()).join("");
 
-export default getInitials;
-
 export const roleToString = (role) => {
   switch (role.toLowerCase()) {
     case "o":

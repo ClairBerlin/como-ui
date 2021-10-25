@@ -6,6 +6,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import { Store } from "./store";
 import { createI18n } from "vue-i18n";
 import messages from "./i18n";
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,4 +20,5 @@ const app = createApp(App);
 app.use(router);
 app.use(Store);
 app.use(i18n);
+app.use(Toast);
 app.mount("#app");

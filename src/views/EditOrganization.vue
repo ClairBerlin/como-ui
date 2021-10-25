@@ -1,9 +1,9 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-
+import { BanIcon } from "@heroicons/vue/outline";
 const store = useStore();
 const route = useRoute();
 
@@ -19,6 +19,8 @@ const currentOrg = computed(() =>
     _jv: { type: "Organization", id: route.params.id },
   })
 );
+
+watch(() => console.log(currentOrg.value));
 
 const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.id)
@@ -49,35 +51,41 @@ const updateOrganization = () => {
 </script>
 
 <template>
-  <div class="m-2 p-2 card bg-base-content">
-    <div class="form-control bg-base-content">
-      <label class="label">
-        <span class="label-text text-black">Organization Name</span>
-      </label>
-      <input
-        type="text"
-        v-model.trim="newOrgName"
-        :placeholder="currentOrg.name"
-        class="input rounded bg-white text-gray-600"
-      />
+  <div class="max-w-sm">
+    <div v-if="!isOwner" class="alert alert-error">
+      <div class="flex items-center justify-between">
+        <BanIcon class="h-12 w-12 mr-4" />
+        <label class="font-semibold">
+          Only an Owner of an organization can change name and/or description
+        </label>
+      </div>
     </div>
-    <div class="form-control bg-base-content">
-      <label class="label">
-        <span class="label-text text-black">Description</span>
-      </label>
-      <input
-        type="text"
-        v-model.trim="newOrgDescription"
-        :placeholder="currentOrg.description"
-        class="text-area rounded h-24 text-gray-600"
-      />
+    <div v-else class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
+      <div class="form-control">
+        <label class="label">
+          <span class="label-text text-black font-bold">Organization Name</span>
+        </label>
+        <input
+          type="text"
+          v-model.trim="newOrgName"
+          :placeholder="currentOrg.name"
+          class="input-bordered como-focus rounded bg-white text-gray-600"
+        />
+      </div>
+      <div class="form-control py-4">
+        <label class="label">
+          <span class="label-text text-black font-bold">Description</span>
+        </label>
+        <input
+          type="text"
+          v-model.trim="newOrgDescription"
+          :placeholder="currentOrg.description"
+          class="como-focus text-area rounded h-24 text-gray-600"
+        />
+      </div>
+      <button class="mt-2 btn gray-button" @click="updateOrganization">
+        Update
+      </button>
     </div>
-    <button
-      class="mt-2 btn gray-button max-w-xs"
-      v-if="isOwner"
-      @click="updateOrganization"
-    >
-      Update
-    </button>
   </div>
 </template>

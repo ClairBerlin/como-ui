@@ -1,6 +1,7 @@
 import Dashboard from "./views/Dashboard.vue";
 import Organizations from "./views/Organizations.vue";
 import Organization from "./views/Organization.vue";
+import AddOrganization from "./views/AddOrganization.vue";
 import EditOrganization from "./views/EditOrganization.vue";
 import NotFound from "./views/NotFound.vue";
 import Sites from "@/views/Sites.vue";
@@ -11,7 +12,16 @@ import Sensors from "@/views/Sensors.vue";
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
   { path: "/", component: Dashboard, meta: { title: "COMo" } },
-  { path: "/orgs", meta: { title: "Organizations" }, component: Organizations },
+  {
+    path: "/orgs",
+    meta: { title: "Organizations" },
+    component: Organizations,
+  },
+  {
+    path: "/orgs/add",
+    meta: { title: "Create a new Organization" },
+    component: AddOrganization,
+  },
   {
     path: "/orgs/:id",
     name: "org",
