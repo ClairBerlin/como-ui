@@ -1,15 +1,52 @@
 <script setup>
-import { computed } from "@vue/runtime-core";
+import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
 import PopoverMenu from "./PopoverMenu.vue";
 import { PlusIcon, CheckIcon } from "@heroicons/vue/outline";
 import { OfficeBuildingIcon } from "@heroicons/vue/solid";
 
-const defaultOptions = [
+const store = useStore();
+const route = useRoute();
+const router = useRouter();
+
+const memberships = computed(() => store.getters["authuser/getMemberships"]);
+
+const selectedMembership = computed(() =>
+  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
+);
+
+const orgName = computed(() => {
+  if (selectedMembership.value) {
+    return selectedMembership.value.orgName;
+  }
+  return "…";
+});
+
+const orgEntries = computed(() => {
+  if (memberships.value?.length) {
+    return memberships.value.map((m) => {
+      return {
+        icon:
+          m.orgId === selectedMembership.value.orgId ? CheckIcon : undefined,
+        name: m.orgName,
+        onClick: async () =>
+          router.push({
+            name: route.name,
+            params: { orgId: m.orgId },
+          }),
+      };
+    });
+  } else {
+    return [];
+  }
+});
+
+const defaultEntries = [
   {
     icon: OfficeBuildingIcon,
     name: "Manage organizations",
-    href: "/orgs",
+    route: "/org-management",
   },
   {
     icon: PlusIcon,
@@ -17,34 +54,17 @@ const defaultOptions = [
     href: "/orgs/add",
   },
 ];
-const store = useStore();
-const title = computed(() => {
-  const { memberships } = store.state.authuser;
-  const { selectedMembership } = store.state.authuser;
-  if (memberships.length) {
-    return memberships[selectedMembership].orgName;
-  }
-  return "…";
-});
+
+const menuEntries = computed(() => [...orgEntries.value, ...defaultEntries]);
+
 const icon = OfficeBuildingIcon;
-const options = computed(() => {
-  const { memberships } = store.state.authuser;
-  const { selectedMembership } = store.state.authuser;
-  const options = memberships.map((m, i) => ({
-    icon: i === selectedMembership ? CheckIcon : undefined,
-    name: m.orgName,
-    onClick: async () =>
-      await store.dispatch("authuser/setSelectedMembership", i),
-  }));
-  return [...options, ...defaultOptions];
-});
 </script>
 
 <template>
   <PopoverMenu
-    context-title="Switch dashboard context"
-    :title="title"
+    context-title="Switch organization"
+    :title="orgName"
     :icon="icon"
-    :options="options"
+    :options="menuEntries"
   />
 </template>

@@ -7,7 +7,7 @@ import Dropdown from "@/components/Dropdown.vue";
 
 const route = useRoute();
 const store = useStore();
-const orgId = route.params.id;
+const orgId = route.params.orgId;
 const members = ref([]);
 const org = ref();
 const orgName = computed(() => org?.value?.name || "…");

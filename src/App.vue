@@ -1,7 +1,9 @@
 <script setup>
 import Logo from "@/components/Logo.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
 import {
   Dialog,
   DialogOverlay,
@@ -21,28 +23,60 @@ import {
 import OrganizationMenu from "./components/OrganizationMenu.vue";
 import ProfileMenu from "./components/ProfileMenu.vue";
 
-// TODO: what about feedback and help? (before this pointed to a Clair email/domain)
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
+
+// TODO: what about feedback and help? (before, this pointed to a Clair email/domain)
 const navigation = [
   {
-    name: "Dashboard",
-    href: "/",
+    name: "Overview",
+    routeName: "overview",
     icon: ChartBarIcon,
   },
-  { name: "Organizations", href: "/orgs", icon: OfficeBuildingIcon },
-  { name: "Sites", href: "/sites", icon: LocationMarkerIcon },
-  { name: "Rooms", href: "/rooms", icon: CubeIcon },
+  // { name: "Organizations", href: "/org-management", icon: OfficeBuildingIcon },
   {
-    name: "Installations",
-    href: "/installations",
-    icon: AdjustmentsIcon,
+    name: "Sites",
+    routeName: "sites",
+    icon: LocationMarkerIcon,
   },
-  { name: "Sensors", href: "/sensors", icon: ChipIcon },
+  // { name: "Rooms", href: "/rooms", icon: CubeIcon },
+  // {
+  //   name: "Installations",
+  //   href: "/installations",
+  //   icon: AdjustmentsIcon,
+  // },
+  { name: "Sensors", routeName: "sensors", icon: ChipIcon },
 ];
 
-const isCurrent = (href) => window.location.href.endsWith(href);
+function isCurrentRoute(routeName) {
+  route.name === routeName;
+}
+
 const sidebarOpen = ref(false);
-const store = useStore();
-onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
+
+const memberships = computed(() => store.getters["authuser/getMemberships"]);
+
+onMounted(async () => {
+  console.log("Mounting app...");
+  await store.dispatch("authuser/fetchAuthenticatedUser");
+  const defaultOrgId = memberships.value[0].orgId;
+  router.push({ name: "overview", params: { orgId: defaultOrgId } });
+});
+
+watch(
+  () => route.params.orgId,
+  async (orgId) => {
+    console.log(
+      `Organization changed to orgId ${orgId}. Fetching related data...`
+    );
+    store.dispatch("jv/get", `organizations/${orgId}`);
+  }
+);
+
+const currentOrgId = computed(() => {
+  return route.params.orgId ? route.params.orgId : 0;
+});
 </script>
 
 <template>
@@ -112,9 +146,12 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
                 <router-link
                   v-for="item in navigation"
                   :key="item.name"
-                  :to="item.href"
+                  :to="{
+                    name: item.routeName,
+                    params: { orgId: currentOrgId },
+                  }"
                   :class="[
-                    isCurrent(item.href)
+                    isCurrentRoute(item.routeName)
                       ? 'bg-gray-200 text-gray-900'
                       : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
                     'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
@@ -123,7 +160,7 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
                   <component
                     :is="item.icon"
                     :class="[
-                      isCurrent(item.href)
+                      isCurrentRoute(item.routeName)
                         ? 'text-gray-700'
                         : 'text-gray-400 group-hover:text-gray-500',
                       'mr-4 flex-shrink-0 h-6 w-6',
@@ -160,9 +197,12 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
               <router-link
                 v-for="item in navigation"
                 :key="item.name"
-                :to="item.href"
+                :to="{
+                  name: item.routeName,
+                  params: { orgId: currentOrgId },
+                }"
                 :class="[
-                  isCurrent(item.href)
+                  isCurrentRoute(item.routeName)
                     ? 'bg-gray-200 text-gray-900'
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
                   'group flex items-center px-2 py-2 text-sm font-medium rounded-md como-focus',
@@ -171,7 +211,7 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
                 <component
                   :is="item.icon"
                   :class="[
-                    isCurrent(item.href)
+                    isCurrentRoute(item.routeName)
                       ? 'text-gray-700'
                       : 'text-gray-400 group-hover:text-gray-500',
                     'mr-3 flex-shrink-0 h-6 w-6',
@@ -211,14 +251,6 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
         </button>
       </div>
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        <header class="bg-white shadow" v-if="$route.meta.title">
-          <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold leading-tight text-gray-900">
-              {{ $route.meta.title }}
-            </h1>
-          </div>
-        </header>
-
         <div class="max-w-screen-xl py-6 mx-auto sm:px-6 lg:px-8">
           <router-view />
         </div>

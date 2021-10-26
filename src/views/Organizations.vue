@@ -29,7 +29,10 @@ const hasMemberships = () => memberships.value?.length > 0;
           <div class="flex items-center">
             <router-link
               class="text-l font-bold text-blue-500 rounded p-1 como-focus"
-              :to="{ name: 'org', params: { id: m.orgId } }"
+              :to="{
+                name: 'org-management-detail',
+                params: { orgId: m.orgId },
+              }"
               >{{ m.orgName }}
             </router-link>
             <div class="gray-label">
@@ -39,7 +42,7 @@ const hasMemberships = () => memberships.value?.length > 0;
           <div class="flex flex-row">
             <router-link
               class="gray-button"
-              :to="{ name: 'editOrg', params: { id: m.orgId } }"
+              :to="{ name: 'org-management-edit', params: { orgId: m.orgId } }"
               >Settings</router-link
             >
             <button
