@@ -7,7 +7,7 @@ import EditOrganization from "./views/EditOrganization.vue";
 import NotFound from "./views/NotFound.vue";
 import Sites from "@/views/Sites.vue";
 import Rooms from "@/views/Rooms.vue";
-import Installations from "@/views/Installations.vue";
+import Installation from "@/views/Installation.vue";
 import Sensors from "@/views/Sensors.vue";
 
 /** @type {import('vue-router').RouterOptions['routes']} */
@@ -28,8 +28,9 @@ export const routes = [
       },
       {
         // Details and visualization for a single installation
-        path: "detail/:installationId",
-        component: Installations,
+        path: "installation/:installationId",
+        name: "installation",
+        component: Installation,
         meta: { title: "Installation" },
       },
       {
@@ -42,6 +43,7 @@ export const routes = [
       {
         // Management of the Rooms of a given site (add, update, delete)
         path: "sites/:siteId/rooms",
+        name: "rooms",
         meta: { title: "Rooms" },
         component: Rooms,
       },
@@ -61,12 +63,6 @@ export const routes = [
       },
     ],
   },
-  // { path: "/rooms", meta: { title: "Rooms" }, component: Rooms },
-  // {
-  //   path: "/installations",
-  //   meta: { title: "Installations" },
-  //   component: Installations,
-  // },
   { path: "/:orgId/sensors", meta: { title: "Sensors" }, component: Sensors },
   {
     path: "/org-management",

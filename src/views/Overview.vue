@@ -97,9 +97,15 @@ watch(currentOrgId, () => update());
         <li v-for="inst in activeInstallations" :key="inst._jv.id">
           ID: {{ inst._jv.id }}, Description: {{ inst.description }}, from
           {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}}, sensor:
-          {{ inst?.node.alias }}, room: {{ inst?.room.name }},
-          site: {{inst?.room?.site.name}},
-          still missing: current CO2 concentration
+          {{ inst?.node.alias }}, room: {{ inst?.room.name }}, site:
+          {{ inst?.room?.site.name }},
+          <router-link
+            :to="{
+              name: 'installation',
+              params: { installationId: inst._jv.id },
+            }"
+            >View CO2 concentration</router-link
+          >
         </li>
       </ul>
     </div>

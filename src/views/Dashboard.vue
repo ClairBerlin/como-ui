@@ -12,7 +12,7 @@ const currentOrgId = computed(() => {
 
 const organization = computed(() =>
   store.getters["jv/get"]({
-    _jv: { type: "Organization", id: route.params.orgId },
+    _jv: { type: "Organization", id: currentOrgId.value },
   })
 );
 </script>
