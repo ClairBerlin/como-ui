@@ -42,12 +42,17 @@ async function update() {
     { params: { "filter[organization]": currentOrgId.value } },
   ]);
   const instList = Object.entries(instObj);
-  const relatedResourcePromises = instList.map(([instId, _]) => {
-    console.log(`Get related objects for installation ${instId}.`);
-    return store.dispatch("jv/getRelated", `installations/${instId}`);
-  });
-  const allRelated = Promise.all(relatedResourcePromises);
   installations.value = instList.map(([_, inst]) => inst);
+  const relatedResourcePromises = instList.map(([instId, inst]) => {
+    console.log(`Get related objects for installation ${instId}.`);
+    return store
+      .dispatch("jv/getRelated", `installations/${instId}`)
+      .then(() => {
+        // At this point vuex-jsonapi has fetched the room object in inst.room
+        store.dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`);
+      });
+  });
+  await Promise.all(relatedResourcePromises);
 }
 
 onMounted(async () => update());
@@ -92,8 +97,9 @@ watch(currentOrgId, () => update());
         <li v-for="inst in activeInstallations" :key="inst._jv.id">
           ID: {{ inst._jv.id }}, Description: {{ inst.description }}, from
           {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}}, sensor:
-          {{ inst?.node.alias }}, room: {{ inst?.room.name }}, still missing:
-          current CO2 concentration
+          {{ inst?.node.alias }}, room: {{ inst?.room.name }},
+          site: {{inst?.room?.site.name}},
+          still missing: current CO2 concentration
         </li>
       </ul>
     </div>
