@@ -11,6 +11,10 @@ dayjs.locale("de");
 const route = useRoute();
 const store = useStore();
 
+const currentOrgId = computed(() => {
+  return route.params.orgId ? route.params.orgId : 0;
+});
+
 const installations = ref(undefined);
 
 const activeInstallations = computed(() =>
@@ -24,10 +28,6 @@ const activeInstallations = computed(() =>
   })
 );
 
-const currentOrgId = computed(() => {
-  return route.params.orgId ? route.params.orgId : 0;
-});
-
 const hasActiveSensors = computed(() => {
   if (activeInstallations?.value?.length) {
     return true;
@@ -36,7 +36,7 @@ const hasActiveSensors = computed(() => {
   }
 });
 
-onMounted(async () => {
+async function update() {
   const instObj = await store.dispatch("jv/get", [
     "installations",
     { params: { "filter[organization]": currentOrgId.value } },
@@ -48,7 +48,11 @@ onMounted(async () => {
   });
   const allRelated = Promise.all(relatedResourcePromises);
   installations.value = instList.map(([_, inst]) => inst);
-});
+}
+
+onMounted(async () => update());
+
+watch(currentOrgId, () => update());
 </script>
 
 <template>
@@ -86,13 +90,10 @@ onMounted(async () => {
       Active Installations:
       <ul id="sensor-list">
         <li v-for="inst in activeInstallations" :key="inst._jv.id">
-          ID: {{ inst._jv.id }},
-          Description: {{ inst.description }},
-          from
-          {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}},
-          sensor: {{ inst?.node.alias }},
-          room: {{ inst?.room.name}},
-          still missing: current CO2 concentration
+          ID: {{ inst._jv.id }}, Description: {{ inst.description }}, from
+          {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}}, sensor:
+          {{ inst?.node.alias }}, room: {{ inst?.room.name }}, still missing:
+          current CO2 concentration
         </li>
       </ul>
     </div>
