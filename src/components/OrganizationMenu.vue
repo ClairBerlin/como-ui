@@ -13,11 +13,8 @@ const defaultOptions = [
   },
   {
     icon: PlusIcon,
-    name: "Create organization",
-    // TODO: open modal to create new org
-    onClick: () => {
-      console.log("TODO: clicked to create a new org");
-    },
+    name: "Create a new organization",
+    href: "/orgs/add",
   },
 ];
 const store = useStore();

@@ -18,6 +18,15 @@ const options = [
   { href: "/remove", title: "Remove" },
 ];
 
+const orgMembership = computed(() =>
+  store.getters["authuser/getMembershipByOrgId"](route.params.id)
+);
+
+const isOwner = () => orgMembership.value?.role === "O";
+
+const deleteOrg = () => console.log("TODO: open delete modal");
+const inviteMembers = () => console.log("TODO: open invite modal");
+
 onMounted(async () => {
   org.value = await store.dispatch("jv/get", `organizations/${orgId}`);
   const membersIds = await store.dispatch(
@@ -26,7 +35,6 @@ onMounted(async () => {
   );
   const getMembers = Object.keys(membersIds).map(async (id) => {
     const member = await store.dispatch("jv/get", `users/${id}`);
-    // TODO: get role
     members.value.push(member);
   });
   await Promise.all(getMembers);
@@ -37,8 +45,25 @@ onMounted(async () => {
   <div>
     <div class="text-black">
       <div class="flex justify-between items-center">
-        <div class="">Members of the {{ orgName }}</div>
-        <div class="btn-sm m-2 gray-button font-semibold">Invite Members</div>
+        <div class="">
+          Members of <span class="font-semibold">{{ orgName }}</span>
+        </div>
+        <div class="flex">
+          <div
+            v-if="isOwner"
+            class="btn-sm m-2 gray-button font-semibold"
+            @click="deleteOrg"
+          >
+            Delete organization
+          </div>
+          <div
+            v-if="isOwner"
+            class="btn-sm m-2 gray-button font-semibold"
+            @click="inviteMembers"
+          >
+            Invite Members
+          </div>
+        </div>
       </div>
       <div class="ring-1 ring-gray-300 rounded-md bg-white text-lg">
         <div
@@ -53,7 +78,6 @@ onMounted(async () => {
             <div class="text-gray-700 text-sm">{{ member.username }}</div>
           </div>
           <div class="hidden sm:flex flex-1">{{ member.email }}</div>
-          <!-- <div class="flex flex-1">role</div> -->
           <Dropdown :options="options" :icon="icon" />
         </div>
       </div>
