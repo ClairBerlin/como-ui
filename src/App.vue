@@ -27,14 +27,15 @@ const store = useStore();
 const router = useRouter();
 const route = useRoute();
 
-// TODO: what about feedback and help? (before, this pointed to a Clair email/domain)
-const navigation = [
+// TODO: what about feedback and help? (before, this pointed to a Clair email/domain)?
+
+//Navigation within the context of the selected organization.
+const orgNavigation = [
   {
     name: "Overview",
     routeName: "overview",
     icon: ChartBarIcon,
   },
-  // { name: "Organizations", href: "/org-management", icon: OfficeBuildingIcon },
   {
     name: "Sites",
     routeName: "sites",
@@ -57,26 +58,34 @@ const sidebarOpen = ref(false);
 
 const memberships = computed(() => store.getters["authuser/getMemberships"]);
 
+const currentOrgId = computed(() => route.params.orgId);
+
+const isOrgConext = computed(() => typeof currentOrgId.value === "string");
+
 onMounted(async () => {
   console.log("Mounting app...");
   await store.dispatch("authuser/fetchAuthenticatedUser");
-  const defaultOrgId = memberships.value[0].orgId;
-  router.push({ name: "overview", params: { orgId: defaultOrgId } });
+  if (memberships.value?.length > 0) {
+    const defaultOrgId = memberships.value[0].orgId;
+    router.push({ name: "overview", params: { orgId: defaultOrgId } });
+  } else {
+    router.push({ name: "org-management-add" });
+  }
 });
 
 watch(
   () => route.params.orgId,
   async (orgId) => {
-    console.log(
-      `Organization changed to orgId ${orgId}. Fetching related data...`
-    );
-    store.dispatch("jv/get", `organizations/${orgId}`);
+    if (isOrgConext.value) {
+      console.log(
+        `Organization changed to orgId ${orgId}. Fetching related data...`
+      );
+      store.dispatch("jv/get", `organizations/${orgId}`);
+    } else {
+      console.log("Entering a route outside of an organization context.");
+    }
   }
 );
-
-const currentOrgId = computed(() => {
-  return route.params.orgId ? route.params.orgId : 0;
-});
 </script>
 
 <template>
@@ -143,32 +152,34 @@ const currentOrgId = computed(() => {
               <nav class="mt-1 flex-1 px-2 space-y-1">
                 <OrganizationMenu />
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
-                <router-link
-                  v-for="item in navigation"
-                  :key="item.name"
-                  :to="{
-                    name: item.routeName,
-                    params: { orgId: currentOrgId },
-                  }"
-                  :class="[
-                    isCurrentRoute(item.routeName)
-                      ? 'bg-gray-200 text-gray-900'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                    'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
-                  ]"
-                >
-                  <component
-                    :is="item.icon"
+                <div v-if="isOrgConext">
+                  <router-link
+                    v-for="item in orgNavigation"
+                    :key="item.name"
+                    :to="{
+                      name: item.routeName,
+                      params: { orgId: currentOrgId },
+                    }"
                     :class="[
                       isCurrentRoute(item.routeName)
-                        ? 'text-gray-700'
-                        : 'text-gray-400 group-hover:text-gray-500',
-                      'mr-4 flex-shrink-0 h-6 w-6',
+                        ? 'bg-gray-200 text-gray-900'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+                      'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
                     ]"
-                    aria-hidden="true"
-                  />
-                  {{ item.name }}
-                </router-link>
+                  >
+                    <component
+                      :is="item.icon"
+                      :class="[
+                        isCurrentRoute(item.routeName)
+                          ? 'text-gray-700'
+                          : 'text-gray-400 group-hover:text-gray-500',
+                        'mr-4 flex-shrink-0 h-6 w-6',
+                      ]"
+                      aria-hidden="true"
+                    />
+                    {{ item.name }}
+                  </router-link>
+                </div>
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
                 <ProfileMenu />
               </nav>
@@ -194,32 +205,34 @@ const currentOrgId = computed(() => {
             <nav class="mt-1 flex-1 px-2 bg-white space-y-1">
               <OrganizationMenu />
               <div class="w-full px-3 my-1 border-b border-gray-200" />
-              <router-link
-                v-for="item in navigation"
-                :key="item.name"
-                :to="{
-                  name: item.routeName,
-                  params: { orgId: currentOrgId },
-                }"
-                :class="[
-                  isCurrentRoute(item.routeName)
-                    ? 'bg-gray-200 text-gray-900'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md como-focus',
-                ]"
-              >
-                <component
-                  :is="item.icon"
+              <div v-if="isOrgConext">
+                <router-link
+                  v-for="item in orgNavigation"
+                  :key="item.name"
+                  :to="{
+                    name: item.routeName,
+                    params: { orgId: currentOrgId },
+                  }"
                   :class="[
                     isCurrentRoute(item.routeName)
-                      ? 'text-gray-700'
-                      : 'text-gray-400 group-hover:text-gray-500',
-                    'mr-3 flex-shrink-0 h-6 w-6',
+                      ? 'bg-gray-200 text-gray-900'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md como-focus',
                   ]"
-                  aria-hidden="true"
-                />
-                {{ item.name }}
-              </router-link>
+                >
+                  <component
+                    :is="item.icon"
+                    :class="[
+                      isCurrentRoute(item.routeName)
+                        ? 'text-gray-700'
+                        : 'text-gray-400 group-hover:text-gray-500',
+                      'mr-3 flex-shrink-0 h-6 w-6',
+                    ]"
+                    aria-hidden="true"
+                  />
+                  {{ item.name }}
+                </router-link>
+              </div>
               <div class="w-full px-3 my-1 border-b border-gray-200" />
               <ProfileMenu />
             </nav>

@@ -63,7 +63,6 @@ export const routes = [
       },
     ],
   },
-  { path: "/:orgId/sensors", meta: { title: "Sensors" }, component: Sensors },
   {
     path: "/org-management",
     name: "org-management",
@@ -81,6 +80,12 @@ export const routes = [
     name: "org-management-edit",
     meta: { title: "Edit Organization" },
     component: EditOrganization,
+  },
+  {
+    path: "/org-management/add",
+    name: "org-management-add",
+    meta: { title: "Add Organization" },
+    component: AddOrganization,
   },
   { path: "/:pathMatch(.*)", component: NotFound },
 ];

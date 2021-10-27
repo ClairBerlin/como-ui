@@ -14,7 +14,7 @@ const hasMemberships = () => memberships.value?.length > 0;
       <div class="">All your organizations</div>
       <router-link
         class="btn btn-sm m-2 font-semibold gray-button"
-        :to="{ path: '/orgs/add' }"
+        :to="{ name: 'org-management-add' }"
       >
         Create a new organization
       </router-link>

@@ -73,16 +73,14 @@ const props = defineProps({
                   @click="close"
                 />
               </div>
-              <a
+              <router-link
                 v-for="item in options"
                 :key="item.name"
-                :href="item.href"
-                @click="
-                  () => {
-                    item.onClick();
-                    close();
-                  }
-                "
+                :to="{
+                  name: item.route,
+                  params: item.params
+                }"
+                @click="close"
                 class="
                   flex
                   items-center
@@ -116,7 +114,7 @@ const props = defineProps({
                     {{ item.name }}
                   </p>
                 </div>
-              </a>
+              </router-link>
             </div>
           </div>
         </PopoverPanel>
