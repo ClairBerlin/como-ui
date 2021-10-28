@@ -24,7 +24,7 @@ const referenceDayFormatted = computed(() =>
   referenceDay.value.format("YYYY-MM-DD")
 );
 const props = defineProps({
-  installationId: { type: Number, required: true },
+  installationId: { type: String, required: true },
 });
 
 const installation = computed(() =>

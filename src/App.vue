@@ -57,9 +57,7 @@ function isCurrentRoute(routeName) {
 const sidebarOpen = ref(false);
 
 const memberships = computed(() => store.getters["authuser/getMemberships"]);
-
 const currentOrgId = computed(() => route.params.orgId);
-
 const isOrgConext = computed(() => typeof currentOrgId.value === "string");
 
 onMounted(async () => {

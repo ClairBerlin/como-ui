@@ -11,9 +11,9 @@ dayjs.locale("de");
 const route = useRoute();
 const store = useStore();
 
-const currentOrgId = computed(() => {
-  return route.params.orgId ? route.params.orgId : 0;
-});
+const currentOrgId = computed(() => route.params.orgId);
+
+const isOrgConext = computed(() => typeof currentOrgId.value === "string");
 
 const installations = ref(undefined);
 
@@ -37,22 +37,24 @@ const hasActiveSensors = computed(() => {
 });
 
 async function update() {
-  const instObj = await store.dispatch("jv/get", [
-    "installations",
-    { params: { "filter[organization]": currentOrgId.value } },
-  ]);
-  const instList = Object.entries(instObj);
-  installations.value = instList.map(([_, inst]) => inst);
-  const relatedResourcePromises = instList.map(([instId, inst]) => {
-    console.log(`Get related objects for installation ${instId}.`);
-    return store
-      .dispatch("jv/getRelated", `installations/${instId}`)
-      .then(() => {
-        // At this point vuex-jsonapi has fetched the room object in inst.room
-        store.dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`);
-      });
-  });
-  await Promise.all(relatedResourcePromises);
+  if (isOrgConext.value) {
+    const instObj = await store.dispatch("jv/get", [
+      "installations",
+      { params: { "filter[organization]": currentOrgId.value } },
+    ]);
+    const instList = Object.entries(instObj);
+    installations.value = instList.map(([_, inst]) => inst);
+    const relatedResourcePromises = instList.map(([instId, inst]) => {
+      console.log(`Get related objects for installation ${instId}.`);
+      return store
+        .dispatch("jv/getRelated", `installations/${instId}`)
+        .then(() => {
+          // At this point vuex-jsonapi has fetched the room object in inst.room
+          store.dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`);
+        });
+    });
+    await Promise.all(relatedResourcePromises);
+  }
 }
 
 onMounted(async () => update());

@@ -6,15 +6,19 @@ import { useStore } from "vuex";
 const route = useRoute();
 const store = useStore();
 
-const currentOrgId = computed(() => {
-  return route.params.orgId ? route.params.orgId : 0;
-});
+const currentOrgId = computed(() => route.params.orgId);
+const isOrgConext = computed(() => typeof currentOrgId.value === "string");
 
-const organization = computed(() =>
-  store.getters["jv/get"]({
-    _jv: { type: "Organization", id: currentOrgId.value },
-  })
-);
+const organization = computed(() => {
+  if (isOrgConext.value) {
+    // Assume that the organization has already been loaded into the store by App.vue.
+    return store.getters["jv/get"]({
+      _jv: { type: "Organization", id: currentOrgId.value },
+    });
+  } else {
+    return { name: "No Organization" };
+  }
+});
 </script>
 
 <template>

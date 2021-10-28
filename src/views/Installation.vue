@@ -10,10 +10,6 @@ import InstallationViz from "@/components/InstallationViz.vue";
 const route = useRoute();
 const store = useStore();
 
-const currentOrgId = computed(() => {
-  return route.params.orgId ? route.params.orgId : 0;
-});
-
 const currentInstallationId = computed(() => {
   return route.params.installationId;
 });

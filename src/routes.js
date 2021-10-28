@@ -9,6 +9,7 @@ import Sites from "@/views/Sites.vue";
 import Rooms from "@/views/Rooms.vue";
 import Installation from "@/views/Installation.vue";
 import Sensors from "@/views/Sensors.vue";
+import Logout from "@/views/Logout.vue";
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
@@ -24,7 +25,7 @@ export const routes = [
         path: "",
         name: "overview",
         component: Overview,
-        meta: { title: "Sensor Overview" },
+        meta: { title: "Overview" },
       },
       {
         // Details and visualization for a single installation
@@ -52,7 +53,7 @@ export const routes = [
         path: "sensors",
         name: "sensors",
         component: Sensors,
-        meta: { title: "Sensor Overview" },
+        meta: { title: "Sensors" },
         children: [
           {
             path: ":sensorId",
@@ -86,6 +87,26 @@ export const routes = [
     name: "org-management-add",
     meta: { title: "Add Organization" },
     component: AddOrganization,
+  },
+  {
+    path: "/accounts/email",
+    name: "change-email",
+    beforeEnter(to, from, next) {
+      window.location.href = "/accounts/email";
+    }
+  },
+  {
+    path: "/accounts/password/change",
+    name: "change-password",
+    beforeEnter(to, from, next) {
+      window.location.href = "/accounts/password/change";
+    }
+  },
+  {
+    path: "/logout",
+    name: "logout",
+    meta: { title: "Logout" },
+    component: Logout
   },
   { path: "/:pathMatch(.*)", component: NotFound },
 ];
