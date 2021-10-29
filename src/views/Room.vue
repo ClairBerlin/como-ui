@@ -20,8 +20,14 @@
           sm:text-4xl sm:leading-10
         "
       >
-        Installations
+        Room
       </h2>
+    </div>
+    <div>
+      This sub-view will detail information on the selected room an allow
+      theuser to update it; e.g., name, description, size, max. occupancy, etc.
+      In addition, this view provides means to add and remove sensor
+      installations in the selected room.
     </div>
   </div>
 </template>

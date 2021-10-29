@@ -2,7 +2,6 @@
 import { computed } from "@vue/runtime-core";
 import { useStore } from "vuex";
 import PopoverMenu from "./PopoverMenu.vue";
-import Cookies from "js-cookie";
 import {
   AtSymbolIcon,
   KeyIcon,
@@ -19,34 +18,33 @@ const title = computed(() => {
   return "…";
 });
 const icon = UserIcon;
-const options = [
+const menuEntries = [
   {
-    name: "Change Email",
-    href: "/accounts/email",
     icon: AtSymbolIcon,
+    name: "Change Email",
+    route: "change-email",
+    params: {},
   },
   {
-    name: "Change Password",
-    href: "/accounts/password/change",
     icon: KeyIcon,
+    name: "Change Password",
+    route: "change-password",
+    params: {},
   },
   {
-    name: "Logout",
     icon: LogoutIcon,
-    onClick: async () => {
-      await store.dispatch("authuser/logout");
-      Cookies.remove("csrftoken");
-      window.location.href = window.location.origin + "/accounts/login/";
-      return;
-    },
+    name: "Logout",
+    route: "logout",
+    params: {},
   },
 ];
 </script>
+
 <template>
   <PopoverMenu
     context-title="User Settings"
     :title="title"
-    :options="options"
+    :options="menuEntries"
     :icon="icon"
   />
 </template>

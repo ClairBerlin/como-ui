@@ -20,11 +20,11 @@
           sm:text-4xl sm:leading-10
         "
       >
-        Sites
+        Site
       </h2>
     </div>
     <div>
-      This view will list all the sites of the selected organization, together with their adresses, and provide links to the rooms in each site. It will offer the possibility to add a new site and to remove an existing site with all its rooms and installations.
+      This sub-view will display details about a given site, and allow the user to make changes to it. That is, change the site's name, description, and address. In addition, the view will provide means to add and remove rooms at the selected site.
     </div>
   </div>
 </template>

@@ -1,6 +1,7 @@
 <script setup>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { ChevronDownIcon, XIcon } from "@heroicons/vue/solid";
+
 const props = defineProps({
   icon: { type: Function, default: undefined },
   title: { type: String, required: true },
@@ -73,16 +74,14 @@ const props = defineProps({
                   @click="close"
                 />
               </div>
-              <a
+              <router-link
                 v-for="item in options"
                 :key="item.name"
-                :href="item.href"
-                @click="
-                  () => {
-                    item.onClick();
-                    close();
-                  }
-                "
+                :to="{
+                  name: item.route,
+                  params: item.params
+                }"
+                @click="close"
                 class="
                   flex
                   items-center
@@ -116,7 +115,7 @@ const props = defineProps({
                     {{ item.name }}
                   </p>
                 </div>
-              </a>
+              </router-link>
             </div>
           </div>
         </PopoverPanel>

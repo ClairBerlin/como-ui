@@ -16,9 +16,14 @@ export default defineConfig({
     },
   },
   server: {
+    port: 3002,
     proxy: {
-      "/api": "http://localhost:8888/",
-      "/accounts": "http://localhost:8888/",
+      "/api": {
+        target: "http://localhost:8888/",
+      },
+      "/accounts": {
+        target: "http://localhost:8888/",
+      },
     },
   },
 });

@@ -1,7 +1,9 @@
 <script setup>
 import Logo from "@/components/Logo.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useRoute, useRouter } from "vue-router";
 import {
   Dialog,
   DialogOverlay,
@@ -21,28 +23,68 @@ import {
 import OrganizationMenu from "./components/OrganizationMenu.vue";
 import ProfileMenu from "./components/ProfileMenu.vue";
 
-// TODO: what about feedback and help? (before this pointed to a Clair email/domain)
-const navigation = [
+const store = useStore();
+const router = useRouter();
+const route = useRoute();
+
+// TODO: what about feedback and help? (before, this pointed to a Clair email/domain)?
+
+//Navigation within the context of the selected organization.
+const orgNavigation = [
   {
-    name: "Dashboard",
-    href: "/",
+    name: "Overview",
+    routeName: "overview",
     icon: ChartBarIcon,
   },
-  { name: "Organizations", href: "/orgs", icon: OfficeBuildingIcon },
-  { name: "Sites", href: "/sites", icon: LocationMarkerIcon },
-  { name: "Rooms", href: "/rooms", icon: CubeIcon },
   {
-    name: "Installations",
-    href: "/installations",
-    icon: AdjustmentsIcon,
+    name: "Sites",
+    routeName: "sites",
+    icon: LocationMarkerIcon,
   },
-  { name: "Sensors", href: "/sensors", icon: ChipIcon },
+  { 
+    name: "Rooms", 
+    routeName: "rooms",
+    icon: CubeIcon
+  },
+  {
+    name: "Sensors",
+    routeName: "sensors",
+    icon: ChipIcon },
 ];
 
-const isCurrent = (href) => window.location.href.endsWith(href);
+function isCurrentRoute(routeName) {
+  route.name === routeName;
+}
+
 const sidebarOpen = ref(false);
-const store = useStore();
-onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
+
+const currentOrgId = computed(() => route.params.orgId);
+const isOrgContext = computed(() => typeof currentOrgId.value === "string");
+
+onMounted(async () => {
+  await store.dispatch("authuser/fetchAuthenticatedUser");
+  const memberships = store.getters["authuser/getMemberships"];
+  if (memberships) {
+    const defaultOrgId = memberships[0].orgId;
+    router.push({ name: "overview", params: { orgId: defaultOrgId } });
+  } else {
+    router.push({ name: "org-management-add" });
+  }
+});
+
+watch(
+  () => route.params.orgId,
+  async (orgId) => {
+    if (isOrgContext.value) {
+      console.log(
+        `Organization changed to orgId ${orgId}. Fetching related data...`
+      );
+      store.dispatch("jv/get", `organizations/${orgId}`);
+    } else {
+      console.log("Entering a route outside of an organization context.");
+    }
+  }
+);
 </script>
 
 <template>
@@ -109,29 +151,34 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
               <nav class="mt-1 flex-1 px-2 space-y-1">
                 <OrganizationMenu />
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
-                <router-link
-                  v-for="item in navigation"
-                  :key="item.name"
-                  :to="item.href"
-                  :class="[
-                    isCurrent(item.href)
-                      ? 'bg-gray-200 text-gray-900'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                    'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
-                  ]"
-                >
-                  <component
-                    :is="item.icon"
+                <div v-if="isOrgContext">
+                  <router-link
+                    v-for="item in orgNavigation"
+                    :key="item.name"
+                    :to="{
+                      name: item.routeName,
+                      params: { orgId: currentOrgId },
+                    }"
                     :class="[
-                      isCurrent(item.href)
-                        ? 'text-gray-700'
-                        : 'text-gray-400 group-hover:text-gray-500',
-                      'mr-4 flex-shrink-0 h-6 w-6',
+                      isCurrentRoute(item.routeName)
+                        ? 'bg-gray-200 text-gray-900'
+                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+                      'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
                     ]"
-                    aria-hidden="true"
-                  />
-                  {{ item.name }}
-                </router-link>
+                  >
+                    <component
+                      :is="item.icon"
+                      :class="[
+                        isCurrentRoute(item.routeName)
+                          ? 'text-gray-700'
+                          : 'text-gray-400 group-hover:text-gray-500',
+                        'mr-4 flex-shrink-0 h-6 w-6',
+                      ]"
+                      aria-hidden="true"
+                    />
+                    {{ item.name }}
+                  </router-link>
+                </div>
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
                 <ProfileMenu />
               </nav>
@@ -157,29 +204,34 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
             <nav class="mt-1 flex-1 px-2 bg-white space-y-1">
               <OrganizationMenu />
               <div class="w-full px-3 my-1 border-b border-gray-200" />
-              <router-link
-                v-for="item in navigation"
-                :key="item.name"
-                :to="item.href"
-                :class="[
-                  isCurrent(item.href)
-                    ? 'bg-gray-200 text-gray-900'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                  'group flex items-center px-2 py-2 text-sm font-medium rounded-md como-focus',
-                ]"
-              >
-                <component
-                  :is="item.icon"
+              <div v-if="isOrgContext">
+                <router-link
+                  v-for="item in orgNavigation"
+                  :key="item.name"
+                  :to="{
+                    name: item.routeName,
+                    params: { orgId: currentOrgId },
+                  }"
                   :class="[
-                    isCurrent(item.href)
-                      ? 'text-gray-700'
-                      : 'text-gray-400 group-hover:text-gray-500',
-                    'mr-3 flex-shrink-0 h-6 w-6',
+                    isCurrentRoute(item.routeName)
+                      ? 'bg-gray-200 text-gray-900'
+                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md como-focus',
                   ]"
-                  aria-hidden="true"
-                />
-                {{ item.name }}
-              </router-link>
+                >
+                  <component
+                    :is="item.icon"
+                    :class="[
+                      isCurrentRoute(item.routeName)
+                        ? 'text-gray-700'
+                        : 'text-gray-400 group-hover:text-gray-500',
+                      'mr-3 flex-shrink-0 h-6 w-6',
+                    ]"
+                    aria-hidden="true"
+                  />
+                  {{ item.name }}
+                </router-link>
+              </div>
               <div class="w-full px-3 my-1 border-b border-gray-200" />
               <ProfileMenu />
             </nav>
@@ -211,14 +263,6 @@ onMounted(async () => await store.dispatch("authuser/fetchAuthenticatedUser"));
         </button>
       </div>
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        <header class="bg-white shadow" v-if="$route.meta.title">
-          <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold leading-tight text-gray-900">
-              {{ $route.meta.title }}
-            </h1>
-          </div>
-        </header>
-
         <div class="max-w-screen-xl py-6 mx-auto sm:px-6 lg:px-8">
           <router-view />
         </div>

@@ -24,7 +24,7 @@ const referenceDayFormatted = computed(() =>
   referenceDay.value.format("YYYY-MM-DD")
 );
 const props = defineProps({
-  installationId: { type: Number, required: true },
+  installationId: { type: String, required: true },
 });
 
 const installation = computed(() =>
@@ -96,7 +96,6 @@ const latestSampleInstant = computed(() => {
 const tabChanged = (index) => {
   // 0 = day, 1 = week, 2 = month
   selectedTab.value = index;
-  console.log(`Select tab ${index}`);
 };
 
 const addOldSamplesToPool = async (from) => {

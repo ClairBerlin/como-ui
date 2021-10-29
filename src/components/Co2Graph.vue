@@ -29,7 +29,7 @@ Chart.register(
 );
 
 const props = defineProps({
-  installationId: { type: Number, required: true },
+  installationId: { type: String, required: true },
   // day, week, month
   displayScope: { type: String, required: true },
   referenceInstant: {

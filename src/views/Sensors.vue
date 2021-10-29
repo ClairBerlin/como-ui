@@ -23,5 +23,8 @@
         Sensors
       </h2>
     </div>
+    <div>
+      This view will provide an overview of all sensors that belong to the selected organization, their make and type, the current installation (with a link to the inspection views of the room and the sensor installation), historical installations, and actions to register a new sensor with The Things Network and to completely remove a sensor both from the COMo stack and from The Things Network.
+    </div>
   </div>
 </template>

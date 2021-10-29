@@ -4,6 +4,7 @@ const actions = {
   logout() {
     return axios.post("/api/v1/auth/logout/");
   },
+
   async fetchMemberships(context) {
     context.commit("START_MEMBERSHIPSLOADING");
     try {
@@ -25,9 +26,6 @@ const actions = {
           orgId: ms._jv.relationships.organization.data.id,
         };
       });
-      if (memberships) {
-        context.dispatch("setSelectedMembership", 0);
-      }
       context.commit("SET_MEMBERSHIPS", memberships || []);
     } catch (error) {
       context.commit("MARK_ERROR");
@@ -36,9 +34,7 @@ const actions = {
       context.commit("STOP_MEMBERSHIPSLOADING");
     }
   },
-  async setSelectedMembership(context, orgId) {
-    context.commit("SET_SELECTEDMEMBERSHIP", orgId);
-  },
+
   async fetchAuthenticatedUser(context) {
     context.commit("START_USERLOADING");
     try {
@@ -49,7 +45,7 @@ const actions = {
       });
       context.commit("SET_ID", userId);
       context.commit("SET_AUTHUSER", userDetails._jv.attrs);
-      context.dispatch("fetchMemberships");
+      await context.dispatch("fetchMemberships");
       context.commit("MARK_SUCCESS");
     } catch (error) {
       context.commit("MARK_ERROR");

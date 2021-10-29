@@ -23,5 +23,13 @@
         Rooms
       </h2>
     </div>
+    <div>
+      This view will list all rooms of the selected organization, information
+      about each room, air quality information of theindividual sensors
+      installed in the room (once we know how to best summarize this
+      information), and links to the visualizatin for each sensor. Once we learn
+      how to synthesize information from multiple sensors in a single room, this
+      information may be viewed here as well.
+    </div>
   </div>
 </template>

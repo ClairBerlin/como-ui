@@ -11,19 +11,19 @@ const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);
 
 onMounted(
-  async () => await store.dispatch("jv/get", `organizations/${route.params.id}`)
+  async () => await store.dispatch("jv/get", `organizations/${route.params.orgId}`)
 );
 
 const currentOrg = computed(() =>
   store.getters["jv/get"]({
-    _jv: { type: "Organization", id: route.params.id },
+    _jv: { type: "Organization", id: route.params.orgId },
   })
 );
 
 watch(() => console.log(currentOrg.value));
 
 const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.id)
+  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
 );
 
 const isOwner = computed(() => orgMembership.value?.role === "O");
@@ -33,7 +33,7 @@ const updateOrganization = () => {
     let updatedOrg = {
       _jv: {
         type: "Organization",
-        id: route.params.id,
+        id: route.params.orgId,
       },
     };
     if (newOrgName.value) {
@@ -44,7 +44,7 @@ const updateOrganization = () => {
     }
     store.dispatch("jv/patch", [
       updatedOrg,
-      { url: `organizations/${route.params.id}/` },
+      { url: `organizations/${route.params.orgId}/` },
     ]);
   }
 };
