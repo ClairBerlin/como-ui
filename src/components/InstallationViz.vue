@@ -96,7 +96,6 @@ const latestSampleInstant = computed(() => {
 const tabChanged = (index) => {
   // 0 = day, 1 = week, 2 = month
   selectedTab.value = index;
-  console.log(`Select tab ${index}`);
 };
 
 const addOldSamplesToPool = async (from) => {

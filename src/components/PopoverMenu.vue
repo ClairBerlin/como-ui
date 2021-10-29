@@ -1,6 +1,7 @@
 <script setup>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import { ChevronDownIcon, XIcon } from "@heroicons/vue/solid";
+
 const props = defineProps({
   icon: { type: Function, default: undefined },
   title: { type: String, required: true },

@@ -4,10 +4,7 @@ import Cookies from "js-cookie";
 
 const store = useStore();
 
-console.log("Logging out...");
 await store.dispatch("authuser/logout");
-console.log("Removing CSRF token.");
-Cookies.remove("csrftoken");
 window.location.href = window.location.origin + "/accounts/login/";
 </script>
 

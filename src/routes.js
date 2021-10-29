@@ -6,9 +6,12 @@ import AddOrganization from "./views/AddOrganization.vue";
 import EditOrganization from "./views/EditOrganization.vue";
 import NotFound from "./views/NotFound.vue";
 import Sites from "@/views/Sites.vue";
+import Site from "@/views/Site.vue";
 import Rooms from "@/views/Rooms.vue";
+import Room from "@/views/Room.vue";
 import Installation from "@/views/Installation.vue";
 import Sensors from "@/views/Sensors.vue";
+import Sensor from "@/views/Sensor.vue";
 import Logout from "@/views/Logout.vue";
 
 /** @type {import('vue-router').RouterOptions['routes']} */
@@ -40,13 +43,27 @@ export const routes = [
         name: "sites",
         component: Sites,
         meta: { title: "Sites" },
+        children: [
+          {
+            path: ":siteId",
+            component: Site,
+            meta: { title: "Site Details" },
+          },
+        ],
       },
       {
         // Management of the Rooms of a given site (add, update, delete)
-        path: "sites/:siteId/rooms",
+        path: "rooms",
         name: "rooms",
         meta: { title: "Rooms" },
         component: Rooms,
+        children: [
+          {
+            path: ":roomId",
+            component: Room,
+            meta: { title: "Room Details" },
+          },
+        ],
       },
       {
         // Management of the sensors of the given organization (add, delete, assign)
@@ -91,14 +108,14 @@ export const routes = [
   {
     path: "/accounts/email",
     name: "change-email",
-    beforeEnter(to, from, next) {
+    beforeEnter() {
       window.location.href = "/accounts/email";
     }
   },
   {
     path: "/accounts/password/change",
     name: "change-password",
-    beforeEnter(to, from, next) {
+    beforeEnter() {
       window.location.href = "/accounts/password/change";
     }
   },

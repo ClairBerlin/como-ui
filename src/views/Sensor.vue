@@ -20,16 +20,11 @@
           sm:text-4xl sm:leading-10
         "
       >
-        Rooms
+        Sensor
       </h2>
     </div>
     <div>
-      This view will list all rooms of the selected organization, information
-      about each room, air quality information of theindividual sensors
-      installed in the room (once we know how to best summarize this
-      information), and links to the visualizatin for each sensor. Once we learn
-      how to synthesize information from multiple sensors in a single room, this
-      information may be viewed here as well.
+      This view will provide a detailed view of the selected sensor, a list of the sensor's current and historical installations, plus the means to change the sensor installation.
     </div>
   </div>
 </template>

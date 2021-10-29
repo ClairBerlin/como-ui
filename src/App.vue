@@ -41,13 +41,15 @@ const orgNavigation = [
     routeName: "sites",
     icon: LocationMarkerIcon,
   },
-  // { name: "Rooms", href: "/rooms", icon: CubeIcon },
-  // {
-  //   name: "Installations",
-  //   href: "/installations",
-  //   icon: AdjustmentsIcon,
-  // },
-  { name: "Sensors", routeName: "sensors", icon: ChipIcon },
+  { 
+    name: "Rooms", 
+    routeName: "rooms",
+    icon: CubeIcon
+  },
+  {
+    name: "Sensors",
+    routeName: "sensors",
+    icon: ChipIcon },
 ];
 
 function isCurrentRoute(routeName) {
@@ -56,15 +58,14 @@ function isCurrentRoute(routeName) {
 
 const sidebarOpen = ref(false);
 
-const memberships = computed(() => store.getters["authuser/getMemberships"]);
 const currentOrgId = computed(() => route.params.orgId);
-const isOrgConext = computed(() => typeof currentOrgId.value === "string");
+const isOrgContext = computed(() => typeof currentOrgId.value === "string");
 
 onMounted(async () => {
-  console.log("Mounting app...");
   await store.dispatch("authuser/fetchAuthenticatedUser");
-  if (memberships.value?.length > 0) {
-    const defaultOrgId = memberships.value[0].orgId;
+  const memberships = store.getters["authuser/getMemberships"];
+  if (memberships) {
+    const defaultOrgId = memberships[0].orgId;
     router.push({ name: "overview", params: { orgId: defaultOrgId } });
   } else {
     router.push({ name: "org-management-add" });
@@ -74,7 +75,7 @@ onMounted(async () => {
 watch(
   () => route.params.orgId,
   async (orgId) => {
-    if (isOrgConext.value) {
+    if (isOrgContext.value) {
       console.log(
         `Organization changed to orgId ${orgId}. Fetching related data...`
       );
@@ -150,7 +151,7 @@ watch(
               <nav class="mt-1 flex-1 px-2 space-y-1">
                 <OrganizationMenu />
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
-                <div v-if="isOrgConext">
+                <div v-if="isOrgContext">
                   <router-link
                     v-for="item in orgNavigation"
                     :key="item.name"
@@ -203,7 +204,7 @@ watch(
             <nav class="mt-1 flex-1 px-2 bg-white space-y-1">
               <OrganizationMenu />
               <div class="w-full px-3 my-1 border-b border-gray-200" />
-              <div v-if="isOrgConext">
+              <div v-if="isOrgContext">
                 <router-link
                   v-for="item in orgNavigation"
                   :key="item.name"

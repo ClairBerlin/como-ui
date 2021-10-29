@@ -10,10 +10,10 @@ const store = useStore();
 const route = useRoute();
 
 const currentOrgId = computed(() => route.params.orgId);
-const isOrgConext = computed(() => typeof currentOrgId.value === "string");
+const isOrgContext = computed(() => typeof currentOrgId.value === "string");
 
 const selectedMembership = computed(() =>
-  isOrgConext.value
+  isOrgContext.value
     ? store.getters["authuser/getMembershipByOrgId"](currentOrgId.value)
     : undefined
 );
@@ -25,19 +25,14 @@ const currentOrgName = computed(() => {
 
 const orgEntries = computed(() => {
   const memberships = store.getters["authuser/getMemberships"];
-  if (memberships?.length) {
-    return memberships.map((m) => {
-      return {
-        icon:
-          m.orgId === selectedMembership.value?.orgId ? CheckIcon : undefined,
-        name: m.orgName,
-        route: route.name,
-        params: { orgId: m.orgId },
-      };
-    });
-  } else {
-    return [];
-  }
+  return memberships.map((m) => {
+    return {
+      icon: m.orgId === selectedMembership.value?.orgId ? CheckIcon : undefined,
+      name: m.orgName,
+      route: route.name,
+      params: { orgId: m.orgId },
+    };
+  });
 });
 
 const defaultEntries = [

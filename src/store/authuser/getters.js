@@ -30,7 +30,7 @@ const getters = {
   },
 
   getMemberships(authuser) {
-    return authuser.id ? authuser.memberships : undefined;
+    return authuser.id ? authuser.memberships : [];
   },
 
   getMembershipByOrgId: (authuser) => (orgId) => {

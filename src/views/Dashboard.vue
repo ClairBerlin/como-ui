@@ -7,10 +7,10 @@ const route = useRoute();
 const store = useStore();
 
 const currentOrgId = computed(() => route.params.orgId);
-const isOrgConext = computed(() => typeof currentOrgId.value === "string");
+const isOrgContext = computed(() => typeof currentOrgId.value === "string");
 
 const organization = computed(() => {
-  if (isOrgConext.value) {
+  if (isOrgContext.value) {
     // Assume that the organization has already been loaded into the store by App.vue.
     return store.getters["jv/get"]({
       _jv: { type: "Organization", id: currentOrgId.value },

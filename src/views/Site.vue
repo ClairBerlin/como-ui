@@ -20,16 +20,11 @@
           sm:text-4xl sm:leading-10
         "
       >
-        Rooms
+        Site
       </h2>
     </div>
     <div>
-      This view will list all rooms of the selected organization, information
-      about each room, air quality information of theindividual sensors
-      installed in the room (once we know how to best summarize this
-      information), and links to the visualizatin for each sensor. Once we learn
-      how to synthesize information from multiple sensors in a single room, this
-      information may be viewed here as well.
+      This sub-view will display details about a given site, and allow the user to make changes to it. That is, change the site's name, description, and address. In addition, the view will provide means to add and remove rooms at the selected site.
     </div>
   </div>
 </template>
