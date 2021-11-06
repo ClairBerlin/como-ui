@@ -1,13 +1,14 @@
 <script setup>
 import { onMounted, computed, ref } from "vue";
 import { CogIcon } from "@heroicons/vue/outline";
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import Dropdown from "@/components/Dropdown.vue";
 import { roleToString } from "@/utils";
 import DeletionModal from "@/components/DeletionModal.vue";
 
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
 const orgId = route.params.orgId;
 const members = ref([]);
@@ -28,7 +29,11 @@ const isOwner = () => orgMembership.value?.role === "O";
 
 const showDeleteOrgModal = ref(false);
 
-const deleteOrg = () => (showDeleteOrgModal.value = false);
+const openDeleteOrgModal = () => (showDeleteOrgModal.value = true);
+const deleteOrg = async () => {
+  await store.dispatch("jv/delete", `organizations/${orgId}`);
+  router.push({ name: "org-management" });
+};
 const inviteMembers = () => console.log("TODO: open invite modal");
 
 const getRole = (memberships, username) =>
@@ -59,7 +64,17 @@ onMounted(async () => {
 
 <template>
   <div>
-    <DeletionModal :open="showDeleteOrgModal.value" />
+    <DeletionModal
+      :open="showDeleteOrgModal"
+      @closeModal="showDeleteOrgModal = false"
+      @deleteClicked="deleteOrg"
+      modal-title="Delete Organization"
+    >
+      <p class="text-sm text-gray-500">
+        Are you sure you want to deltet this organization? This action cannot be
+        undone!
+      </p>
+    </DeletionModal>
     <div class="text-black">
       <div class="flex justify-between items-center">
         <div class="">
@@ -69,7 +84,7 @@ onMounted(async () => {
           <div
             v-if="isOwner"
             class="btn-sm m-2 gray-button font-semibold"
-            @click="deleteOrg"
+            @click="openDeleteOrgModal"
           >
             Delete organization
           </div>
