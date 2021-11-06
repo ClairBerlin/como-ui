@@ -26,8 +26,7 @@ onMounted(() => {
   if (route.name === "dashboard") {
     // If no organization is selected, default to the user's first organization.
     const memberships = store.getters["authuser/getMemberships"];
-    console.log(memberships.value);
-    if (memberships.value?.length > 0) {
+    if (memberships?.length > 0) {
       const defaultOrgId = memberships[0].orgId;
       router.push({ name: "overview", params: { orgId: defaultOrgId } });
     } else {
