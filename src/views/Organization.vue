@@ -1,12 +1,14 @@
 <script setup>
 import { onMounted, computed, ref } from "vue";
 import { CogIcon } from "@heroicons/vue/outline";
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import Dropdown from "@/components/Dropdown.vue";
 import { roleToString } from "@/utils";
+import DeletionModal from "@/components/DeletionModal.vue";
 
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
 const orgId = route.params.orgId;
 const members = ref([]);
@@ -25,7 +27,13 @@ const orgMembership = computed(() =>
 
 const isOwner = () => orgMembership.value?.role === "O";
 
-const deleteOrg = () => console.log("TODO: open delete modal");
+const showDeleteOrgModal = ref(false);
+
+const openDeleteOrgModal = () => (showDeleteOrgModal.value = true);
+const deleteOrg = async () => {
+  await store.dispatch("jv/delete", `organizations/${orgId}`);
+  router.push({ name: "org-management" });
+};
 const inviteMembers = () => console.log("TODO: open invite modal");
 
 const getRole = (memberships, username) =>
@@ -43,10 +51,8 @@ onMounted(async () => {
     "jv/get",
     `organizations/${orgId}/memberships`
   );
-  console.log({ memberships });
   const getMembers = Object.keys(membersIds).map(async (id) => {
     const member = await store.dispatch("jv/get", `users/${id}`);
-    console.log({ member });
     members.value.push({
       ...member,
       role: getRole(memberships, member.username),
@@ -58,6 +64,17 @@ onMounted(async () => {
 
 <template>
   <div>
+    <DeletionModal
+      :open="showDeleteOrgModal"
+      @closeModal="showDeleteOrgModal = false"
+      @deleteClicked="deleteOrg"
+      modal-title="Delete Organization"
+    >
+      <p class="text-sm text-gray-500">
+        Are you sure you want to deltet this organization? This action cannot be
+        undone!
+      </p>
+    </DeletionModal>
     <div class="text-black">
       <div class="flex justify-between items-center">
         <div class="">
@@ -67,7 +84,7 @@ onMounted(async () => {
           <div
             v-if="isOwner"
             class="btn-sm m-2 gray-button font-semibold"
-            @click="deleteOrg"
+            @click="openDeleteOrgModal"
           >
             Delete organization
           </div>
