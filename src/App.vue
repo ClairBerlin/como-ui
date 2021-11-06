@@ -17,6 +17,7 @@ import {
   ChipIcon,
   MenuIcon,
   XIcon,
+  UserGroupIcon,
 } from "@heroicons/vue/outline";
 import OrganizationMenu from "./components/OrganizationMenu.vue";
 import ProfileMenu from "./components/ProfileMenu.vue";
@@ -33,6 +34,11 @@ const orgNavigation = [
     name: "Overview",
     routeName: "overview",
     icon: ChartBarIcon,
+  },
+  {
+    name: "Team",
+    routeName: "org-management-detail",
+    icon: UserGroupIcon,
   },
   {
     name: "Sites",

@@ -4,6 +4,7 @@ import { CogIcon } from "@heroicons/vue/outline";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import Dropdown from "@/components/Dropdown.vue";
+import { roleToString } from "@/utils";
 
 const route = useRoute();
 const store = useStore();
@@ -27,15 +28,29 @@ const isOwner = () => orgMembership.value?.role === "O";
 const deleteOrg = () => console.log("TODO: open delete modal");
 const inviteMembers = () => console.log("TODO: open invite modal");
 
+const getRole = (memberships, username) =>
+  roleToString(
+    Object.values(memberships).find((m) => m.user_name === username).role
+  );
+
 onMounted(async () => {
   org.value = await store.dispatch("jv/get", `organizations/${orgId}`);
   const membersIds = await store.dispatch(
     "jv/get",
     `organizations/${orgId}/users`
   );
+  const memberships = await store.dispatch(
+    "jv/get",
+    `organizations/${orgId}/memberships`
+  );
+  console.log({ memberships });
   const getMembers = Object.keys(membersIds).map(async (id) => {
     const member = await store.dispatch("jv/get", `users/${id}`);
-    members.value.push(member);
+    console.log({ member });
+    members.value.push({
+      ...member,
+      role: getRole(memberships, member.username),
+    });
   });
   await Promise.all(getMembers);
 });
@@ -65,21 +80,84 @@ onMounted(async () => {
           </div>
         </div>
       </div>
-      <div class="ring-1 ring-gray-300 rounded-md bg-white text-lg">
-        <div
-          v-for="member in members"
-          :key="member.id"
-          class="flex items-center justify-between border-b p-4"
-        >
-          <div class="flex flex-col flex-1">
-            <div class="flex">
-              {{ member.first_name }} {{ member.last_name }}
-            </div>
-            <div class="text-gray-700 text-sm">{{ member.username }}</div>
-          </div>
-          <div class="hidden sm:flex flex-1">{{ member.email }}</div>
-          <Dropdown :options="options" :icon="icon" />
-        </div>
+      <div
+        class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden"
+      >
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                class="
+                  px-2
+                  sm:px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  tracking-wider
+                "
+              >
+                Name
+              </th>
+              <th
+                scope="col"
+                class="
+                  sm:px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  tracking-wider
+                  hidden
+                  sm:table-cell
+                "
+              >
+                Email
+              </th>
+              <th
+                scope="col"
+                class="
+                  px-2
+                  sm:px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  tracking-wider
+                "
+              >
+                Role
+              </th>
+              <th scope="col" class="relative px-6 py-3">
+                <span class="sr-only">Edit</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(member, memberIdx) in members"
+              :key="member.id"
+              :class="[memberIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+            >
+              <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                <div class="flex">
+                  {{ member.first_name }} {{ member.last_name }}
+                </div>
+                <div class="text-gray-700 text-sm">{{ member.username }}</div>
+              </td>
+              <td class="hidden sm:table-cell sm:px-6 py-4 whitespace-nowrap">
+                {{ member.email }}
+              </td>
+              <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                {{ member.role }}
+              </td>
+              <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                <Dropdown :options="options" :icon="icon" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

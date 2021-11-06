@@ -61,36 +61,14 @@ watch(currentOrgId, () => update());
 </script>
 
 <template>
-  <div class="bg-white shadow-md p-2 rounded-md">
-    <div
-      class="
-        max-w-screen-xl
-        px-4
-        py-12
-        mx-auto
-        sm:px-6
-        lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between
-      "
-    >
-      <h2
-        class="
-          text-3xl
-          font-extrabold
-          leading-9
-          tracking-tight
-          text-gray-900
-          sm:text-4xl sm:leading-10
-        "
-      >
-        Overview
-      </h2>
-    </div>
-    <div>
-      This view will provide the latest sensor readings at a glance for all
-      sites, rooms, and installations of an organization. For example, as a list
-      with all installations, a traffic-light display and the latest sensor
-      reading, plus links to the corresponding detail view.
-    </div>
+  <div class="bg-white shadow-md p-4 rounded-md max-w-xl mx-auto">
+    <pre>VIEW DESCRIPTION (will be removed)</pre>
+    This view will provide the latest sensor readings at a glance for all sites,
+    rooms, and installations of an organization. For example, as a list with all
+    installations, a traffic-light display and the latest sensor reading, plus
+    links to the corresponding detail view.
+  </div>
+  <div class="bg-white shadow-md mt-8 p-2 rounded-md">
     <div v-if="hasActiveSensors">
       Active Installations:
       <ul id="sensor-list">
@@ -109,5 +87,6 @@ watch(currentOrgId, () => update());
         </li>
       </ul>
     </div>
+    <div v-else>This organization has no active installations</div>
   </div>
 </template>

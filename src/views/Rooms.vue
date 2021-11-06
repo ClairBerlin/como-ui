@@ -33,43 +33,23 @@ watch(currentOrgId, () => update());
 </script>
 
 <template>
-  <div class="bg-white shadow-md rounded-md p-2">
-    <div
-      class="
-        max-w-screen-xl
-        px-4
-        py-12
-        mx-auto
-        sm:px-6
-        lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between
-      "
-    >
-      <h2
-        class="
-          text-3xl
-          font-extrabold
-          leading-9
-          tracking-tight
-          text-gray-900
-          sm:text-4xl sm:leading-10
-        "
-      >
-        Rooms
-      </h2>
-    </div>
-    <div>
-      This view will list all rooms of the selected organization, information
-      about each room, air quality information of the individual sensors
-      installed in the room (once we know how to best summarize this
-      information), and links to the visualization for each sensor. Once we learn
-      how to synthesize information from multiple sensors in a single room, this
-      information may be viewed here as well.
-    </div>
+  <div class="bg-white shadow-md p-4 rounded-md max-w-xl mx-auto">
+    <pre>VIEW DESCRIPTION (will be removed)</pre>
+    This view will list all rooms of the selected organization, information
+    about each room, air quality information of the individual sensors installed
+    in the room (once we know how to best summarize this information), and links
+    to the visualization for each sensor. Once we learn how to synthesize
+    information from multiple sensors in a single room, this information may be
+    viewed here as well.
+  </div>
+  <div class="bg-white shadow-md rounded-md mt-8 p-2">
     <div v-if="hasRooms">
       Sites:
       <ul id="rooms-list">
         <li v-for="room in rooms" :key="room._jv.id">
-          ID: {{ room._jv.id }}, Name: {{ room.name }}, Size [m<sup>2</sup>]: {{ room.size_sqm }}, Height [m]: {{ room.height_m }}, Max. Occupancy: {{ room.max_occupancy }}
+          ID: {{ room._jv.id }}, Name: {{ room.name }}, Size [m<sup>2</sup>]:
+          {{ room.size_sqm }}, Height [m]: {{ room.height_m }}, Max. Occupancy:
+          {{ room.max_occupancy }}
           <router-link
             :to="{
               name: 'room',
@@ -80,6 +60,5 @@ watch(currentOrgId, () => update());
         </li>
       </ul>
     </div>
-  
   </div>
 </template>
