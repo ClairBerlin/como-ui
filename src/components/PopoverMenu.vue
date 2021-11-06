@@ -1,11 +1,12 @@
 <script setup>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { ChevronDownIcon, XIcon } from "@heroicons/vue/solid";
+import { ChevronDownIcon, ChevronUpIcon, XIcon } from "@heroicons/vue/solid";
 
 const props = defineProps({
   icon: { type: Function, default: undefined },
   title: { type: String, required: true },
   contextTitle: { type: String, default: "" },
+  popOverAbove: { type: Boolean, default: false },
   options: { type: Array, required: true },
 });
 </script>
@@ -16,9 +17,11 @@ const props = defineProps({
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"
         class="
+          w-full
           inline-flex
           items-center
-          p-2
+          px-2
+          py-4
           text-sm
           font-medium
           text-black
@@ -27,19 +30,23 @@ const props = defineProps({
           group
           hover:text-opacity-100 hover:bg-gray-100
           como-focus
+          justify-between
         "
       >
+        <div class="flex">
+          <component
+            v-if="icon"
+            :is="icon"
+            :class="[
+              'text-gray-500 group-hover:text-gray-600',
+              'mr-3 flex-shrink-0 h-6 w-6',
+            ]"
+            aria-hidden="true"
+          />
+          <span class="text-left">{{ title }}</span>
+        </div>
         <component
-          v-if="icon"
-          :is="icon"
-          :class="[
-            'text-gray-400 group-hover:text-gray-500',
-            'mr-3 flex-shrink-0 h-6 w-6',
-          ]"
-          aria-hidden="true"
-        />
-        <span class="text-left">{{ title }}</span>
-        <ChevronDownIcon
+          :is="popOverAbove ? ChevronUpIcon : ChevronDownIcon"
           :class="open ? '' : 'text-opacity-70'"
           class="
             w-5
@@ -62,7 +69,13 @@ const props = defineProps({
         leave-from-class="translate-y-0 opacity-100"
         leave-to-class="translate-y-1 opacity-0"
       >
-        <PopoverPanel class="w-auto absolute z-10" v-slot="{ close }">
+        <PopoverPanel
+          :class="[
+            popOverAbove ? 'top-[-9rem]' : 'bottom-[-7rem]',
+            'w-full absolute z-10',
+          ]"
+          v-slot="{ close }"
+        >
           <div class="shadow-lg rounded-lg ring-1 ring-gray-300">
             <div class="relative bg-white text-xs rounded-lg">
               <div class="flex items-center pl-4 pr-2 py-2 justify-between">
@@ -79,7 +92,7 @@ const props = defineProps({
                 :key="item.name"
                 :to="{
                   name: item.route,
-                  params: item.params
+                  params: item.params,
                 }"
                 @click="close"
                 class="
@@ -101,8 +114,8 @@ const props = defineProps({
                     v-if="item.icon"
                     :is="item.icon"
                     class="
-                      text-gray-400
-                      group-hover:text-gray-500
+                      text-gray-500
+                      group-hover:text-gray-600
                       mr-2
                       flex-shrink-0
                       h-4

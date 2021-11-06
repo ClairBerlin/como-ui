@@ -33,7 +33,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="bg-gray-50">
+  <div class="">
     <div
       class="
         max-w-screen-xl
