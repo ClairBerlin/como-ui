@@ -56,17 +56,11 @@ const isCurrentRoute = (routeName) => route.name === routeName;
 const sidebarOpen = ref(false);
 
 const currentOrgId = computed(() => route.params.orgId);
+const isUserLoading = computed(() => store.getters["authuser/isLoading"]);
 const isOrgContext = computed(() => typeof currentOrgId.value === "string");
 
 onMounted(async () => {
   await store.dispatch("authuser/fetchAuthenticatedUser");
-  const memberships = store.getters["authuser/getMemberships"];
-  if (memberships) {
-    const defaultOrgId = memberships[0].orgId;
-    router.push({ name: "overview", params: { orgId: defaultOrgId } });
-  } else {
-    router.push({ name: "org-management-add" });
-  }
 });
 
 watch(
@@ -266,7 +260,10 @@ watch(
         </button>
       </div>
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        <div class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md">
+        <div
+          class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md"
+          v-if="!isUserLoading"
+        >
           <router-view />
         </div>
       </main>

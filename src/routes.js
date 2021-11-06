@@ -17,6 +17,15 @@ const Logout = () => import("@/views/Logout.vue");
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
   {
+    path: "/",
+    redirect: "/dashboard",
+  },
+  {
+    path: "/dashboard",
+    name: "dashboard",
+    component: Dashboard,
+  },
+  {
     path: "/dashboard/:orgId",
     name: "home",
     component: Dashboard,

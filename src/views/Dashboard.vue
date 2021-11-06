@@ -1,9 +1,11 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 
 const route = useRoute();
+const router = useRouter();
 const store = useStore();
 
 const currentOrgId = computed(() => route.params.orgId);
@@ -17,6 +19,20 @@ const organization = computed(() => {
     });
   } else {
     return { name: "No Organization" };
+  }
+});
+
+onMounted(() => {
+  if (route.name === "dashboard") {
+    // If no organization is selected, default to the user's first organization.
+    const memberships = store.getters["authuser/getMemberships"];
+    console.log(memberships.value);
+    if (memberships.value?.length > 0) {
+      const defaultOrgId = memberships[0].orgId;
+      router.push({ name: "overview", params: { orgId: defaultOrgId } });
+    } else {
+      router.push({ name: "org-management-add" });
+    }
   }
 });
 </script>
