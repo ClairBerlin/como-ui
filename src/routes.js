@@ -1,18 +1,18 @@
 import Overview from "./views/Overview.vue";
 import Dashboard from "./views/Dashboard.vue";
-import Organizations from "./views/Organizations.vue";
-import Organization from "./views/Organization.vue";
-import AddOrganization from "./views/AddOrganization.vue";
-import EditOrganization from "./views/EditOrganization.vue";
-import NotFound from "./views/NotFound.vue";
-import Sites from "@/views/Sites.vue";
-import Site from "@/views/Site.vue";
-import Rooms from "@/views/Rooms.vue";
-import Room from "@/views/Room.vue";
-import Installation from "@/views/Installation.vue";
-import Sensors from "@/views/Sensors.vue";
-import Sensor from "@/views/Sensor.vue";
-import Logout from "@/views/Logout.vue";
+const Organizations = () => import("./views/Organizations.vue");
+const Organization = () => import("./views/Organization.vue");
+const AddOrganization = () => import("./views/AddOrganization.vue");
+const EditOrganization = () => import("./views/EditOrganization.vue");
+const NotFound = () => import("./views/NotFound.vue");
+const Sites = () => import("@/views/Sites.vue");
+const Site = () => import("@/views/Site.vue");
+const Rooms = () => import("@/views/Rooms.vue");
+const Room = () => import("@/views/Room.vue");
+const Installation = () => import("@/views/Installation.vue");
+const Sensors = () => import("@/views/Sensors.vue");
+const Sensor = () => import("@/views/Sensor.vue");
+const Logout = () => import("@/views/Logout.vue");
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
