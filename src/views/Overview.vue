@@ -46,8 +46,10 @@ async function update() {
     return store
       .dispatch("jv/getRelated", `installations/${instId}`)
       .then(() => {
-        // At this point vuex-jsonapi has fetched the room object in inst.room
-        store.dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`);
+        // At this point vuex-jsonapi has fetched the room object in inst.room, if any
+        if (typeof inst.room === "object") {
+          store.dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`);
+        }
       });
   });
   await Promise.all(relatedResourcePromises);
@@ -94,7 +96,7 @@ watch(currentOrgId, () => update());
       <ul id="sensor-list">
         <li v-for="inst in activeInstallations" :key="inst._jv.id">
           ID: {{ inst._jv.id }}, Description: {{ inst.description }}, from
-          {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}}, sensor:
+          {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}, sensor:
           {{ inst?.node?.alias }}, room: {{ inst?.room?.name }}, site:
           {{ inst?.room?.site?.name }},
           <router-link

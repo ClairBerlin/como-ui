@@ -46,6 +46,7 @@ export const routes = [
         children: [
           {
             path: ":siteId",
+            name: "site",
             component: Site,
             meta: { title: "Site Details" },
           },
@@ -60,6 +61,7 @@ export const routes = [
         children: [
           {
             path: ":roomId",
+            name: "room",
             component: Room,
             meta: { title: "Room Details" },
           },
@@ -74,6 +76,7 @@ export const routes = [
         children: [
           {
             path: ":sensorId",
+            name: "sensor",
             component: Sensor,
             meta: { title: "Sensor Details" },
           },

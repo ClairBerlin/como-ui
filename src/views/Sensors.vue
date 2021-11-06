@@ -1,3 +1,37 @@
+<script setup>
+import { onMounted, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { computed } from "@vue/reactivity";
+import { useStore } from "vuex";
+
+const route = useRoute();
+const store = useStore();
+
+// This view is routed to in an organization context only, this orgId is defined.
+const currentOrgId = computed(() => route.params.orgId);
+const sensors = ref(undefined);
+
+const hasSensors = computed(() => sensors.value?.length > 0);
+
+async function update() {
+  const sensorObj = await store.dispatch("jv/get", [
+    "nodes",
+    { params: { "filter[organization]": currentOrgId.value } },
+  ]);
+  const sensorList = Object.entries(sensorObj);
+  console.log(`Organization has ${sensorList.length} sensor(s).`);
+  sensors.value = sensorList.map(([_, sensor]) => sensor);
+  const relatedResourcePromises = sensorList.map(([sensorId, _]) => {
+    console.log(`Fetch related objects for sensor ${sensorId}.`);
+    return store.dispatch("jv/getRelated", `nodes/${sensorId}`);
+  });
+  await Promise.all(relatedResourcePromises);
+}
+
+onMounted(async () => update());
+watch(currentOrgId, () => update());
+</script>
+
 <template>
   <div class="bg-white shadow-md rounded-md p-2">
     <div
@@ -30,6 +64,24 @@
       historical installations, and actions to register a new sensor with The
       Things Network and to completely remove a sensor both from the COMo stack
       and from The Things Network.
+    </div>
+    <div v-if="hasSensors">
+      Sites:
+      <ul id="sensor-list">
+        <li v-for="sensor in sensors" :key="sensor._jv.id">
+          Alias: {{ sensor.alias }}, Description: {{ sensor.description }}, ID:
+          {{ sensor._jv.id }}, Device-EUI: {{ sensor.eui64 }}, Manufacturer:
+          {{ sensor.model.manufacturer }}, Model: {{ sensor.model.trade_name }},
+          Sensor Element: {{ sensor.model.sensor_type }}
+          <router-link
+            :to="{
+              name: 'sensor',
+              params: { sensorId: sensor._jv.id },
+            }"
+            >Inspect and modify sensor</router-link
+          >
+        </li>
+      </ul>
     </div>
   </div>
 </template>
