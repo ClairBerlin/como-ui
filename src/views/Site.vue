@@ -24,7 +24,10 @@
       </h2>
     </div>
     <div>
-      This sub-view will display details about a given site, and allow the user to make changes to it. That is, change the site's name, description, and address. In addition, the view will provide means to add and remove rooms at the selected site.
+      This sub-view will display details about a given site, and allow the user
+      to make changes to it. That is, change the site's name, description, and
+      address. In addition, the view will provide means to add and remove rooms
+      at the selected site.
     </div>
   </div>
 </template>

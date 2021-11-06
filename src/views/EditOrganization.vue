@@ -11,7 +11,8 @@ const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);
 
 onMounted(
-  async () => await store.dispatch("jv/get", `organizations/${route.params.orgId}`)
+  async () =>
+    await store.dispatch("jv/get", `organizations/${route.params.orgId}`)
 );
 
 const currentOrg = computed(() =>
@@ -74,7 +75,9 @@ const updateOrganization = () => {
       </div>
       <div class="form-control py-4">
         <label class="label">
-          <span class="label-text text-black font-bold">Description</span>
+          <span class="label-text text-black font-bold">
+            Description (optional)
+          </span>
         </label>
         <input
           type="text"

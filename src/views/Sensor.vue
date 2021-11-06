@@ -24,7 +24,9 @@
       </h2>
     </div>
     <div>
-      This view will provide a detailed view of the selected sensor, a list of the sensor's current and historical installations, plus the means to change the sensor installation.
+      This view will provide a detailed view of the selected sensor, a list of
+      the sensor's current and historical installations, plus the means to
+      change the sensor installation.
     </div>
   </div>
 </template>

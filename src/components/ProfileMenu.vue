@@ -46,5 +46,6 @@ const menuEntries = [
     :title="title"
     :options="menuEntries"
     :icon="icon"
+    pop-over-above
   />
 </template>

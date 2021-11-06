@@ -110,20 +110,20 @@ export const routes = [
     name: "change-email",
     beforeEnter() {
       window.location.href = "/accounts/email";
-    }
+    },
   },
   {
     path: "/accounts/password/change",
     name: "change-password",
     beforeEnter() {
       window.location.href = "/accounts/password/change";
-    }
+    },
   },
   {
     path: "/logout",
     name: "logout",
     meta: { title: "Logout" },
-    component: Logout
+    component: Logout,
   },
   { path: "/:pathMatch(.*)", component: NotFound },
 ];

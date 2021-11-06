@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-50">
+  <div class="bg-white shadow-md rounded-md p-2">
     <div
       class="
         max-w-screen-xl
@@ -24,7 +24,10 @@
       </h2>
     </div>
     <div>
-      This view will list all the sites of the selected organization, together with their adresses, and provide links to the rooms in each site. It will offer the possibility to add a new site and to remove an existing site with all its rooms and installations.
+      This view will list all the sites of the selected organization, together
+      with their adresses, and provide links to the rooms in each site. It will
+      offer the possibility to add a new site and to remove an existing site
+      with all its rooms and installations.
     </div>
   </div>
 </template>

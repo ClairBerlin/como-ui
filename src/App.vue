@@ -14,11 +14,9 @@ import {
   LocationMarkerIcon,
   CubeIcon,
   ChartBarIcon,
-  AdjustmentsIcon,
   ChipIcon,
   MenuIcon,
   XIcon,
-  OfficeBuildingIcon,
 } from "@heroicons/vue/outline";
 import OrganizationMenu from "./components/OrganizationMenu.vue";
 import ProfileMenu from "./components/ProfileMenu.vue";
@@ -41,20 +39,19 @@ const orgNavigation = [
     routeName: "sites",
     icon: LocationMarkerIcon,
   },
-  { 
-    name: "Rooms", 
+  {
+    name: "Rooms",
     routeName: "rooms",
-    icon: CubeIcon
+    icon: CubeIcon,
   },
   {
     name: "Sensors",
     routeName: "sensors",
-    icon: ChipIcon },
+    icon: ChipIcon,
+  },
 ];
 
-function isCurrentRoute(routeName) {
-  route.name === routeName;
-}
+const isCurrentRoute = (routeName) => route.name === routeName;
 
 const sidebarOpen = ref(false);
 
@@ -194,14 +191,19 @@ watch(
     <!-- Static sidebar for desktop -->
     <div class="hidden md:flex md:flex-shrink-0">
       <div class="flex flex-col w-64">
-        <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div
-          class="flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white"
+          class="
+            flex-1 flex flex-col
+            min-h-0
+            border-r border-gray-200
+            shadow-md
+            bg-white
+          "
         >
-          <div class="flex-1 flex flex-col pt-6 pb-4">
+          <div class="flex-1 flex mx-2 px-1 flex-col pt-6 pb-1 overflow-y-auto">
             <Logo />
             <div class="w-full px-3 border-b border-gray-200" />
-            <nav class="mt-1 flex-1 px-2 bg-white space-y-1">
+            <nav class="mt-1 flex-1 bg-white space-y-1">
               <OrganizationMenu />
               <div class="w-full px-3 my-1 border-b border-gray-200" />
               <div v-if="isOrgContext">
@@ -214,9 +216,9 @@ watch(
                   }"
                   :class="[
                     isCurrentRoute(item.routeName)
-                      ? 'bg-gray-200 text-gray-900'
-                      : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-                    'group flex items-center px-2 py-2 text-sm font-medium rounded-md como-focus',
+                      ? 'bg-gray-100 text-gray-900 font-bold'
+                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
+                    'group flex items-center my-1 px-2 py-4 text-sm font-medium rounded-md como-focus',
                   ]"
                 >
                   <component
@@ -224,7 +226,7 @@ watch(
                     :class="[
                       isCurrentRoute(item.routeName)
                         ? 'text-gray-700'
-                        : 'text-gray-400 group-hover:text-gray-500',
+                        : 'text-gray-500 group-hover:text-gray-500',
                       'mr-3 flex-shrink-0 h-6 w-6',
                     ]"
                     aria-hidden="true"
@@ -232,9 +234,9 @@ watch(
                   {{ item.name }}
                 </router-link>
               </div>
-              <div class="w-full px-3 my-1 border-b border-gray-200" />
-              <ProfileMenu />
             </nav>
+            <div class="w-full px-3 my-1 border-b border-gray-200" />
+            <ProfileMenu class="w-full" />
           </div>
         </div>
       </div>
@@ -263,7 +265,7 @@ watch(
         </button>
       </div>
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
-        <div class="max-w-screen-xl py-6 mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md">
           <router-view />
         </div>
       </main>
