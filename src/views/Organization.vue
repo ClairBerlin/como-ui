@@ -5,6 +5,7 @@ import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import Dropdown from "@/components/Dropdown.vue";
 import { roleToString } from "@/utils";
+import DeletionModal from "@/components/DeletionModal.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -25,7 +26,9 @@ const orgMembership = computed(() =>
 
 const isOwner = () => orgMembership.value?.role === "O";
 
-const deleteOrg = () => console.log("TODO: open delete modal");
+const showDeleteOrgModal = ref(false);
+
+const deleteOrg = () => (showDeleteOrgModal.value = false);
 const inviteMembers = () => console.log("TODO: open invite modal");
 
 const getRole = (memberships, username) =>
@@ -43,10 +46,8 @@ onMounted(async () => {
     "jv/get",
     `organizations/${orgId}/memberships`
   );
-  console.log({ memberships });
   const getMembers = Object.keys(membersIds).map(async (id) => {
     const member = await store.dispatch("jv/get", `users/${id}`);
-    console.log({ member });
     members.value.push({
       ...member,
       role: getRole(memberships, member.username),
@@ -58,6 +59,7 @@ onMounted(async () => {
 
 <template>
   <div>
+    <DeletionModal :open="showDeleteOrgModal.value" />
     <div class="text-black">
       <div class="flex justify-between items-center">
         <div class="">
