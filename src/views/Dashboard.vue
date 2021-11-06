@@ -23,7 +23,7 @@ const organization = computed(() => {
 
 <template>
   <div>
-    <header class="bg-white shadow-md rounded-md" v-if="$route.meta.title">
+    <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
       <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold leading-tight text-gray-900">
           {{ organization.name }} – {{ route.meta.title }}

@@ -170,7 +170,7 @@ const isTabActive = (index) => selectedTab.value === index;
 </script>
 
 <template>
-  <div class="text-black card bg-white p-4 max-w-md absolute">
+  <div class="text-black card bg-white p-4 max-w-xs sm:max-w-lg">
     <div class="flex justify-between">
       <div class="card-title">
         Installation in {{ roomName }} with ID {{ installationId }}

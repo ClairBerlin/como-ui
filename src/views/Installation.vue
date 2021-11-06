@@ -33,22 +33,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="">
-    <div
-      class="
-        max-w-screen-xl
-        px-4
-        py-12
-        mx-auto
-        sm:px-6
-        lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between
-      "
-    >
-      <div v-if="isInstallationLoaded">
-        <InstallationViz
-          :installation-id="currentInstallationId"
-        ></InstallationViz>
-      </div>
-    </div>
+  <div
+    class="
+      max-w-screen-xl
+      flex flex-wrap
+      gap-4
+      px-2
+      lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between
+    "
+    v-if="isInstallationLoaded"
+  >
+    <InstallationViz :installation-id="currentInstallationId" />
   </div>
 </template>

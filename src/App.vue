@@ -248,6 +248,7 @@ watch(
           class="
             -ml-0.5
             -mt-0.5
+            mb-0.5
             h-12
             w-12
             inline-flex
