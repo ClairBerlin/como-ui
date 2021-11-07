@@ -15,6 +15,8 @@ const isLoading = ref(true);
 
 // This view is routed to in an organization context only, this orgId is defined.
 const currentOrgId = computed(() => route.params.orgId);
+onMounted(async () => update());
+watch(currentOrgId, () => update());
 const installations = ref(undefined);
 
 const activeInstallations = computed(() =>
@@ -63,10 +65,6 @@ const update = async () => {
   await Promise.all(relatedResourcePromises);
   isLoading.value = false;
 };
-
-onMounted(async () => update());
-
-watch(currentOrgId, () => update());
 </script>
 
 <template>

@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, ref } from "vue";
+import { onMounted, watch, computed, ref } from "vue";
 import { CogIcon } from "@heroicons/vue/outline";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
@@ -10,7 +10,6 @@ import DeletionModal from "@/components/DeletionModal.vue";
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
-const orgId = route.params.orgId;
 const members = ref([]);
 const org = ref();
 const orgName = computed(() => org?.value?.name || "…");
@@ -20,6 +19,12 @@ const options = [
   { href: "/change-role", title: "Change role" },
   { href: "/remove", title: "Remove" },
 ];
+
+const currentOrgId = computed(() => route.params.orgId);
+onMounted(async () => update());
+watch(currentOrgId, () => update());
+
+const isLoading = ref(true);
 
 const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.id)
@@ -31,7 +36,7 @@ const showDeleteOrgModal = ref(false);
 
 const openDeleteOrgModal = () => (showDeleteOrgModal.value = true);
 const deleteOrg = async () => {
-  await store.dispatch("jv/delete", `organizations/${orgId}`);
+  await store.dispatch("jv/delete", `organizations/${currentOrgId.value}`);
   router.push({ name: "org-management" });
 };
 const inviteMembers = () => console.log("TODO: open invite modal");
@@ -41,15 +46,20 @@ const getRole = (memberships, username) =>
     Object.values(memberships).find((m) => m.user_name === username).role
   );
 
-onMounted(async () => {
-  org.value = await store.dispatch("jv/get", `organizations/${orgId}`);
+const update = async () => {
+  members.value = [];
+  isLoading.value = true;
+  org.value = await store.dispatch(
+    "jv/get",
+    `organizations/${currentOrgId.value}`
+  );
   const membersIds = await store.dispatch(
     "jv/get",
-    `organizations/${orgId}/users`
+    `organizations/${currentOrgId.value}/users`
   );
   const memberships = await store.dispatch(
     "jv/get",
-    `organizations/${orgId}/memberships`
+    `organizations/${currentOrgId.value}/memberships`
   );
   const getMembers = Object.keys(membersIds).map(async (id) => {
     const member = await store.dispatch("jv/get", `users/${id}`);
@@ -59,11 +69,13 @@ onMounted(async () => {
     });
   });
   await Promise.all(getMembers);
-});
+  isLoading.value = false;
+};
 </script>
 
 <template>
-  <div>
+  <div v-if="isLoading">loading...</div>
+  <div v-else>
     <DeletionModal
       :open="showDeleteOrgModal"
       @closeModal="showDeleteOrgModal = false"
