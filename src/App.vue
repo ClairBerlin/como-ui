@@ -265,7 +265,7 @@ watch(
           <MenuIcon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <main class="flex-1 relative z-0 focus:outline-none">
+      <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
         <div
           class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md"
           v-if="!isUserLoading"

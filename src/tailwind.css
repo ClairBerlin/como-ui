@@ -10,6 +10,6 @@
     @apply font-semibold text-sm text-white bg-gray-500 border-2 border-gray-400 border-opacity-20 rounded-full px-1 mx-2 select-none;
   }
   .gray-button {
-    @apply flex items-center bg-gray-100 hover:bg-gray-200 text-black font-medium px-3 py-1 border border-black border-opacity-20 rounded-md shadow-sm h-auto normal-case cursor-pointer select-none como-focus;
+    @apply flex items-center bg-gradient-to-t from-gray-300 to-gray-100 hover:bg-gray-200 text-gray-900 font-medium px-3 py-1 border border-black border-opacity-20 rounded-md shadow-sm h-auto normal-case cursor-pointer select-none como-focus;
   }
 }

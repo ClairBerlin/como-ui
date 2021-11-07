@@ -31,7 +31,7 @@ const props = defineProps({
         :key="option.href"
         class="
           font-medium
-          hover:bg-gray-100
+          hover:bg-gray-50
           border-b border-gray-200
           last:border-none
           como-focus

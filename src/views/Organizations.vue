@@ -2,6 +2,7 @@
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { roleToString } from "@/utils";
+import { ExclamationIcon } from "@heroicons/vue/outline";
 
 const store = useStore();
 const memberships = computed(() => store.state.authuser.memberships);
@@ -11,7 +12,7 @@ const hasMemberships = () => memberships.value?.length > 0;
 <template>
   <div class="text-black">
     <div class="flex justify-between items-center">
-      <div class="">All your organizations</div>
+      <h2 class="font-bold text-xl">All your organizations</h2>
       <router-link
         class="btn btn-sm m-2 font-semibold gray-button"
         :to="{ name: 'org-management-add' }"
@@ -19,45 +20,127 @@ const hasMemberships = () => memberships.value?.length > 0;
         Create a new organization
       </router-link>
     </div>
-    <div v-if="hasMemberships" class="ring-1 ring-gray-300 rounded-md bg-white">
-      <div
-        class="flex flex-col border-b last:border-b-0"
-        v-for="m in memberships"
-        :key="m.orgId"
-      >
-        <div class="flex p-4 items-center justify-between">
-          <div class="flex items-center">
-            <router-link
-              class="text-l font-bold text-blue-500 rounded p-1 como-focus"
-              :to="{
-                name: 'org-management-detail',
-                params: { orgId: m.orgId },
-              }"
-              >{{ m.orgName }}
-            </router-link>
-            <div class="gray-label">
+    <div
+      v-if="hasMemberships"
+      class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden"
+    >
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th
+              scope="col"
+              class="
+                px-2
+                sm:px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
+            >
+              Organization Name
+            </th>
+            <th
+              scope="col"
+              class="
+                sm:px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+                hidden
+                sm:table-cell
+              "
+            >
+              Your Role
+            </th>
+            <th
+              scope="col"
+              class="
+                px-2
+                sm:px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
+            >
+              Options
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(m, mIdx) in memberships"
+            :key="m.orgId"
+            :class="[mIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+          >
+            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+              <router-link
+                class="text-l font-bold text-blue-500 rounded p-1 como-focus"
+                :to="{
+                  name: 'org-management-detail',
+                  params: { orgId: m.orgId },
+                }"
+                >{{ m.orgName }}
+              </router-link>
+            </td>
+            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
               {{ roleToString(m.role) }}
-            </div>
-          </div>
-          <div class="flex flex-row">
-            <router-link
-              class="gray-button"
-              :to="{ name: 'org-management-edit', params: { orgId: m.orgId } }"
-              >Settings</router-link
-            >
-            <button
-              @click="console.log('todo: leave org')"
-              type="button"
-              class="gray-button ml-2"
-            >
-              Leave
-            </button>
-          </div>
-        </div>
-      </div>
+            </td>
+            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+              <div class="flex flex-row">
+                <router-link
+                  v-if="m.role === 'O'"
+                  class="gray-button"
+                  :to="{
+                    name: 'org-management-edit',
+                    params: { orgId: m.orgId },
+                  }"
+                  >Edit</router-link
+                >
+                <button
+                  @click="console.log('todo: leave org')"
+                  type="button"
+                  class="gray-button ml-2"
+                >
+                  Leave
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="text-gray-600" v-else>
-      you are not a member of any organization yet
+    <div
+      v-else
+      class="
+        shadow-md
+        mt-4
+        rounded-md
+        max-w-sm
+        flex
+        items-center
+        bg-yellow-50
+        border-l-4 border-yellow-400
+        p-4
+      "
+    >
+      <div class="flex-shrink-0">
+        <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+      </div>
+      <div class="ml-3">
+        You are not a member of any organization yet.
+        <router-link
+          :to="{ name: 'org-management-add' }"
+          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+        >
+          Click here to create one
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
