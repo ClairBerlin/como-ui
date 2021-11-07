@@ -166,6 +166,11 @@ const nextInstant = () => {
   console.log(`New reference day: ${referenceDay.value}`);
 };
 
+const installationTooltip = (isPublic) =>
+  isPublic
+    ? "This installation is public."
+    : "This installation is not public.";
+
 const isTabActive = (index) => selectedTab.value === index;
 </script>
 
@@ -175,7 +180,10 @@ const isTabActive = (index) => selectedTab.value === index;
       <div class="card-title">
         Installation in {{ roomName }} with ID {{ installationId }}
       </div>
-      <div class="h-6 w-6">
+      <div
+        :data-tip="installationTooltip(installation['is_public'])"
+        class="tooltip tooltip-left h-6 w-6"
+      >
         <EyeIcon v-if="installation['is_public']" />
         <EyeOffIcon v-else />
       </div>

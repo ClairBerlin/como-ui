@@ -71,7 +71,7 @@ const props = defineProps({
       >
         <PopoverPanel
           :class="[
-            popOverAbove ? 'top-[-9rem]' : 'bottom-[-15rem]',
+            popOverAbove ? 'top-[-9rem]' : 'top-16',
             'w-full absolute z-10',
           ]"
           v-slot="{ close }"
