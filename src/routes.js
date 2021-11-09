@@ -51,45 +51,39 @@ export const routes = [
         path: "sites",
         name: "sites",
         component: Sites,
-        meta: { title: "sites" },
-        children: [
-          {
-            path: ":siteId",
-            name: "site",
-            component: Site,
-            meta: { title: "site.details" },
-          },
-        ],
+        meta: { title: "Sites" },
+      },
+      {
+        path: "sites/:siteId",
+        name: "site",
+        component: Site,
+        meta: { title: "Site Details" },
       },
       {
         // Management of the Rooms of a given site (add, update, delete)
         path: "rooms",
         name: "rooms",
-        meta: { title: "rooms" },
         component: Rooms,
-        children: [
-          {
-            path: ":roomId",
-            name: "room",
-            component: Room,
-            meta: { title: "room.details" },
-          },
-        ],
+        meta: { title: "Rooms" },
+      },
+      {
+        path: "rooms/:roomId",
+        name: "room",
+        component: Room,
+        meta: { title: "Room Details" },
       },
       {
         // Management of the sensors of the given organization (add, delete, assign)
         path: "sensors",
         name: "sensors",
         component: Sensors,
-        meta: { title: "nodes" },
-        children: [
-          {
-            path: ":sensorId",
-            name: "sensor",
-            component: Sensor,
-            meta: { title: "node.details" },
-          },
-        ],
+        meta: { title: "Sensors" },
+      },
+      {
+        path: "sensors/:sensorId",
+        name: "sensor",
+        component: Sensor,
+        meta: { title: "Sensor Details" },
       },
     ],
   },

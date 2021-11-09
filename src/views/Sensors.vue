@@ -42,24 +42,82 @@ watch(currentOrgId, () => update());
     Things Network and to completely remove a sensor both from the COMo stack
     and from The Things Network.
   </div>
-  <div class="bg-white shadow-md rounded-md mt-8 p-2">
-    <div v-if="hasSensors">
-      Sites:
-      <ul id="sensor-list">
-        <li v-for="sensor in sensors" :key="sensor._jv.id">
-          Alias: {{ sensor.alias }}, Description: {{ sensor.description }}, ID:
-          {{ sensor._jv.id }}, Device-EUI: {{ sensor.eui64 }}, Manufacturer:
-          {{ sensor.model.manufacturer }}, Model: {{ sensor.model.trade_name }},
-          Sensor Element: {{ sensor.model.sensor_type }}
-          <router-link
-            :to="{
-              name: 'sensor',
-              params: { sensorId: sensor._jv.id },
-            }"
-            >Inspect and modify sensor</router-link
+  <div class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th
+            scope="col"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
-        </li>
-      </ul>
-    </div>
+            Sensor Name
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
+          >
+            Sensor Identifier
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
+          >
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody v-if="hasSensors">
+        <tr
+          v-for="(sensor, sensorIdx) in sensors"
+          :key="sensor._jv.id"
+          :class="[sensorIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+        >
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            {{ sensor.alias }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            {{ sensor._jv.id }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <div class="flex flex-row">
+              <router-link
+                class="gray-button"
+                :to="{
+                  name: 'sensor',
+                  params: { sensorId: sensor._jv.id },
+                }"
+                >Inspect</router-link
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>

@@ -42,23 +42,118 @@ watch(currentOrgId, () => update());
     information from multiple sensors in a single room, this information may be
     viewed here as well.
   </div>
-  <div class="bg-white shadow-md rounded-md mt-8 p-2">
-    <div v-if="hasRooms">
-      Sites:
-      <ul id="rooms-list">
-        <li v-for="room in rooms" :key="room._jv.id">
-          ID: {{ room._jv.id }}, Name: {{ room.name }}, Size [m<sup>2</sup>]:
-          {{ room.size_sqm }}, Height [m]: {{ room.height_m }}, Max. Occupancy:
-          {{ room.max_occupancy }}
-          <router-link
-            :to="{
-              name: 'room',
-              params: { roomId: room._jv.id },
-            }"
-            >Inspect and modify room</router-link
+  <div class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th
+            scope="col"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
-        </li>
-      </ul>
-    </div>
+            Room Name
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
+          >
+            Size [m<sup>2</sup>]
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
+          >
+            Height [m]
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
+          >
+            Max. Occupancy
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
+          >
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(room, roomIdx) in rooms"
+          :key="room._jv.id"
+          :class="[roomIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+        >
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            {{ room.name }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            {{ room.size_sqm }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            {{ room.height_m }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            {{ room.max_occupancy }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <div class="flex flex-row">
+              <router-link
+                class="gray-button"
+                :to="{
+                  name: 'room',
+                  params: { roomId: room._jv.id },
+                }"
+                >Inspect</router-link
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
