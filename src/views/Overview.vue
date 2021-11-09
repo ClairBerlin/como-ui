@@ -17,14 +17,11 @@ watch(currentOrgId, () => update());
 const installations = ref(undefined);
 
 const activeInstallations = computed(() =>
-  installations.value?.map((inst) => {
-    if (
+  installations.value?.filter(
+    (inst) =>
       inst.from_timestamp_s <= inst.query_timestamp_s &&
       inst.to_timestamp_s >= inst.query_timestamp_s
-    ) {
-      return inst;
-    }
-  })
+  )
 );
 
 const hasActiveSensors = computed(() => {
