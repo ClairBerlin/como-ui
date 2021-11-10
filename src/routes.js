@@ -30,34 +30,34 @@ export const routes = [
     name: "home",
     component: Dashboard,
     props: true,
-    meta: { title: "Organization" },
+    meta: { title: "org.singular" },
     children: [
       {
         // Summary of all current sensor readings of an organization
         path: "",
         name: "overview",
         component: Overview,
-        meta: { title: "Overview" },
+        meta: { title: "overview" },
       },
       {
         // Details and visualization for a single installation
         path: "installation/:installationId",
         name: "installation",
         component: Installation,
-        meta: { title: "Installation" },
+        meta: { title: "installation.details" },
       },
       {
         // Management of the Sites of the given organization (add, update, delete)
         path: "sites",
         name: "sites",
         component: Sites,
-        meta: { title: "Sites" },
+        meta: { title: "sites" },
         children: [
           {
             path: ":siteId",
             name: "site",
             component: Site,
-            meta: { title: "Site Details" },
+            meta: { title: "site.details" },
           },
         ],
       },
@@ -65,14 +65,14 @@ export const routes = [
         // Management of the Rooms of a given site (add, update, delete)
         path: "rooms",
         name: "rooms",
-        meta: { title: "Rooms" },
+        meta: { title: "rooms" },
         component: Rooms,
         children: [
           {
             path: ":roomId",
             name: "room",
             component: Room,
-            meta: { title: "Room Details" },
+            meta: { title: "room.details" },
           },
         ],
       },
@@ -81,13 +81,13 @@ export const routes = [
         path: "sensors",
         name: "sensors",
         component: Sensors,
-        meta: { title: "Sensors" },
+        meta: { title: "nodes" },
         children: [
           {
             path: ":sensorId",
             name: "sensor",
             component: Sensor,
-            meta: { title: "Sensor Details" },
+            meta: { title: "node.details" },
           },
         ],
       },
@@ -96,25 +96,25 @@ export const routes = [
   {
     path: "/org-management",
     name: "org-management",
-    meta: { title: "Manage Organizations" },
+    meta: { title: "org.manage" },
     component: Organizations,
   },
   {
     path: "/org-management/:orgId",
     name: "org-management-detail",
-    meta: { title: "Organization" },
+    meta: { title: "org.detail" },
     component: Organization,
   },
   {
     path: "/org-management/:orgId/edit",
     name: "org-management-edit",
-    meta: { title: "Edit Organization" },
+    meta: { title: "org.edit" },
     component: EditOrganization,
   },
   {
     path: "/org-management/add",
     name: "org-management-add",
-    meta: { title: "Add Organization" },
+    meta: { title: "org.add" },
     component: AddOrganization,
   },
   {
@@ -134,7 +134,7 @@ export const routes = [
   {
     path: "/logout",
     name: "logout",
-    meta: { title: "Logout" },
+    meta: { title: "user.logout" },
     component: Logout,
   },
   { path: "/:pathMatch(.*)", component: NotFound },

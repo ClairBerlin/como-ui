@@ -38,7 +38,9 @@ const createOrg = async () => {
     <div class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
       <div class="form-control">
         <label class="label">
-          <span class="label-text text-black font-bold">Organization Name</span>
+          <span class="label-text text-black font-bold">{{
+            $t("org.name")
+          }}</span>
         </label>
         <input
           type="text"
@@ -48,7 +50,9 @@ const createOrg = async () => {
       </div>
       <div class="form-control py-4">
         <label class="label">
-          <span class="label-text text-black font-bold">Description</span>
+          <span class="label-text text-black font-bold">{{
+            $t("description")
+          }}</span>
         </label>
         <input
           type="text"
@@ -58,7 +62,7 @@ const createOrg = async () => {
         />
       </div>
       <button class="mt-2 btn gray-button" @click="createOrg">
-        Create new organization
+        {{ $t("org.create") }}
       </button>
     </div>
   </div>

@@ -16,8 +16,8 @@ const orgName = computed(() => org?.value?.name || "…");
 const icon = CogIcon;
 const options = [
   //TODO: adapt to correct urls/onclick actions
-  { href: "/change-role", title: "Change role" },
-  { href: "/remove", title: "Remove" },
+  { href: "/change-role", title: "role.change" },
+  { href: "/remove", title: "remove" },
 ];
 
 const currentOrgId = computed(() => route.params.orgId);
@@ -74,38 +74,39 @@ const update = async () => {
 </script>
 
 <template>
-  <div v-if="isLoading">loading...</div>
-  <div v-else>
+  <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
+    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold leading-tight text-gray-900">
+        {{ $t("org.members") }} {{ $t("of") }} {{ orgName }}
+      </h1>
+    </div>
+  </header>
+  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <div v-else class="mt-8">
     <DeletionModal
       :open="showDeleteOrgModal"
       @closeModal="showDeleteOrgModal = false"
       @deleteClicked="deleteOrg"
-      modal-title="Delete Organization"
+      modal-title="delete-org-modal.title"
     >
-      <p class="text-sm text-gray-500">
-        Are you sure you want to deltet this organization? This action cannot be
-        undone!
-      </p>
+      <p class="text-sm text-gray-500">{{ $t("delete-org-modal.message") }}</p>
     </DeletionModal>
     <div class="text-black">
-      <div class="flex justify-between items-center">
-        <div class="">
-          Members of <span class="font-semibold">{{ orgName }}</span>
-        </div>
+      <div class="flex justify-end items-center">
         <div class="flex">
           <div
             v-if="isOwner"
             class="btn-sm m-2 gray-button font-semibold"
             @click="openDeleteOrgModal"
           >
-            Delete organization
+            {{ $t("org.delete") }}
           </div>
           <div
             v-if="isOwner"
-            class="btn-sm m-2 gray-button font-semibold"
+            class="btn-sm m-2 mr-0 gray-button font-semibold"
             @click="inviteMembers"
           >
-            Invite Members
+            {{ $t("org.invite") }}
           </div>
         </div>
       </div>
@@ -127,7 +128,7 @@ const update = async () => {
                   tracking-wider
                 "
               >
-                Name
+                {{ $t("name") }}
               </th>
               <th
                 scope="col"
@@ -142,7 +143,7 @@ const update = async () => {
                   sm:table-cell
                 "
               >
-                Email
+                {{ $t("email") }}
               </th>
               <th
                 scope="col"
@@ -156,7 +157,7 @@ const update = async () => {
                   tracking-wider
                 "
               >
-                Role
+                {{ $t("role.singular") }}
               </th>
               <th scope="col" class="relative px-6 py-3">
                 <span class="sr-only">Edit</span>
@@ -179,7 +180,7 @@ const update = async () => {
                 {{ member.email }}
               </td>
               <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-                {{ member.role }}
+                {{ $t(member.role) }}
               </td>
               <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
                 <Dropdown :options="options" :icon="icon" />

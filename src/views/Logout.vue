@@ -11,6 +11,6 @@ window.location.href = window.location.origin + "/accounts/login/";
 
 <template>
   <div>
-    <h1>You are being logged out...</h1>
+    <h1>{{ $t("logging-out") }}</h1>
   </div>
 </template>

@@ -37,7 +37,7 @@ const props = defineProps({
           como-focus
         "
       >
-        <router-link :to="option.href">{{ option.title }}</router-link>
+        <router-link :to="option.href">{{ $t(option.title) }}</router-link>
       </li>
     </ul>
   </div>

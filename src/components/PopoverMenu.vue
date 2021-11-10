@@ -80,7 +80,7 @@ const props = defineProps({
             <div class="relative bg-white text-xs rounded-lg">
               <div class="flex items-center pl-4 pr-2 py-2 justify-between">
                 <div class="font-semibold text-gray-500">
-                  {{ contextTitle }}
+                  {{ $t(contextTitle) }}
                 </div>
                 <XIcon
                   class="h-4 w-4 text-gray-600 cursor-pointer"
@@ -126,7 +126,7 @@ const props = defineProps({
                   />
                   <div v-else class="w-6" />
                   <p class="font-medium text-gray-900 whitespace-nowrap">
-                    {{ item.name }}
+                    {{ $t(item.name) }}
                   </p>
                 </div>
               </router-link>

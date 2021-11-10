@@ -21,19 +21,19 @@ const icon = UserIcon;
 const menuEntries = [
   {
     icon: AtSymbolIcon,
-    name: "Change Email",
+    name: "user.change-email",
     route: "change-email",
     params: {},
   },
   {
     icon: KeyIcon,
-    name: "Change Password",
+    name: "user.change-password",
     route: "change-password",
     params: {},
   },
   {
     icon: LogoutIcon,
-    name: "Logout",
+    name: "user.logout",
     route: "logout",
     params: {},
   },
@@ -42,7 +42,7 @@ const menuEntries = [
 
 <template>
   <PopoverMenu
-    context-title="User Settings"
+    context-title="user.settings"
     :title="title"
     :options="menuEntries"
     :icon="icon"

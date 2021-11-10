@@ -4,11 +4,11 @@ export const getInitials = (...args) =>
 export const roleToString = (role) => {
   switch (role.toLowerCase()) {
     case "o":
-      return "Owner";
+      return "role.owner";
     case "i":
-      return "Inspector";
+      return "role.inspector";
     case "a":
-      return "Assistant";
+      return "role.assistant";
     default:
       return "-";
   }

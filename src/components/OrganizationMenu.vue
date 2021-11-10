@@ -38,13 +38,13 @@ const orgEntries = computed(() => {
 const defaultEntries = [
   {
     icon: OfficeBuildingIcon,
-    name: "Manage organizations",
+    name: "org.manage",
     route: "org-management",
     params: {},
   },
   {
     icon: PlusIcon,
-    name: "Create a new organization",
+    name: "org.create",
     route: "org-management-add",
     params: {},
   },
@@ -57,7 +57,7 @@ const icon = OfficeBuildingIcon;
 
 <template>
   <PopoverMenu
-    context-title="Switch organization"
+    context-title="org.switch"
     :title="currentOrgName"
     :icon="icon"
     :options="menuEntries"
