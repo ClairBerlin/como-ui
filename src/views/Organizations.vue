@@ -80,7 +80,7 @@ const hasMemberships = () => memberships.value?.length > 0;
           >
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
               <router-link
-                class="text-l font-bold text-blue-500 rounded p-1 como-focus"
+                class="text-l font-bold text-blue-600 rounded p-1 como-focus"
                 :to="{
                   name: 'org-management-detail',
                   params: { orgId: m.orgId },

@@ -3,7 +3,7 @@ import Logo from "@/components/Logo.vue";
 import { onMounted, ref, watch } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import {
   Dialog,
   DialogOverlay,
@@ -23,7 +23,6 @@ import OrganizationMenu from "./components/OrganizationMenu.vue";
 import ProfileMenu from "./components/ProfileMenu.vue";
 
 const store = useStore();
-const router = useRouter();
 const route = useRoute();
 
 // TODO: what about feedback and help? (before, this pointed to a Clair email/domain)?
@@ -158,8 +157,8 @@ watch(
                     }"
                     :class="[
                       isCurrentRoute(item.routeName)
-                        ? 'bg-gray-200 text-gray-900'
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+                        ? 'bg-indigo-50 text-indigo-900'
+                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
                       'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
                     ]"
                   >
@@ -167,8 +166,8 @@ watch(
                       :is="item.icon"
                       :class="[
                         isCurrentRoute(item.routeName)
-                          ? 'text-gray-700'
-                          : 'text-gray-400 group-hover:text-gray-500',
+                          ? 'text-indigo-900'
+                          : 'text-gray-500 group-hover:text-gray-600',
                         'mr-4 flex-shrink-0 h-6 w-6',
                       ]"
                       aria-hidden="true"
@@ -216,7 +215,7 @@ watch(
                   }"
                   :class="[
                     isCurrentRoute(item.routeName)
-                      ? 'bg-gray-100 text-gray-900 font-bold'
+                      ? 'bg-indigo-50 text-indigo-900 font-bold'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
                     'group flex items-center my-1 px-2 py-4 text-sm font-medium rounded-md como-focus',
                   ]"
@@ -225,8 +224,8 @@ watch(
                     :is="item.icon"
                     :class="[
                       isCurrentRoute(item.routeName)
-                        ? 'text-gray-700'
-                        : 'text-gray-500 group-hover:text-gray-500',
+                        ? 'text-indigo-900'
+                        : 'text-gray-500 group-hover:text-gray-600',
                       'mr-3 flex-shrink-0 h-6 w-6',
                     ]"
                     aria-hidden="true"

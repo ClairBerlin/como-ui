@@ -33,7 +33,7 @@ const props = defineProps({
           justify-between
         "
       >
-        <div class="flex">
+        <div class="flex items-center">
           <component
             v-if="icon"
             :is="icon"
@@ -107,6 +107,7 @@ const props = defineProps({
                   como-focus
                   border-t border-gray-200
                   cursor-pointer
+                  last:rounded-b-md
                 "
               >
                 <div class="flex">

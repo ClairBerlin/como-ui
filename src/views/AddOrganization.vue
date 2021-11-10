@@ -25,7 +25,7 @@ const createOrg = async () => {
         newOrg,
         { url: `organizations/` },
       ]);
-      router.push({ path: `/orgs/${_jv.id}` });
+      router.push({ path: `/org-management/${_jv.id}` });
     } catch (e) {
       toast.error("Failed to create the organization");
     }

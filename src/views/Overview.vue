@@ -159,17 +159,18 @@ const update = async () => {
                 }"
                 class="
                   bg-gradient-to-t
-                  from-blue-700
+                  from-indigo-700
                   to-blue-500
                   p-4
-                  w-full
+                  m-6
+                  mt-0
                   text-center
                   hover:ring
-                  rounded-b-md
+                  rounded-md
                   font-semibold
-                  text-blue-100
+                  text-indigo-100
                 "
-                >View CO2 concentration chart
+                >View CO2 chart
               </router-link>
             </div>
           </li>
