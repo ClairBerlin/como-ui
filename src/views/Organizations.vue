@@ -12,12 +12,12 @@ const hasMemberships = () => memberships.value?.length > 0;
 <template>
   <div class="text-black">
     <div class="flex justify-between items-center">
-      <h2 class="font-bold text-xl">All your organizations</h2>
+      <h2 class="font-bold text-xl">{{ $t("org.all") }}</h2>
       <router-link
         class="btn btn-sm m-2 font-semibold gray-button"
         :to="{ name: 'org-management-add' }"
       >
-        Create a new organization
+        {{ $t("org.create") }}
       </router-link>
     </div>
     <div
@@ -39,7 +39,7 @@ const hasMemberships = () => memberships.value?.length > 0;
                 tracking-wider
               "
             >
-              Organization Name
+              {{ $t("org.name") }}
             </th>
             <th
               scope="col"
@@ -54,7 +54,7 @@ const hasMemberships = () => memberships.value?.length > 0;
                 sm:table-cell
               "
             >
-              Your Role
+              {{ $t("role.your") }}
             </th>
             <th
               scope="col"
@@ -68,7 +68,7 @@ const hasMemberships = () => memberships.value?.length > 0;
                 tracking-wider
               "
             >
-              Options
+              {{ $t("options") }}
             </th>
           </tr>
         </thead>
@@ -80,7 +80,14 @@ const hasMemberships = () => memberships.value?.length > 0;
           >
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
               <router-link
-                class="text-l font-bold text-blue-600 rounded p-1 como-focus"
+                class="
+                  text-md
+                  font-bold
+                  text-blue-600
+                  underline
+                  rounded
+                  como-focus
+                "
                 :to="{
                   name: 'org-management-detail',
                   params: { orgId: m.orgId },
@@ -89,7 +96,7 @@ const hasMemberships = () => memberships.value?.length > 0;
               </router-link>
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-              {{ roleToString(m.role) }}
+              {{ $t(roleToString(m.role)) }}
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
               <div class="flex flex-row">
@@ -100,14 +107,14 @@ const hasMemberships = () => memberships.value?.length > 0;
                     name: 'org-management-edit',
                     params: { orgId: m.orgId },
                   }"
-                  >Edit</router-link
+                  >{{ $t("edit") }}</router-link
                 >
                 <button
                   @click="console.log('todo: leave org')"
                   type="button"
                   class="gray-button ml-2"
                 >
-                  Leave
+                  {{ $t("leave") }}
                 </button>
               </div>
             </td>

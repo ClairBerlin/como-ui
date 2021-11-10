@@ -1,7 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
-import { useStore } from "vuex";
 import dayjs from "dayjs";
 import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";
@@ -16,6 +14,9 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 Chart.register(
   LineElement,
@@ -40,8 +41,6 @@ const props = defineProps({
   },
   samplePool: { type: Array, required: true },
 });
-
-const store = useStore();
 
 const displayFrom = computed(() => {
   if (props.displayScope === "month") {
@@ -86,20 +85,32 @@ const timeseries = computed(() =>
 const chartData = computed(() => ({
   datasets: [
     {
-      label: "CO2 concentration [PPM]",
+      label: t("ppm"),
       pointRadius: 0,
       lineTension: 0,
-      borderWidth: 2,
-      borderColor: "#007cb0",
+      borderWidth: 3,
+      backgroundColor: "#4338CA",
+      borderColor: "#4338CA",
       data: timeseries.value,
       parsing: false,
     },
   ],
 }));
 
+const getColor = (value) => {
+  if (value <= 600) return "#27ff00";
+  if (value <= 800) return "#95fe00";
+  if (value <= 1000) return "#d0fc00";
+  if (value <= 1200) return "#fff800";
+  if (value <= 1400) return "#ffd400";
+  if (value <= 1600) return "#ff8700";
+  return "#ff0000";
+};
+
 const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
+  animation: { duration: 600, easing: "easeOutCubic" },
   scales: {
     x: {
       type: "time",
@@ -122,9 +133,10 @@ const chartOptions = computed(() => ({
       position: "bottom",
       alignToPixels: true,
       title: {
-        color: "red",
+        color: "#4338CA",
         display: true,
-        text: "Time",
+        font: { weight: "bold", size: 16 },
+        text: t("time"),
       },
       ...displayTimeRange.value,
     },
@@ -133,29 +145,25 @@ const chartOptions = computed(() => ({
       position: "left",
       alignToPixels: true,
       title: {
-        color: "red",
+        color: "#4338CA",
         display: true,
-        text: "CO2-Concentration [PPM]",
+        font: { weight: "bold", size: 16 },
+        text: t("ppm"),
       },
-      suggestedmin: 400,
+      min: 400,
       max: 1800,
+      ticks: {
+        stepSize: 100,
+      },
       grid: {
-        color: [
-          "#27ff00",
-          "#95fe00",
-          "#d0fc00",
-          "#fff800",
-          "#ffd400",
-          "#ffaf00",
-          "#ff8700",
-          "#ff0000",
-        ],
+        drawBorder: false,
+        color: (context) => getColor(context.tick.value),
       },
     },
   },
 }));
 
-const { lineChartProps, lineChartRef } = useLineChart({
+const { lineChartProps } = useLineChart({
   chartData: chartData,
   options: chartOptions,
 });
