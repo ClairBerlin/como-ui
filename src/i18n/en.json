@@ -51,7 +51,7 @@
     "details": "Organization Details"
   },
   "role": {
-    "singular": "role",
+    "singular": "Role",
     "change": "Change Role",
     "your": "Your Role",
     "owner": "Owner",
