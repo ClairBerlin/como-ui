@@ -105,14 +105,17 @@ const updateOrganization = () => {
             {{ $t("description") }}
           </span>
         </label>
-        <input
+        <textarea
           type="text"
           v-model.trim="newOrgDescription"
-          :placeholder="currentOrg?.description || 'optional'"
-          class="como-focus text-area rounded h-24 text-gray-600"
+          :placeholder="currentOrg?.description || '(optional)'"
+          class="como-focus area rounded h-24 text-gray-600"
         />
       </div>
-      <button class="mt-2 btn gray-button" @click="updateOrganization">
+      <button
+        class="mt-2 btn gray-button font-semibold"
+        @click="updateOrganization"
+      >
         {{ $t("update") }}
       </button>
     </div>

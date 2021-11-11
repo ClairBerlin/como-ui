@@ -54,14 +54,14 @@ const createOrg = async () => {
             $t("description")
           }}</span>
         </label>
-        <input
+        <textarea
           type="text"
           v-model.trim="newOrgDescription"
           placeholder="(optional)"
-          class="como-focus text-area rounded h-24 text-gray-600"
+          class="como-focus rounded h-24 text-gray-600"
         />
       </div>
-      <button class="mt-2 btn gray-button" @click="createOrg">
+      <button class="mt-2 btn gray-button font-semibold" @click="createOrg">
         {{ $t("org.create") }}
       </button>
     </div>
