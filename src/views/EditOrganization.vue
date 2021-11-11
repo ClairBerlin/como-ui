@@ -52,19 +52,45 @@ const updateOrganization = () => {
 </script>
 
 <template>
-  <div class="max-w-sm">
-    <div v-if="!isOwner" class="alert alert-error">
-      <div class="flex items-center justify-between">
-        <BanIcon class="h-12 w-12 mr-4" />
-        <label class="font-semibold">
-          Only an Owner of an organization can change name and/or description
-        </label>
+  <div class="max-w-sm sm:max-w-lg">
+    <div
+      v-if="!isOwner"
+      class="
+        shadow-md
+        mt-4
+        rounded-md
+        flex
+        items-center
+        bg-red-50
+        border-l-4 border-red-400
+        p-4
+      "
+    >
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <BanIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
+        </div>
+        <div class="ml-3">
+          Only the Owner of an organization can change the name and/or
+          description. Contact the Owner of {{ currentOrg.name }}. {{ " " }}
+          <router-link
+            :to="{
+              name: 'org-management-detail',
+              params: { orgId: route.params.orgId },
+            }"
+            class="font-medium underline text-red-700 hover:text-red-600"
+          >
+            Find their contact information here.
+          </router-link>
+        </div>
       </div>
     </div>
     <div v-else class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
       <div class="form-control">
         <label class="label">
-          <span class="label-text text-black font-bold">Organization Name</span>
+          <span class="label-text text-black font-bold">{{
+            $t("org.name")
+          }}</span>
         </label>
         <input
           type="text"
@@ -76,18 +102,18 @@ const updateOrganization = () => {
       <div class="form-control py-4">
         <label class="label">
           <span class="label-text text-black font-bold">
-            Description (optional)
+            {{ $t("description") }}
           </span>
         </label>
         <input
           type="text"
           v-model.trim="newOrgDescription"
-          :placeholder="currentOrg.description"
+          :placeholder="currentOrg?.description || 'optional'"
           class="como-focus text-area rounded h-24 text-gray-600"
         />
       </div>
       <button class="mt-2 btn gray-button" @click="updateOrganization">
-        Update
+        {{ $t("update") }}
       </button>
     </div>
   </div>

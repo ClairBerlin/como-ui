@@ -125,7 +125,7 @@ const deleteClick = () => {
                   as="h3"
                   class="text-lg leading-6 font-medium text-gray-900"
                 >
-                  {{ modalTitle }}
+                  {{ $t(modalTitle) }}
                 </DialogTitle>
                 <div class="mt-2">
                   <slot />
@@ -157,7 +157,7 @@ const deleteClick = () => {
                 "
                 @click="deleteClick"
               >
-                Delete
+                {{ $t("delete") }}
               </button>
               <button
                 type="button"
@@ -184,7 +184,7 @@ const deleteClick = () => {
                 "
                 @click="close"
               >
-                Cancel
+                {{ $t("cancel") }}
               </button>
             </div>
           </div>

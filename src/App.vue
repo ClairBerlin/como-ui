@@ -21,6 +21,7 @@ import {
 } from "@heroicons/vue/outline";
 import OrganizationMenu from "./components/OrganizationMenu.vue";
 import ProfileMenu from "./components/ProfileMenu.vue";
+import LanguageSelect from "./components/LanguageSelect.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -30,27 +31,27 @@ const route = useRoute();
 //Navigation within the context of the selected organization.
 const orgNavigation = [
   {
-    name: "Overview",
+    name: "overview",
     routeName: "overview",
     icon: ChartBarIcon,
   },
   {
-    name: "Team",
+    name: "team",
     routeName: "org-management-detail",
     icon: UserGroupIcon,
   },
   {
-    name: "Sites",
+    name: "sites",
     routeName: "sites",
     icon: LocationMarkerIcon,
   },
   {
-    name: "Rooms",
+    name: "rooms",
     routeName: "rooms",
     icon: CubeIcon,
   },
   {
-    name: "Sensors",
+    name: "nodes",
     routeName: "sensors",
     icon: ChipIcon,
   },
@@ -146,6 +147,7 @@ watch(
               <div class="w-full px-3 border-b border-gray-200" />
               <nav class="mt-1 flex-1 px-2 space-y-1">
                 <OrganizationMenu />
+                <LanguageSelect />
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
                 <div v-if="isOrgContext">
                   <router-link
@@ -204,6 +206,7 @@ watch(
             <div class="w-full px-3 border-b border-gray-200" />
             <nav class="mt-1 flex-1 bg-white space-y-1">
               <OrganizationMenu />
+              <LanguageSelect />
               <div class="w-full px-3 my-1 border-b border-gray-200" />
               <div v-if="isOrgContext">
                 <router-link
@@ -230,7 +233,7 @@ watch(
                     ]"
                     aria-hidden="true"
                   />
-                  {{ item.name }}
+                  {{ $t(item.name) }}
                 </router-link>
               </div>
             </nav>

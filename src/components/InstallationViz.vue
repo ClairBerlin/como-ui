@@ -3,10 +3,7 @@ import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
-import "dayjs/locale/de";
 import DayjsMinMax from "dayjs/plugin/minMax";
-// TODO: update locale when language is changed via UI
-dayjs.locale("de");
 dayjs.extend(DayjsMinMax);
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
@@ -195,21 +192,21 @@ const isTabActive = (index) => selectedTab.value === index;
             'tab tab-bordered flex-grow',
             isTabActive(0) ? 'tab-active' : '',
           ]"
-          >Day</Tab
+          >{{ $t("day") }}</Tab
         >
         <Tab
           :class="[
             'tab tab-bordered flex-grow',
             isTabActive(1) ? 'tab-active' : '',
           ]"
-          >Week</Tab
+          >{{ $t("week") }}</Tab
         >
         <Tab
           :class="[
             'tab tab-bordered flex-grow',
             isTabActive(2) ? 'tab-active' : '',
           ]"
-          >Month</Tab
+          >{{ $t("month") }}</Tab
         >
       </TabList>
       <TabPanels>
@@ -242,13 +239,19 @@ const isTabActive = (index) => selectedTab.value === index;
     <div>Reference day for display: {{ referenceDayFormatted }}</div>
     <div class="flex justify-between">
       <div>
-        <div class="btn-sm gray-button" @click="previousInstant">Previous</div>
+        <div class="btn-sm gray-button" @click="previousInstant">
+          {{ $t("previous") }}
+        </div>
       </div>
       <div>
-        <div class="btn-sm gray-button" @click="nowInstant">Now</div>
+        <div class="btn-sm gray-button" @click="nowInstant">
+          {{ $t("now") }}
+        </div>
       </div>
       <div>
-        <div class="btn-sm gray-button" @click="nextInstant">Next</div>
+        <div class="btn-sm gray-button" @click="nextInstant">
+          {{ $t("next") }}
+        </div>
       </div>
     </div>
   </div>

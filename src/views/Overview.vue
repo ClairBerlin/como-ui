@@ -4,10 +4,7 @@ import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
-import "dayjs/locale/de";
 import { ExclamationIcon, EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
-// TODO: update locale when language is changed via UI
-dayjs.locale("de");
 
 const route = useRoute();
 const store = useStore();
