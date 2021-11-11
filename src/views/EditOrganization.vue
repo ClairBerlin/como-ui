@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
@@ -20,8 +20,6 @@ const currentOrg = computed(() =>
     _jv: { type: "Organization", id: route.params.orgId },
   })
 );
-
-watch(() => console.log(currentOrg.value));
 
 const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.orgId)

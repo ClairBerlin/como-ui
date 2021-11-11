@@ -17,7 +17,7 @@ const props = defineProps({
       tabindex="0"
       class="
         shadow-lg
-        rounded-lg
+        rounded-md
         menu
         dropdown-content
         w-52

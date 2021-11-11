@@ -147,7 +147,7 @@ watch(
               <div class="w-full px-3 border-b border-gray-200" />
               <nav class="mt-1 flex-1 px-2 space-y-1">
                 <OrganizationMenu />
-                <LanguageSelect />
+                <LanguageSelect class="py-1" />
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
                 <div v-if="isOrgContext">
                   <router-link
@@ -206,7 +206,7 @@ watch(
             <div class="w-full px-3 border-b border-gray-200" />
             <nav class="mt-1 flex-1 bg-white space-y-1">
               <OrganizationMenu />
-              <LanguageSelect />
+              <LanguageSelect class="py-1" />
               <div class="w-full px-3 my-1 border-b border-gray-200" />
               <div v-if="isOrgContext">
                 <router-link

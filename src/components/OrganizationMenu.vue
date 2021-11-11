@@ -3,7 +3,7 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import PopoverMenu from "@/components/PopoverMenu.vue";
-import { PlusIcon, CheckIcon } from "@heroicons/vue/outline";
+import { PlusIcon } from "@heroicons/vue/outline";
 import { OfficeBuildingIcon } from "@heroicons/vue/solid";
 
 const store = useStore();
@@ -27,7 +27,7 @@ const orgEntries = computed(() => {
   const memberships = store.getters["authuser/getMemberships"];
   return memberships.map((m) => {
     return {
-      icon: m.orgId === selectedMembership.value?.orgId ? CheckIcon : undefined,
+      selected: m.orgId === selectedMembership.value?.orgId,
       name: m.orgName,
       route: route.name,
       params: { orgId: m.orgId },

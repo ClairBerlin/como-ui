@@ -16,10 +16,7 @@ import "dayjs/locale/tr";
 import { CheckIcon, SelectorIcon } from "@heroicons/vue/outline";
 import { useI18n } from "vue-i18n";
 
-const { locale } = useI18n({ useScope: "global" });
-
 const PREFERRED = "preferredlanguage";
-
 const languages = [
   {
     id: 1,
@@ -43,6 +40,9 @@ const languages = [
     unavailable: true,
   },
 ];
+
+const { locale } = useI18n({ useScope: "global" });
+
 const updateLocale = (newLocale) => {
   Cookies.set(PREFERRED, newLocale);
   locale.value = newLocale;
@@ -51,11 +51,7 @@ const updateLocale = (newLocale) => {
 const preferredlanguage =
   languages.find((l) => l.locale === Cookies.get(PREFERRED)) || languages[0];
 const selectedLanguage = ref(preferredlanguage);
-updateLocale(selectedLanguage.value.locale);
-watchEffect(() => {
-  const locale = selectedLanguage.value.locale;
-  updateLocale(locale);
-});
+watchEffect(() => updateLocale(selectedLanguage.value.locale));
 </script>
 
 <template>
@@ -83,7 +79,7 @@ watchEffect(() => {
           sm:text-sm
         "
       >
-        <span class="w-full inline-flex truncate font-medium text-gray-600">
+        <span class="w-full inline-flex truncate font-medium text-gray-700">
           <span class="truncate">{{ selectedLanguage.short }}</span>
           <span class="ml-3 truncate">{{ selectedLanguage.name }}</span>
         </span>
@@ -136,7 +132,7 @@ watchEffect(() => {
             <li
               :class="[
                 active
-                  ? 'text-white bg-indigo-600 font-medium'
+                  ? 'text-white bg-indigo-500 font-medium'
                   : 'text-gray-900',
                 'cursor-default select-none relative py-2 pl-3 pr-9',
               ]"
@@ -153,9 +149,9 @@ watchEffect(() => {
                 <span
                   :class="[
                     active
-                      ? 'text-indigo-200'
+                      ? 'text-white'
                       : l.unavailable
-                      ? 'text-gray-500'
+                      ? 'text-gray-400'
                       : 'text-gray-700',
                     'ml-2 truncate',
                   ]"

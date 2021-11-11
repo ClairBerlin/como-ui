@@ -1,6 +1,11 @@
 <script setup>
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import { ChevronDownIcon, ChevronUpIcon, XIcon } from "@heroicons/vue/solid";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  XIcon,
+} from "@heroicons/vue/solid";
 
 const props = defineProps({
   icon: { type: Function, default: undefined },
@@ -9,6 +14,9 @@ const props = defineProps({
   popOverAbove: { type: Boolean, default: false },
   options: { type: Array, required: true },
 });
+
+const iconClasses = () =>
+  `text-gray-500 group-hover:text-gray-600 mr-2 flex-shrink-0 h-4 w-4`;
 </script>
 
 <template>
@@ -111,22 +119,16 @@ const props = defineProps({
                 "
               >
                 <div class="flex">
+                  <CheckIcon :class="iconClasses()" v-if="item.selected" />
                   <component
-                    v-if="item.icon"
+                    v-else-if="item.icon"
                     :is="item.icon"
-                    class="
-                      text-gray-500
-                      group-hover:text-gray-600
-                      mr-2
-                      flex-shrink-0
-                      h-4
-                      w-4
-                    "
+                    :class="iconClasses()"
                     aria-hidden="true"
                   />
                   <div v-else class="w-6" />
                   <p class="font-medium text-gray-900 whitespace-nowrap">
-                    {{ $t(item.name) }}
+                    {{ item?.icon ? $t(item.name) : item.name }}
                   </p>
                 </div>
               </router-link>
