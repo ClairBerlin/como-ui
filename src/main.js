@@ -14,7 +14,11 @@ const router = createRouter({
   routes,
 });
 
-const i18n = createI18n({ locale: "de", fallbackLocale: "en", messages });
+const i18n = createI18n({
+  locale: "de",
+  fallbackLocale: ["de", "en"],
+  messages,
+});
 
 const app = createApp(App);
 app.use(router);

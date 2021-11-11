@@ -3,10 +3,7 @@ import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
-import "dayjs/locale/de";
 import DayjsMinMax from "dayjs/plugin/minMax";
-// TODO: update locale when language is changed via UI
-dayjs.locale("de");
 dayjs.extend(DayjsMinMax);
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
