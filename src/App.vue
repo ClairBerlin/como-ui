@@ -3,7 +3,7 @@ import Logo from "@/components/Logo.vue";
 import { onMounted, ref, watch } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import {
   Dialog,
   DialogOverlay,
@@ -25,6 +25,7 @@ import LanguageSelect from "./components/LanguageSelect.vue";
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 
 // TODO: what about feedback and help? (before, this pointed to a Clair email/domain)?
 
@@ -77,6 +78,7 @@ watch(
         `Organization changed to orgId ${orgId}. Fetching related data...`
       );
       store.dispatch("jv/get", `organizations/${orgId}`);
+      router.push({ name: "", params: { orgId: orgId } });
     } else {
       console.log("Entering a route outside of an organization context.");
     }
@@ -89,7 +91,7 @@ watch(
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog
         as="div"
-        class="fixed inset-0 flex z-40 md:hidden"
+        class="fixed inset-0 flex z-40 lg:hidden"
         @close="sidebarOpen = false"
       >
         <TransitionChild
@@ -174,7 +176,7 @@ watch(
                       ]"
                       aria-hidden="true"
                     />
-                    {{ item.name }}
+                    {{ $t(item.name) }}
                   </router-link>
                 </div>
                 <div class="w-full px-3 my-1 border-b border-gray-200" />
@@ -190,7 +192,7 @@ watch(
     </TransitionRoot>
 
     <!-- Static sidebar for desktop -->
-    <div class="hidden md:flex md:flex-shrink-0">
+    <div class="hidden lg:flex lg:flex-shrink-0">
       <div class="flex flex-col w-64">
         <div
           class="
@@ -244,7 +246,7 @@ watch(
       </div>
     </div>
     <div class="flex flex-col w-0 flex-1 overflow-hidden">
-      <div class="md:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+      <div class="lg:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
         <button
           type="button"
           class="

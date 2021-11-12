@@ -12,8 +12,10 @@ const currentOrgId = computed(() => route.params.orgId);
 const rooms = ref(undefined);
 
 const hasRooms = computed(() => rooms.value?.length > 0);
+const isLoading = ref(true);
 
 async function update() {
+  isLoading.value = true;
   const roomObj = await store.dispatch("jv/get", [
     "rooms",
     { params: { "filter[organization]": currentOrgId.value } },
@@ -26,6 +28,7 @@ async function update() {
     return store.dispatch("jv/getRelated", `rooms/${roomId}`);
   });
   await Promise.all(relatedResourcePromises);
+  isLoading.value = false;
 }
 
 onMounted(async () => update());
@@ -42,23 +45,163 @@ watch(currentOrgId, () => update());
     information from multiple sensors in a single room, this information may be
     viewed here as well.
   </div>
-  <div class="bg-white shadow-md rounded-md mt-8 p-2">
-    <div v-if="hasRooms">
-      Sites:
-      <ul id="rooms-list">
-        <li v-for="room in rooms" :key="room._jv.id">
-          ID: {{ room._jv.id }}, Name: {{ room.name }}, Size [m<sup>2</sup>]:
-          {{ room.size_sqm }}, Height [m]: {{ room.height_m }}, Max. Occupancy:
-          {{ room.max_occupancy }}
-          <router-link
-            :to="{
-              name: 'room',
-              params: { roomId: room._jv.id },
-            }"
-            >Inspect and modify room</router-link
+  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <div
+    v-else-if="hasRooms"
+    class="
+      ring-1 ring-gray-300
+      rounded-md
+      bg-white
+      text-md
+      overflow-hidden
+      mt-8
+    "
+  >
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th
+            scope="col"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
-        </li>
-      </ul>
+            Room Name
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-right text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
+          >
+            Size [m<sup>2</sup>]
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-right text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
+          >
+            Height [m]
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-right text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              md:table-cell
+            "
+          >
+            Max. Occupancy
+          </th>
+          <th
+            scope="col"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
+          >
+            Action
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(room, roomIdx) in rooms"
+          :key="room._jv.id"
+          :class="[roomIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+        >
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            {{ room.name }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+            {{ room.size_sqm }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+            {{ room.height_m }}
+          </td>
+          <td
+            class="
+              hidden
+              md:table-cell
+              px-2
+              sm:px-6
+              py-4
+              whitespace-nowrap
+              text-right
+            "
+          >
+            {{ room.max_occupancy }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <div class="flex flex-row">
+              <router-link
+                class="gray-button"
+                :to="{
+                  name: 'room',
+                  params: { roomId: room._jv.id },
+                }"
+                >Inspect</router-link
+              >
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div
+    v-else
+    class="
+      shadow-md
+      mt-4
+      rounded-md
+      max-w-sm
+      flex
+      items-center
+      bg-yellow-50
+      border-l-4 border-yellow-400
+      p-4
+    "
+  >
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+      </div>
+      <div class="ml-3">
+        This organization has no rooms. {{ " " }}
+        <!-- TODO: use :to="{ name: 'rooms-add' }" -->
+        <router-link
+          to="#"
+          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+        >
+          Click here to add one.
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

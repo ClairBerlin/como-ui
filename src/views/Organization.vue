@@ -1,9 +1,7 @@
 <script setup>
 import { onMounted, watch, computed, ref } from "vue";
-import { CogIcon } from "@heroicons/vue/outline";
 import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
-import Dropdown from "@/components/Dropdown.vue";
 import { roleToString } from "@/utils";
 import DeletionModal from "@/components/DeletionModal.vue";
 
@@ -13,7 +11,6 @@ const store = useStore();
 const members = ref([]);
 const org = ref();
 const orgName = computed(() => org?.value?.name || "…");
-const icon = CogIcon;
 const options = [
   //TODO: adapt to correct urls/onclick actions
   { href: "/change-role", title: "role.change" },
@@ -40,6 +37,8 @@ const deleteOrg = async () => {
   router.push({ name: "org-management" });
 };
 const inviteMembers = () => console.log("TODO: open invite modal");
+const removeMember = () => console.log("TODO: open modal to confirm removal");
+const changeRole = () => console.log("TODO: open modal to change role");
 
 const getRole = (memberships, username) =>
   roleToString(
@@ -139,8 +138,6 @@ const update = async () => {
                   font-medium
                   text-gray-500
                   tracking-wider
-                  hidden
-                  sm:table-cell
                 "
               >
                 {{ $t("email") }}
@@ -155,12 +152,25 @@ const update = async () => {
                   font-medium
                   text-gray-500
                   tracking-wider
+                  hidden
+                  md:table-cell
                 "
               >
                 {{ $t("role.singular") }}
               </th>
-              <th scope="col" class="relative px-6 py-3">
-                <span class="sr-only">Edit</span>
+              <th
+                scope="col"
+                class="
+                  px-2
+                  sm:px-6
+                  py-3
+                  text-left text-xs
+                  font-medium
+                  text-gray-500
+                  tracking-wider
+                "
+              >
+                {{ $t("actions") }}
               </th>
             </tr>
           </thead>
@@ -176,14 +186,32 @@ const update = async () => {
                 </div>
                 <div class="text-gray-700 text-sm">{{ member.username }}</div>
               </td>
-              <td class="hidden sm:table-cell sm:px-6 py-4 whitespace-nowrap">
+              <td class="sm:px-6 py-4 whitespace-nowrap">
                 {{ member.email }}
               </td>
-              <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+              <td
+                class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap"
+              >
                 {{ $t(member.role) }}
               </td>
               <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-                <Dropdown :options="options" :icon="icon" />
+                <!-- <Dropdown :options="options" :icon="icon" /> -->
+                <div class="flex flex-col sm:flex-row">
+                  <div
+                    v-if="isOwner"
+                    class="btn-sm m-2 gray-button font-semibold w-max"
+                    @click="changeRole"
+                  >
+                    {{ $t("role.change") }}
+                  </div>
+                  <div
+                    v-if="isOwner"
+                    class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                    @click="removeMember"
+                  >
+                    {{ $t("remove") }}
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>

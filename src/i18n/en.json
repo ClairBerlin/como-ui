@@ -26,6 +26,8 @@
   "previous": "Previous",
   "now": "Now",
   "next": "Next",
+  "action": "Action",
+  "actions": "Actions",
   "user": {
     "singular": "User",
     "plural": "Users",
