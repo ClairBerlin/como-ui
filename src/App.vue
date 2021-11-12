@@ -3,7 +3,7 @@ import Logo from "@/components/Logo.vue";
 import { onMounted, ref, watch } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import {
   Dialog,
   DialogOverlay,
@@ -25,6 +25,7 @@ import LanguageSelect from "./components/LanguageSelect.vue";
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 
 // TODO: what about feedback and help? (before, this pointed to a Clair email/domain)?
 
@@ -77,6 +78,7 @@ watch(
         `Organization changed to orgId ${orgId}. Fetching related data...`
       );
       store.dispatch("jv/get", `organizations/${orgId}`);
+      router.push({ name: "", params: { orgId: orgId } });
     } else {
       console.log("Entering a route outside of an organization context.");
     }

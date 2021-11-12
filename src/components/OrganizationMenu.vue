@@ -29,7 +29,7 @@ const orgEntries = computed(() => {
     return {
       selected: m.orgId === selectedMembership.value?.orgId,
       name: m.orgName,
-      route: route.name,
+      route: "overview",
       params: { orgId: m.orgId },
     };
   });
