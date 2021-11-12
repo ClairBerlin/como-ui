@@ -16,8 +16,10 @@ const formatAdress = (address) => {
 };
 
 const hasSites = computed(() => sites.value?.length > 0);
+const isLoading = ref(true);
 
 async function update() {
+  isLoading.value = true;
   const siteObj = await store.dispatch("jv/get", [
     "sites",
     { params: { "filter[organization]": currentOrgId.value } },
@@ -30,6 +32,7 @@ async function update() {
     return store.dispatch("jv/getRelated", `sites/${siteId}`);
   });
   await Promise.all(relatedResourcePromises);
+  isLoading.value = false;
 }
 
 onMounted(async () => update());
@@ -44,7 +47,18 @@ watch(currentOrgId, () => update());
     offer the possibility to add a new site and to remove an existing site with
     all its rooms and installations.
   </div>
-  <div class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden">
+  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <div
+    v-else-if="hasSites"
+    class="
+      ring-1 ring-gray-300
+      rounded-md
+      bg-white
+      text-md
+      overflow-hidden
+      mt-8
+    "
+  >
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -86,8 +100,6 @@ watch(currentOrgId, () => update());
               font-medium
               text-gray-500
               tracking-wider
-              hidden
-              sm:table-cell
             "
           >
             Action
@@ -103,7 +115,7 @@ watch(currentOrgId, () => update());
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
             {{ site.name }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="hidden sm:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
             {{ formatAdress(site.address) }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
@@ -121,5 +133,35 @@ watch(currentOrgId, () => update());
         </tr>
       </tbody>
     </table>
+  </div>
+  <div
+    v-else
+    class="
+      shadow-md
+      mt-4
+      rounded-md
+      max-w-sm
+      flex
+      items-center
+      bg-yellow-50
+      border-l-4 border-yellow-400
+      p-4
+    "
+  >
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+      </div>
+      <div class="ml-3">
+        This organization has no sites. {{ " " }}
+        <!-- TODO: use :to="{ name: 'sites-add' }" -->
+        <router-link
+          to="#"
+          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+        >
+          Click here to add one.
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>

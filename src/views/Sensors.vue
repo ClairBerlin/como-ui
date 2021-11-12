@@ -12,8 +12,10 @@ const currentOrgId = computed(() => route.params.orgId);
 const sensors = ref(undefined);
 
 const hasSensors = computed(() => sensors.value?.length > 0);
+const isLoading = ref(true);
 
 async function update() {
+  isLoading.value = true;
   const sensorObj = await store.dispatch("jv/get", [
     "nodes",
     { params: { "filter[organization]": currentOrgId.value } },
@@ -26,6 +28,7 @@ async function update() {
     return store.dispatch("jv/getRelated", `nodes/${sensorId}`);
   });
   await Promise.all(relatedResourcePromises);
+  isLoading.value = false;
 }
 
 onMounted(async () => update());
@@ -42,7 +45,19 @@ watch(currentOrgId, () => update());
     Things Network and to completely remove a sensor both from the COMo stack
     and from The Things Network.
   </div>
-  <div class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden">
+
+  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <div
+    v-else-if="hasSensors"
+    class="
+      ring-1 ring-gray-300
+      rounded-md
+      bg-white
+      text-md
+      overflow-hidden
+      mt-8
+    "
+  >
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -70,7 +85,7 @@ watch(currentOrgId, () => update());
               text-gray-500
               tracking-wider
               hidden
-              sm:table-cell
+              md:table-cell
             "
           >
             Sensor Identifier
@@ -84,15 +99,13 @@ watch(currentOrgId, () => update());
               font-medium
               text-gray-500
               tracking-wider
-              hidden
-              sm:table-cell
             "
           >
             Action
           </th>
         </tr>
       </thead>
-      <tbody v-if="hasSensors">
+      <tbody>
         <tr
           v-for="(sensor, sensorIdx) in sensors"
           :key="sensor._jv.id"
@@ -101,8 +114,8 @@ watch(currentOrgId, () => update());
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
             {{ sensor.alias }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-            {{ sensor._jv.id }}
+          <td class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
+            <pre class="">{{ sensor._jv.id }}</pre>
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
             <div class="flex flex-row">
@@ -119,5 +132,35 @@ watch(currentOrgId, () => update());
         </tr>
       </tbody>
     </table>
+  </div>
+  <div
+    v-else
+    class="
+      shadow-md
+      mt-4
+      rounded-md
+      max-w-sm
+      flex
+      items-center
+      bg-yellow-50
+      border-l-4 border-yellow-400
+      p-4
+    "
+  >
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+      </div>
+      <div class="ml-3">
+        This organization has no sensors. {{ " " }}
+        <!-- TODO: use :to="{ name: 'sensors-add' }" -->
+        <router-link
+          to="#"
+          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+        >
+          Click here to add one.
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>

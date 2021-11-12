@@ -186,7 +186,7 @@ const isTabActive = (index) => selectedTab.value === index;
       </div>
     </div>
     <TabGroup @change="tabChanged">
-      <TabList class="tabs p-2">
+      <TabList class="tabs py-2">
         <Tab
           :class="[
             'tab tab-bordered flex-grow',

@@ -12,8 +12,10 @@ const currentOrgId = computed(() => route.params.orgId);
 const rooms = ref(undefined);
 
 const hasRooms = computed(() => rooms.value?.length > 0);
+const isLoading = ref(true);
 
 async function update() {
+  isLoading.value = true;
   const roomObj = await store.dispatch("jv/get", [
     "rooms",
     { params: { "filter[organization]": currentOrgId.value } },
@@ -26,6 +28,7 @@ async function update() {
     return store.dispatch("jv/getRelated", `rooms/${roomId}`);
   });
   await Promise.all(relatedResourcePromises);
+  isLoading.value = false;
 }
 
 onMounted(async () => update());
@@ -42,7 +45,18 @@ watch(currentOrgId, () => update());
     information from multiple sensors in a single room, this information may be
     viewed here as well.
   </div>
-  <div class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden">
+  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <div
+    v-else-if="hasRooms"
+    class="
+      ring-1 ring-gray-300
+      rounded-md
+      bg-white
+      text-md
+      overflow-hidden
+      mt-8
+    "
+  >
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -65,12 +79,10 @@ watch(currentOrgId, () => update());
             class="
               sm:px-6
               py-3
-              text-left text-xs
+              text-right text-xs
               font-medium
               text-gray-500
               tracking-wider
-              hidden
-              sm:table-cell
             "
           >
             Size [m<sup>2</sup>]
@@ -80,12 +92,10 @@ watch(currentOrgId, () => update());
             class="
               sm:px-6
               py-3
-              text-left text-xs
+              text-right text-xs
               font-medium
               text-gray-500
               tracking-wider
-              hidden
-              sm:table-cell
             "
           >
             Height [m]
@@ -95,12 +105,12 @@ watch(currentOrgId, () => update());
             class="
               sm:px-6
               py-3
-              text-left text-xs
+              text-right text-xs
               font-medium
               text-gray-500
               tracking-wider
               hidden
-              sm:table-cell
+              md:table-cell
             "
           >
             Max. Occupancy
@@ -114,8 +124,6 @@ watch(currentOrgId, () => update());
               font-medium
               text-gray-500
               tracking-wider
-              hidden
-              sm:table-cell
             "
           >
             Action
@@ -131,13 +139,23 @@ watch(currentOrgId, () => update());
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
             {{ room.name }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
             {{ room.size_sqm }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
             {{ room.height_m }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td
+            class="
+              hidden
+              md:table-cell
+              px-2
+              sm:px-6
+              py-4
+              whitespace-nowrap
+              text-right
+            "
+          >
             {{ room.max_occupancy }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
@@ -155,5 +173,35 @@ watch(currentOrgId, () => update());
         </tr>
       </tbody>
     </table>
+  </div>
+  <div
+    v-else
+    class="
+      shadow-md
+      mt-4
+      rounded-md
+      max-w-sm
+      flex
+      items-center
+      bg-yellow-50
+      border-l-4 border-yellow-400
+      p-4
+    "
+  >
+    <div class="flex">
+      <div class="flex-shrink-0">
+        <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+      </div>
+      <div class="ml-3">
+        This organization has no rooms. {{ " " }}
+        <!-- TODO: use :to="{ name: 'rooms-add' }" -->
+        <router-link
+          to="#"
+          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+        >
+          Click here to add one.
+        </router-link>
+      </div>
+    </div>
   </div>
 </template>
