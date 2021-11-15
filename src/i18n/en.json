@@ -1,83 +1,101 @@
 {
-  "overview": "Overview",
-  "team": "Team",
-  "sites": "Sites",
-  "installations": "Installations",
-  "rooms": "Rooms",
-  "nodes": "Sensors",
-  "of": "of",
-  "name": "Name",
-  "email": "Email",
-  "remove": "Remove",
-  "delete": "Delete",
-  "cancel": "Cancel",
-  "update": "Update",
-  "loading...": "loading...",
-  "logging-out": "You are being logged out",
-  "description": "Description",
-  "options": "Options",
-  "leave": "Leave",
-  "edit": "Edit",
-  "time": "Time",
-  "ppm": "CO2-Concentration [PPM]",
-  "day": "Day",
-  "week": "Week",
-  "month": "Month",
-  "previous": "Previous",
-  "now": "Now",
-  "next": "Next",
   "action": "Action",
   "actions": "Actions",
-  "user": {
-    "singular": "User",
-    "plural": "Users",
-    "settings": "User Settings",
-    "change-password": "Change password",
-    "change-email": "Change your email",
-    "logout": "Logout"
+  "add": "Add",
+  "address": {
+    "city": "City",
+    "street1": "Street and Number",
+    "street2": "Routing Extension",
+    "zip": "Zip-Code"
   },
-  "org": {
-    "singular": "Organization",
-    "plural": "Organizations",
-    "name": "Organization Name",
-    "all": "All your Organizations",
-    "none": "No Organization",
-    "members": "Members",
-    "switch": "Switch Organization",
-    "manage": "Manage Organizations",
-    "create": "Create Organization",
-    "add": "Add Organization",
-    "edit": "Edit Organization",
-    "delete": "Delete Organization",
-    "invite": "Invite Members",
-    "details": "Organization Details"
+  "cancel": "Cancel",
+  "day": "Day",
+  "delete": "Delete",
+  "delete-org-modal": {
+    "message": "Are you sure you want to delete this organization? This action cannot be undone!",
+    "title": "Delete Organization"
   },
-  "role": {
-    "singular": "Role",
-    "change": "Change Role",
-    "your": "Your Role",
-    "owner": "Owner",
-    "assistant": "Assistant",
-    "inspector": "Inspector"
-  },
-  "site": {
-    "details": "Site Details"
-  },
+  "description": "Description",
+  "edit": "Edit",
+  "email": "Email",
+  "inspect": "Inspect",
   "installation": {
-    "details": "Installation Details"
+    "add": "Add Installation",
+    "details": "Installation Details",
+    "terminate": "Terminate Installation"
   },
-  "room": {
-    "details": "Room Details"
-  },
+  "installations": "Installations",
+  "leave": "Leave",
+  "loading...": "loading...",
+  "logging-out": "You are being logged out",
+  "month": "Month",
+  "name": "Name",
+  "next": "Next",
   "node": {
     "details": "Sensor Details"
   },
-  "delete-org-modal": {
-    "title": "Delete Organization",
-    "message": "Are you sure you want to delete this organization? This action cannot be undone!"
+  "nodes": "Sensors",
+  "now": "Now",
+  "of": "of",
+  "options": "Options",
+  "org": {
+    "add": "Add Organization",
+    "all": "All your Organizations",
+    "create": "Create Organization",
+    "delete": "Delete Organization",
+    "details": "Organization Details",
+    "edit": "Edit Organization",
+    "invite": "Invite Members",
+    "manage": "Manage Organizations",
+    "members": "Members",
+    "name": "Organization Name",
+    "none": "No Organization",
+    "plural": "Organizations",
+    "singular": "Organization",
+    "switch": "Switch Organization"
   },
+  "overview": "Overview",
+  "ppm": "CO2-Concentration [PPM]",
+  "previous": "Previous",
+  "remove": "Remove",
+  "role": {
+    "assistant": "Assistant",
+    "change": "Change Role",
+    "inspector": "Inspector",
+    "owner": "Owner",
+    "singular": "Role",
+    "your": "Your Role"
+  },
+  "room": {
+    "add": "Add Room",
+    "addRoomToSite": "Add Room to Site",
+    "details": "Room Details",
+    "height": "Height",
+    "maxOccupancy": "Maximum Occupancy [Persons]",
+    "name": "Room Name",
+    "size": "Size"
+  },
+  "rooms": "Rooms",
+  "site": {
+    "details": "Site Details",
+    "name": "Site Name",
+    "update": "Update"
+  },
+  "sites": "Sites",
+  "team": "Team",
+  "time": "Time",
+  "update": "Update",
+  "user": {
+    "change-email": "Change your email",
+    "change-password": "Change password",
+    "logout": "Logout",
+    "plural": "Users",
+    "settings": "User Settings",
+    "singular": "User"
+  },
+  "week": "Week",
   "404": {
-    "msg": "Oops! Nothing to see here.",
-    "home": "Back to home"
+    "home": "Back to home",    
+    "msg": "Oops! Nothing to see here."
   }
 }

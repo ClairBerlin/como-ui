@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { ExclamationIcon } from "@heroicons/vue/outline";
 
 const route = useRoute();
 const store = useStore();

@@ -1,83 +1,101 @@
 {
-  "overview": "Überblick",
-  "team": "Team",
-  "sites": "Orte",
-  "installations": "Installationen",
-  "rooms": "Räume",
-  "nodes": "Sensoren",
-  "of": "von",
-  "name": "Name",
-  "email": "E-Mail",
-  "remove": "Entfernen",
-  "delete": "Löschen",
-  "cancel": "Abbrechen",
-  "update": "Aktualisieren",
-  "loading...": "lädt...",
-  "logging-out": "Sie werden ausgeloggt...",
-  "description": "Beschreibung",
-  "options": "Optionen",
-  "leave": "Verlassen",
-  "edit": "Editieren",
-  "time": "Zeit",
-  "ppm": "CO2 Gehalt in ppm",
-  "day": "Tag",
-  "week": "Woche",
-  "month": "Monat",
-  "previous": "Zurück",
-  "now": "Jetzt",
-  "next": "Weiter",
   "action": "Aktion",
   "actions": "Aktionen",
-  "user": {
-    "singular": "Nutzer",
-    "plural": "Nutzer",
-    "settings": "Nutzereinstellungen",
-    "change-password": "Passwort ändern",
-    "change-email": "Email-Adresse ändern",
-    "logout": "Ausloggen"
+  "add": "Hinzufügen",
+  "address": {
+    "city": "Stadt",
+    "street1": "Straße und Hausnummer",
+    "street2": "Adressdetails",
+    "zip": "Postleitzahl"
   },
-  "org": {
-    "singular": "Organisation",
-    "plural": "Organisationen",
-    "name": "Organisationsname",
-    "all": "All Ihre Organisationen",
-    "none": "Keine Organisation",
-    "members": "Mitglieder",
-    "switch": "Organisation wechseln",
-    "manage": "Organisationen verwalten",
-    "create": "Organisation hinzufügen",
-    "add": "Organisation hinzufügen",
-    "edit": "Organisation editieren",
-    "delete": "Organisation löschen",
-    "invite": "Mitglieder einladen",
-    "details": "Organisationsdetails"
+  "cancel": "Abbrechen",
+  "day": "Tag",
+  "delete": "Löschen",
+  "delete-org-modal": {
+    "message": "Sind Sie sicher, dass diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "title": "Organisation löschen"
   },
-  "role": {
-    "singular": "Rolle",
-    "change": "Rolle ändern",
-    "your": "Ihre Rolle",
-    "owner": "Besitzer",
-    "assistant": "Assistent",
-    "inspector": "Inspekteur"
-  },
-  "site": {
-    "details": "Ortdetails"
-  },
+  "description": "Beschreibung",
+  "edit": "Bearbeiten",
+  "email": "E-Mail",
+  "leave": "Verlassen",
+  "loading...": "lädt...",
+  "logging-out": "Sie werden ausgeloggt...",
+  "inspect": "Details",
   "installation": {
-    "details": "Installationsdetails"
+    "add": "Installation Hinzufügen",
+    "details": "Installationsdetails",
+    "terminate": "Installation beenden"
   },
-  "room": {
-    "details": "Raumdetails"
-  },
+  "installations": "Installationen",
+  "month": "Monat",
+  "name": "Name",
+  "next": "Weiter",
   "node": {
     "details": "Sensorendetails"
   },
-  "delete-org-modal": {
-    "title": "Organisation löschen",
-    "message": "Sind Sie sicher, dass diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!"
+  "nodes": "Sensoren",
+  "now": "Jetzt",
+  "of": "von",
+  "options": "Optionen",
+  "org": {
+    "add": "Organisation hinzufügen",
+    "all": "All Ihre Organisationen",
+    "create": "Organisation hinzufügen",
+    "delete": "Organisation löschen",
+    "details": "Organisationsdetails",
+    "edit": "Organisation editieren",
+    "invite": "Mitglieder einladen",
+    "manage": "Organisationen verwalten",
+    "members": "Mitglieder",
+    "name": "Organisationsname",
+    "none": "Keine Organisation",
+    "plural": "Organisationen",
+    "singular": "Organisation",
+    "switch": "Organisation wechseln"
   },
+  "overview": "Überblick",
+  "previous": "Zurück",
+  "ppm": "CO<sub>2</sub> Gehalt in ppm",
+  "remove": "Entfernen",
+  "role": {
+    "assistant": "Assistent",
+    "change": "Rolle ändern",
+    "inspector": "Inspekteur",
+    "owner": "Besitzer",
+    "singular": "Rolle",
+    "your": "Ihre Rolle"
+  },
+  "room": {
+    "add": "Raum hinzufügen",
+    "addRoomToSite": "Raum hinzufügen zum Ort",
+    "details": "Raumdetails",
+    "height": "Höhe",
+    "maxOccupancy": "Maximale Belegung [Personen]",
+    "name": "Raumname",
+    "size": "Größe"
+  },
+  "rooms": "Räume",
+  "site": {
+    "details": "Ort-Details",
+    "name": "Name des Orts",
+    "update": "Aktualisieren"
+  },
+  "sites": "Orte",
+  "team": "Team",
+  "time": "Zeit",
+  "update": "Aktualisieren",
+  "user": {
+    "change-email": "Email-Adresse ändern",
+    "change-password": "Passwort ändern",
+    "logout": "Ausloggen",
+    "plural": "Nutzer",
+    "settings": "Nutzereinstellungen",
+    "singular": "Nutzer"
+  },
+  "week": "Woche",
   "404": {
-    "msg": "Huch! Hier ist nichts.",
-    "home": "Zurück zur Startseite."
+    "home": "Zurück zur Startseite.",
+    "msg": "Huch! Hier ist nichts."
   }
 }

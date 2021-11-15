@@ -3,7 +3,10 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { ExclamationIcon } from "@heroicons/vue/outline";
 
+// TODO: Add number of rooms to each site's table row.
+// TODO: Add "remove site" button, visible for owners only.
 const route = useRoute();
 const store = useStore();
 
@@ -18,7 +21,7 @@ const formatAdress = (address) => {
 const hasSites = computed(() => sites.value?.length > 0);
 const isLoading = ref(true);
 
-async function update() {
+async function updateView() {
   isLoading.value = true;
   const siteObj = await store.dispatch("jv/get", [
     "sites",
@@ -35,8 +38,8 @@ async function update() {
   isLoading.value = false;
 }
 
-onMounted(async () => update());
-watch(currentOrgId, () => update());
+onMounted(async () => updateView());
+watch(currentOrgId, () => updateView());
 </script>
 
 <template>
@@ -126,7 +129,7 @@ watch(currentOrgId, () => update());
                   name: 'site',
                   params: { siteId: site._jv.id },
                 }"
-                >Inspect</router-link
+                >{{ $t("inspect") }}</router-link
               >
             </div>
           </td>
