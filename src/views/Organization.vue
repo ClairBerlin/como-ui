@@ -84,8 +84,8 @@ const update = async () => {
   <div v-else class="mt-8">
     <DeletionModal
       :open="showDeleteOrgModal"
-      @closeModal="showDeleteOrgModal = false"
-      @deleteClicked="deleteOrg"
+      @close-modal="showDeleteOrgModal = false"
+      @delete-clicked="deleteOrg"
       modal-title="delete-org-modal.title"
     >
       <p class="text-sm text-gray-500">{{ $t("delete-org-modal.message") }}</p>

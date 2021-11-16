@@ -34,8 +34,15 @@ const createOrg = async () => {
 </script>
 
 <template>
-  <div class="max-w-sm sm:max-w-lg">
-    <div class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
+  <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
+    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold leading-tight text-gray-900">
+        {{ $t("org.add") }}
+      </h1>
+    </div>
+  </header>
+  <div class="max-w-sm sm:max-w-lg mt-8">
+    <div class="text-black p-4 card rounded-md ring-1 ring-gray-300 bg-white">
       <div class="form-control">
         <label class="label">
           <span class="label-text text-black font-bold">{{
@@ -45,7 +52,7 @@ const createOrg = async () => {
         <input
           type="text"
           v-model.trim="newOrgName"
-          class="input-bordered como-focus rounded bg-white text-gray-600"
+          class="input-bordered como-focus rounded-md bg-white text-gray-600"
         />
       </div>
       <div class="form-control py-4">
@@ -58,7 +65,7 @@ const createOrg = async () => {
           type="text"
           v-model.trim="newOrgDescription"
           placeholder="(optional)"
-          class="como-focus rounded h-24 text-gray-600"
+          class="como-focus rounded-md h-24 text-gray-600"
         />
       </div>
       <button class="mt-2 btn gray-button font-semibold" @click="createOrg">

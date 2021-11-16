@@ -50,7 +50,14 @@ const updateOrganization = () => {
 </script>
 
 <template>
-  <div class="max-w-sm sm:max-w-lg">
+  <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
+    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold leading-tight text-gray-900">
+        {{ $t("org.edit") }}
+      </h1>
+    </div>
+  </header>
+  <div class="max-w-sm sm:max-w-lg mt-8">
     <div
       v-if="!isOwner"
       class="
@@ -83,7 +90,10 @@ const updateOrganization = () => {
         </div>
       </div>
     </div>
-    <div v-else class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
+    <div
+      v-else
+      class="text-black p-4 card rounded-md ring-1 ring-gray-300 bg-white"
+    >
       <div class="form-control">
         <label class="label">
           <span class="label-text text-black font-bold">{{
@@ -94,7 +104,7 @@ const updateOrganization = () => {
           type="text"
           v-model.trim="newOrgName"
           :placeholder="currentOrg.name"
-          class="input-bordered como-focus rounded bg-white text-gray-600"
+          class="input-bordered como-focus rounded-md bg-white text-gray-600"
         />
       </div>
       <div class="form-control py-4">
@@ -107,7 +117,7 @@ const updateOrganization = () => {
           type="text"
           v-model.trim="newOrgDescription"
           :placeholder="currentOrg?.description || '(optional)'"
-          class="como-focus area rounded h-24 text-gray-600"
+          class="como-focus area rounded-md h-24 text-gray-600"
         />
       </div>
       <button
