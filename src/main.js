@@ -15,6 +15,7 @@ const router = createRouter({
 });
 
 const i18n = createI18n({
+  // legacy: false, // to use Composition API. See https://vue-i18n.intlify.dev/guide/advanced/composition.html#basic-usage
   locale: "de",
   fallbackLocale: ["de", "en"],
   messages,

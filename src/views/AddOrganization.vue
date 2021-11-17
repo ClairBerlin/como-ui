@@ -3,10 +3,12 @@ import { ref } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const toast = useToast();
 const router = useRouter();
+const t = useI18n();
 
 const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);
@@ -27,7 +29,7 @@ const createOrg = async () => {
       ]);
       router.push({ name: "org-management-detail", params: { orgId: _jv.id } });
     } catch (e) {
-      toast.error("Failed to create the organization");
+      toast.error(t("org.createError"));
     }
   }
 };

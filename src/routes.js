@@ -7,9 +7,12 @@ const EditOrganization = () => import("./views/EditOrganization.vue");
 const NotFound = () => import("./views/NotFound.vue");
 const Sites = () => import("@/views/Sites.vue");
 const Site = () => import("@/views/Site.vue");
+const AddSite = () => import("@/views/AddSite.vue");
+const AddRoom = () => import("@/views/AddRoom.vue");
 const Rooms = () => import("@/views/Rooms.vue");
 const Room = () => import("@/views/Room.vue");
 const Installation = () => import("@/views/Installation.vue");
+const AddInstallation = () => import("@/views/AddInstallation.vue");
 const Sensors = () => import("@/views/Sensors.vue");
 const Sensor = () => import("@/views/Sensor.vue");
 const Logout = () => import("@/views/Logout.vue");
@@ -33,25 +36,28 @@ export const routes = [
     meta: { title: "org.singular" },
     children: [
       {
-        // Summary of all current sensor readings of an organization
         path: "",
         name: "overview",
         component: Overview,
         meta: { title: "overview" },
       },
       {
-        // Details and visualization for a single installation
         path: "installation/:installationId",
         name: "installation",
         component: Installation,
         meta: { title: "installation.details" },
       },
       {
-        // Management of the Sites of the given organization (add, update, delete)
         path: "sites",
         name: "sites",
         component: Sites,
         meta: { title: "sites" },
+      },
+      {
+        path: "sites/addSite",
+        name: "addSite",
+        component: AddSite,
+        meta: { title: "site.add" },
       },
       {
         path: "sites/:siteId",
@@ -60,7 +66,12 @@ export const routes = [
         meta: { title: "site.details" },
       },
       {
-        // Management of the Rooms of a given site (add, update, delete)
+        path: "sites/:siteId/addRoom",
+        name: "addRoom",
+        component: AddRoom,
+        meta: { title: "room.add" },
+      },
+      {
         path: "rooms",
         name: "rooms",
         component: Rooms,
@@ -73,7 +84,12 @@ export const routes = [
         meta: { title: "room.details" },
       },
       {
-        // Management of the sensors of the given organization (add, delete, assign)
+        path: "rooms/:roomId/addInstallation",
+        name: "addInstallation",
+        component: AddInstallation,
+        meta: { title: "installation.add" },
+      },
+      {
         path: "sensors",
         name: "sensors",
         component: Sensors,

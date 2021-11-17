@@ -1,83 +1,127 @@
 {
-  "overview": "Überblick",
-  "team": "Team",
-  "sites": "Orte",
-  "installations": "Installationen",
-  "rooms": "Räume",
-  "nodes": "Sensoren",
-  "of": "von",
-  "name": "Name",
-  "email": "E-Mail",
-  "remove": "Entfernen",
-  "delete": "Löschen",
-  "cancel": "Abbrechen",
-  "update": "Aktualisieren",
-  "loading...": "lädt...",
-  "logging-out": "Sie werden ausgeloggt...",
-  "description": "Beschreibung",
-  "options": "Optionen",
-  "leave": "Verlassen",
-  "edit": "Editieren",
-  "time": "Zeit",
-  "ppm": "CO2 Gehalt in ppm",
-  "day": "Tag",
-  "week": "Woche",
-  "month": "Monat",
-  "previous": "Zurück",
-  "now": "Jetzt",
-  "next": "Weiter",
   "action": "Aktion",
   "actions": "Aktionen",
-  "user": {
-    "singular": "Nutzer",
-    "plural": "Nutzer",
-    "settings": "Nutzereinstellungen",
-    "change-password": "Passwort ändern",
-    "change-email": "Email-Adresse ändern",
-    "logout": "Ausloggen"
+  "add": "Hinzufügen",
+  "address": {
+    "city": "Stadt",
+    "createError": "Fehler beim Anlegen der Adresse!",
+    "singular": "Adresse",
+    "street1": "Straße und Hausnummer",
+    "street2": "Adressdetails",
+    "zip": "Postleitzahl"
   },
-  "org": {
-    "singular": "Organisation",
-    "plural": "Organisationen",
-    "name": "Organisationsname",
-    "all": "All Ihre Organisationen",
-    "none": "Keine Organisation",
-    "members": "Mitglieder",
-    "switch": "Organisation wechseln",
-    "manage": "Organisationen verwalten",
-    "create": "Organisation hinzufügen",
-    "add": "Organisation hinzufügen",
-    "edit": "Organisation editieren",
-    "delete": "Organisation löschen",
-    "invite": "Mitglieder einladen",
-    "details": "Organisationsdetails"
+  "cancel": "Abbrechen",
+  "day": "Tag",
+  "delete": "Löschen",
+  "delete-org-modal": {
+    "message": "Sind Sie sicher, dass diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "title": "Organisation löschen"
   },
-  "role": {
-    "singular": "Rolle",
-    "change": "Rolle ändern",
-    "your": "Ihre Rolle",
-    "owner": "Besitzer",
-    "assistant": "Assistent",
-    "inspector": "Inspekteur"
-  },
-  "site": {
-    "details": "Ortdetails"
-  },
+  "description": "Beschreibung",
+  "edit": "Bearbeiten",
+  "email": "E-Mail",
+  "leave": "Verlassen",
+  "loading...": "lädt...",
+  "logging-out": "Sie werden ausgeloggt...",
+  "inspect": "Details",
   "installation": {
-    "details": "Installationsdetails"
+    "add": "Installation Hinzufügen",
+    "details": "Installationsdetails",
+    "terminate": "Installation beenden"
+  },
+  "installations": "Installationen",
+  "month": "Monat",
+  "name": "Name",
+  "next": "Weiter",
+  "node": {
+    "addNode": "Sensor hinzufügen",
+    "details": "Sensordetails",
+    "identifier": "Sensor-ID",
+    "installedOn": "installiert am",
+    "isPublic": "Daten öffentlich?",
+    "name": "Sensorname",
+    "noNodes": "Die gewählte Organisation verfügt über keine Sensoren",
+    "removedOn": "Entfernt am",
+    "singular": "Sensor"
+  },
+  "nodes": "Sensoren",
+  "now": "Jetzt",
+  "of": "von",
+  "ongoing": "laufend",
+  "options": "Optionen",
+  "org": {
+    "add": "Organisation hinzufügen",
+    "addSite": "Ort hinzufügen",
+    "all": "All Ihre Organisationen",
+    "create": "Organisation hinzufügen",
+    "createError": "Fehler beim Anlegen der Organisation!",
+    "delete": "Organisation löschen",
+    "details": "Organisationsdetails",
+    "edit": "Organisation editieren",
+    "invite": "Mitglieder einladen",
+    "manage": "Organisationen verwalten",
+    "members": "Mitglieder",
+    "name": "Organisationsname",
+    "none": "Keine Organisation",
+    "noSite": "Die gewählte Organisation verfügt über keine Orte",
+    "plural": "Organisationen",
+    "singular": "Organisation",
+    "switch": "Organisation wechseln",
+    "updateError": "Fehler beim Aktualisieren der Organisation!"
+  },
+  "overview": "Überblick",
+  "previous": "Zurück",
+  "ppm": "CO<sub>2</sub> Gehalt in ppm",
+  "remove": "Entfernen",
+  "role": {
+    "assistant": "Assistent",
+    "change": "Rolle ändern",
+    "inspector": "Inspekteur",
+    "owner": "Besitzer",
+    "singular": "Rolle",
+    "your": "Ihre Rolle"
   },
   "room": {
-    "details": "Raumdetails"
+    "add": "Raum hinzufügen",
+    "addRoomToSite": "Raum hinzufügen zum Ort",
+    "createError": "Fehler beim Anlegen des Raumes!",
+    "details": "Raumdetails",
+    "height": "Höhe",
+    "maxOccupancy": "Maximale Belegung [Personen]",
+    "name": "Raumname",
+    "noRoom": "Die gewählte Organisation hat keine Räume",
+    "sensor": "Sensor",
+    "siteForRoom": "Wähle einen Ort aus, um in diesem Räume anzulegen",
+    "size": "Größe",
+    "updateError": "Fehler beim Aktualisieren des Raums!"
   },
-  "node": {
-    "details": "Sensorendetails"
+  "rooms": "Räume",
+  "site": {
+    "add": "Ort hinzufügen",
+    "createError": "Fehler beim Anlegen des Orts!",
+    "details": "Ort-Details",
+    "missingNameAddress": "Name und Adresse des Orts müssen angegeben werden!",
+    "name": "Name des Orts",
+    "noRooms": "Dieser Ort hat noch keine Räume.",
+    "singular": "Ort",
+    "update": "Aktualisieren",
+    "updateError": "Fehler beim Aktualisieren des Orts!"
   },
-  "delete-org-modal": {
-    "title": "Organisation löschen",
-    "message": "Sind Sie sicher, dass diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!"
+  "sites": "Orte",
+  "team": "Team",
+  "time": "Zeit",
+  "update": "Aktualisieren",
+  "user": {
+    "change-email": "Email-Adresse ändern",
+    "change-password": "Passwort ändern",
+    "logout": "Ausloggen",
+    "plural": "Nutzer",
+    "settings": "Nutzereinstellungen",
+    "singular": "Nutzer"
   },
+  "week": "Woche",
   "404": {
-    "msg": "Huch! Hier ist nichts.",
-    "home": "Zurück zur Startseite."
+    "home": "Zurück zur Startseite",
+    "msg": "Huch! Hier ist nichts"
   }
 }

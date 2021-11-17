@@ -1,83 +1,127 @@
 {
-  "overview": "Overview",
-  "team": "Team",
-  "sites": "Sites",
-  "installations": "Installations",
-  "rooms": "Rooms",
-  "nodes": "Sensors",
-  "of": "of",
-  "name": "Name",
-  "email": "Email",
-  "remove": "Remove",
-  "delete": "Delete",
-  "cancel": "Cancel",
-  "update": "Update",
-  "loading...": "loading...",
-  "logging-out": "You are being logged out",
-  "description": "Description",
-  "options": "Options",
-  "leave": "Leave",
-  "edit": "Edit",
-  "time": "Time",
-  "ppm": "CO2-Concentration [PPM]",
-  "day": "Day",
-  "week": "Week",
-  "month": "Month",
-  "previous": "Previous",
-  "now": "Now",
-  "next": "Next",
   "action": "Action",
   "actions": "Actions",
-  "user": {
-    "singular": "User",
-    "plural": "Users",
-    "settings": "User Settings",
-    "change-password": "Change password",
-    "change-email": "Change your email",
-    "logout": "Logout"
+  "add": "Add",
+  "address": {
+    "city": "City",
+    "createError": "Failed to create the address!",
+    "singular": "Address",
+    "street1": "Street and Number",
+    "street2": "Routing Extension",
+    "zip": "Zip-Code"
   },
-  "org": {
-    "singular": "Organization",
-    "plural": "Organizations",
-    "name": "Organization Name",
-    "all": "All your Organizations",
-    "none": "No Organization",
-    "members": "Members",
-    "switch": "Switch Organization",
-    "manage": "Manage Organizations",
-    "create": "Create Organization",
-    "add": "Add Organization",
-    "edit": "Edit Organization",
-    "delete": "Delete Organization",
-    "invite": "Invite Members",
-    "details": "Organization Details"
+  "cancel": "Cancel",
+  "day": "Day",
+  "delete": "Delete",
+  "delete-org-modal": {
+    "message": "Are you sure you want to delete this organization? This action cannot be undone!",
+    "title": "Delete Organization"
   },
-  "role": {
-    "singular": "Role",
-    "change": "Change Role",
-    "your": "Your Role",
-    "owner": "Owner",
-    "assistant": "Assistant",
-    "inspector": "Inspector"
-  },
-  "site": {
-    "details": "Site Details"
-  },
+  "description": "Description",
+  "edit": "Edit",
+  "email": "Email",
+  "inspect": "Inspect",
   "installation": {
-    "details": "Installation Details"
+    "add": "Add Installation",
+    "details": "Installation Details",
+    "terminate": "Terminate Installation"
+  },
+  "installations": "Installations",
+  "leave": "Leave",
+  "loading...": "loading...",
+  "logging-out": "You are being logged out",
+  "month": "Month",
+  "name": "Name",
+  "next": "Next",
+  "node": {
+    "addNode": "Add a sensor",
+    "details": "Sensor Details",
+    "identifier": "Sensor-ID",
+    "installedOn": "Installed on",
+    "isPublic": "Data public?",
+    "name": "Sensor Name",
+    "noNode": "The selected organization has no sensors",
+    "removedOn": "Removed on",
+    "singular": "Sensor"
+  },
+  "nodes": "Sensors",
+  "now": "Now",
+  "of": "of",
+  "ongoing": "ongoing",
+  "options": "Options",
+  "org": {
+    "add": "Add Organization",
+    "addSite": "Add a site",
+    "all": "All your Organizations",
+    "create": "Create Organization",
+    "createError": "Failed to create the organization!",
+    "delete": "Delete Organization",
+    "details": "Organization Details",
+    "edit": "Edit Organization",
+    "invite": "Invite Members",
+    "manage": "Manage Organizations",
+    "members": "Members",
+    "name": "Organization Name",
+    "none": "No Organization",
+    "noSite": "The selected organization has no sites",
+    "plural": "Organizations",
+    "singular": "Organization",
+    "switch": "Switch Organization",
+    "updateError": "Failed to update the organization!"
+  },
+  "overview": "Overview",
+  "ppm": "CO2-Concentration [PPM]",
+  "previous": "Previous",
+  "remove": "Remove",
+  "role": {
+    "assistant": "Assistant",
+    "change": "Change Role",
+    "inspector": "Inspector",
+    "owner": "Owner",
+    "singular": "Role",
+    "your": "Your Role"
   },
   "room": {
-    "details": "Room Details"
+    "add": "Add Room",
+    "addRoomToSite": "Add Room to Site",
+    "createError": "Failed to create the room!",
+    "details": "Room Details",
+    "height": "Height",
+    "maxOccupancy": "Maximum Occupancy [Persons]",
+    "name": "Room Name",
+    "noRoom": "The selected organization has no rooms",
+    "sensor": "Sensor",
+    "siteForRoom": "Select a site to add a room",
+    "size": "Size",
+    "updateError": "Failed to update the room!"
   },
-  "node": {
-    "details": "Sensor Details"
+  "rooms": "Rooms",
+  "site": {
+    "add": "Add Site",
+    "createError": "Failed to create the site!",
+    "details": "Site Details",
+    "missingNameAddress": "Site name and address must be provided!",
+    "name": "Site Name",
+    "noRooms": "This site has no rooms",
+    "singular": "Site",
+    "update": "Update",
+    "updateError": "Failed to update the site!"
   },
-  "delete-org-modal": {
-    "title": "Delete Organization",
-    "message": "Are you sure you want to delete this organization? This action cannot be undone!"
+  "sites": "Sites",
+  "team": "Team",
+  "time": "Time",
+  "update": "Update",
+  "user": {
+    "change-email": "Change your email",
+    "change-password": "Change password",
+    "logout": "Logout",
+    "plural": "Users",
+    "settings": "User Settings",
+    "singular": "User"
   },
+  "week": "Week",
   "404": {
-    "msg": "Oops! Nothing to see here.",
-    "home": "Back to home"
+    "home": "Back to home",
+    "msg": "Oops! Nothing to see here"
   }
 }
