@@ -259,7 +259,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              Room Name
+              {{ $t("room.name") }}
             </th>
             <th
               scope="col"
@@ -272,7 +272,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              Size [m<sup>2</sup>]
+              {{ $t("room.size") }} [m<sup>2</sup>]
             </th>
             <th
               scope="col"
@@ -285,7 +285,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              Height [m]
+              {{ $t("room.height") }} [m]
             </th>
             <th
               scope="col"
@@ -300,7 +300,7 @@ onMounted(async () => updateView());
                 md:table-cell
               "
             >
-              Max. Occupancy
+              {{ $t("room.maxOccupancy") }}
             </th>
             <th
               scope="col"
@@ -390,14 +390,16 @@ onMounted(async () => updateView());
           <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
         </div>
         <div class="ml-3">
-          This site has no rooms. {{ " " }}
-          <!-- TODO: use :to="{ name: 'sites-add' }" -->
+          {{ $t("site.noRooms") }}.
           <router-link
-            to="#"
+            v-if="isOwner"
             class="font-medium underline text-yellow-700 hover:text-yellow-600"
+            :to="{
+              name: 'addRoom',
+              params: { siteId: siteId },
+            }"
+            >{{ $t("room.add") }}.</router-link
           >
-            Click here to add one.
-          </router-link>
         </div>
       </div>
     </div>

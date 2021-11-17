@@ -7,6 +7,7 @@ const EditOrganization = () => import("./views/EditOrganization.vue");
 const NotFound = () => import("./views/NotFound.vue");
 const Sites = () => import("@/views/Sites.vue");
 const Site = () => import("@/views/Site.vue");
+const AddSite = () => import("@/views/AddSite.vue");
 const AddRoom = () => import("@/views/AddRoom.vue");
 const Rooms = () => import("@/views/Rooms.vue");
 const Room = () => import("@/views/Room.vue");
@@ -53,6 +54,12 @@ export const routes = [
         meta: { title: "sites" },
       },
       {
+        path: "sites/addSite",
+        name: "addSite",
+        component: AddSite,
+        meta: { title: "site.add" },
+      },
+      {
         path: "sites/:siteId",
         name: "site",
         component: Site,
@@ -81,7 +88,7 @@ export const routes = [
         name: "addInstallation",
         component: AddInstallation,
         meta: { title: "installation.add" },
-      },      
+      },
       {
         path: "sensors",
         name: "sensors",

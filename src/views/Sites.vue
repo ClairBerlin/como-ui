@@ -18,8 +18,18 @@ const formatAdress = (address) => {
   return `${address.street1}, ${address.zip} ${address.city}`;
 };
 
+const orgMembership = computed(() =>
+  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
+);
+const isOwner = computed(() => orgMembership.value?.role === "O");
+
 const hasSites = computed(() => sites.value?.length > 0);
 const isLoading = ref(true);
+
+const deleteSite = async (siteId) => {
+  await store.dispatch("jv/delete", `sites/${siteId}`);
+  updateView();
+};
 
 async function updateView() {
   isLoading.value = true;
@@ -62,6 +72,19 @@ watch(currentOrgId, () => updateView());
       mt-8
     "
   >
+    <div class="flex justify-end items-center">
+      <div class="flex flex-row">
+        <router-link
+          v-if="isOwner"
+          class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+          :to="{
+            name: 'addSite',
+          }"
+          >{{ $t("site.add") }}</router-link
+        >
+      </div>
+    </div>
+
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -77,7 +100,7 @@ watch(currentOrgId, () => updateView());
               tracking-wider
             "
           >
-            Site Name
+            {{ $t("site.name") }}
           </th>
           <th
             scope="col"
@@ -92,7 +115,7 @@ watch(currentOrgId, () => updateView());
               sm:table-cell
             "
           >
-            Address
+            {{ $t("address.singular") }}
           </th>
           <th
             scope="col"
@@ -105,7 +128,7 @@ watch(currentOrgId, () => updateView());
               tracking-wider
             "
           >
-            Action
+            {{ $t("action") }}
           </th>
         </tr>
       </thead>
@@ -122,15 +145,24 @@ watch(currentOrgId, () => updateView());
             {{ formatAdress(site.address) }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-            <div class="flex flex-row">
-              <router-link
-                class="gray-button"
-                :to="{
-                  name: 'site',
-                  params: { siteId: site._jv.id },
-                }"
-                >{{ $t("inspect") }}</router-link
+            <div class="flex flex-col sm:flex-row">
+              <div class="flex flex-row">
+                <router-link
+                  class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                  :to="{
+                    name: 'site',
+                    params: { siteId: site._jv.id },
+                  }"
+                  >{{ $t("inspect") }}</router-link
+                >
+              </div>
+              <div
+                v-if="isOwner"
+                class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                @click="deleteSite(site._jv.id)"
               >
+                {{ $t("remove") }}
+              </div>
             </div>
           </td>
         </tr>
@@ -156,13 +188,14 @@ watch(currentOrgId, () => updateView());
         <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
       </div>
       <div class="ml-3">
-        This organization has no sites. {{ " " }}
-        <!-- TODO: use :to="{ name: 'sites-add' }" -->
+        {{ $t("org.noSite") }}.
         <router-link
-          to="#"
+          :to="{
+            name: 'addSite',
+          }"
           class="font-medium underline text-yellow-700 hover:text-yellow-600"
         >
-          Click here to add one.
+          {{ $t("org.addSite") }}.
         </router-link>
       </div>
     </div>

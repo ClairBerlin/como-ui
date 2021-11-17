@@ -4,6 +4,8 @@
   "add": "Add",
   "address": {
     "city": "City",
+    "createError": "Failed to create the address!",
+    "singular": "Address",
     "street1": "Street and Number",
     "street2": "Routing Extension",
     "zip": "Zip-Code"
@@ -32,16 +34,27 @@
   "name": "Name",
   "next": "Next",
   "node": {
-    "details": "Sensor Details"
+    "addNode": "Add a sensor",
+    "details": "Sensor Details",
+    "identifier": "Sensor-ID",
+    "installedOn": "Installed on",
+    "isPublic": "Data public?",
+    "name": "Sensor Name",
+    "noNode": "The selected organization has no sensors",
+    "removedOn": "Removed on",
+    "singular": "Sensor"
   },
   "nodes": "Sensors",
   "now": "Now",
   "of": "of",
+  "ongoing": "ongoing",
   "options": "Options",
   "org": {
     "add": "Add Organization",
+    "addSite": "Add a site",
     "all": "All your Organizations",
     "create": "Create Organization",
+    "createError": "Failed to create the organization!",
     "delete": "Delete Organization",
     "details": "Organization Details",
     "edit": "Edit Organization",
@@ -50,9 +63,11 @@
     "members": "Members",
     "name": "Organization Name",
     "none": "No Organization",
+    "noSite": "The selected organization has no sites",
     "plural": "Organizations",
     "singular": "Organization",
-    "switch": "Switch Organization"
+    "switch": "Switch Organization",
+    "updateError": "Failed to update the organization!"
   },
   "overview": "Overview",
   "ppm": "CO2-Concentration [PPM]",
@@ -69,17 +84,28 @@
   "room": {
     "add": "Add Room",
     "addRoomToSite": "Add Room to Site",
+    "createError": "Failed to create the room!",
     "details": "Room Details",
     "height": "Height",
     "maxOccupancy": "Maximum Occupancy [Persons]",
     "name": "Room Name",
-    "size": "Size"
+    "noRoom": "The selected organization has no rooms",
+    "sensor": "Sensor",
+    "siteForRoom": "Select a site to add a room",
+    "size": "Size",
+    "updateError": "Failed to update the room!"
   },
   "rooms": "Rooms",
   "site": {
+    "add": "Add Site",
+    "createError": "Failed to create the site!",
     "details": "Site Details",
+    "missingNameAddress": "Site name and address must be provided!",
     "name": "Site Name",
-    "update": "Update"
+    "noRooms": "This site has no rooms",
+    "singular": "Site",
+    "update": "Update",
+    "updateError": "Failed to update the site!"
   },
   "sites": "Sites",
   "team": "Team",
@@ -95,7 +121,7 @@
   },
   "week": "Week",
   "404": {
-    "home": "Back to home",    
-    "msg": "Oops! Nothing to see here."
+    "home": "Back to home",
+    "msg": "Oops! Nothing to see here"
   }
 }

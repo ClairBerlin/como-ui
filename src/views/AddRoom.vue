@@ -4,11 +4,13 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
+const t = useI18n();
 
 const siteId = computed(() => route.params.siteId);
 const site = computed(() =>
@@ -56,9 +58,12 @@ const createRoom = async () => {
         newRoom,
         { url: `rooms/` },
       ]);
-      router.push({ name: "rooms", params: { roomId: _jv.id } });
+      router.push({
+        name: "site",
+        params: { siteId: siteId.value },
+      });
     } catch (e) {
-      toast.error("Failed to create the room");
+      toast.error(t("room.createError"));
     }
   }
 };

@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { ExclamationIcon } from "@heroicons/vue/outline";
 
 const route = useRoute();
 const store = useStore();
@@ -73,7 +74,7 @@ watch(currentOrgId, () => update());
               tracking-wider
             "
           >
-            Sensor Name
+            {{ $t("node.name") }}
           </th>
           <th
             scope="col"
@@ -88,7 +89,7 @@ watch(currentOrgId, () => update());
               md:table-cell
             "
           >
-            Sensor Identifier
+            {{ $t("node.identifier") }}
           </th>
           <th
             scope="col"
@@ -101,7 +102,7 @@ watch(currentOrgId, () => update());
               tracking-wider
             "
           >
-            Action
+            {{ $t("action") }}
           </th>
         </tr>
       </thead>
@@ -125,7 +126,7 @@ watch(currentOrgId, () => update());
                   name: 'sensor',
                   params: { sensorId: sensor._jv.id },
                 }"
-                >Inspect</router-link
+                >{{ $t("inspect") }}</router-link
               >
             </div>
           </td>
@@ -152,13 +153,13 @@ watch(currentOrgId, () => update());
         <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
       </div>
       <div class="ml-3">
-        This organization has no sensors. {{ " " }}
+        {{ $t("node.noNode") }}.
         <!-- TODO: use :to="{ name: 'sensors-add' }" -->
         <router-link
           to="#"
           class="font-medium underline text-yellow-700 hover:text-yellow-600"
         >
-          Click here to add one.
+          {{ $t("node.addNode") }}.
         </router-link>
       </div>
     </div>

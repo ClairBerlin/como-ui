@@ -15,7 +15,17 @@ const rooms = ref(undefined);
 const hasRooms = computed(() => rooms.value?.length > 0);
 const isLoading = ref(true);
 
-async function update() {
+const orgMembership = computed(() =>
+  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
+);
+const isOwner = computed(() => orgMembership.value?.role === "O");
+
+const deleteRoom = async (roomId) => {
+  await store.dispatch("jv/delete", `rooms/${roomId}`);
+  updateView();
+};
+
+async function updateView() {
   isLoading.value = true;
   const roomObj = await store.dispatch("jv/get", [
     "rooms",
@@ -32,8 +42,8 @@ async function update() {
   isLoading.value = false;
 }
 
-onMounted(async () => update());
-watch(currentOrgId, () => update());
+onMounted(async () => updateView());
+watch(currentOrgId, () => updateView());
 </script>
 
 <template>
@@ -73,7 +83,7 @@ watch(currentOrgId, () => update());
               tracking-wider
             "
           >
-            Room Name
+            {{ $t("room.name") }}
           </th>
           <th
             scope="col"
@@ -86,7 +96,7 @@ watch(currentOrgId, () => update());
               tracking-wider
             "
           >
-            Size [m<sup>2</sup>]
+            {{ $t("room.size") }} [m<sup>2</sup>]
           </th>
           <th
             scope="col"
@@ -99,7 +109,7 @@ watch(currentOrgId, () => update());
               tracking-wider
             "
           >
-            Height [m]
+            {{ $t("room.height") }} [m]
           </th>
           <th
             scope="col"
@@ -114,7 +124,21 @@ watch(currentOrgId, () => update());
               md:table-cell
             "
           >
-            Max. Occupancy
+            {{ $t("room.maxOccupancy") }}
+          </th>
+          <th
+            scope="col"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
+          >
+            {{ $t("site.singular") }}
           </th>
           <th
             scope="col"
@@ -127,7 +151,7 @@ watch(currentOrgId, () => update());
               tracking-wider
             "
           >
-            Action
+            {{ $t("action") }}
           </th>
         </tr>
       </thead>
@@ -159,16 +183,51 @@ watch(currentOrgId, () => update());
           >
             {{ room.max_occupancy }}
           </td>
+          <td
+            class="
+              hidden
+              md:table-cell
+              px-2
+              sm:px-6
+              py-4
+              whitespace-nowrap
+              text-right
+            "
+          >
+            <router-link
+              class="
+                font-medium
+                underline
+                text-yellow-700
+                hover:text-yellow-600
+              "
+              :to="{
+                name: 'site',
+                params: { siteId: room.site._jv.id },
+              }"
+            >
+              {{ room.site.name }}
+            </router-link>
+          </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-            <div class="flex flex-row">
-              <router-link
-                class="gray-button"
-                :to="{
-                  name: 'room',
-                  params: { roomId: room._jv.id },
-                }"
-                >Inspect</router-link
+            <div class="flex flex-col sm:flex-row">
+              <div class="flex flex-row">
+                <router-link
+                  class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                  :to="{
+                    name: 'room',
+                    params: { roomId: room._jv.id },
+                  }"
+                  >{{ $t("inspect") }}</router-link
+                >
+              </div>
+              <div
+                v-if="isOwner"
+                class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                @click="deleteRoom(room._jv.id)"
               >
+                {{ $t("remove") }}
+              </div>
             </div>
           </td>
         </tr>
@@ -194,13 +253,14 @@ watch(currentOrgId, () => update());
         <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
       </div>
       <div class="ml-3">
-        This organization has no rooms. {{ " " }}
-        <!-- TODO: use :to="{ name: 'rooms-add' }" -->
+        {{ $t("room.noRoom") }}.
         <router-link
-          to="#"
+          to="sites"
           class="font-medium underline text-yellow-700 hover:text-yellow-600"
         >
-          Click here to add one.
+          <div>
+            {{ $t("room.siteForRoom") }}.
+          </div>
         </router-link>
       </div>
     </div>

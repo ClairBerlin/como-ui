@@ -4,6 +4,7 @@ import { useRoute, useRouter } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
+import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 
@@ -12,6 +13,7 @@ const route = useRoute();
 const router = useRouter();
 const store = useStore();
 const toast = useToast();
+const t = useI18n();
 
 const roomId = computed(() => route.params.roomId);
 const room = computed(() =>
@@ -39,7 +41,7 @@ const isOwner = computed(() => orgMembership.value?.role === "O");
 
 const dayFormatTimestamp = (unixTimestamp) => {
   if (unixTimestamp === 2_147_483_647) {
-    return "ongoing";
+    return "—";
   } else {
     return dayjs.unix(unixTimestamp).format("YYYY-MM-DD");
   }
@@ -81,7 +83,7 @@ const updateData = async () => {
       ]);
       updateView();
     } catch (e) {
-      toast.error("Failed to update the room");
+      toast.error(t("room.updateError"));
       console.log(e);
     }
   }
@@ -245,7 +247,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              Sensor Name
+              {{ $t("room.sensor") }}
             </th>
             <th
               scope="col"
@@ -258,7 +260,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              Public?
+              {{ $t("node.isPublic") }}
             </th>
             <th
               scope="col"
@@ -271,7 +273,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              Installed on
+              {{ $t("node.installedOn") }}
             </th>
             <th
               scope="col"
@@ -286,7 +288,7 @@ onMounted(async () => updateView());
                 md:table-cell
               "
             >
-              Removed on
+              {{ $t("node.removedOn") }}
             </th>
             <th
               scope="col"

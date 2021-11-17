@@ -125,14 +125,14 @@ const update = async () => {
                     </div>
                   </div>
                   <div v-if="inst.description" class="text-gray-600">
-                    Description: {{ inst.description }}
+                    {{ $t("description") }}: {{ inst.description }}
                   </div>
                   <div>
-                    installed on
+                    {{ $t("node.installedOn") }}
                     {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}
                   </div>
                   <div>
-                    location:
+                    {{ $t("site.singular") }}:
                     <router-link
                       :to="{
                         name: 'site',

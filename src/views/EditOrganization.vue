@@ -3,9 +3,14 @@ import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
+import { useToast } from "vue-toastification";
+import { useI18n } from "vue-i18n";
 import { BanIcon } from "@heroicons/vue/outline";
+
 const store = useStore();
 const route = useRoute();
+const toast = useToast();
+const t = useI18n();
 
 const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);
@@ -41,10 +46,14 @@ const updateOrganization = () => {
     if (newOrgDescription.value) {
       updatedOrg["description"] = newOrgDescription.value;
     }
-    store.dispatch("jv/patch", [
-      updatedOrg,
-      { url: `organizations/${route.params.orgId}/` },
-    ]);
+    try {
+      store.dispatch("jv/patch", [
+        updatedOrg,
+        { url: `organizations/${route.params.orgId}/` },
+      ]);
+    } catch (e) {
+      toast.error(t("org.updateError"));
+    }
   }
 };
 </script>

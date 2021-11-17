@@ -4,6 +4,8 @@
   "add": "Hinzufügen",
   "address": {
     "city": "Stadt",
+    "createError": "Fehler beim Anlegen der Adresse!",
+    "singular": "Adresse",
     "street1": "Straße und Hausnummer",
     "street2": "Adressdetails",
     "zip": "Postleitzahl"
@@ -32,16 +34,27 @@
   "name": "Name",
   "next": "Weiter",
   "node": {
-    "details": "Sensorendetails"
+    "addNode": "Sensor hinzufügen",
+    "details": "Sensordetails",
+    "identifier": "Sensor-ID",
+    "installedOn": "installiert am",
+    "isPublic": "Daten öffentlich?",
+    "name": "Sensorname",
+    "noNodes": "Die gewählte Organisation verfügt über keine Sensoren",
+    "removedOn": "Entfernt am",
+    "singular": "Sensor"
   },
   "nodes": "Sensoren",
   "now": "Jetzt",
   "of": "von",
+  "ongoing": "laufend",
   "options": "Optionen",
   "org": {
     "add": "Organisation hinzufügen",
+    "addSite": "Ort hinzufügen",
     "all": "All Ihre Organisationen",
     "create": "Organisation hinzufügen",
+    "createError": "Fehler beim Anlegen der Organisation!",
     "delete": "Organisation löschen",
     "details": "Organisationsdetails",
     "edit": "Organisation editieren",
@@ -50,9 +63,11 @@
     "members": "Mitglieder",
     "name": "Organisationsname",
     "none": "Keine Organisation",
+    "noSite": "Die gewählte Organisation verfügt über keine Orte",
     "plural": "Organisationen",
     "singular": "Organisation",
-    "switch": "Organisation wechseln"
+    "switch": "Organisation wechseln",
+    "updateError": "Fehler beim Aktualisieren der Organisation!"
   },
   "overview": "Überblick",
   "previous": "Zurück",
@@ -69,17 +84,28 @@
   "room": {
     "add": "Raum hinzufügen",
     "addRoomToSite": "Raum hinzufügen zum Ort",
+    "createError": "Fehler beim Anlegen des Raumes!",
     "details": "Raumdetails",
     "height": "Höhe",
     "maxOccupancy": "Maximale Belegung [Personen]",
     "name": "Raumname",
-    "size": "Größe"
+    "noRoom": "Die gewählte Organisation hat keine Räume",
+    "sensor": "Sensor",
+    "siteForRoom": "Wähle einen Ort aus, um in diesem Räume anzulegen",
+    "size": "Größe",
+    "updateError": "Fehler beim Aktualisieren des Raums!"
   },
   "rooms": "Räume",
   "site": {
+    "add": "Ort hizufügen",
+    "createError": "Fehler beim Anlegen des Orts!",
     "details": "Ort-Details",
+    "missingNameAddress": "Name und Adresse des Orts müssen angegeben werden!",
     "name": "Name des Orts",
-    "update": "Aktualisieren"
+    "noRooms": "Dieser Ort hat noch keine Räume.",
+    "singular": "Ort",
+    "update": "Aktualisieren",
+    "updateError": "Fehler beim Aktualisieren des Orts!"
   },
   "sites": "Orte",
   "team": "Team",
@@ -95,7 +121,7 @@
   },
   "week": "Woche",
   "404": {
-    "home": "Zurück zur Startseite.",
-    "msg": "Huch! Hier ist nichts."
+    "home": "Zurück zur Startseite",
+    "msg": "Huch! Hier ist nichts"
   }
 }
