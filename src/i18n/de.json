@@ -97,7 +97,7 @@
   },
   "rooms": "Räume",
   "site": {
-    "add": "Ort hizufügen",
+    "add": "Ort hinzufügen",
     "createError": "Fehler beim Anlegen des Orts!",
     "details": "Ort-Details",
     "missingNameAddress": "Name und Adresse des Orts müssen angegeben werden!",
