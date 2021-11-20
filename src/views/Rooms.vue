@@ -47,15 +47,6 @@ watch(currentOrgId, () => updateView());
 </script>
 
 <template>
-  <div class="bg-white shadow-md p-4 rounded-md max-w-xl mx-auto">
-    <pre>VIEW DESCRIPTION (will be removed)</pre>
-    This view will list all rooms of the selected organization, information
-    about each room, air quality information of the individual sensors installed
-    in the room (once we know how to best summarize this information), and links
-    to the visualization for each sensor. Once we learn how to synthesize
-    information from multiple sensors in a single room, this information may be
-    viewed here as well.
-  </div>
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div
     v-else-if="hasRooms"

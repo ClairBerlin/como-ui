@@ -53,13 +53,6 @@ watch(currentOrgId, () => updateView());
 </script>
 
 <template>
-  <div class="bg-white shadow-md p-4 rounded-md max-w-xl mx-auto">
-    <pre>VIEW DESCRIPTION (will be removed)</pre>
-    This view will list all the sites of the selected organization, together
-    with their adresses, and provide links to the rooms in each site. It will
-    offer the possibility to add a new site and to remove an existing site with
-    all its rooms and installations.
-  </div>
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else-if="hasSites" class="text-md mt-8">
     <div class="flex justify-end items-center">

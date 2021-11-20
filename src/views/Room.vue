@@ -119,14 +119,6 @@ onMounted(async () => updateView());
 </script>
 
 <template>
-  <div class="bg-white shadow-md p-4 rounded-md max-w-xl mx-auto">
-    <pre>VIEW DESCRIPTION (will be removed)</pre>
-    This sub-view will detail information on the selected room an allow the user
-    to update it; e.g., name, description, size, max. occupancy, etc. In
-    addition, this view provides means to add and remove sensor installations in
-    the selected room.
-  </div>
-
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else>
     <div class="max-w-sm sm:max-w-lg">

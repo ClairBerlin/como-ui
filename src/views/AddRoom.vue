@@ -79,7 +79,18 @@ const createRoom = async () => {
   </header>
 
   <div class="max-w-sm sm:max-w-lg">
-    <div class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
+    <div
+      class="
+        text-black
+        mt-2
+        p-4
+        card
+        rounded-md
+        shadow-md
+        ring-1 ring-gray-300
+        bg-white
+      "
+    >
       <div class="form-control">
         <label class="label">
           <span class="label-text text-black font-bold">{{

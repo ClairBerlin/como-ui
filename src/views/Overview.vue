@@ -57,13 +57,6 @@ const update = async () => {
 </script>
 
 <template>
-  <div class="bg-white shadow-md p-4 rounded-md max-w-xl mx-auto">
-    <pre>VIEW DESCRIPTION (will be removed)</pre>
-    This view will provide the latest sensor readings at a glance for all sites,
-    rooms, and installations of an organization. For example, as a list with all
-    installations, a traffic-light display and the latest sensor reading, plus
-    links to the corresponding detail view.
-  </div>
   <!-- TODO: replace with a spinner or another indication of loading data (e.g. skeleton) -->
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else class="mx-2">
