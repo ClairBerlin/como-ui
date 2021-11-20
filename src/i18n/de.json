@@ -20,13 +20,17 @@
   "cancel": "Abbrechen",
   "day": "Tag",
   "delete": "Löschen",
-  "delete-site-modal": {
-    "message": "Sind Sie sicher, dass diesen Ort löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
-    "title": "Ort löschen"
-  },
   "delete-org-modal": {
     "message": "Sind Sie sicher, dass diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
     "title": "Organisation löschen"
+  },
+  "delete-room-modal": {
+    "message": "Sind Sie sicher, dass diesen Raum löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "title": "Raum löschen"
+  },
+  "delete-site-modal": {
+    "message": "Sind Sie sicher, dass diesen Ort löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "title": "Ort löschen"
   },
   "description": "Beschreibung",
   "edit": "Bearbeiten",

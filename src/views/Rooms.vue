@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
+import DeletionModal from "@/components/DeletionModal.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -15,13 +16,17 @@ const rooms = ref(undefined);
 const hasRooms = computed(() => rooms.value?.length > 0);
 const isLoading = ref(true);
 
+const showDeleteRoomModal = ref(false);
+const deleteRoomId = ref();
+const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
+
 const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
 );
 const isOwner = computed(() => orgMembership.value?.role === "O");
 
-const deleteRoom = async (roomId) => {
-  await store.dispatch("jv/delete", `rooms/${roomId}`);
+const deleteRoom = async () => {
+  await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
   updateView();
 };
 
@@ -59,6 +64,14 @@ watch(currentOrgId, () => updateView());
       mt-8
     "
   >
+    <DeletionModal
+      :open="showDeleteRoomModal"
+      @close-modal="showDeleteRoomModal = false"
+      @delete-clicked="deleteRoom"
+      modal-title="delete-room-modal.title"
+    >
+      <p class="text-sm text-gray-500">{{ $t("delete-room-modal.message") }}</p>
+    </DeletionModal>
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
@@ -205,7 +218,12 @@ watch(currentOrgId, () => updateView());
               <div
                 v-if="isOwner"
                 class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
-                @click="deleteRoom(room._jv.id)"
+                @click="
+                  () => {
+                    openDeleteRoomModal();
+                    deleteRoomId = room._jv.id;
+                  }
+                "
               >
                 {{ $t("remove") }}
               </div>

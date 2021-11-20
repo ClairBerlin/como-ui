@@ -20,13 +20,17 @@
   "cancel": "Cancel",
   "day": "Day",
   "delete": "Delete",
-  "delete-site-modal": {
-    "message": "Are you sure you want to delete this site? This action cannot be undone!",
-    "title": "Delete Site"
-  },
   "delete-org-modal": {
     "message": "Are you sure you want to delete this organization? This action cannot be undone!",
     "title": "Delete Organization"
+  },
+  "delete-room-modal": {
+    "message": "Are you sure you want to delete this room? This action cannot be undone!",
+    "title": "Delete Room"
+  },
+  "delete-site-modal": {
+    "message": "Are you sure you want to delete this site? This action cannot be undone!",
+    "title": "Delete Site"
   },
   "description": "Description",
   "edit": "Edit",
