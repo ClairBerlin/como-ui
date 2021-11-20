@@ -11,11 +11,6 @@ const store = useStore();
 const members = ref([]);
 const org = ref();
 const orgName = computed(() => org?.value?.name || "…");
-const options = [
-  //TODO: adapt to correct urls/onclick actions
-  { href: "/change-role", title: "role.change" },
-  { href: "/remove", title: "remove" },
-];
 
 const currentOrgId = computed(() => route.params.orgId);
 onMounted(async () => update());

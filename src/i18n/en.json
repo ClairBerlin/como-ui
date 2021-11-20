@@ -20,6 +20,10 @@
   "cancel": "Cancel",
   "day": "Day",
   "delete": "Delete",
+  "delete-site-modal": {
+    "message": "Are you sure you want to delete this site? This action cannot be undone!",
+    "title": "Delete Site"
+  },
   "delete-org-modal": {
     "message": "Are you sure you want to delete this organization? This action cannot be undone!",
     "title": "Delete Organization"
@@ -47,7 +51,7 @@
     "installedOn": "Installed on",
     "isPublic": "Data public?",
     "name": "Sensor Name",
-    "noNode": "The selected organization has no sensors",
+    "noNodes": "The selected organization has no sensors.",
     "removedOn": "Removed on",
     "singular": "Sensor"
   },
@@ -74,7 +78,8 @@
     "plural": "Organizations",
     "singular": "Organization",
     "switch": "Switch Organization",
-    "updateError": "Failed to update the organization!"
+    "updateError": "Failed to update the organization!",
+    "updateSuccess": "Organization details have been updated!"
   },
   "overview": "Overview",
   "ppm": "CO2-Concentration [PPM]",
@@ -100,7 +105,8 @@
     "sensor": "Sensor",
     "siteForRoom": "Select a site to add a room",
     "size": "Size",
-    "updateError": "Failed to update the room!"
+    "updateError": "Failed to update the room!",
+    "updateSuccess": "Room details have been updated!"
   },
   "rooms": "Rooms",
   "site": {
@@ -112,7 +118,8 @@
     "noRooms": "This site has no rooms",
     "singular": "Site",
     "update": "Update",
-    "updateError": "Failed to update the site!"
+    "updateError": "Failed to update the site!",
+    "updateSuccess": "Sites details have been updated!"
   },
   "sites": "Sites",
   "team": "Team",

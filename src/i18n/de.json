@@ -20,6 +20,10 @@
   "cancel": "Abbrechen",
   "day": "Tag",
   "delete": "Löschen",
+  "delete-site-modal": {
+    "message": "Sind Sie sicher, dass diesen Ort löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "title": "Ort löschen"
+  },
   "delete-org-modal": {
     "message": "Sind Sie sicher, dass diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
     "title": "Organisation löschen"
@@ -47,7 +51,7 @@
     "installedOn": "installiert am",
     "isPublic": "Daten öffentlich?",
     "name": "Sensorname",
-    "noNodes": "Die gewählte Organisation verfügt über keine Sensoren",
+    "noNodes": "Die gewählte Organisation verfügt über keine Sensoren.",
     "removedOn": "Entfernt am",
     "singular": "Sensor"
   },
@@ -74,7 +78,8 @@
     "plural": "Organisationen",
     "singular": "Organisation",
     "switch": "Organisation wechseln",
-    "updateError": "Fehler beim Aktualisieren der Organisation!"
+    "updateError": "Fehler beim Aktualisieren der Organisation!",
+    "updateSucces": "Details der Organisation wurden erfolgreich aktualsiert."
   },
   "overview": "Überblick",
   "previous": "Zurück",
@@ -100,7 +105,8 @@
     "sensor": "Sensor",
     "siteForRoom": "Wähle einen Ort aus, um in diesem Räume anzulegen",
     "size": "Größe",
-    "updateError": "Fehler beim Aktualisieren des Raums!"
+    "updateError": "Fehler beim Aktualisieren des Raums!",
+    "updateSuccess": "Raumdetails wurden erfolgreich akualisiert!"
   },
   "rooms": "Räume",
   "site": {
@@ -112,7 +118,8 @@
     "noRooms": "Dieser Ort hat noch keine Räume.",
     "singular": "Ort",
     "update": "Aktualisieren",
-    "updateError": "Fehler beim Aktualisieren des Orts!"
+    "updateError": "Fehler beim Aktualisieren des Orts!",
+    "updateSuccess": "Details des Orts wurden erfolgreich akualisiert!"
   },
   "sites": "Orte",
   "team": "Team",

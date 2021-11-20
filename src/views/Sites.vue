@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
+import DeletionModal from "@/components/DeletionModal.vue";
 
 // TODO: Add number of rooms to each site's table row.
 // TODO: Add "remove site" button, visible for owners only.
@@ -13,6 +14,10 @@ const store = useStore();
 // This view is routed to in an organization context only, this orgId is defined.
 const currentOrgId = computed(() => route.params.orgId);
 const sites = ref(undefined);
+
+const showDeleteSiteModal = ref(false);
+const deleteSiteId = ref();
+const openDeleteSiteModal = () => (showDeleteSiteModal.value = true);
 
 const formatAdress = (address) => {
   return `${address.street1}, ${address.zip} ${address.city}`;
@@ -26,8 +31,8 @@ const isOwner = computed(() => orgMembership.value?.role === "O");
 const hasSites = computed(() => sites.value?.length > 0);
 const isLoading = ref(true);
 
-const deleteSite = async (siteId) => {
-  await store.dispatch("jv/delete", `sites/${siteId}`);
+const deleteSite = async () => {
+  await store.dispatch("jv/delete", `sites/${deleteSiteId.value}`);
   updateView();
 };
 
@@ -55,6 +60,14 @@ watch(currentOrgId, () => updateView());
 <template>
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else-if="hasSites" class="text-md mt-8">
+    <DeletionModal
+      :open="showDeleteSiteModal"
+      @close-modal="showDeleteSiteModal = false"
+      @delete-clicked="deleteSite"
+      modal-title="delete-site-modal.title"
+    >
+      <p class="text-sm text-gray-500">{{ $t("delete-site-modal.message") }}</p>
+    </DeletionModal>
     <div class="flex justify-end items-center">
       <div class="flex flex-row">
         <router-link
@@ -151,7 +164,12 @@ watch(currentOrgId, () => updateView());
               <div
                 v-if="isOwner"
                 class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
-                @click="deleteSite(site._jv.id)"
+                @click="
+                  () => {
+                    openDeleteSiteModal();
+                    deleteSiteId = site._jv.id;
+                  }
+                "
               >
                 {{ $t("remove") }}
               </div>

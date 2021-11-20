@@ -81,6 +81,7 @@ const updateData = async () => {
         { url: `rooms/${roomId.value}/` },
       ]);
       updateView();
+      toast.success(t("room.updateSuccess"));
     } catch (e) {
       toast.error(t("room.updateError"));
       console.log(e);
@@ -122,7 +123,18 @@ onMounted(async () => updateView());
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else>
     <div class="max-w-sm sm:max-w-lg">
-      <div class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
+      <div
+        class="
+          text-black
+          mt-2
+          p-4
+          card
+          rounded-md
+          shadow-md
+          ring-1 ring-gray-300
+          bg-white
+        "
+      >
         <div class="form-control">
           <label class="label">
             <span class="label-text text-black font-bold">{{

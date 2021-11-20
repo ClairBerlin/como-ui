@@ -120,7 +120,7 @@ const updateView = async () => {
   const roomObj = await store.dispatch("jv/get", `sites/${siteId.value}/rooms`);
   const roomList = Object.entries(roomObj);
   console.log(`Fetched ${roomList.length} rooms`);
-  rooms.value = roomList.map(([_, room]) => room);
+  rooms.value = roomList.map(([, room]) => room);
   isLoading.value = false;
 };
 
@@ -230,17 +230,7 @@ onMounted(async () => updateView());
         </button>
       </div>
     </div>
-    <div
-      v-if="hasRooms"
-      class="
-        ring-1 ring-gray-300
-        rounded-md
-        bg-white
-        text-md
-        overflow-hidden
-        mt-8
-      "
-    >
+    <div v-if="hasRooms" class="text-md mt-8">
       <div class="flex justify-end items-center">
         <div class="flex flex-row">
           <router-link
@@ -255,7 +245,16 @@ onMounted(async () => updateView());
         </div>
       </div>
 
-      <table class="min-w-full divide-y divide-gray-200">
+      <table
+        class="
+          min-w-full
+          divide-y divide-gray-200
+          ring-1 ring-gray-300
+          rounded-md
+          bg-white
+          overflow-hidden
+        "
+      >
         <thead class="bg-gray-50">
           <tr>
             <th

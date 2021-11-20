@@ -47,10 +47,11 @@ const updateOrganization = () => {
       updatedOrg["description"] = newOrgDescription.value;
     }
     try {
-      store.dispatch("jv/patch", [
+      await store.dispatch("jv/patch", [
         updatedOrg,
         { url: `organizations/${route.params.orgId}/` },
       ]);
+      toast.success(t("org.updateSuccess"));
     } catch (e) {
       toast.error(t("org.updateError"));
     }

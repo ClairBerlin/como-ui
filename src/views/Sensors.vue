@@ -143,7 +143,7 @@ watch(currentOrgId, () => update());
         <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
       </div>
       <div class="ml-3">
-        {{ $t("node.noNode") }}.
+        {{ $t("node.noNodes") }} {{ " " }}
         <!-- TODO: use :to="{ name: 'sensors-add' }" -->
         <router-link
           to="#"
