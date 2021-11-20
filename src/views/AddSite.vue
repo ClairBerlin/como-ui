@@ -10,7 +10,7 @@ const store = useStore();
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
-const t = useI18n();
+const { t } = useI18n();
 
 const orgId = computed(() => route.params.orgId);
 
@@ -70,7 +70,7 @@ const createAddress = async () => {
     zip: newZip.value,
     city: newCity.value,
   };
-  if (newStreet2) {
+  if (newStreet2.value) {
     newAddress["street2"] = newStreet2.value;
   }
   try {
@@ -89,7 +89,7 @@ const createAddress = async () => {
 
 <template>
   <div class="max-w-sm sm:max-w-lg">
-    <div class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
+    <div class="text-black p-4 card rounded-md shadow-md bg-white">
       <div class="form-control">
         <label class="label">
           <span class="label-text text-black font-bold">{{

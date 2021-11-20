@@ -8,7 +8,7 @@ import { useI18n } from "vue-i18n";
 const store = useStore();
 const toast = useToast();
 const router = useRouter();
-const t = useI18n();
+const { t } = useI18n();
 
 const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);

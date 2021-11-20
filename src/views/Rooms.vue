@@ -183,23 +183,13 @@ watch(currentOrgId, () => updateView());
           >
             {{ room.max_occupancy }}
           </td>
-          <td
-            class="
-              hidden
-              md:table-cell
-              px-2
-              sm:px-6
-              py-4
-              whitespace-nowrap
-              text-right
-            "
-          >
+          <td class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
             <router-link
               class="
                 font-medium
                 underline
-                text-yellow-700
-                hover:text-yellow-600
+                text-blue-700
+                hover:text-blue-600 hover:no-underline
               "
               :to="{
                 name: 'site',
@@ -258,9 +248,7 @@ watch(currentOrgId, () => updateView());
           to="sites"
           class="font-medium underline text-yellow-700 hover:text-yellow-600"
         >
-          <div>
-            {{ $t("room.siteForRoom") }}.
-          </div>
+          <div>{{ $t("room.siteForRoom") }}.</div>
         </router-link>
       </div>
     </div>

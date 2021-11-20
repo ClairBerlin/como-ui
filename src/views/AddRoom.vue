@@ -10,7 +10,7 @@ const store = useStore();
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
-const t = useI18n();
+const { t } = useI18n();
 
 const siteId = computed(() => route.params.siteId);
 const site = computed(() =>

@@ -61,17 +61,7 @@ watch(currentOrgId, () => updateView());
     all its rooms and installations.
   </div>
   <div v-if="isLoading">{{ $t("loading...") }}</div>
-  <div
-    v-else-if="hasSites"
-    class="
-      ring-1 ring-gray-300
-      rounded-md
-      bg-white
-      text-md
-      overflow-hidden
-      mt-8
-    "
-  >
+  <div v-else-if="hasSites" class="text-md mt-8">
     <div class="flex justify-end items-center">
       <div class="flex flex-row">
         <router-link
@@ -85,7 +75,16 @@ watch(currentOrgId, () => updateView());
       </div>
     </div>
 
-    <table class="min-w-full divide-y divide-gray-200">
+    <table
+      class="
+        overflow-hidden
+        rounded-md
+        ring-1 ring-gray-300
+        bg-white
+        min-w-full
+        divide-y divide-gray-200
+      "
+    >
       <thead class="bg-gray-50">
         <tr>
           <th
@@ -148,7 +147,7 @@ watch(currentOrgId, () => updateView());
             <div class="flex flex-col sm:flex-row">
               <div class="flex flex-row">
                 <router-link
-                  class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                  class="btn-sm my-2 gray-button font-semibold w-max"
                   :to="{
                     name: 'site',
                     params: { siteId: site._jv.id },

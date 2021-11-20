@@ -3,8 +3,8 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-import dayjs from "dayjs";
-import { ExclamationIcon, EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
+import { ExclamationIcon } from "@heroicons/vue/outline";
+import InstallationCard from "@/components/InstallationCard.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -31,11 +31,6 @@ const hasActiveSensors = computed(() => {
     return false;
   }
 });
-
-const installationTooltip = (isPublic) =>
-  isPublic
-    ? "This installation is public."
-    : "This installation is not public.";
 
 const update = async () => {
   isLoading.value = true;
@@ -70,103 +65,29 @@ const update = async () => {
     links to the corresponding detail view.
   </div>
   <!-- TODO: replace with a spinner or another indication of loading data (e.g. skeleton) -->
-  <div v-if="isLoading">loading...</div>
+  <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else class="mx-2">
-    <h2 class="font-bold text-xl mt-8">Active Installations</h2>
+    <h2 class="font-bold text-xl mt-8">{{ $t("Active Installations") }}</h2>
     <div class="">
       <div v-if="hasActiveSensors">
         <ul
           role="list"
-          class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
         >
           <li
             v-for="inst in activeInstallations"
             :key="inst._jv.id"
-            class="
-              col-span-1
-              bg-white
-              shadow-md
-              mt-4
-              rounded-md
-              hover:shadow-lg
-            "
+            class="col-span-1 mt-4"
           >
-            <div class="w-full flex flex-col">
-              <div class="p-6">
-                <div class="">
-                  <div class="flex justify-between">
-                    <div class="text-lg font-semibold text-gray-900">
-                      <router-link
-                        :to="{
-                          name: 'sensor',
-                          params: { sensorId: inst.node._jv.id },
-                        }"
-                        class="link"
-                      >
-                        {{ inst.node?.alias || inst.node?.eui64 }}
-                      </router-link>
-                      /
-                      <router-link
-                        :to="{
-                          name: 'room',
-                          params: { roomId: inst.room._jv.id },
-                        }"
-                        class="link"
-                      >
-                        {{ inst.room?.name }}
-                      </router-link>
-                    </div>
-                    <div
-                      :data-tip="installationTooltip(inst?.is_public)"
-                      class="tooltip h-6 w-6"
-                    >
-                      <EyeIcon v-if="inst?.is_public" />
-                      <EyeOffIcon v-else />
-                    </div>
-                  </div>
-                  <div v-if="inst.description" class="text-gray-600">
-                    {{ $t("description") }}: {{ inst.description }}
-                  </div>
-                  <div>
-                    {{ $t("node.installedOn") }}
-                    {{ dayjs.unix(inst.from_timestamp_s).format("YYYY-MM-DD") }}
-                  </div>
-                  <div>
-                    {{ $t("site.singular") }}:
-                    <router-link
-                      :to="{
-                        name: 'site',
-                        params: { siteId: inst.room?.site?._jv?.id || 1 },
-                      }"
-                      class="link"
-                    >
-                      {{ inst.room?.site?.name }}
-                    </router-link>
-                  </div>
-                  <div>most recent measurement: TODO</div>
-                </div>
-              </div>
-              <router-link
-                :to="{
-                  name: 'installation',
-                  params: { installationId: inst._jv.id },
-                }"
-                class="
-                  bg-gradient-to-t
-                  from-indigo-700
-                  to-blue-500
-                  p-4
-                  m-6
-                  mt-0
-                  text-center
-                  hover:ring
-                  rounded-md
-                  font-semibold
-                  text-indigo-100
-                "
-                >View CO2 chart
-              </router-link>
-            </div>
+            <InstallationCard
+              :installation-id="inst._jv.id"
+              :sensor-name="inst.node?.alias || inst.node?.eui64"
+              :sensor-id="inst.node._jv.id"
+              :room-name="inst.room?.name"
+              :room-id="inst.room._jv.id"
+              :is-public="inst?.is_public"
+              :latest-measurement="inst?.latest_sample?.co2_ppm?.toString()"
+            />
           </li>
         </ul>
       </div>

@@ -2,6 +2,7 @@
 import { onMounted, ref } from "vue";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
+import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import DayjsMinMax from "dayjs/plugin/minMax";
 dayjs.extend(DayjsMinMax);
@@ -14,6 +15,7 @@ const store = useStore();
 
 const selectedTab = ref(0);
 const samplePool = ref([]);
+const { t } = useI18n();
 
 // The window of sample data to display is taken relative to this day
 const referenceDay = ref(dayjs().startOf("day"));
@@ -163,10 +165,12 @@ const nextInstant = () => {
   console.log(`New reference day: ${referenceDay.value}`);
 };
 
-const installationTooltip = (isPublic) =>
-  isPublic
+const installationTooltip = (isPublic) => {
+  const tip = isPublic
     ? "This installation is public."
     : "This installation is not public.";
+  return t(tip);
+};
 
 const isTabActive = (index) => selectedTab.value === index;
 </script>

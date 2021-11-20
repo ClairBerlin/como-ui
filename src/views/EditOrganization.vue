@@ -10,7 +10,7 @@ import { BanIcon } from "@heroicons/vue/outline";
 const store = useStore();
 const route = useRoute();
 const toast = useToast();
-const t = useI18n();
+const { t } = useI18n();
 
 const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);

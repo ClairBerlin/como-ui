@@ -6,14 +6,13 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
-import { ExclamationIcon } from "@heroicons/vue/outline";
 
 // TODO: Add room name to dashboard title.
 const route = useRoute();
 const router = useRouter();
 const store = useStore();
 const toast = useToast();
-const t = useI18n();
+const { t } = useI18n();
 
 const roomId = computed(() => route.params.roomId);
 const room = computed(() =>

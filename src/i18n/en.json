@@ -1,4 +1,11 @@
 {
+  "This installation is public.": "This installation is public.",
+  "This installation is not public.": "This installation is not public.",
+  "Active Installations": "Active Installations",
+  "Latest": "Latest",
+  "View": "View",
+  "Chart": "Chart",
+  "Value": "Value",
   "action": "Action",
   "actions": "Actions",
   "add": "Add",

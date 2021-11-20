@@ -1,4 +1,11 @@
 {
+  "This installation is public.": "Diese Installation ist öffentlich.",
+  "This installation is not public.": "Diese Installation ist nicht öffentlich.",
+  "Active Installations": "Aktive Installationen",
+  "Latest": "Aktueller",
+  "View": "Zum",
+  "Chart": "Diagramm",
+  "Value": "Wert",
   "action": "Aktion",
   "actions": "Aktionen",
   "add": "Hinzufügen",
@@ -71,7 +78,7 @@
   },
   "overview": "Überblick",
   "previous": "Zurück",
-  "ppm": "CO<sub>2</sub> Gehalt in ppm",
+  "ppm": "CO2 Gehalt in ppm",
   "remove": "Entfernen",
   "role": {
     "assistant": "Assistent",
