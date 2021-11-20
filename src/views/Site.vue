@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
@@ -51,7 +51,7 @@ const updateSite = async () => {
   if (newSiteName.value) {
     newSite["name"] = newSiteName.value;
   }
-  if (newSiteDescription) {
+  if (newSiteDescription.value) {
     newSite["description"] = newSiteDescription.value;
   }
   try {
@@ -73,16 +73,16 @@ const updateAddress = async () => {
       id: addressId.value,
     },
   };
-  if (newStreet1) {
+  if (newStreet1.value) {
     newAddress["street1"] = newStreet1.value;
   }
-  if (newStreet2) {
+  if (newStreet2.value) {
     newAddress["street2"] = newStreet2.value;
   }
-  if (newZip) {
+  if (newZip.value) {
     newAddress["zip"] = newZip.value;
   }
-  if (newCity) {
+  if (newCity.value) {
     newAddress["city"] = newCity.value;
   }
   try {
@@ -131,7 +131,18 @@ onMounted(async () => updateView());
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else>
     <div class="max-w-sm sm:max-w-lg">
-      <div class="text-black m-2 p-4 card ring-1 ring-gray-300 bg-white">
+      <div
+        class="
+          text-black
+          mt-2
+          p-4
+          card
+          shadow-md
+          rounded-md
+          ring-1 ring-gray-300
+          bg-white
+        "
+      >
         <div class="form-control">
           <label class="label">
             <span class="label-text text-black font-bold">{{

@@ -37,7 +37,6 @@ watch(currentOrgId, () => update());
 </script>
 
 <template>
-  <div class="bg-white shadow-md p-4 rounded-md max-w-xl mx-auto">
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div
     v-else-if="hasSensors"
