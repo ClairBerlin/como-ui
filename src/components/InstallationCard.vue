@@ -21,26 +21,21 @@ const installationTooltip = (isPublic) => {
   return t(tip);
 };
 
+const ppm = parseInt(props?.latestMeasurement || "0");
 const getColor = () => {
-  const ppm = props.latestMeasurement;
-  if (!ppm || ppm === "-") return "#9CA3AF";
-  const value = parseInt(ppm);
-  if (value <= 800) return "#7DBF70";
-  if (value <= 1200) return "#EBAC56";
+  if (!ppm) return "#9CA3AF";
+  if (ppm <= 800) return "#7DBF70";
+  if (ppm <= 1200) return "#EBAC56";
   return "#E1665E";
 };
 
 const getCircleHeight = () => {
-  const ppm = props.latestMeasurement;
-  if (!ppm || ppm === "-") return "-100";
-  const value = parseInt(ppm);
-  if (value <= 800) return "80";
-  if (value <= 1200) return "50";
-  return "20";
+  if (!ppm) return "-100";
+  if (ppm <= 800) return "75";
+  if (ppm <= 1200) return "50";
+  return "25";
 };
 
-const ppm = parseInt(props?.latestMeasurement || "0");
-console.log({ ppm });
 const ppmHeight = getCircleHeight();
 const ppmColor = getColor();
 </script>
@@ -84,7 +79,7 @@ const ppmColor = getColor();
         <EyeOffIcon v-else />
       </div>
     </div>
-    <div class="mt-8 flex justify-between">
+    <div class="mt-6 flex justify-between">
       <div class="flex flex-col">
         <div class="text-gray-900 text-lg font-bold">
           {{ $t("Latest") }} CO<sub>2</sub> {{ $t("Value") }}
@@ -117,14 +112,14 @@ const ppmColor = getColor();
         :to="{ name: 'installation', params: { installationId } }"
         class="
           bg-black
-          hover:ring hover:ring-gray-500
+          hover:ring hover:ring-gray-300
           shadow-md
           drop-shadow-md
           flex
           p-2
           w-full
           rounded-lg
-          text-lg text-gray-100
+          text-lg text-gray-300
           font-semibold
           items-center
           justify-center

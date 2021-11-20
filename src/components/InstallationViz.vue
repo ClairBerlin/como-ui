@@ -179,7 +179,7 @@ const isTabActive = (index) => selectedTab.value === index;
   <div class="text-black card bg-white p-4 max-w-xs sm:max-w-lg">
     <div class="flex justify-between">
       <div class="card-title">
-        Installation in {{ roomName }} with ID {{ installationId }}
+        Installation #{{ installationId }} in {{ roomName }}
       </div>
       <div
         :data-tip="installationTooltip(installation['is_public'])"
