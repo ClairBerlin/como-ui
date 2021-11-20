@@ -77,6 +77,7 @@
     "manage": "Organisationen verwalten",
     "members": "Mitglieder",
     "name": "Organisationsname",
+    "noInstallations": "Diese Organisation hat keine aktiven Installationen.",
     "none": "Keine Organisation",
     "noSite": "Die gewählte Organisation verfügt über keine Orte",
     "plural": "Organisationen",
@@ -107,7 +108,7 @@
     "name": "Raumname",
     "noRoom": "Die gewählte Organisation hat keine Räume",
     "sensor": "Sensor",
-    "siteForRoom": "Wähle einen Ort aus, um in diesem Räume anzulegen",
+    "siteForRoom": "Wählen Sie einen Ort aus, um in diesem Räume anzulegen.",
     "size": "Größe",
     "updateError": "Fehler beim Aktualisieren des Raums!",
     "updateSuccess": "Raumdetails wurden erfolgreich akualisiert!"

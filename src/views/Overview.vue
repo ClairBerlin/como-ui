@@ -106,7 +106,8 @@ const update = async () => {
             />
           </div>
           <div class="ml-3">
-            This organization has no active installations. {{ " " }}
+            {{ $t("org.noInstallations") }}
+            {{ " " }}
             <!-- TODO: use :to="{ name: 'installation-add' }" -->
             <router-link
               to="#"

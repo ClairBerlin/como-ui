@@ -90,14 +90,14 @@ const update = async () => {
         <div class="flex">
           <div
             v-if="isOwner"
-            class="btn-sm m-2 gray-button font-semibold"
+            class="m-2 gray-button font-semibold"
             @click="openDeleteOrgModal"
           >
             {{ $t("org.delete") }}
           </div>
           <div
             v-if="isOwner"
-            class="btn-sm m-2 mr-0 gray-button font-semibold"
+            class="m-2 mr-0 gray-button font-semibold"
             @click="inviteMembers"
           >
             {{ $t("org.invite") }}

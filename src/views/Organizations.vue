@@ -14,7 +14,7 @@ const hasMemberships = () => memberships.value?.length > 0;
     <div class="flex justify-between items-center">
       <h2 class="font-bold text-xl">{{ $t("org.all") }}</h2>
       <router-link
-        class="btn btn-sm m-2 font-semibold gray-button"
+        class="m-2 font-semibold gray-button"
         :to="{ name: 'org-management-add' }"
       >
         {{ $t("org.create") }}
@@ -83,8 +83,9 @@ const hasMemberships = () => memberships.value?.length > 0;
                 class="
                   text-md
                   font-bold
-                  text-blue-600
                   underline
+                  text-blue-700
+                  hover:text-blue-600 hover:no-underline
                   rounded
                   como-focus
                 "

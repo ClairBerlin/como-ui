@@ -72,7 +72,7 @@ watch(currentOrgId, () => updateView());
       <div class="flex flex-row">
         <router-link
           v-if="isOwner"
-          class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+          class="m-2 mr-0 gray-button font-semibold"
           :to="{
             name: 'addSite',
           }"

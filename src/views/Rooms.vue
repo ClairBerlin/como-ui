@@ -257,7 +257,7 @@ watch(currentOrgId, () => updateView());
           to="sites"
           class="font-medium underline text-yellow-700 hover:text-yellow-600"
         >
-          <div>{{ $t("room.siteForRoom") }}.</div>
+          {{ $t("room.siteForRoom") }}
         </router-link>
       </div>
     </div>
