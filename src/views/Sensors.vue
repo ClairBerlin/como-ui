@@ -76,7 +76,7 @@ watch(currentOrgId, () => update());
               text-gray-500
               tracking-wider
               hidden
-              md:table-cell
+              xl:table-cell
             "
           >
             {{ $t("node.identifier") }}
@@ -90,9 +90,26 @@ watch(currentOrgId, () => update());
               font-medium
               text-gray-500
               tracking-wider
+              hidden
+              sm:table-cell
             "
           >
-            {{ $t("action") }}
+            {{ $t("node.model") }}
+          </th>
+          <th
+            scope="col"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              text-right
+            "
+          >
+            {{ $t("node.sampleCount") }}
           </th>
         </tr>
       </thead>
@@ -103,22 +120,24 @@ watch(currentOrgId, () => update());
           :class="[sensorIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
         >
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-            {{ sensor.alias }}
+            <router-link
+              class="como-link"
+              :to="{
+                name: 'sensor',
+                params: { sensorId: sensor._jv.id },
+              }"
+            >
+              {{ sensor.alias }}
+            </router-link>
           </td>
-          <td class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="hidden xl:table-cell sm:px-6 py-4 whitespace-nowrap">
             <pre class="">{{ sensor._jv.id }}</pre>
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-            <div class="flex flex-row">
-              <router-link
-                class="gray-button"
-                :to="{
-                  name: 'sensor',
-                  params: { sensorId: sensor._jv.id },
-                }"
-                >{{ $t("inspect") }}</router-link
-              >
-            </div>
+          <td class="hidden sm:table-cell sm:px-6 py-4 whitespace-nowrap">
+            {{ sensor.model.trade_name }}
+          </td>
+          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+            {{ sensor.sample_count }}
           </td>
         </tr>
       </tbody>

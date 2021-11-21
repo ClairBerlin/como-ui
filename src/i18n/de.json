@@ -59,7 +59,9 @@
     "name": "Sensorname",
     "noNodes": "Die gewählte Organisation verfügt über keine Sensoren.",
     "removedOn": "Entfernt am",
-    "singular": "Sensor"
+    "singular": "Sensor",
+    "model": "Modell",
+    "sampleCount": "Messwerte"
   },
   "nodes": "Sensoren",
   "now": "Jetzt",
