@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -12,7 +12,6 @@ const { t } = useI18n();
 
 // TODO: Add Site name to dashboard title.
 const route = useRoute();
-const router = useRouter();
 const store = useStore();
 const toast = useToast();
 
@@ -67,9 +66,9 @@ const updateSite = async () => {
       newSite,
       { url: `sites/${siteId.value}/` },
     ]);
-    router.push({ name: "site", params: { siteId: siteId.value } });
+    toast.success(t("site.updateSuccess"));
   } catch (e) {
-    toast.error(t("site.updateSuccess"));
+    toast.error(t("site.updateError"));
     console.log(e);
   }
 };
@@ -101,19 +100,23 @@ const updateAddress = async () => {
     toast.success(t("address.updateSuccess"));
   } catch (e) {
     toast.error(t("address.updateError"));
-    console.log(e);
   }
 };
 
 const updateData = async () => {
   if (newSiteName.value || newSiteDescription.value) {
     updateSite();
+    newSiteName.value = undefined;
+    newSiteDescription.value = undefined;
   }
   if (newStreet1.value || newStreet2.value || newZip.value || newCity.value) {
     updateAddress();
+    newStreet1.value = undefined;
+    newStreet2.value = undefined;
+    newZip.value = undefined;
+    newCity.value = undefined;
   }
   updateView();
-  // router.push({ name: "site", params: { siteId: siteId.value } });
 };
 
 const updateView = async () => {
@@ -138,108 +141,281 @@ onMounted(async () => updateView());
 
 <template>
   <div v-if="isLoading">{{ $t("loading...") }}</div>
-  <div v-else>
-    <div class="max-w-sm sm:max-w-lg">
+  <div v-else class="divide-y-2 divide-gray-300">
+    <form class="space-y-8 divide-y divide-gray-200">
+      <div>
+        <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
+          <div
+            class="
+              sm:grid
+              sm:grid-cols-3
+              sm:gap-4
+              sm:items-start
+              sm:border-t
+              sm:border-gray-200
+              sm:pt-5
+            "
+          >
+            <label
+              for="site-name"
+              class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            >
+              {{ $t("site.name") }}
+            </label>
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+              <input
+                type="text"
+                name="site-name"
+                id="site-name"
+                v-model.trim="newSiteName"
+                :placeholder="site.name"
+                class="
+                  max-w-lg
+                  block
+                  w-full
+                  shadow-sm
+                  focus:ring-indigo-500 focus:border-indigo-500
+                  sm:max-w-xs sm:text-sm
+                  border-gray-300
+                  rounded-md
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-6 sm:space-y-5">
+        <div
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
+        >
+          <label
+            for="description"
+            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {{ $t("description") }}
+          </label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <textarea
+              id="description"
+              name="description"
+              rows="3"
+              v-model.trim="newSiteDescription"
+              :placeholder="site.description || '-'"
+              class="
+                max-w-lg
+                shadow-sm
+                block
+                w-full
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
+            />
+            <p class="mt-2 text-sm text-gray-500">
+              {{ $t("optional") }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
+        >
+          <label
+            for="street-address"
+            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {{ $t("address.street1") }}
+          </label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <input
+              type="text"
+              name="street-address"
+              id="street-address"
+              autocomplete="street-address"
+              v-model.trim="newStreet1"
+              :placeholder="site.address.street1"
+              class="
+                block
+                max-w-lg
+                w-full
+                shadow-sm
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:text-sm
+                border-gray-300
+                rounded-md
+              "
+            />
+          </div>
+        </div>
+
+        <div
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
+        >
+          <label
+            for="street-address2"
+            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {{ $t("address.street2") }}
+          </label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <input
+              type="text"
+              name="street-address2"
+              id="street-address2"
+              v-model.trim="newStreet2"
+              :placeholder="site.address.street2"
+              autocomplete="address-level4"
+              class="
+                block
+                max-w-lg
+                w-full
+                shadow-sm
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:text-sm
+                border-gray-300
+                rounded-md
+              "
+            />
+          </div>
+        </div>
+
+        <div
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
+        >
+          <label
+            for="postal-code"
+            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+          >
+            {{ $t("address.zip") }}
+          </label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">
+            <input
+              type="text"
+              name="postal-code"
+              id="postal-code"
+              autocomplete="postal-code"
+              v-model.trim="newZip"
+              :placeholder="site.address.zip"
+              class="
+                max-w-lg
+                block
+                w-full
+                shadow-sm
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:max-w-xs sm:text-sm
+                border-gray-300
+                rounded-md
+              "
+            />
+          </div>
+        </div>
+      </div>
+
       <div
         class="
-          text-black
-          mt-2
-          p-4
-          card
-          shadow-md
-          rounded-md
-          ring-1 ring-gray-300
-          bg-white
+          sm:grid
+          sm:grid-cols-3
+          sm:gap-4
+          sm:items-start
+          sm:border-t
+          sm:border-gray-200
+          sm:pt-5
         "
       >
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("site.name")
-            }}</span>
-          </label>
+        <label
+          for="city"
+          class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+        >
+          {{ $t("address.city") }}
+        </label>
+        <div class="mt-1 sm:mt-0 sm:col-span-2">
           <input
             type="text"
-            v-model.trim="newSiteName"
-            :placeholder="site.name"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control py-4">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("description")
-            }}</span>
-          </label>
-          <textarea
-            type="text"
-            v-model.trim="newSiteDescription"
-            :placeholder="site.description"
-            class="como-focus rounded h-24 text-gray-600"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold"
-              >{{ $t("address.street1") }}
-            </span>
-          </label>
-          <input
-            type="text"
-            v-model.trim="newStreet1"
-            :placeholder="site.address.street1"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold"
-              >{{ $t("address.street2") }}
-            </span>
-          </label>
-          <input
-            type="text"
-            v-model.trim="newStreet2"
-            :placeholder="site.address.street2"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold"
-              >{{ $t("address.zip") }}
-            </span>
-          </label>
-          <input
-            type="text"
-            v-model.trim="newZip"
-            :placeholder="site.address.zip"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold"
-              >{{ $t("address.city") }}
-            </span>
-          </label>
-          <input
-            type="text"
+            name="city"
+            id="city"
+            autocomplete="address-level2"
             v-model.trim="newCity"
             :placeholder="site.address.city"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
+            class="
+              max-w-lg
+              block
+              w-full
+              shadow-sm
+              focus:ring-indigo-500 focus:border-indigo-500
+              sm:max-w-xs sm:text-sm
+              border-gray-300
+              rounded-md
+            "
           />
         </div>
-        <button
-          class="mt-2 btn gray-button font-semibold"
-          v-if="isOwner"
-          @click="updateData"
-        >
-          {{ $t("site.update") }}
-        </button>
       </div>
-    </div>
-    <div v-if="hasRooms" class="text-md mt-8">
+
+      <div class="pt-5">
+        <div class="flex justify-end">
+          <button
+            type="submit"
+            class="
+              ml-3
+              inline-flex
+              justify-center
+              py-2
+              px-4
+              border border-transparent
+              shadow-sm
+              text-sm
+              font-medium
+              rounded-md
+              text-white
+              bg-indigo-600
+              hover:bg-indigo-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-indigo-500
+            "
+            v-if="isOwner"
+            @click="updateData"
+          >
+            {{ $t("site.update") }}
+          </button>
+        </div>
+      </div>
+    </form>
+    <div v-if="hasRooms" class="text-md mt-8 pt-8">
       <DeletionModal
         :open="showDeleteRoomModal"
         @close-modal="showDeleteRoomModal = false"
