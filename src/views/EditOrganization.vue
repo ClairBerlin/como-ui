@@ -32,7 +32,7 @@ const orgMembership = computed(() =>
 
 const isOwner = computed(() => orgMembership.value?.role === "O");
 
-const updateOrganization = () => {
+const updateOrganization = async () => {
   if (newOrgName.value || newOrgDescription.value) {
     let updatedOrg = {
       _jv: {
