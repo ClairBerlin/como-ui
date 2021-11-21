@@ -3,7 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-import { ExclamationIcon } from "@heroicons/vue/outline";
+import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
 
 const route = useRoute();
@@ -166,13 +166,21 @@ watch(currentOrgId, () => updateView());
           :class="[roomIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
         >
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-            {{ room.name }}
+            <router-link
+              class="como-link"
+              :to="{
+                name: 'room',
+                params: { roomId: room._jv.id },
+              }"
+            >
+              {{ room.name }}
+            </router-link>
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-            {{ room.size_sqm }}
+            {{ room.size_sqm || "-" }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-            {{ room.height_m }}
+            {{ room.height_m || "-" }}
           </td>
           <td
             class="
@@ -185,7 +193,7 @@ watch(currentOrgId, () => updateView());
               text-right
             "
           >
-            {{ room.max_occupancy }}
+            {{ room.max_occupancy || "-" }}
           </td>
           <td class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
             <router-link
@@ -200,19 +208,9 @@ watch(currentOrgId, () => updateView());
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
             <div class="flex flex-col sm:flex-row">
-              <div class="flex flex-row">
-                <router-link
-                  class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
-                  :to="{
-                    name: 'room',
-                    params: { roomId: room._jv.id },
-                  }"
-                  >{{ $t("inspect") }}</router-link
-                >
-              </div>
               <div
                 v-if="isOwner"
-                class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                class="btn-sm gray-button font-semibold w-max"
                 @click="
                   () => {
                     openDeleteRoomModal();
@@ -220,7 +218,8 @@ watch(currentOrgId, () => updateView());
                   }
                 "
               >
-                {{ $t("remove") }}
+                <TrashIcon class="w-4 h-4 mr-2" />
+                <span>{{ $t("remove") }}</span>
               </div>
             </div>
           </td>

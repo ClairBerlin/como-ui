@@ -4,6 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { roleToString } from "@/utils";
 import DeletionModal from "@/components/DeletionModal.vue";
+import { UserAddIcon, TrashIcon } from "@heroicons/vue/outline";
 
 const route = useRoute();
 const router = useRouter();
@@ -93,14 +94,16 @@ const update = async () => {
             class="m-2 gray-button font-semibold"
             @click="openDeleteOrgModal"
           >
-            {{ $t("org.delete") }}
+            <TrashIcon class="w-4 h-4 mr-2" />
+            <span>{{ $t("org.delete") }}</span>
           </div>
           <div
             v-if="isOwner"
             class="m-2 mr-0 gray-button font-semibold"
             @click="inviteMembers"
           >
-            {{ $t("org.invite") }}
+            <UserAddIcon class="w-4 h-4 mr-2" />
+            <span>{{ $t("org.invite") }}</span>
           </div>
         </div>
       </div>
@@ -204,7 +207,8 @@ const update = async () => {
                     class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
                     @click="removeMember"
                   >
-                    {{ $t("remove") }}
+                    <TrashIcon class="w-4 h-4 mr-2" />
+                    <span>{{ $t("remove") }}</span>
                   </div>
                 </div>
               </td>

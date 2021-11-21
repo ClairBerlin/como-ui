@@ -3,7 +3,7 @@ import { onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
-import { ExclamationIcon } from "@heroicons/vue/outline";
+import { ExclamationIcon, PlusIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
 
 // TODO: Add number of rooms to each site's table row.
@@ -76,8 +76,10 @@ watch(currentOrgId, () => updateView());
           :to="{
             name: 'addSite',
           }"
-          >{{ $t("site.add") }}</router-link
         >
+          <PlusIcon class="w-4 h-4 mr-2" />
+          <span>{{ $t("site.add") }}</span>
+        </router-link>
       </div>
     </div>
 
@@ -144,23 +146,22 @@ watch(currentOrgId, () => updateView());
           :class="[siteIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
         >
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-            {{ site.name }}
+            <router-link
+              class="como-link"
+              :to="{
+                name: 'site',
+                params: { siteId: site._jv.id },
+              }"
+            >
+              {{ site.name }}
+            </router-link>
           </td>
           <td class="hidden sm:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
             {{ formatAdress(site.address) }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
             <div class="flex flex-col sm:flex-row">
-              <div class="flex flex-row">
-                <router-link
-                  class="btn-sm my-2 gray-button font-semibold w-max"
-                  :to="{
-                    name: 'site',
-                    params: { siteId: site._jv.id },
-                  }"
-                  >{{ $t("inspect") }}</router-link
-                >
-              </div>
+              <div class="flex flex-row"></div>
               <div
                 v-if="isOwner"
                 class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
@@ -171,7 +172,8 @@ watch(currentOrgId, () => updateView());
                   }
                 "
               >
-                {{ $t("remove") }}
+                <TrashIcon class="w-4 h-4 mr-2" />
+                <span>{{ $t("remove") }}</span>
               </div>
             </div>
           </td>
