@@ -44,8 +44,8 @@ const newStreet2 = ref(undefined);
 const newZip = ref(undefined);
 const newCity = ref(undefined);
 
-const deleteRoom = async (roomId) => {
-  await store.dispatch("jv/delete", `rooms/${roomId}`);
+const deleteRoom = async () => {
+  await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
   updateView();
 };
 
