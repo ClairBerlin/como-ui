@@ -236,7 +236,9 @@ onMounted(async () => updateView());
     </div>
     <div v-if="hasRooms" class="text-md mt-8">
       <div class="flex justify-between items-center">
-        <h2 class="font-bold text-xl">{{ $t("rooms") }} {{ $t("of") }} {{}}</h2>
+        <h2 class="font-bold text-xl">
+          {{ $t("rooms") }} {{ $t("of") }} {{ site.name }}
+        </h2>
         <div class="flex flex-row">
           <router-link
             v-if="isOwner"
