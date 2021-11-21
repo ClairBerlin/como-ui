@@ -201,7 +201,7 @@ onMounted(async () => updateView());
             for="description"
             class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
           >
-            {{ $t("description") }}
+            {{ $t("description") }} ({{ $t("optional") }})
           </label>
           <div class="mt-1 sm:mt-0 sm:col-span-2">
             <textarea
@@ -221,9 +221,6 @@ onMounted(async () => updateView());
                 rounded-md
               "
             />
-            <p class="mt-2 text-sm text-gray-500">
-              {{ $t("optional") }}
-            </p>
           </div>
         </div>
 
