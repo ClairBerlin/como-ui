@@ -21,4 +21,7 @@
     rounded-md h-auto normal-case cursor-pointer select-none 
     como-focus;
   }
+  .como-link {
+    @apply font-bold underline text-blue-700 hover:text-blue-600 hover:no-underline rounded como-focus;
+  }
 }

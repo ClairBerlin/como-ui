@@ -4,8 +4,9 @@ import { useRoute, useRouter } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import { ExclamationIcon } from "@heroicons/vue/outline";
+import { ExclamationIcon, TrashIcon, PlusIcon } from "@heroicons/vue/outline";
 import { useI18n } from "vue-i18n";
+import DeletionModal from "@/components/DeletionModal.vue";
 
 const { t } = useI18n();
 
@@ -26,6 +27,10 @@ const addressId = computed(() => site.value.address._jv.id);
 const rooms = ref([]);
 const hasRooms = computed(() => !isLoading.value && rooms.value?.length > 0);
 const isLoading = ref(true);
+
+const showDeleteRoomModal = ref(false);
+const deleteRoomId = ref();
+const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
 const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
@@ -235,6 +240,16 @@ onMounted(async () => updateView());
       </div>
     </div>
     <div v-if="hasRooms" class="text-md mt-8">
+      <DeletionModal
+        :open="showDeleteRoomModal"
+        @close-modal="showDeleteRoomModal = false"
+        @delete-clicked="deleteRoom"
+        modal-title="delete-room-modal.title"
+      >
+        <p class="text-sm text-gray-500">
+          {{ $t("delete-room-modal.message") }}
+        </p>
+      </DeletionModal>
       <div class="flex justify-between items-center">
         <h2 class="font-bold text-xl">
           {{ $t("rooms") }} {{ $t("of") }} {{ site.name }}
@@ -247,8 +262,10 @@ onMounted(async () => updateView());
               name: 'addRoom',
               params: { siteId: siteId },
             }"
-            >{{ $t("room.add") }}</router-link
           >
+            <PlusIcon class="w-4 h-4 mr-2" />
+            <span>{{ $t("room.add") }}</span>
+          </router-link>
         </div>
       </div>
 
@@ -331,7 +348,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              {{ $t("actions") }}
+              {{ $t("action") }}
             </th>
           </tr>
         </thead>
@@ -342,13 +359,21 @@ onMounted(async () => updateView());
             :class="[roomIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
           >
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-              {{ room.name }}
+              <router-link
+                class="como-link"
+                :to="{
+                  name: 'room',
+                  params: { roomId: room._jv.id },
+                }"
+              >
+                {{ room.name }}
+              </router-link>
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-              {{ room.size_sqm }}
+              {{ room.size_sqm || "-" }}
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-              {{ room.height_m }}
+              {{ room.height_m || "-" }}
             </td>
             <td
               class="
@@ -361,26 +386,22 @@ onMounted(async () => updateView());
                 text-right
               "
             >
-              {{ room.max_occupancy }}
+              {{ room.max_occupancy || "-" }}
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
               <div class="flex flex-col sm:flex-row">
-                <div class="flex flex-row">
-                  <router-link
-                    class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
-                    :to="{
-                      name: 'room',
-                      params: { roomId: room._jv.id },
-                    }"
-                    >{{ $t("inspect") }}</router-link
-                  >
-                </div>
                 <div
                   v-if="isOwner"
-                  class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
-                  @click="deleteRoom(room._jv.id)"
+                  class="btn-sm m-2 mr-0 gray-button font-semibold"
+                  @click="
+                    () => {
+                      openDeleteRoomModal();
+                      deleteRoomId = room._jv.id;
+                    }
+                  "
                 >
-                  {{ $t("remove") }}
+                  <TrashIcon class="w-4 h-4 mr-2" />
+                  <span>{{ $t("remove") }}</span>
                 </div>
               </div>
             </td>

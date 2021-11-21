@@ -189,12 +189,7 @@ watch(currentOrgId, () => updateView());
           </td>
           <td class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
             <router-link
-              class="
-                font-medium
-                underline
-                text-blue-700
-                hover:text-blue-600 hover:no-underline
-              "
+              class="como-link"
               :to="{
                 name: 'site',
                 params: { siteId: room.site._jv.id },
