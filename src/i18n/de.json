@@ -15,7 +15,9 @@
     "singular": "Adresse",
     "street1": "Straße und Hausnummer",
     "street2": "Adressdetails",
-    "zip": "Postleitzahl"
+    "zip": "Postleitzahl",
+    "updateError": "Fehler beim Aktualisieren der Addresse!",
+    "updateSuccess": "Adresse wurde erfolgreich aktualisiert!"
   },
   "cancel": "Abbrechen",
   "day": "Tag",

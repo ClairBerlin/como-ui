@@ -15,7 +15,9 @@
     "singular": "Address",
     "street1": "Street and Number",
     "street2": "Routing Extension",
-    "zip": "Zip-Code"
+    "zip": "Zip-Code",
+    "updateError": "Failed to update the address!",
+    "updateSuccess": "Address has been updated!"
   },
   "cancel": "Cancel",
   "day": "Day",

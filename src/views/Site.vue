@@ -5,6 +5,9 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { ExclamationIcon } from "@heroicons/vue/outline";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 // TODO: Add Site name to dashboard title.
 const route = useRoute();
@@ -61,7 +64,7 @@ const updateSite = async () => {
     ]);
     router.push({ name: "site", params: { siteId: siteId.value } });
   } catch (e) {
-    toast.error("Failed to update the site");
+    toast.error(t("site.updateSuccess"));
     console.log(e);
   }
 };
@@ -90,8 +93,9 @@ const updateAddress = async () => {
       newAddress,
       { url: `addresses/${addressId.value}/` },
     ]);
+    toast.success(t("address.updateSuccess"));
   } catch (e) {
-    toast.error("Failed to update the address");
+    toast.error(t("address.updateError"));
     console.log(e);
   }
 };
@@ -231,7 +235,8 @@ onMounted(async () => updateView());
       </div>
     </div>
     <div v-if="hasRooms" class="text-md mt-8">
-      <div class="flex justify-end items-center">
+      <div class="flex justify-between items-center">
+        <h2 class="font-bold text-xl">{{ $t("rooms") }} {{ $t("of") }} {{}}</h2>
         <div class="flex flex-row">
           <router-link
             v-if="isOwner"
