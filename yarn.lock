@@ -2019,6 +2019,11 @@ vue-toastification@^2.0.0-rc.5:
   resolved "https://registry.yarnpkg.com/vue-toastification/-/vue-toastification-2.0.0-rc.5.tgz#92798604d806ae473cfb76ed776fae294280f8f8"
   integrity sha512-q73e5jy6gucEO/U+P48hqX+/qyXDozAGmaGgLFm5tXX4wJBcVsnGp4e/iJqlm9xzHETYOilUuwOUje2Qg1JdwA==
 
+vue3-date-time-picker@^2.3.6:
+  version "2.3.6"
+  resolved "https://registry.yarnpkg.com/vue3-date-time-picker/-/vue3-date-time-picker-2.3.6.tgz#8308a171af5fcc9f28ff6cecdc0c0edf8385a6f0"
+  integrity sha512-nl9oYw2hLJoco6zBvQY/mAVF9c+j0jv6DWeBiuWDe3U9B5TRLgnYWfhCwkBCsRhEfMaE2fCCqhGd1aRaa5n8Ng==
+
 vue@^3.0.0:
   version "3.2.20"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.20.tgz#940f8aa8bf3e3be78243ca582bad41fcd45ae3e6"

@@ -5,6 +5,8 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useI18n } from "vue-i18n";
+import { dayFormatTimestamp } from "@/utils";
+import { ExclamationIcon } from "@heroicons/vue/outline";
 import dayjs from "dayjs";
 
 // TODO: Add room name to dashboard title.
@@ -38,11 +40,15 @@ const orgMembership = computed(() =>
 );
 const isOwner = computed(() => orgMembership.value?.role === "O");
 
-const dayFormatTimestamp = (unixTimestamp) => {
-  if (unixTimestamp === 2_147_483_647) {
-    return "—";
+const isInstallationActive = (installation) => {
+  if (installation == null) {
+    return false;
   } else {
-    return dayjs.unix(unixTimestamp).format("YYYY-MM-DD");
+    let now_s = dayjs().unix();
+    return (
+      installation.from_timestamp_s < now_s &&
+      installation.to_timestamp_s > now_s
+    );
   }
 };
 
@@ -86,6 +92,27 @@ const updateData = async () => {
       toast.error(t("room.updateError"));
       console.log(e);
     }
+  }
+};
+
+const terminateInstallation = async (installationId) => {
+  const installation = {
+    _jv: {
+      type: "Installation",
+      id: installationId,
+    },
+    to_timestamp_s: dayjs().unix(),
+  };
+  try {
+    await store.dispatch("jv/patch", [
+      installation,
+      { url: `installations/${installationId}/` },
+    ]);
+    toast.success(t("installation.successTerminate"));
+    updateView();
+  } catch (e) {
+    toast.error(t("installation.errorTerminate"));
+    console.log(e);
   }
 };
 
@@ -263,7 +290,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              {{ $t("node.isPublic") }}
+              {{ $t("installation.isPublic") }}
             </th>
             <th
               scope="col"
@@ -276,7 +303,7 @@ onMounted(async () => updateView());
                 tracking-wider
               "
             >
-              {{ $t("node.installedOn") }}
+              {{ $t("installation.installedOn") }}
             </th>
             <th
               scope="col"
@@ -291,7 +318,7 @@ onMounted(async () => updateView());
                 md:table-cell
               "
             >
-              {{ $t("node.removedOn") }}
+              {{ $t("installation.removedOn") }}
             </th>
             <th
               scope="col"
@@ -340,7 +367,7 @@ onMounted(async () => updateView());
                   >
                 </div>
                 <div
-                  v-if="isOwner"
+                  v-if="isOwner && isInstallationActive(installation)"
                   class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
                   @click="terminateInstallation(installation._jv.id)"
                 >
@@ -351,6 +378,24 @@ onMounted(async () => updateView());
           </tr>
         </tbody>
       </table>
+    </div>
+    <div v-else class="flex">
+      <div class="flex-shrink-0">
+        <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+      </div>
+      <div class="ml-3">
+        {{ $t("room.noInstallations") }}
+        <router-link
+          v-if="isOwner"
+          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+          :to="{
+            name: 'addInstallation',
+            params: { roomId: roomId },
+          }"
+        >
+          {{ $t("room.addInstallation") }}.
+        </router-link>
+      </div>
     </div>
   </div>
 </template>

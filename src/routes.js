@@ -15,6 +15,7 @@ const Installation = () => import("@/views/Installation.vue");
 const AddInstallation = () => import("@/views/AddInstallation.vue");
 const Sensors = () => import("@/views/Sensors.vue");
 const Sensor = () => import("@/views/Sensor.vue");
+const AddSensor = () => import("@/views/AddSensor.vue");
 const Logout = () => import("@/views/Logout.vue");
 
 /** @type {import('vue-router').RouterOptions['routes']} */
@@ -94,6 +95,12 @@ export const routes = [
         name: "sensors",
         component: Sensors,
         meta: { title: "nodes" },
+      },
+      {
+        path: "addSensor",
+        name: "addSensor",
+        component: AddSensor,
+        meta: { title: "node.add" },
       },
       {
         path: "sensors/:sensorId",
