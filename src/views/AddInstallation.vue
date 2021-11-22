@@ -27,6 +27,11 @@ const router = useRouter();
 const { t } = useI18n();
 
 // ---- Context ----
+const orgMembership = computed(() =>
+  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
+);
+const isOwner = computed(() => orgMembership.value?.role === "O");
+
 const orgId = computed(() => route.params.orgId);
 const roomId = computed(() => route.params.roomId);
 const room = computed(() =>
@@ -68,7 +73,8 @@ const isSensorSelected = computed(
 const hasInstallations = computed(
   () => isSensorSelected.value && installations.value?.length > 0
 );
-watch(selectedSensor, async () => {
+
+const updateSelectedSensor = async () => {
   const sensorId = selectedSensor.value._jv.id;
   console.log(`Sensor ${sensorId} selected`);
   const installationObj = await store.dispatch(
@@ -87,7 +93,9 @@ watch(selectedSensor, async () => {
   console.log(
     `The selected sensor ${sensorId} has ${installations.value?.length} associated installations.`
   );
-});
+};
+
+watch(selectedSensor, async () => updateSelectedSensor());
 
 // ---- Installation Start Time ----
 const fromDateTime = ref(undefined);
@@ -159,6 +167,18 @@ const endIsValid = computed(() => {
   return validValue && isLater && endIsBeforeNextStart.value;
 });
 
+const isInstallationActive = (installation) => {
+  if (installation == null) {
+    return false;
+  } else {
+    let now_s = dayjs().unix();
+    return (
+      installation.from_timestamp_s < now_s &&
+      installation.to_timestamp_s > now_s
+    );
+  }
+};
+
 // ---- Create Installation ----
 const installationDescription = ref(undefined);
 const isPublic = ref(false);
@@ -229,6 +249,27 @@ const createInstallation = async () => {
     }
   }
 };
+
+const terminateInstallation = async (installationId) => {
+  const installation = {
+    _jv: {
+      type: "Installation",
+      id: installationId,
+    },
+    to_timestamp_s: dayjs().unix(),
+  };
+  try {
+    await store.dispatch("jv/patch", [
+      installation,
+      { url: `installations/${installationId}/` },
+    ]);
+    toast.success(t("installation.successTerminate"));
+    updateSelectedSensor();
+  } catch (e) {
+    toast.error(t("installation.errorTerminate"));
+    console.log(e);
+  }
+};
 </script>
 
 <template>
@@ -242,230 +283,289 @@ const createInstallation = async () => {
 
   <div v-if="isLoading">{{ $t("loading...") }}</div>
   <div v-else>
-    <div v-if="hasSensors" class="max-w-sm sm:max-w-lg">
-      <div
-        class="
-          text-black
-          mt-2
-          p-4
-          card
-          rounded-md
-          shadow-md
-          ring-1 ring-gray-300
-          bg-white
-        "
-      >
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("node.singular")
-            }}</span>
-          </label>
-          <Listbox v-model="selectedSensor">
-            <ListboxButton v-if="isSensorSelected"
-              >{{ selectedSensor?.alias }} (EUI:
-              {{ selectedSensor?.eui64 }})</ListboxButton
-            >
-            <ListboxButton v-else>{{
-              $t("installation.selectSensor")
-            }}</ListboxButton>
-            <ListboxOptions>
-              <ListboxOption
-                v-for="sensor in sensors"
-                :key="sensor._jv.id"
-                :value="sensor"
-              >
-                {{ sensor.alias }} (EUI: {{ sensor.eui64 }})
-              </ListboxOption>
-            </ListboxOptions>
-          </Listbox>
-        </div>
-        <div v-if="isSensorSelected">
-          <SwitchGroup>
-            <div class="flex items-center">
-              <SwitchLabel class="label-text text-black font-bold">{{
-                $t("installation.makePublic")
-              }}</SwitchLabel>
-              <Switch
-                v-model="isPublic"
-                :class="isPublic ? 'bg-green' : 'bg-blue'"
-                class="relative inline-flex items-center h-6 rounded-full w-11"
-              >
-                <span
-                  :class="isPublic ? 'translate-x-6' : 'translate-x-1'"
-                  class="
-                    inline-block
-                    w-4
-                    h-4
-                    transform
-                    bg-white
-                    shadow-lg
-                    rounded-full
-                    transition
-                  "
-                />
-              </Switch>
-            </div>
-          </SwitchGroup>
-          <div class="form-control py-4">
-            <label class="label">
-              <span class="label-text text-black font-bold">{{
-                $t("installation.from")
-              }}</span>
-            </label>
-            <Datepicker
-              v-model="fromDateTime"
-              locale="de"
-              weekNumbers
-              textInput
-              format="yyyy-MM-dd HH:mm"
-              :state="isValidStart"
-              :clearable="true"
-              showNowButton
-              :nowButtonLabel="$t('now')"
-              :cancelText="$t('cancel')"
-              :selectText="$t('select')"
-            ></Datepicker>
-          </div>
+    <div v-if="isOwner">
+      <div v-if="hasSensors" class="max-w-sm sm:max-w-lg">
+        <div
+          class="
+            text-black
+            mt-2
+            p-4
+            card
+            rounded-md
+            shadow-md
+            ring-1 ring-gray-300
+            bg-white
+          "
+        >
           <div class="form-control">
             <label class="label">
-              <span class="label-text text-black font-bold"
-                >{{ $t("installation.to") }}
-              </span>
-            </label>
-            <Datepicker
-              v-model="toDateTime"
-              locale="de"
-              weekNumbers
-              textInput
-              format="yyyy-MM-dd HH:mm"
-              :state="endIsValid"
-              :clearable="true"
-              :placeholder="$t('optional')"
-              showNowButton
-              :nowButtonLabel="$t('now')"
-              :cancelText="$t('cancel')"
-              :selectText="$t('select')"
-            ></Datepicker>
-          </div>
-          <div class="form-control py-4">
-            <label class="label">
               <span class="label-text text-black font-bold">{{
-                $t("description")
+                $t("node.singular")
               }}</span>
             </label>
-            <textarea
-              type="text"
-              v-model.trim="installationDescription"
-              :placeholder="$t('optional')"
-              class="como-focus rounded h-24 text-gray-600"
-            />
+            <Listbox v-model="selectedSensor">
+              <ListboxButton v-if="isSensorSelected"
+                >{{ selectedSensor?.alias }} (EUI:
+                {{ selectedSensor?.eui64 }})</ListboxButton
+              >
+              <ListboxButton v-else>{{
+                $t("installation.selectSensor")
+              }}</ListboxButton>
+              <ListboxOptions>
+                <ListboxOption
+                  v-for="sensor in sensors"
+                  :key="sensor._jv.id"
+                  :value="sensor"
+                >
+                  {{ sensor.alias }} (EUI: {{ sensor.eui64 }})
+                </ListboxOption>
+              </ListboxOptions>
+            </Listbox>
           </div>
+          <div v-if="isSensorSelected">
+            <SwitchGroup>
+              <div class="flex items-center">
+                <SwitchLabel class="label-text text-black font-bold">{{
+                  $t("installation.makePublic")
+                }}</SwitchLabel>
+                <Switch
+                  v-model="isPublic"
+                  :class="isPublic ? 'bg-green' : 'bg-blue'"
+                  class="
+                    relative
+                    inline-flex
+                    items-center
+                    h-6
+                    rounded-full
+                    w-11
+                  "
+                >
+                  <span
+                    :class="isPublic ? 'translate-x-6' : 'translate-x-1'"
+                    class="
+                      inline-block
+                      w-4
+                      h-4
+                      transform
+                      bg-white
+                      shadow-lg
+                      rounded-full
+                      transition
+                    "
+                  />
+                </Switch>
+              </div>
+            </SwitchGroup>
+            <div class="form-control py-4">
+              <label class="label">
+                <span class="label-text text-black font-bold">{{
+                  $t("installation.from")
+                }}</span>
+              </label>
+              <Datepicker
+                v-model="fromDateTime"
+                locale="de"
+                weekNumbers
+                textInput
+                format="yyyy-MM-dd HH:mm"
+                :state="isValidStart"
+                :clearable="true"
+                showNowButton
+                :nowButtonLabel="$t('now')"
+                :cancelText="$t('cancel')"
+                :selectText="$t('select')"
+              ></Datepicker>
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text text-black font-bold"
+                  >{{ $t("installation.to") }}
+                </span>
+              </label>
+              <Datepicker
+                v-model="toDateTime"
+                locale="de"
+                weekNumbers
+                textInput
+                format="yyyy-MM-dd HH:mm"
+                :state="endIsValid"
+                :clearable="true"
+                :placeholder="$t('optional')"
+                showNowButton
+                :nowButtonLabel="$t('now')"
+                :cancelText="$t('cancel')"
+                :selectText="$t('select')"
+              ></Datepicker>
+            </div>
+            <div class="form-control py-4">
+              <label class="label">
+                <span class="label-text text-black font-bold">{{
+                  $t("description")
+                }}</span>
+              </label>
+              <textarea
+                type="text"
+                v-model.trim="installationDescription"
+                :placeholder="$t('optional')"
+                class="como-focus rounded h-24 text-gray-600"
+              />
+            </div>
 
-          <button
-            class="mt-2 btn gray-button font-semibold"
-            @click="createInstallation"
-          >
-            {{ $t("installation.add") }}
-          </button>
+            <button
+              class="mt-2 btn gray-button font-semibold"
+              @click="createInstallation"
+            >
+              {{ $t("installation.add") }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div
-      v-if="hasSensors"
-      class="
-        ring-1 ring-gray-300
-        rounded-md
-        bg-white
-        text-md
-        overflow-hidden
-        mt-8
-      "
-    >
-      <div v-if="hasInstallations">
-        {{ $t("installation.otherInstallations") }}
-        {{ selectedSensor.alias }} (EUI: {{ selectedSensor.eui64 }})
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                class="
-                  px-2
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
+      <div
+        v-if="hasSensors"
+        class="
+          ring-1 ring-gray-300
+          rounded-md
+          bg-white
+          text-md
+          overflow-hidden
+          mt-8
+        "
+      >
+        <div v-if="hasInstallations">
+          {{ $t("installation.otherInstallations") }}
+          {{ selectedSensor.alias }} (EUI: {{ selectedSensor.eui64 }})
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+              <tr>
+                <th
+                  scope="col"
+                  class="
+                    px-2
+                    sm:px-6
+                    py-3
+                    text-left text-xs
+                    font-medium
+                    text-gray-500
+                    tracking-wider
+                  "
+                >
+                  {{ $t("room.singular") }}
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    sm:px-6
+                    py-3
+                    text-right text-xs
+                    font-medium
+                    text-gray-500
+                    tracking-wider
+                  "
+                >
+                  {{ $t("installation.isPublic") }}
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    sm:px-6
+                    py-3
+                    text-right text-xs
+                    font-medium
+                    text-gray-500
+                    tracking-wider
+                  "
+                >
+                  {{ $t("installation.installedOn") }}
+                </th>
+                <th
+                  scope="col"
+                  class="
+                    sm:px-6
+                    py-3
+                    text-right text-xs
+                    font-medium
+                    text-gray-500
+                    tracking-wider
+                    hidden
+                    md:table-cell
+                  "
+                >
+                  {{ $t("installation.removedOn") }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(installation, installationIdx) in installations"
+                :key="installation._jv.id"
+                :class="[installationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
               >
-                {{ $t("room.singular") }}
-              </th>
-              <th
-                scope="col"
-                class="
-                  sm:px-6
-                  py-3
-                  text-right text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
-              >
-                {{ $t("installation.isPublic") }}
-              </th>
-              <th
-                scope="col"
-                class="
-                  sm:px-6
-                  py-3
-                  text-right text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
-              >
-                {{ $t("installation.installedOn") }}
-              </th>
-              <th
-                scope="col"
-                class="
-                  sm:px-6
-                  py-3
-                  text-right text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                  hidden
-                  md:table-cell
-                "
-              >
-                {{ $t("installation.removedOn") }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(relatedInst, installationIdx) in installations"
-              :key="relatedInst._jv.id"
-              :class="[installationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+                <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                  {{ installation.room.name }}
+                </td>
+                <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+                  {{ installation.is_public }}
+                </td>
+                <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+                  {{ detailFormatTimestamp(installation.from_timestamp_s) }}
+                </td>
+                <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+                  {{ detailFormatTimestamp(installation.to_timestamp_s) }}
+                </td>
+                <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                  <div class="flex flex-col sm:flex-row">
+                    <div
+                      v-if="isOwner && isInstallationActive(installation)"
+                      class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                      @click="terminateInstallation(installation._jv.id)"
+                    >
+                      {{ $t("installation.terminate") }}
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        v-else
+        class="
+          shadow-md
+          mt-4
+          rounded-md
+          max-w-sm
+          flex
+          items-center
+          bg-yellow-50
+          border-l-4 border-yellow-400
+          p-4
+        "
+      >
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <ExclamationIcon
+              class="h-5 w-5 text-yellow-400"
+              aria-hidden="true"
+            />
+          </div>
+          <div class="ml-3">
+            {{ $t("node.noNodes") }}.
+            <router-link
+              :to="{
+                name: 'addSensor',
+              }"
+              class="
+                font-medium
+                underline
+                text-yellow-700
+                hover:text-yellow-600
+              "
             >
-              <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-                {{ relatedInst.room.name }}
-              </td>
-              <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-                {{ relatedInst.is_public }}
-              </td>
-              <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-                {{ detailFormatTimestamp(relatedInst.from_timestamp_s) }}
-              </td>
-              <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-                {{ detailFormatTimestamp(relatedInst.to_timestamp_s) }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              {{ $t("org.addNode") }}.
+            </router-link>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -486,17 +586,7 @@ const createInstallation = async () => {
         <div class="flex-shrink-0">
           <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
         </div>
-        <div class="ml-3">
-          {{ $t("node.noNodes") }}.
-          <router-link
-            :to="{
-              name: 'addSensor',
-            }"
-            class="font-medium underline text-yellow-700 hover:text-yellow-600"
-          >
-            {{ $t("org.addNode") }}.
-          </router-link>
-        </div>
+        <div class="ml-3">{{ $t("node.errorNotOwner") }}.</div>
       </div>
     </div>
   </div>

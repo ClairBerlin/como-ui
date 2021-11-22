@@ -71,6 +71,7 @@
   "node": {
     "addNode": "Sensor hinzufügen",
     "details": "Sensordetails",
+    "errorNotOwner": "Sie sind nicht berechtigt, Änderungen am Inventar der gewählten Organisation vorzunehmen!",
     "identifier": "Sensor-ID",
     "name": "Sensorname",
     "noNodes": "Die gewählte Organisation verfügt über keine Sensoren.",
