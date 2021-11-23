@@ -54,10 +54,7 @@ const createRoom = async () => {
       newRoom["max_occupancy"] = newRoomMaxOccupancy.value;
     }
     try {
-      const { _jv } = await store.dispatch("jv/post", [
-        newRoom,
-        { url: `rooms/` },
-      ]);
+      await store.dispatch("jv/post", [newRoom, { url: `rooms/` }]);
       router.push({
         name: "site",
         params: { siteId: siteId.value },

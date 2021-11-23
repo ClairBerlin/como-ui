@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 export const getInitials = (...args) =>
   args.map((a) => a[0].toUpperCase()).join("");
 
@@ -11,5 +13,24 @@ export const roleToString = (role) => {
       return "role.assistant";
     default:
       return "-";
+  }
+};
+
+// (2^31) - 1, 03:14:08 UTC on Tuesday, 19 January 2038
+export const maxUnixEpoch = 2_147_483_647;
+
+export const dayFormatTimestamp = (unixTimestamp) => {
+  if (unixTimestamp === maxUnixEpoch) {
+    return "—";
+  } else {
+    return dayjs.unix(unixTimestamp).format("YYYY-MM-DD");
+  }
+};
+
+export const detailFormatTimestamp = (unixTimestamp) => {
+  if (unixTimestamp === maxUnixEpoch) {
+    return "—";
+  } else {
+    return dayjs.unix(unixTimestamp).format("YYYY-MM-DD HH:mm");
   }
 };
