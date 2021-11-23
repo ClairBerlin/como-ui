@@ -52,8 +52,9 @@ async function loadSensors() {
     { params: { "filter[organization]": orgId.value } },
   ]);
   const sensorList = Object.entries(sensorObj);
+  console.log(sensorList);
   console.log(`Organization has ${sensorList.length} sensor(s).`);
-  sensors.value = sensorList.map(([_, sensor]) => sensor);
+  sensors.value = sensorList.map(([, sensor]) => sensor);
   isLoading.value = false;
 }
 
@@ -83,9 +84,9 @@ const updateSelectedSensor = async () => {
   );
   const installationList = Object.entries(installationObj);
   installations.value = installationList.map(
-    ([_, installation]) => installation
+    ([, installation]) => installation
   );
-  const relatedRoomPromises = installationList.map(([instId, inst]) => {
+  const relatedRoomPromises = installationList.map(([instId]) => {
     console.log(`Get rooms for installation ${instId}.`);
     return store.dispatch("jv/getRelated", `installations/${instId}`);
   });
@@ -236,7 +237,7 @@ const createInstallation = async () => {
       newInstallation["description"] = installationDescription.value;
     }
     try {
-      const { _jv } = await store.dispatch("jv/post", [
+      await store.dispatch("jv/post", [
         newInstallation,
         { url: `installations/` },
       ]);
@@ -365,15 +366,15 @@ const terminateInstallation = async (installationId) => {
               <Datepicker
                 v-model="fromDateTime"
                 locale="de"
-                weekNumbers
-                textInput
+                week-numbers
+                text-input
                 format="yyyy-MM-dd HH:mm"
                 :state="isValidStart"
                 :clearable="true"
-                showNowButton
-                :nowButtonLabel="$t('now')"
-                :cancelText="$t('cancel')"
-                :selectText="$t('select')"
+                show-now-button
+                :now-button-label="$t('now')"
+                :cancel-text="$t('cancel')"
+                :select-text="$t('select')"
               ></Datepicker>
             </div>
             <div class="form-control">
@@ -385,16 +386,16 @@ const terminateInstallation = async (installationId) => {
               <Datepicker
                 v-model="toDateTime"
                 locale="de"
-                weekNumbers
-                textInput
+                week-numbers
+                text-nput
                 format="yyyy-MM-dd HH:mm"
                 :state="endIsValid"
                 :clearable="true"
                 :placeholder="$t('optional')"
-                showNowButton
-                :nowButtonLabel="$t('now')"
-                :cancelText="$t('cancel')"
-                :selectText="$t('select')"
+                show-ow-button
+                :now-button-label="$t('now')"
+                :cancel-text="$t('cancel')"
+                :select-text="$t('select')"
               ></Datepicker>
             </div>
             <div class="form-control py-4">

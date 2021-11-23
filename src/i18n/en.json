@@ -69,7 +69,7 @@
   "name": "Name",
   "next": "Next",
   "node": {
-    "addNode": "Add a sensor",
+    "add": "Add a sensor",
     "details": "Sensor Details",
     "errorNotOwner": "You are not permitted to make any changes to the inventory of the selected organization!",
     "identifier": "Sensor-ID",

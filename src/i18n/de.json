@@ -69,7 +69,7 @@
   "name": "Name",
   "next": "Weiter",
   "node": {
-    "addNode": "Sensor hinzufügen",
+    "add": "Sensor hinzufügen",
     "details": "Sensordetails",
     "errorNotOwner": "Sie sind nicht berechtigt, Änderungen am Inventar der gewählten Organisation vorzunehmen!",
     "identifier": "Sensor-ID",

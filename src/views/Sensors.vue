@@ -23,8 +23,8 @@ async function update() {
   ]);
   const sensorList = Object.entries(sensorObj);
   console.log(`Organization has ${sensorList.length} sensor(s).`);
-  sensors.value = sensorList.map(([_, sensor]) => sensor);
-  const relatedResourcePromises = sensorList.map(([sensorId, _]) => {
+  sensors.value = sensorList.map(([, sensor]) => sensor);
+  const relatedResourcePromises = sensorList.map(([sensorId]) => {
     console.log(`Fetch related objects for sensor ${sensorId}.`);
     return store.dispatch("jv/getRelated", `nodes/${sensorId}`);
   });
@@ -168,7 +168,7 @@ watch(currentOrgId, () => update());
           to="#"
           class="font-medium underline text-yellow-700 hover:text-yellow-600"
         >
-          {{ $t("node.addNode") }}.
+          {{ $t("node.add") }}.
         </router-link>
       </div>
     </div>

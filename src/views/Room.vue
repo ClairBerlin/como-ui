@@ -1,6 +1,6 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -11,7 +11,6 @@ import dayjs from "dayjs";
 
 // TODO: Add room name to dashboard title.
 const route = useRoute();
-const router = useRouter();
 const store = useStore();
 const toast = useToast();
 const { t } = useI18n();
@@ -82,7 +81,7 @@ const updateData = async () => {
       newRoom["max_occupancy"] = newRoomMaxOccupancy.value;
     }
     try {
-      const { _jv } = await store.dispatch("jv/patch", [
+      await store.dispatch("jv/patch", [
         newRoom,
         { url: `rooms/${roomId.value}/` },
       ]);
@@ -122,7 +121,7 @@ const updateView = async () => {
     console.log(
       `Room with ID ${roomId.value} has not been loaded yet; fetching...`
     );
-    const room = await store.dispatch("jv/get", `rooms/${roomId.value}/`);
+    await store.dispatch("jv/get", `rooms/${roomId.value}/`);
   }
   console.log(`Fetch related objects for room ${roomId.value}.`);
   await store.dispatch("jv/getRelated", `rooms/${roomId.value}`);
@@ -133,9 +132,9 @@ const updateView = async () => {
   const installationList = Object.entries(installationObj);
   console.log(`Fetched ${installationList.length} installations`);
   installations.value = installationList.map(
-    ([_, installation]) => installation
+    ([, installation]) => installation
   );
-  const relatedResourcePromises = installationList.map(([instId, inst]) => {
+  const relatedResourcePromises = installationList.map(([instId]) => {
     console.log(`Get related objects for installation ${instId}.`);
     return store.dispatch("jv/getRelated", `installations/${instId}`);
   });
