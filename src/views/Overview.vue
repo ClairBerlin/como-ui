@@ -5,6 +5,7 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import InstallationCard from "@/components/InstallationCard.vue";
+import dayjs from "dayjs";
 
 const route = useRoute();
 const store = useStore();
@@ -31,6 +32,17 @@ const hasActiveSensors = computed(() => {
     return false;
   }
 });
+
+const isRecent = (sample) => {
+  return dayjs().diff(dayjs.unix(sample.timestamp_s), "minute") < 30;
+};
+
+const getLatestMeasurement = (sample) => {
+  if (sample && isRecent(sample) && sample.co2_ppm) {
+    return sample.co2_ppm.toString();
+  }
+  return undefined;
+};
 
 const update = async () => {
   isLoading.value = true;
@@ -79,7 +91,7 @@ const update = async () => {
               :room-name="inst.room?.name"
               :room-id="inst.room._jv.id"
               :is-public="inst?.is_public"
-              :latest-measurement="inst?.latest_sample?.co2_ppm?.toString()"
+              :latest-measurement="getLatestMeasurement(inst?.latest_sample)"
             />
           </li>
         </ul>
