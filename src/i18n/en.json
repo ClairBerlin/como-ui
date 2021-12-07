@@ -73,6 +73,7 @@
     "details": "Sensor Details",
     "errorNotOwner": "You are not permitted to make any changes to the inventory of the selected organization!",
     "identifier": "Sensor-ID",
+    "isInstalled": "The sensor node currently is installed in a room",
     "name": "Sensor Name",
     "noNodes": "The selected organization has no sensors.",
     "singular": "Sensor",

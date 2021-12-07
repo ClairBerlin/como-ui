@@ -5,7 +5,7 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import dayjs from "dayjs";
+import dayjs, { Dayjs, min } from "dayjs";
 import { maxUnixEpoch, detailFormatTimestamp } from "@/utils";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import {
@@ -25,8 +25,14 @@ const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
+const i18n = useI18n();
+const openEnd = dayjs.unix(maxUnixEpoch);
+// Somewhat arbitrary cutoff to limit the selectable dates in the date picker.
+const minFrom = dayjs("2020-11-01T00:00:00.000Z");
 
 // ---- Context ----
+
+const locale = computed(() => i18n.locale.value);
 const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
 );
@@ -39,6 +45,17 @@ const room = computed(() =>
     _jv: { type: "Room", id: roomId.value },
   })
 );
+
+const dateRangeArray = (from, to) => {
+  let fromD = from.startOf("day");
+  let toD = to.endOf("day");
+  let dateArray = [];
+  while (fromD.isBefore(toD)) {
+    dateArray.push(fromD.toDate());
+    fromD = fromD.add(1, "day");
+  }
+  return dateArray;
+};
 
 // ---- Available Sensors ----
 const sensors = ref(undefined);
@@ -64,7 +81,7 @@ onMounted(async () => {
 });
 
 // ---- Sensor Selection ----
-const selectedSensor = ref(undefined);
+const selectedSensor = ref(undefined); // To be set via selection dropdown
 const installations = ref(undefined);
 
 const isSensorSelected = computed(
@@ -75,6 +92,21 @@ const hasInstallations = computed(
   () => isSensorSelected.value && installations.value?.length > 0
 );
 
+const isSensorInstalled = computed(() => {
+  if (hasInstallations.value) {
+    const now_s = dayjs().unix();
+    for (const installation of installations.value) {
+      if (
+        installation.from_timestamp_s < now_s &&
+        installation.to_timestamp_s > now_s
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+});
+
 const updateSelectedSensor = async () => {
   const sensorId = selectedSensor.value._jv.id;
   console.log(`Sensor ${sensorId} selected`);
@@ -83,11 +115,13 @@ const updateSelectedSensor = async () => {
     `nodes/${sensorId}/installations/`
   );
   const installationList = Object.entries(installationObj);
-  installations.value = installationList.map(
-    ([, installation]) => installation
-  );
+  installations.value = installationList
+    .map(([, installation]) => installation)
+    .sort((a, b) => {
+      // Sort by installation start date and time.
+      a.from_timestamp_s - b.from_timestamp_s;
+    });
   const relatedRoomPromises = installationList.map(([instId]) => {
-    console.log(`Get rooms for installation ${instId}.`);
     return store.dispatch("jv/getRelated", `installations/${instId}`);
   });
   await Promise.all(relatedRoomPromises);
@@ -98,19 +132,65 @@ const updateSelectedSensor = async () => {
 
 watch(selectedSensor, async () => updateSelectedSensor());
 
-// ---- Installation Start Time ----
-const fromDateTime = ref(undefined);
+// ---- Installation Start  ----
+const fromDateTime = ref(undefined); // Set via the date picker
 const fromDT = computed(() => dayjs(fromDateTime?.value));
 
+// Minimum admissible date to be selected in the "From" date picker
+const fromMinDate = computed(() => {
+  if (
+    hasInstallations.value &&
+    installations.value[0].from_timestamp_s <= minFrom.unix() // sorted installations
+  ) {
+    return dayjs.unix(installations.value[0].to_timestamp_s);
+  } else {
+    return minFrom;
+  }
+});
+
+// Maximum admissible date to be selected in the "From" date picker
+const fromMaxDate = computed(() => {
+  if (
+    hasInstallations.value &&
+    installations.value.at(-1).to_timestamp_s === maxUnixEpoch
+  ) {
+    return dayjs.unix(installations.value.at(-1).from_timestamp_s);
+  } else {
+    return openEnd;
+  }
+});
+
+// Dates that cannot be selected in the "From" date picker
+const disabledFromDates = computed(() => {
+  if (!hasInstallations.value) {
+    return [];
+  }
+  let excludeDates = [];
+  for (const installation of installations.value) {
+    if (installation.from_timestamp_s <= minFrom.unix()) {
+      continue; // Covered by fromMinDate property.
+    }
+    if (installation.to_timestamp_s === maxUnixEpoch) {
+      continue; // Covered by fromMaxDate property.
+    }
+    // Might lead to duplicates at the edges. I prefer this to an extra dependency or
+    // complex deduplication logic.
+    const instFrom = dayjs.unix(installation.from_timestamp_s);
+    const instTo = dayjs.unix(installation.to_timestamp_s);
+    excludeDates = excludeDates.concat(dateRangeArray(instFrom, instTo));
+  }
+  return excludeDates;
+});
+
 const startIsOutsideInstalledRanges = computed(() => {
-  // The start time lies outsid any existing installation period of the selected sensor.
+  // The start time is outside any existing installation period of the selected sensor.
   if (fromDateTime.value == null) {
     return false;
   } else if (hasInstallations.value) {
-    const sdt_s = fromDT.value.unix();
+    const fdt_s = fromDT.value.unix();
     return installations.value
       .map(
-        (inst) => inst.from_timestamp_s > sdt_s || inst.to_timestamp_s < sdt_s
+        (inst) => inst.from_timestamp_s > fdt_s || inst.to_timestamp_s < fdt_s
       )
       .every((elem) => elem);
   } else {
@@ -118,20 +198,51 @@ const startIsOutsideInstalledRanges = computed(() => {
   }
 });
 
-const isValidStart = computed(
-  () => fromDT.value.isValid() && startIsOutsideInstalledRanges.value
-);
+const startIsValid = computed(() => {
+  return (
+    fromDT.value.isValid() &&
+    startIsOutsideInstalledRanges.value &&
+    fromDT.value.isAfter(minFrom)
+  );
+});
 
-// ---- Installation End Time ----
-const toDateTime = ref(undefined);
-
+// ---- Installation End  ----
+const toDateTime = ref(undefined); // Set via the date picker
 const toDT = computed(() => {
   if (toDateTime.value == null) {
-    console.log("No end date and time defined; returning max. POSIX time.");
-    return dayjs.unix(maxUnixEpoch);
+    return openEnd;
   } else {
     return dayjs(toDateTime.value);
   }
+});
+
+// Minimum admissible date to be selected in the "To" date picker
+const toMinDate = computed(() => {
+  if (fromDT.value !== null) {
+    return fromDT.value;
+  } else {
+    return fromMinDate.value;
+  }
+});
+
+// Maximum admissible date to be selected in the "To" date picker
+const toMaxDate = computed(() => {
+  return fromMaxDate.value;
+});
+
+// Admissible individual dates to be selected in the "To" date picker
+const admissibleToDates = computed(() => {
+  if (!hasInstallations.value || fromDT.value === null) {
+    return [];
+  }
+  const nextInstallations = installations.value.filter(
+    (inst) => inst.from_timestamp_s > fromDT.value.unix()
+  );
+  if (nextInstallations.length === 0) {
+    return [];
+  }
+  const nextStart = dayjs.unix(nextInstallations[0].from_timestamp_s);
+  return dateRangeArray(fromDT.value, nextStart);
 });
 
 const endIsBeforeNextStart = computed(() => {
@@ -140,32 +251,27 @@ const endIsBeforeNextStart = computed(() => {
     return false;
   } else if (hasInstallations.value) {
     const fdt_s = fromDT.value.unix();
-    console.log(`from timestamp: ${fdt_s}`);
     const nextInstallations = installations.value.filter(
       (inst) => inst.from_timestamp_s > fdt_s
     );
-    console.log(
-      `next installations: ${nextInstallations} (${typeof nextInstallations})`
-    );
     if (nextInstallations.length > 0) {
-      const tdt_s = toDT.value.unix();
-      return nextInstallations
-        .map((inst) => inst.from_timestamp_s > tdt_s)
-        .some((elem) => elem);
+      return nextInstallations[0].from_timestamp_s > toDT.value.unix();
     } else {
-      console.log("no next installations.");
       return true;
     }
   } else {
-    console.log("no installations.");
     return true;
   }
 });
 
 const endIsValid = computed(() => {
-  const validValue = toDT.value?.isValid();
-  const isLater = toDT.value?.unix() > fromDT.value?.unix();
-  return validValue && isLater && endIsBeforeNextStart.value;
+  if (toDT.value === null) {
+    return false;
+  } else {
+    const validValue = toDT.value.isValid();
+    const isLater = toDT.value.unix() > fromDT.value?.unix();
+    return validValue && isLater && endIsBeforeNextStart.value;
+  }
 });
 
 const isInstallationActive = (installation) => {
@@ -196,15 +302,15 @@ const createInstallation = async () => {
     validationErrors.push(t("installation.errorNoStart"));
   }
   // 3. The start time lies outsid any existing installation period of the selected sensor
-  if (!startIsOutsideInstalledRanges.value) {
+  if (!startIsOutsideInstalledRanges()) {
     validationErrors.push(t("installation.errorOverlappingStart"));
   }
   // 4. The end time must be later than the start time.
-  if (!endIsValid.value) {
+  if (!endIsValid()) {
     validationErrors.push(t("installation.errorInvalidEnd"));
   }
   // 6. If there exist installations with start time later than the current start time, the current stop time must be earlier than the earliest of these start times.
-  if (!endIsBeforeNextStart.value) {
+  if (!endIsBeforeNextStart()) {
     validationErrors.push(t("installation.errorOverlappingEnd"));
   }
   if (validationErrors.length > 0) {
@@ -323,7 +429,10 @@ const terminateInstallation = async (installationId) => {
               </ListboxOptions>
             </Listbox>
           </div>
-          <div v-if="isSensorSelected">
+          <div v-if="isSensorInstalled">
+            {{ $t("node.isInstalled") }}
+          </div>
+          <div v-else-if="isSensorSelected">
             <SwitchGroup>
               <div class="flex items-center">
                 <SwitchLabel class="label-text text-black font-bold">{{
@@ -365,12 +474,15 @@ const terminateInstallation = async (installationId) => {
               </label>
               <Datepicker
                 v-model="fromDateTime"
-                locale="de"
+                :locale="locale"
                 week-numbers
                 text-input
                 format="yyyy-MM-dd HH:mm"
-                :state="isValidStart"
                 :clearable="true"
+                :min-date="fromMinDate.toDate()"
+                :max-date="fromMaxDate.toDate()"
+                :disabled-dates="disabledFromDates"
+                :state="startIsValid"
                 show-now-button
                 :now-button-label="$t('now')"
                 :cancel-text="$t('cancel')"
@@ -385,14 +497,17 @@ const terminateInstallation = async (installationId) => {
               </label>
               <Datepicker
                 v-model="toDateTime"
-                locale="de"
+                :locale="locale"
                 week-numbers
-                text-nput
+                text-input
                 format="yyyy-MM-dd HH:mm"
-                :state="endIsValid"
                 :clearable="true"
+                :min-date="toMinDate.toDate()"
+                :max-date="toMaxDate.toDate()"
+                :allowed-dates="admissibleToDates"
+                :state="endIsValid"
                 :placeholder="$t('optional')"
-                show-ow-button
+                show-now-button
                 :now-button-label="$t('now')"
                 :cancel-text="$t('cancel')"
                 :select-text="$t('select')"
