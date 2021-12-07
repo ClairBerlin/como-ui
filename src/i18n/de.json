@@ -73,7 +73,7 @@
     "details": "Sensordetails",
     "errorNotOwner": "Sie sind nicht berechtigt, Änderungen am Inventar der gewählten Organisation vorzunehmen!",
     "identifier": "Sensor-ID",
-    "isInstalled": "Der Sensor ist gegenwärt in einem Raum installiert",
+    "isInstalled": "Der Sensor ist gegenwärtig in einem Raum installiert",
     "name": "Sensorname",
     "noNodes": "Die gewählte Organisation verfügt über keine Sensoren.",
     "singular": "Sensor",
