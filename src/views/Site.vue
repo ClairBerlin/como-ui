@@ -7,6 +7,8 @@ import { useToast } from "vue-toastification";
 import { ExclamationIcon, TrashIcon, PlusIcon } from "@heroicons/vue/outline";
 import { useI18n } from "vue-i18n";
 import DeletionModal from "@/components/DeletionModal.vue";
+import * as yup from "yup";
+import { useField, useForm, Form, Field, ErrorMessage } from "vee-validate";
 
 const { t } = useI18n();
 
@@ -36,12 +38,27 @@ const orgMembership = computed(() =>
 );
 const isOwner = computed(() => orgMembership.value?.role === "O");
 
-const newSiteName = ref(undefined);
-const newSiteDescription = ref(undefined);
-const newStreet1 = ref(undefined);
-const newStreet2 = ref(undefined);
-const newZip = ref(undefined);
-const newCity = ref(undefined);
+// const newSiteName = ref(undefined);
+// const newSiteDescription = ref(undefined);
+// const newStreet1 = ref(undefined);
+// const newStreet2 = ref(undefined);
+// const newZip = ref(undefined);
+// const newCity = ref(undefined);
+
+const schema = yup.object().shape({
+  siteName: yup.string().required().email(),
+  street1: yup.string().required(),
+  zip: yup.string().required().length(5),
+  city: yup.string().required(),
+});
+useForm({ validationSchema: schema });
+const { value: newSiteName, errorMessage: siteNameError } =
+  useField("newSiteName");
+const { value: newSiteDescription } = useField("description");
+const { value: newStreet1, errorMessage: streetError } = useField("newStreet1");
+const { value: newStreet2 } = useField("newStreet2");
+const { value: newZip, errorMessage: zipError } = useField("newZip");
+const { value: newCity, errorMessage: cityError } = useField("newCity");
 
 const deleteRoom = async () => {
   await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
@@ -62,7 +79,7 @@ const updateSite = async () => {
     newSite["description"] = newSiteDescription.value;
   }
   try {
-    const { _jv } = await store.dispatch("jv/patch", [
+    await store.dispatch("jv/patch", [
       newSite,
       { url: `sites/${siteId.value}/` },
     ]);
@@ -93,7 +110,7 @@ const updateAddress = async () => {
     newAddress["city"] = newCity.value;
   }
   try {
-    const { _jv } = await store.dispatch("jv/patch", [
+    await store.dispatch("jv/patch", [
       newAddress,
       { url: `addresses/${addressId.value}/` },
     ]);
@@ -103,7 +120,8 @@ const updateAddress = async () => {
   }
 };
 
-const updateData = async () => {
+const updateData = async (values) => {
+  console.log({ values });
   if (newSiteName.value || newSiteDescription.value) {
     updateSite();
     newSiteName.value = undefined;
@@ -125,7 +143,7 @@ const updateView = async () => {
     console.log(
       `Site with ID ${siteId.value} has not been loaded yet; fetching...`
     );
-    const site = await store.dispatch("jv/get", `sites/${siteId.value}/`);
+    await store.dispatch("jv/get", `sites/${siteId.value}/`);
   }
   console.log(`Fetch related objects for site ${siteId.value}.`);
   await store.dispatch("jv/getRelated", `sites/${siteId.value}`);
@@ -141,8 +159,12 @@ onMounted(async () => updateView());
 
 <template>
   <div v-if="isLoading">{{ $t("loading...") }}</div>
-  <div v-else class="divide-y-2 divide-gray-300">
-    <form class="space-y-8 divide-y divide-gray-200">
+  <div v-else class="divide-y-2 divide-gray-300 max-w-2xl">
+    <Form
+      class="space-y-8 divide-y divide-gray-200"
+      :validation-schema="schema"
+      @submit="updateData"
+    >
       <div>
         <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
           <div
@@ -338,6 +360,7 @@ onMounted(async () => updateView());
                 rounded-md
               "
             />
+            <span>{{ zipError }}</span>
           </div>
         </div>
       </div>
@@ -405,13 +428,12 @@ onMounted(async () => updateView());
               focus:ring-indigo-500
             "
             v-if="isOwner"
-            @click="updateData"
           >
             {{ $t("site.update") }}
           </button>
         </div>
       </div>
-    </form>
+    </Form>
     <div v-if="hasRooms" class="text-md mt-8 pt-8">
       <DeletionModal
         :open="showDeleteRoomModal"

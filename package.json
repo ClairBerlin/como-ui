@@ -19,13 +19,15 @@
     "dayjs-plugin-utc": "^0.1.2",
     "js-cookie": "^3.0.1",
     "jsonapi-vuex": "^5.7.0",
+    "vee-validate": "^4.5.6",
     "vue": "^3.0.0",
     "vue-chart-3": "^0.5.11",
     "vue-i18n": "^9.1.9",
     "vue-router": "^4.0.11",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-date-time-picker": "^2.3.6",
-    "vuex": "^4.0.2"
+    "vuex": "^4.0.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@headlessui/vue": "^1.4.2",
