@@ -7,6 +7,7 @@ import { useToast } from "vue-toastification";
 import { useI18n } from "vue-i18n";
 import { dayFormatTimestamp } from "@/utils";
 import { ExclamationIcon } from "@heroicons/vue/outline";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 
 // TODO: Add room name to dashboard title.
@@ -146,7 +147,7 @@ onMounted(async () => updateView());
 </script>
 
 <template>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else>
     <div class="max-w-sm sm:max-w-lg">
       <div

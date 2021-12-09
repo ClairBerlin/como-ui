@@ -4,6 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { roleToString } from "@/utils";
 import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import { UserAddIcon, TrashIcon } from "@heroicons/vue/outline";
 
 const route = useRoute();
@@ -76,7 +77,7 @@ const update = async () => {
       </h1>
     </div>
   </header>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else class="mt-8">
     <DeletionModal
       :open="showDeleteOrgModal"

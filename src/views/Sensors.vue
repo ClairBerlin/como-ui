@@ -4,6 +4,7 @@ import { useRoute } from "vue-router";
 import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -37,7 +38,7 @@ watch(currentOrgId, () => update());
 </script>
 
 <template>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div
     v-else-if="hasSensors"
     class="

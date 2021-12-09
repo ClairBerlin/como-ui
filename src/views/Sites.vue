@@ -5,6 +5,7 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon, PlusIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 // TODO: Add number of rooms to each site's table row.
 // TODO: Add "remove site" button, visible for owners only.
@@ -58,7 +59,7 @@ watch(currentOrgId, () => updateView());
 </script>
 
 <template>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else-if="hasSites" class="text-md mt-8">
     <DeletionModal
       :open="showDeleteSiteModal"

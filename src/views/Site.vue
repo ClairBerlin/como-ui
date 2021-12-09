@@ -7,6 +7,7 @@ import { useToast } from "vue-toastification";
 import { ExclamationIcon, TrashIcon, PlusIcon } from "@heroicons/vue/outline";
 import { useI18n } from "vue-i18n";
 import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const { t } = useI18n();
 
@@ -140,7 +141,7 @@ onMounted(async () => updateView());
 </script>
 
 <template>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else class="divide-y-2 divide-gray-300">
     <form class="space-y-8 divide-y divide-gray-200">
       <div>

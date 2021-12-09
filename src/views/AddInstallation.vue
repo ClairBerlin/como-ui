@@ -5,7 +5,7 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import dayjs, { Dayjs, min } from "dayjs";
+import dayjs from "dayjs";
 import { maxUnixEpoch, detailFormatTimestamp } from "@/utils";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import {
@@ -19,6 +19,7 @@ import {
 } from "@headlessui/vue";
 import Datepicker from "vue3-date-time-picker";
 import "vue3-date-time-picker/dist/main.css";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const store = useStore();
 const toast = useToast();
@@ -388,7 +389,7 @@ const terminateInstallation = async (installationId) => {
     </div>
   </header>
 
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else>
     <div v-if="isOwner">
       <div v-if="hasSensors" class="max-w-sm sm:max-w-lg">

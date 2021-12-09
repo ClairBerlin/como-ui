@@ -5,6 +5,7 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import InstallationCard from "@/components/InstallationCard.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 
 const route = useRoute();
@@ -70,7 +71,7 @@ const update = async () => {
 
 <template>
   <!-- TODO: replace with a spinner or another indication of loading data (e.g. skeleton) -->
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else class="mx-2">
     <h2 class="font-bold text-xl mt-8">{{ $t("Active Installations") }}</h2>
     <div class="">

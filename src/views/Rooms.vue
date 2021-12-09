@@ -5,6 +5,7 @@ import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -52,7 +53,7 @@ watch(currentOrgId, () => updateView());
 </script>
 
 <template>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div
     v-else-if="hasRooms"
     class="
