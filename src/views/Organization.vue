@@ -24,7 +24,7 @@ const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.id)
 );
 
-const isOwner = () => orgMembership.value?.role === "O";
+const isOwner = computed(() => orgMembership.value?.role === "O");
 
 const showDeleteOrgModal = ref(false);
 
