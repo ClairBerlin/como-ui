@@ -11,11 +11,8 @@ import {
 
 const store = useStore();
 const title = computed(() => {
-  const { firstName, lastName } = store.state.authuser;
-  if (firstName && lastName) {
-    return firstName + " " + lastName;
-  }
-  return "…";
+  const { email } = store.state.authuser;
+  return email ? email : "…";
 });
 const icon = UserIcon;
 const menuEntries = [
