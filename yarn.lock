@@ -2024,7 +2024,7 @@ vue3-date-time-picker@^2.3.6:
   resolved "https://registry.yarnpkg.com/vue3-date-time-picker/-/vue3-date-time-picker-2.3.6.tgz#8308a171af5fcc9f28ff6cecdc0c0edf8385a6f0"
   integrity sha512-nl9oYw2hLJoco6zBvQY/mAVF9c+j0jv6DWeBiuWDe3U9B5TRLgnYWfhCwkBCsRhEfMaE2fCCqhGd1aRaa5n8Ng==
 
-vue@^3.0.0:
+vue@3.2.20:
   version "3.2.20"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.2.20.tgz#940f8aa8bf3e3be78243ca582bad41fcd45ae3e6"
   integrity sha512-81JjEP4OGk9oO8+CU0h2nFPGgJBm9mNa3kdCX2k6FuRdrWrC+CNe+tOnuIeTg8EWwQuI+wwdra5Q7vSzp7p4Iw==
