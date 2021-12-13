@@ -10,18 +10,9 @@ import {
   isInstallationActive,
   isAnyInstallationActive,
 } from "@/utils";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-  Switch,
-  SwitchLabel,
-  SwitchGroup,
-} from "@headlessui/vue";
-import { ExclamationIcon } from "@heroicons/vue/outline";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
+import InstallNowModal from "@/components/InstallNowModal.vue";
 
 // TODO: Add room name to dashboard title.
 const route = useRoute();
@@ -52,13 +43,11 @@ const rooms = ref(undefined);
 const hasRooms = computed(() => rooms.value?.length > 0);
 
 const isLoading = ref(true);
+const showInstallNowModal = ref(false);
 
 const newSensorAlias = ref(undefined);
 const newSensorDescription = ref(undefined);
 const selectedRoom = ref(undefined);
-const isRoomSelected = computed(
-  () => typeof selectedRoom.value !== "undefined"
-);
 const makeInstallationPublic = ref(false);
 
 const updateView = async () => {
@@ -92,7 +81,8 @@ const updateView = async () => {
     { params: { "filter[organization]": route.params.orgId } },
   ]);
   const roomList = Object.entries(roomObj);
-  rooms.value = roomList.map(([_, room]) => room);
+  rooms.value = roomList.map(([, room]) => room);
+  selectedRoom.value = rooms.value[0];
 };
 
 onMounted(async () => updateView());
@@ -273,68 +263,70 @@ const installNow = async () => {
     </div>
   </div>
 
-  <div
-    v-if="!hasActiveInstallations && hasRooms"
-    class="
-      ring-1 ring-gray-300
-      rounded-md
-      bg-white
-      text-md
-      overflow-hidden
-      mt-8
-    "
-  >
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text text-black font-bold">{{
-          $t("installation.targetLocation")
-        }}</span>
-      </label>
-      <Listbox v-model="selectedRoom">
-        <ListboxButton v-if="isRoomSelected"
-          >{{ selectedRoom?.name }}
-        </ListboxButton>
-        <ListboxButton v-else>{{
-          $t("installation.selectRoom")
-        }}</ListboxButton>
-        <ListboxOptions>
-          <ListboxOption v-for="room in rooms" :key="room._jv.id" :value="room">
+  <div v-if="!hasActiveInstallations && hasRooms" class="mt-8">
+    <div
+      class="btn bg-indigo-600 normal-case"
+      @click="showInstallNowModal = true"
+    >
+      {{ $t("installation.installNow") }}
+    </div>
+    <InstallNowModal
+      :open="showInstallNowModal"
+      @close-modal="showInstallNowModal = false"
+      @install-clicked="installNow"
+      :modal-title="'Installation ' + t('of') + ' ' + sensor.alias"
+    >
+      <div class="form-control">
+        <label for="room" class="block text-sm font-medium text-gray-700">
+          {{ $t("installation.targetLocation") }}
+        </label>
+        <select
+          id="location"
+          name="room"
+          v-model="selectedRoom"
+          class="
+            mt-1
+            block
+            w-full
+            pl-3
+            pr-10
+            py-2
+            text-base
+            border-gray-300
+            focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
+            sm:text-sm
+            rounded-md
+          "
+        >
+          <option v-for="room in rooms" :key="room._jv.id" :value="room">
             {{ room.name }}
-          </ListboxOption>
-        </ListboxOptions>
-      </Listbox>
-    </div>
-    <div v-if="isRoomSelected">
-      <SwitchGroup>
-        <div class="flex items-center">
-          <SwitchLabel class="label-text text-black font-bold">{{
-            $t("installation.makePublic")
-          }}</SwitchLabel>
-          <Switch
+          </option>
+        </select>
+      </div>
+      <div class="flex my-2">
+        <div class="flex items-center h-5">
+          <input
+            id="makePublic"
+            name="makePublic"
+            type="checkbox"
             v-model="makeInstallationPublic"
-            :class="makeInstallationPublic ? 'bg-green' : 'bg-blue'"
-            class="relative inline-flex items-center h-6 rounded-full w-11"
-          >
-            <span
-              :class="makeInstallationPublic ? 'translate-x-6' : 'translate-x-1'"
-              class="
-                inline-block
-                w-4
-                h-4
-                transform
-                bg-white
-                shadow-lg
-                rounded-full
-                transition
-              "
-            />
-          </Switch>
+            class="
+              focus:ring-indigo-500
+              h-4
+              w-4
+              text-indigo-600
+              border-gray-300
+              rounded
+            "
+          />
         </div>
-      </SwitchGroup>
-      <button class="mt-2 btn gray-button font-semibold" @click="installNow">
-        {{ $t("installation.installNow") }}
-      </button>
-    </div>
+        <div class="ml-3 text-sm">
+          <label for="makePublic" class="font-bold text-gray-700">
+            {{ $t("installation.makePublic") }}
+          </label>
+        </div>
+      </div>
+    </InstallNowModal>
   </div>
 
   <div
