@@ -34,3 +34,18 @@ export const detailFormatTimestamp = (unixTimestamp) => {
     return dayjs.unix(unixTimestamp).format("YYYY-MM-DD HH:mm");
   }
 };
+
+export const isInstallationActive = (installation) => {
+  if (installation == null) {
+    return false;
+  } else {
+    let now_s = dayjs().unix();
+    return (
+      installation.from_timestamp_s < now_s &&
+      installation.to_timestamp_s > now_s
+    );
+  }
+};
+
+export const isAnyInstallationActive = (installations) =>
+  installations.some(isInstallationActive);
