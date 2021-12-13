@@ -14,7 +14,6 @@ const isLoading = ref(true);
 // This view is routed to in an organization context only, this orgId is defined.
 const currentOrgId = computed(() => route.params.orgId);
 onMounted(async () => update());
-watch(currentOrgId, () => update());
 const installations = ref(undefined);
 
 const activeInstallations = computed(() =>

@@ -1,10 +1,10 @@
-import Overview from "./views/Overview.vue";
-import Dashboard from "./views/Dashboard.vue";
-const Organizations = () => import("./views/Organizations.vue");
-const Organization = () => import("./views/Organization.vue");
-const AddOrganization = () => import("./views/AddOrganization.vue");
-const EditOrganization = () => import("./views/EditOrganization.vue");
-const NotFound = () => import("./views/NotFound.vue");
+import Dashboard from "@/views/Dashboard.vue";
+const Overview = () => import("@/views/Overview.vue");
+const Organizations = () => import("@/views/Organizations.vue");
+const Organization = () => import("@/views/Organization.vue");
+const AddOrganization = () => import("@/views/AddOrganization.vue");
+const EditOrganization = () => import("@/views/EditOrganization.vue");
+const NotFound = () => import("@/views/NotFound.vue");
 const Sites = () => import("@/views/Sites.vue");
 const Site = () => import("@/views/Site.vue");
 const AddSite = () => import("@/views/AddSite.vue");
@@ -23,6 +23,30 @@ export const routes = [
   {
     path: "/",
     redirect: "/dashboard",
+  },
+  {
+    path: "/org-management",
+    name: "org-management",
+    meta: { title: "org.manage" },
+    component: Organizations,
+  },
+  {
+    path: "/org-management/:orgId",
+    name: "org-management-detail",
+    meta: { title: "org.detail" },
+    component: Organization,
+  },
+  {
+    path: "/org-management/:orgId/edit",
+    name: "org-management-edit",
+    meta: { title: "org.edit" },
+    component: EditOrganization,
+  },
+  {
+    path: "/org-management/add",
+    name: "org-management-add",
+    meta: { title: "org.add" },
+    component: AddOrganization,
   },
   {
     path: "/dashboard",
@@ -109,30 +133,6 @@ export const routes = [
         meta: { title: "node.details" },
       },
     ],
-  },
-  {
-    path: "/org-management",
-    name: "org-management",
-    meta: { title: "org.manage" },
-    component: Organizations,
-  },
-  {
-    path: "/org-management/:orgId",
-    name: "org-management-detail",
-    meta: { title: "org.detail" },
-    component: Organization,
-  },
-  {
-    path: "/org-management/:orgId/edit",
-    name: "org-management-edit",
-    meta: { title: "org.edit" },
-    component: EditOrganization,
-  },
-  {
-    path: "/org-management/add",
-    name: "org-management-add",
-    meta: { title: "org.add" },
-    component: AddOrganization,
   },
   {
     path: "/accounts/email",

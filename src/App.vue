@@ -72,17 +72,26 @@ onMounted(async () => {
 watch(
   () => route.params.orgId,
   async (orgId) => {
+    console.log(`Organization context changed. Clearing inventory store.`);
+    clearStore();
     if (isOrgContext.value) {
-      console.log(
-        `Organization changed to orgId ${orgId}. Fetching related data...`
-      );
-      store.dispatch("jv/get", `organizations/${orgId}`);
-      router.push({ name: "", params: { orgId: orgId } });
+      console.log(`New organization context with orgId ${orgId}.`);
+      await store.dispatch("jv/get", `organizations/${orgId}`);
+      router.push({ name: "overview", params: { orgId: orgId } });
     } else {
       console.log("Entering a route outside of an organization context.");
+      router.push({ name: "org-management" });
     }
   }
 );
+
+const clearStore = () => {
+  store.commit("jv/clearRecords", { _jv: { type: "Installation" } });
+  store.commit("jv/clearRecords", { _jv: { type: "Room" } });
+  store.commit("jv/clearRecords", { _jv: { type: "Node" } });
+  store.commit("jv/clearRecords", { _jv: { type: "Site" } });
+  store.commit("jv/clearRecords", { _jv: { type: "Address" } });
+};
 </script>
 
 <template>
