@@ -1,7 +1,6 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";

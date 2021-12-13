@@ -1,7 +1,6 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
-import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { ExclamationIcon, TrashIcon, PlusIcon } from "@heroicons/vue/outline";

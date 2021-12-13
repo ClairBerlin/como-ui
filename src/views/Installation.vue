@@ -1,7 +1,6 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, computed } from "vue";
 import { useRoute } from "vue-router";
-import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import InstallationViz from "@/components/InstallationViz.vue";
 

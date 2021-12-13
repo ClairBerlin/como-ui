@@ -1,6 +1,5 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { computed } from "@vue/reactivity";
+import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";

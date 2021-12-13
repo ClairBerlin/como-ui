@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "@vue/runtime-core";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import PopoverMenu from "./PopoverMenu.vue";
 import {

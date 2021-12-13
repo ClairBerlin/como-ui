@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "@vue/reactivity";
+import { computed } from "vue";
 import dayjs from "dayjs";
 import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";

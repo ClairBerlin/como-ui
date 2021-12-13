@@ -1,6 +1,5 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { computed } from "@vue/reactivity";
+import { onMounted, ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
@@ -125,7 +124,7 @@ const previousInstant = async () => {
 };
 
 const addNewSamplesToPool = async () => {
-  if (!latestSampleInstant) {
+  if (!latestSampleInstant.value) {
     // In case the sample pool is still empty.
     return;
   }

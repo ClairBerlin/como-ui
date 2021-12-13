@@ -1,7 +1,6 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
-import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import InstallationCard from "@/components/InstallationCard.vue";
