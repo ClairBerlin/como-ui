@@ -1,4 +1,5 @@
 <script setup>
+import { defineProps, defineEmits } from "vue";
 import {
   Dialog,
   DialogOverlay,
@@ -125,7 +126,7 @@ const installClick = () => {
                   as="h3"
                   class="text-lg leading-6 font-medium text-gray-900"
                 >
-                  {{ $t(modalTitle) }}
+                  {{ modalTitle }}
                 </DialogTitle>
                 <div class="mt-2">
                   <slot />

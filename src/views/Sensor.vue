@@ -263,7 +263,7 @@ const installNow = async () => {
     </div>
   </div>
 
-  <div v-if="!hasActiveInstallations && hasRooms" class="mt-8">
+  <div v-if="isOwner && !hasActiveInstallations && hasRooms" class="mt-8">
     <div
       class="btn bg-indigo-600 normal-case"
       @click="showInstallNowModal = true"

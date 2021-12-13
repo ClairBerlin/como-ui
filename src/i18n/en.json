@@ -52,7 +52,7 @@
     "errorTerminate": "Failed to terminate the selected installation!",
     "from": "Installation Date and Time",
     "installedOn": "Installed on",
-    "installNow": "Install Now",
+    "installNow": "Install Sensor Now",
     "isPublic": "Data public?",
     "makePublic": "Make installation data public?",
     "otherInstallations": "Other installations of sensor",

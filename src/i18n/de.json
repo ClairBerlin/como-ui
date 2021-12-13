@@ -55,7 +55,7 @@
     "errorTerminate": "Fehler beim beenden der Installation!",
     "from": "Datum und Zeit der Installation",
     "installedOn": "Installiert am",
-    "installNow": "Jetzt installieren",
+    "installNow": "Sensor jetzt installieren",
     "isPublic": "Daten öffentlich?",
     "makePublic": "Installationsdaten veröffentlichen?",
     "otherInstallations": "Andere Installationen des Sensors",
@@ -89,7 +89,7 @@
     "singular": "Sensor",
     "type": "Modell",
     "updateError": "Fehler beim Aktualisieren der Sensorinformationen!",
-    "updateSucces": "Details des Sensors Organisation wurden erfolgreich aktualsiert."
+    "updateSuccess": "Details des Sensors Organisation wurden erfolgreich aktualsiert."
   },
   "nodes": "Sensoren",
   "now": "Jetzt",
