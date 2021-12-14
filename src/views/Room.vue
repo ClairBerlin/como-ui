@@ -4,7 +4,7 @@ import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useI18n } from "vue-i18n";
-import { dayFormatTimestamp } from "@/utils";
+import { dayFormatTimestamp, isInstallationActive } from "@/utils";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
@@ -38,18 +38,6 @@ const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
 );
 const isOwner = computed(() => orgMembership.value?.role === "O");
-
-const isInstallationActive = (installation) => {
-  if (installation == null) {
-    return false;
-  } else {
-    let now_s = dayjs().unix();
-    return (
-      installation.from_timestamp_s < now_s &&
-      installation.to_timestamp_s > now_s
-    );
-  }
-};
 
 const updateData = async () => {
   if (
