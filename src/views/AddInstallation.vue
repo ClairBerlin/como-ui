@@ -302,15 +302,15 @@ const createInstallation = async () => {
     validationErrors.push(t("installation.errorNoStart"));
   }
   // 3. The start time lies outsid any existing installation period of the selected sensor
-  if (!startIsOutsideInstalledRanges()) {
+  if (!startIsOutsideInstalledRanges.value) {
     validationErrors.push(t("installation.errorOverlappingStart"));
   }
   // 4. The end time must be later than the start time.
-  if (!endIsValid()) {
+  if (!endIsValid.value) {
     validationErrors.push(t("installation.errorInvalidEnd"));
   }
   // 6. If there exist installations with start time later than the current start time, the current stop time must be earlier than the earliest of these start times.
-  if (!endIsBeforeNextStart()) {
+  if (!endIsBeforeNextStart.value) {
     validationErrors.push(t("installation.errorOverlappingEnd"));
   }
   if (validationErrors.length > 0) {
