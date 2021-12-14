@@ -33,7 +33,6 @@ const iconClasses = () =>
           text-sm
           font-medium
           text-black
-          bg-orange-700
           rounded-md
           group
           hover:text-opacity-100 hover:bg-gray-100
