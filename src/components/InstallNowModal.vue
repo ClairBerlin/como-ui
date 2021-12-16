@@ -6,16 +6,16 @@ import {
   TransitionChild,
   TransitionRoot,
 } from "@headlessui/vue";
-import { ExclamationIcon, XIcon } from "@heroicons/vue/outline";
+import { PlusCircleIcon, XIcon } from "@heroicons/vue/outline";
 
 const props = defineProps({
   open: { type: Boolean, required: true },
   modalTitle: { type: String, required: true },
 });
-const emit = defineEmits(["closeModal", "deleteClicked"]);
+const emit = defineEmits(["closeModal", "installClicked"]);
 const close = () => emit("closeModal");
-const deleteClick = () => {
-  emit("deleteClicked");
+const installClick = () => {
+  emit("installClicked");
   close();
 };
 </script>
@@ -70,10 +70,10 @@ const deleteClick = () => {
             </div>
             <div class="sm:flex sm:items-start">
               <div
-                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
+                class="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 sm:mx-0 sm:h-10 sm:w-10"
               >
-                <ExclamationIcon
-                  class="h-6 w-6 text-red-600"
+                <PlusCircleIcon
+                  class="h-6 w-6 text-indigo-600"
                   aria-hidden="true"
                 />
               </div>
@@ -82,7 +82,7 @@ const deleteClick = () => {
                   as="h3"
                   class="text-lg leading-6 font-medium text-gray-900"
                 >
-                  {{ $t(modalTitle) }}
+                  {{ modalTitle }}
                 </DialogTitle>
                 <div class="mt-2">
                   <slot />
@@ -92,10 +92,10 @@ const deleteClick = () => {
             <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
               <button
                 type="button"
-                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                @click="deleteClick"
+                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+                @click="installClick"
               >
-                {{ $t("delete") }}
+                {{ $t("installation.installNow") }}
               </button>
               <button
                 type="button"

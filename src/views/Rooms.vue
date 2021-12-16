@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -52,17 +52,10 @@ watch(currentOrgId, () => updateView());
 </script>
 
 <template>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div
     v-else-if="hasRooms"
-    class="
-      ring-1 ring-gray-300
-      rounded-md
-      bg-white
-      text-md
-      overflow-hidden
-      mt-8
-    "
+    class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
   >
     <DeletionModal
       :open="showDeleteRoomModal"
@@ -77,83 +70,37 @@ watch(currentOrgId, () => updateView());
         <tr>
           <th
             scope="col"
-            class="
-              px-2
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("room.name") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("room.size") }} [m<sup>2</sup>]
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("room.height") }} [m]
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-              hidden
-              md:table-cell
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
           >
             {{ $t("room.maxOccupancy") }}
           </th>
           <th
             scope="col"
-            class="
-              px-2
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("site.singular") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("action") }}
           </th>
@@ -183,15 +130,7 @@ watch(currentOrgId, () => updateView());
             {{ room.height_m || "-" }}
           </td>
           <td
-            class="
-              hidden
-              md:table-cell
-              px-2
-              sm:px-6
-              py-4
-              whitespace-nowrap
-              text-right
-            "
+            class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
           >
             {{ room.max_occupancy || "-" }}
           </td>
@@ -229,17 +168,7 @@ watch(currentOrgId, () => updateView());
   </div>
   <div
     v-else
-    class="
-      shadow-md
-      mt-4
-      rounded-md
-      max-w-sm
-      flex
-      items-center
-      bg-yellow-50
-      border-l-4 border-yellow-400
-      p-4
-    "
+    class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
   >
     <div class="flex">
       <div class="flex-shrink-0">

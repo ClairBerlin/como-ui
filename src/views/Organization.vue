@@ -4,6 +4,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { roleToString } from "@/utils";
 import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import { UserAddIcon, TrashIcon } from "@heroicons/vue/outline";
 
 const route = useRoute();
@@ -23,7 +24,7 @@ const orgMembership = computed(() =>
   store.getters["authuser/getMembershipByOrgId"](route.params.id)
 );
 
-const isOwner = () => orgMembership.value?.role === "O";
+const isOwner = computed(() => orgMembership.value?.role === "O");
 
 const showDeleteOrgModal = ref(false);
 
@@ -76,7 +77,7 @@ const update = async () => {
       </h1>
     </div>
   </header>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else class="mt-8">
     <DeletionModal
       :open="showDeleteOrgModal"
@@ -115,58 +116,25 @@ const update = async () => {
             <tr>
               <th
                 scope="col"
-                class="
-                  px-2
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
+                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
               >
                 {{ $t("name") }}
               </th>
               <th
                 scope="col"
-                class="
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
+                class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
               >
                 {{ $t("email") }}
               </th>
               <th
                 scope="col"
-                class="
-                  px-2
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                  hidden
-                  md:table-cell
-                "
+                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
               >
                 {{ $t("role.singular") }}
               </th>
               <th
                 scope="col"
-                class="
-                  px-2
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
+                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
               >
                 {{ $t("actions") }}
               </th>

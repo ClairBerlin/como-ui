@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "@vue/reactivity";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import { roleToString } from "@/utils";
 import { ExclamationIcon } from "@heroicons/vue/outline";
@@ -29,44 +29,19 @@ const hasMemberships = () => memberships.value?.length > 0;
           <tr>
             <th
               scope="col"
-              class="
-                px-2
-                sm:px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-              "
+              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
             >
               {{ $t("org.name") }}
             </th>
             <th
               scope="col"
-              class="
-                sm:px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-                hidden
-                sm:table-cell
-              "
+              class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden sm:table-cell"
             >
               {{ $t("role.your") }}
             </th>
             <th
               scope="col"
-              class="
-                px-2
-                sm:px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-              "
+              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
             >
               {{ $t("options") }}
             </th>
@@ -117,17 +92,7 @@ const hasMemberships = () => memberships.value?.length > 0;
     </div>
     <div
       v-else
-      class="
-        shadow-md
-        mt-4
-        rounded-md
-        max-w-sm
-        flex
-        items-center
-        bg-yellow-50
-        border-l-4 border-yellow-400
-        p-4
-      "
+      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
     >
       <div class="flex-shrink-0">
         <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />

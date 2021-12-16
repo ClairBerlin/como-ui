@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon, PlusIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 // TODO: Add number of rooms to each site's table row.
 // TODO: Add "remove site" button, visible for owners only.
@@ -58,7 +58,7 @@ watch(currentOrgId, () => updateView());
 </script>
 
 <template>
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else-if="hasSites" class="text-md mt-8">
     <DeletionModal
       :open="showDeleteSiteModal"
@@ -84,56 +84,25 @@ watch(currentOrgId, () => updateView());
     </div>
 
     <table
-      class="
-        overflow-hidden
-        rounded-md
-        ring-1 ring-gray-300
-        bg-white
-        min-w-full
-        divide-y divide-gray-200
-      "
+      class="overflow-hidden rounded-md ring-1 ring-gray-300 bg-white min-w-full divide-y divide-gray-200"
     >
       <thead class="bg-gray-50">
         <tr>
           <th
             scope="col"
-            class="
-              px-2
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("site.name") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-              hidden
-              sm:table-cell
-            "
+            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden sm:table-cell"
           >
             {{ $t("address.singular") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("action") }}
           </th>
@@ -183,17 +152,7 @@ watch(currentOrgId, () => updateView());
   </div>
   <div
     v-else
-    class="
-      shadow-md
-      mt-4
-      rounded-md
-      max-w-sm
-      flex
-      items-center
-      bg-yellow-50
-      border-l-4 border-yellow-400
-      p-4
-    "
+    class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
   >
     <div class="flex">
       <div class="flex-shrink-0">

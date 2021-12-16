@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
-import { computed } from "@vue/reactivity";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import InstallationCard from "@/components/InstallationCard.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 
 const route = useRoute();
@@ -70,7 +70,7 @@ const update = async () => {
 
 <template>
   <!-- TODO: replace with a spinner or another indication of loading data (e.g. skeleton) -->
-  <div v-if="isLoading">{{ $t("loading...") }}</div>
+  <LoadingSpinner v-if="isLoading" />
   <div v-else class="mx-2">
     <h2 class="font-bold text-xl mt-8">{{ $t("Active Installations") }}</h2>
     <div class="">
@@ -98,17 +98,7 @@ const update = async () => {
       </div>
       <div
         v-else
-        class="
-          shadow-md
-          mt-4
-          rounded-md
-          max-w-sm
-          flex
-          items-center
-          bg-yellow-50
-          border-l-4 border-yellow-400
-          p-4
-        "
+        class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
       >
         <div class="flex">
           <div class="flex-shrink-0">
@@ -123,14 +113,9 @@ const update = async () => {
             <!-- TODO: use :to="{ name: 'installation-add' }" -->
             <router-link
               to="#"
-              class="
-                font-medium
-                underline
-                text-yellow-700
-                hover:text-yellow-600
-              "
+              class="font-medium underline text-yellow-700 hover:text-yellow-600"
             >
-              Click here to add one
+              {{ $t("installation.clickToAdd") }}
             </router-link>
           </div>
         </div>

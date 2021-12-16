@@ -15,27 +15,12 @@ const props = defineProps({
 
     <ul
       tabindex="0"
-      class="
-        shadow-lg
-        rounded-md
-        menu
-        dropdown-content
-        w-52
-        ring-1 ring-gray-200
-        bg-white
-        text-xs
-      "
+      class="shadow-lg rounded-md menu dropdown-content w-52 ring-1 ring-gray-200 bg-white text-xs"
     >
       <li
         v-for="option in options"
         :key="option.href"
-        class="
-          font-medium
-          hover:bg-gray-50
-          border-b border-gray-200
-          last:border-none
-          como-focus
-        "
+        class="font-medium hover:bg-gray-50 border-b border-gray-200 last:border-none como-focus"
       >
         <router-link :to="option.href">{{ $t(option.title) }}</router-link>
       </li>

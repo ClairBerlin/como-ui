@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from "vue";
-import { computed } from "@vue/reactivity";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRoute, useRouter } from "vue-router";
@@ -77,16 +76,7 @@ const createRoom = async () => {
 
   <div class="max-w-sm sm:max-w-lg">
     <div
-      class="
-        text-black
-        mt-2
-        p-4
-        card
-        rounded-md
-        shadow-md
-        ring-1 ring-gray-300
-        bg-white
-      "
+      class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
     >
       <div class="form-control">
         <label class="label">
