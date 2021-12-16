@@ -126,16 +126,7 @@ watch(
               <div class="absolute top-0 right-0 -mr-12 pt-2">
                 <button
                   type="button"
-                  class="
-                    ml-1
-                    flex
-                    items-center
-                    justify-center
-                    h-10
-                    w-10
-                    rounded-full
-                    como-focus
-                  "
+                  class="ml-1 flex items-center justify-center h-10 w-10 rounded-full como-focus"
                   @click="sidebarOpen = false"
                 >
                   <span class="sr-only">Close sidebar</span>
@@ -194,13 +185,7 @@ watch(
     <div class="hidden lg:flex lg:flex-shrink-0">
       <div class="flex flex-col w-64">
         <div
-          class="
-            flex-1 flex flex-col
-            min-h-0
-            border-r border-gray-200
-            shadow-md
-            bg-white
-          "
+          class="flex-1 flex flex-col min-h-0 border-r border-gray-200 shadow-md bg-white"
         >
           <div class="flex-1 flex mx-2 px-1 flex-col pt-6 pb-1 overflow-y-auto">
             <Logo />
@@ -248,20 +233,7 @@ watch(
       <div class="lg:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
         <button
           type="button"
-          class="
-            -ml-0.5
-            -mt-0.5
-            mb-0.5
-            h-12
-            w-12
-            inline-flex
-            items-center
-            justify-center
-            rounded-md
-            text-gray-500
-            hover:text-gray-900
-            como-focus
-          "
+          class="-ml-0.5 -mt-0.5 mb-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 como-focus"
           @click="sidebarOpen = true"
         >
           <span class="sr-only">Open sidebar</span>

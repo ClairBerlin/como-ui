@@ -183,16 +183,7 @@ const installNow = async () => {
   <div v-else>
     <div class="max-w-sm sm:max-w-lg">
       <div
-        class="
-          text-black
-          mt-2
-          p-4
-          card
-          rounded-md
-          shadow-md
-          ring-1 ring-gray-300
-          bg-white
-        "
+        class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
       >
         <div class="form-control">
           <label class="label">
@@ -284,19 +275,7 @@ const installNow = async () => {
           id="location"
           name="room"
           v-model="selectedRoom"
-          class="
-            mt-1
-            block
-            w-full
-            pl-3
-            pr-10
-            py-2
-            text-base
-            border-gray-300
-            focus:outline-none focus:ring-indigo-500 focus:border-indigo-500
-            sm:text-sm
-            rounded-md
-          "
+          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
         >
           <option v-for="room in rooms" :key="room._jv.id" :value="room">
             {{ room.name }}
@@ -310,14 +289,7 @@ const installNow = async () => {
             name="makePublic"
             type="checkbox"
             v-model="makeInstallationPublic"
-            class="
-              focus:ring-indigo-500
-              h-4
-              w-4
-              text-indigo-600
-              border-gray-300
-              rounded
-            "
+            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
           />
         </div>
         <div class="ml-3 text-sm">
@@ -331,84 +303,38 @@ const installNow = async () => {
 
   <div
     v-if="hasInstallations"
-    class="
-      ring-1 ring-gray-300
-      rounded-md
-      bg-white
-      text-md
-      overflow-hidden
-      mt-8
-    "
+    class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
   >
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
           <th
             scope="col"
-            class="
-              px-2
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("node.installationLocation") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("installation.isPublic") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("installation.installedOn") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-              hidden
-              md:table-cell
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
           >
             {{ $t("installation.removedOn") }}
           </th>
           <th
             scope="col"
-            class="
-              px-2
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("actions") }}
           </th>
