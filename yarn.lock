@@ -225,10 +225,10 @@
   resolved "https://registry.yarnpkg.com/@types/tailwindcss/-/tailwindcss-2.2.4.tgz#c3bca7d265e608ffc50a6d1a4932b5b53be14553"
   integrity sha512-8mIk+0BoReKiaBI4e3hjaz9YDQto+rdZ2eEExHf6AfS38FZcALQ6s8mTd+74N8BtBaLnTzLdNe5GbkzObWlSXw==
 
-"@vitejs/plugin-vue@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-2.0.0.tgz#5b5879cae44f48874196d018213bf1dbaca8f4ea"
-  integrity sha512-4Xn1h9OcaAf7KYrvz2oEi52fCCCLcCzyr3pDOrzYTWrs0DrzNOXt9fT5IiGb1f/uoNTdX3aAkXVGNXrGkzF/zw==
+"@vitejs/plugin-vue@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@vitejs/plugin-vue/-/plugin-vue-2.0.1.tgz#db0e5eacf96358e04cc501c9008079b25a70a4ac"
+  integrity sha512-wtdMnGVvys9K8tg+DxowU1ytTrdVveXr3LzdhaKakysgGXyrsfaeds2cDywtvujEASjWOwWL/OgWM+qoeM8Plg==
 
 "@vue/compiler-core@3.2.26":
   version "3.2.26"
@@ -631,10 +631,10 @@ csstype@^2.6.8:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.18.tgz#980a8b53085f34af313410af064f2bd241784218"
   integrity sha512-RSU6Hyeg14am3Ah4VZEmeX8H7kLwEEirXe6aU2IPfKNvhXwTflK5HQRDNI0ypQXoqmm+QPyG2IaPuQE5zMwSIQ==
 
-daisyui@^1.16.5:
-  version "1.16.5"
-  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-1.16.5.tgz#f63680d7cc807379cd2e35afe3e6c4596cd7c902"
-  integrity sha512-34nXxyQ0M8CWv8OE8/+jEasBbw5pipBNgWkC4HVsOVDgZ0Y5jD7UgcvosOmm+pEBgZHWNze2Ocwi9NUDge6gHg==
+daisyui@^1.16.6:
+  version "1.16.6"
+  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-1.16.6.tgz#449ce87d0d336e70e1de87d46cf4e8797de0a9d3"
+  integrity sha512-kso740gqMVVqritCQliQCpfPwos9lxp7/TEiEev4w6GGQyLNRyfriWY+DWxfawMY/DwGDzBl2DZtekCMf73bzw==
 
 date-fns@^2.27.0:
   version "2.27.0"
@@ -1724,10 +1724,10 @@ supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-tailwindcss@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.0.2.tgz#9eea4c6dbe8d6d2c11363d313f4a4eba2baeb652"
-  integrity sha512-i1KpjYnGYftjzdAth6jA5iMPjhxpUkk5L6DafhfnQs+KiiWaThYxmk47Weh4oFH1mZqP6MuiQNHxtoRVPOraLg==
+tailwindcss@^3.0.5:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.0.5.tgz#468e20347b8c4b59bb0585361682126edb1dd9e3"
+  integrity sha512-59pNgzx2o+wkAk7IZGIH7H9eNS53gzZGrO3+NPyOEWHDbquHgiLL/c993T5t1vPSAeBxox4X5OgZwNuRvXVf+g==
   dependencies:
     arg "^5.0.1"
     chalk "^4.1.2"
@@ -1799,10 +1799,10 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vite@^2.7.2:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.7.2.tgz#f9937114cf2e730a7e2e4c4f8c26ed0ed1c3bb6b"
-  integrity sha512-wMffVVdKZRZP/HwW3yttKL8X+IJePz7bUcnGm0vqljffpVwHpjWC3duZtJQHAGvy+wrTjmwU7vkULpZ1dVXY6w==
+vite@^2.7.3:
+  version "2.7.3"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.7.3.tgz#e983cf4f71f42c192436bfcad1b75932642da293"
+  integrity sha512-GAY1P+9fLJOju1SRm8+hykVnEXog+E+KXuqqyMBQDriKCUIKzWnPn142yNNhSdf/ixYGYdUa5ce3A8WaEajzGw==
   dependencies:
     esbuild "^0.13.12"
     postcss "^8.3.11"
@@ -1868,10 +1868,10 @@ vue-toastification@^2.0.0-rc.5:
   resolved "https://registry.yarnpkg.com/vue-toastification/-/vue-toastification-2.0.0-rc.5.tgz#92798604d806ae473cfb76ed776fae294280f8f8"
   integrity sha512-q73e5jy6gucEO/U+P48hqX+/qyXDozAGmaGgLFm5tXX4wJBcVsnGp4e/iJqlm9xzHETYOilUuwOUje2Qg1JdwA==
 
-vue3-date-time-picker@^2.4.1:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/vue3-date-time-picker/-/vue3-date-time-picker-2.4.1.tgz#210e5566ce308e0afc3489a2edd8ba5ed48e1adb"
-  integrity sha512-7YvPa2Td6bkIrfTQ4lNsJX0REUHc8VOXvGdi7QjMZsblXRaIrd9E0J0CkMbSLw9KjTWt41TanLvUkLf/lHBlmg==
+vue3-date-time-picker@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/vue3-date-time-picker/-/vue3-date-time-picker-2.4.2.tgz#e9bb9ab287af037189b7d995d51312fb7a3b7396"
+  integrity sha512-lHXQCoHj7oVtsmsirJKlemRt4a9oGei8V4qY4yRLG6dn0YYzTKPILiayry8TBHhrIQOkAkkZQv6fMEgf/HU7nQ==
   dependencies:
     date-fns "^2.27.0"
 
