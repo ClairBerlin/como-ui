@@ -37,6 +37,8 @@
   "description": "Beschreibung",
   "edit": "Bearbeiten",
   "email": "E-Mail",
+  "field_invalid": "Die Angabe ist ungültig.",
+  "field_required": "ist erforderlich.",
   "leave": "Verlassen",
   "loading...": "lädt...",
   "logging-out": "Sie werden ausgeloggt...",

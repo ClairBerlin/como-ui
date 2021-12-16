@@ -8,7 +8,7 @@ import { useI18n } from "vue-i18n";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import * as yup from "yup";
-import { useField, useForm, Form, Field, ErrorMessage } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
 
 const { t } = useI18n();
 
@@ -38,27 +38,26 @@ const orgMembership = computed(() =>
 );
 const isOwner = computed(() => orgMembership.value?.role === "O");
 
-// const newSiteName = ref(undefined);
-// const newSiteDescription = ref(undefined);
-// const newStreet1 = ref(undefined);
-// const newStreet2 = ref(undefined);
-// const newZip = ref(undefined);
-// const newCity = ref(undefined);
+const newSiteName = ref(undefined);
+const newSiteDescription = ref(undefined);
+const newStreet1 = ref(undefined);
+const newStreet2 = ref(undefined);
+const newZip = ref(undefined);
+const newCity = ref(undefined);
+
+yup.setLocale({
+  mixed: {
+    default: "field_invalid",
+    required: ({ label }) => label + " " + t("field_required"),
+  },
+});
 
 const schema = yup.object().shape({
-  siteName: yup.string().required().email(),
-  street1: yup.string().required(),
-  zip: yup.string().required().length(5),
-  city: yup.string().required(),
+  siteName: yup.string().required().label(t("site.name")),
+  street1: yup.string().required().label(t("address.street1")),
+  zip: yup.string().required().length(5).label(t("address.zip")),
+  city: yup.string().required().label(t("address.city")),
 });
-useForm({ validationSchema: schema });
-const { value: newSiteName, errorMessage: siteNameError } =
-  useField("newSiteName");
-const { value: newSiteDescription } = useField("description");
-const { value: newStreet1, errorMessage: streetError } = useField("newStreet1");
-const { value: newStreet2 } = useField("newStreet2");
-const { value: newZip, errorMessage: zipError } = useField("newZip");
-const { value: newCity, errorMessage: cityError } = useField("newCity");
 
 const deleteRoom = async () => {
   await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
@@ -162,8 +161,8 @@ onMounted(async () => updateView());
   <div v-else class="divide-y-2 divide-gray-300">
     <Form
       class="space-y-8 divide-y divide-gray-200"
-      :validation-schema="schema"
       @submit="updateData"
+      :validation-schema="schema"
     >
       <div>
         <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
@@ -177,14 +176,15 @@ onMounted(async () => updateView());
               {{ $t("site.name") }}
             </label>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <input
+              <Field
                 type="text"
-                name="site-name"
+                name="siteName"
                 id="site-name"
                 v-model.trim="newSiteName"
                 :placeholder="site.name"
                 class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
               />
+              <ErrorMessage name="siteName" />
             </div>
           </div>
         </div>
@@ -222,15 +222,16 @@ onMounted(async () => updateView());
             {{ $t("address.street1") }}
           </label>
           <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <input
+            <Field
               type="text"
-              name="street-address"
+              name="street1"
               id="street-address"
               autocomplete="street-address"
               v-model.trim="newStreet1"
               :placeholder="site.address.street1"
               class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
             />
+            <ErrorMessage name="street1" />
           </div>
         </div>
 
@@ -266,16 +267,16 @@ onMounted(async () => updateView());
             {{ $t("address.zip") }}
           </label>
           <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <input
+            <Field
               type="text"
-              name="postal-code"
+              name="zip"
               id="postal-code"
               autocomplete="postal-code"
               v-model.trim="newZip"
               :placeholder="site.address.zip"
               class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
             />
-            <span>{{ zipError }}</span>
+            <ErrorMessage name="zip" />
           </div>
         </div>
       </div>
@@ -290,7 +291,7 @@ onMounted(async () => updateView());
           {{ $t("address.city") }}
         </label>
         <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <input
+          <Field
             type="text"
             name="city"
             id="city"
@@ -299,6 +300,7 @@ onMounted(async () => updateView());
             :placeholder="site.address.city"
             class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
           />
+          <ErrorMessage name="city" />
         </div>
       </div>
 

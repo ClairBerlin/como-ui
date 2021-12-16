@@ -37,6 +37,8 @@
   "description": "Description",
   "edit": "Edit",
   "email": "Email",
+  "field_invalid": "The field is invalid",
+  "field_required": "is required.",
   "inspect": "Inspect",
   "installation": {
     "add": "Add Installation",
