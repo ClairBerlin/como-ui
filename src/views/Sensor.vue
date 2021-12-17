@@ -19,10 +19,9 @@ const store = useStore();
 const toast = useToast();
 const { t } = useI18n();
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const sensorId = computed(() => route.params.sensorId);
 const sensor = computed(() =>

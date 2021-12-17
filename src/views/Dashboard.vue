@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed } from "vue";
+import { onMounted, computed, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -7,8 +7,12 @@ const route = useRoute();
 const router = useRouter();
 const store = useStore();
 
-const currentOrgId = computed(() => route.params.orgId);
-const isOrgContext = computed(() => typeof currentOrgId.value === "string");
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+const isOrgContext = computed(() => store.getters["nav/isOrgContext"]);
+
+const isInventoryLoading = ref(true);
 
 const organization = computed(() => {
   if (isOrgContext.value) {
@@ -33,6 +37,30 @@ onMounted(() => {
     }
   }
 });
+
+const update = async () => {
+  isInventoryLoading.value = true;
+  const instObj = await store.dispatch("jv/get", [
+    "installations",
+    { params: { "filter[organization]": currentOrgId.value } },
+  ]);
+  const instList = Object.entries(instObj);
+  instList.map(([, inst]) => inst);
+  const relatedResourcePromises = instList.map(([instId, inst]) => {
+    console.log(`Get related objects for installation ${instId}.`);
+    return store
+      .dispatch("jv/getRelated", `installations/${instId}`)
+      .then(() => {
+        // At this point vuex-jsonapi has fetched the room object in inst.room, if any
+        if (typeof inst.room === "object") {
+          store.dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`);
+        }
+      });
+  });
+  await Promise.all(relatedResourcePromises);
+  isInventoryLoading.value = false;
+};
+
 </script>
 
 <template>

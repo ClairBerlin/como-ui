@@ -31,10 +31,9 @@ const showDeleteRoomModal = ref(false);
 const deleteRoomId = ref();
 const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const newSiteName = ref(undefined);
 const newSiteDescription = ref(undefined);

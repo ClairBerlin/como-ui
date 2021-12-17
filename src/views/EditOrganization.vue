@@ -25,11 +25,9 @@ const currentOrg = computed(() =>
   })
 );
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const updateOrganization = async () => {
   if (newOrgName.value || newOrgDescription.value) {
@@ -69,7 +67,16 @@ const updateOrganization = async () => {
   <div class="max-w-sm sm:max-w-lg mt-8">
     <div
       v-if="!isOwner"
-      class="shadow-md mt-4 rounded-md flex items-center bg-red-50 border-l-4 border-red-400 p-4"
+      class="
+        shadow-md
+        mt-4
+        rounded-md
+        flex
+        items-center
+        bg-red-50
+        border-l-4 border-red-400
+        p-4
+      "
     >
       <div class="flex">
         <div class="flex-shrink-0">

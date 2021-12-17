@@ -1,20 +1,25 @@
 <script setup>
-import { onMounted, ref, watch, computed } from "vue";
-import { useRoute } from "vue-router";
+import { onMounted, ref, computed } from "vue";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import InstallationCard from "@/components/InstallationCard.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 
-const route = useRoute();
 const store = useStore();
-const isLoading = ref(true);
+// const isLoading = ref(true);
+const isLoading = ref(false);
 
-// This view is routed to in an organization context only, this orgId is defined.
-const currentOrgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
 onMounted(async () => update());
 const installations = ref(undefined);
+// const installations = computed(() => {
+//   return store.getters["jv/get"]({
+//     _jv: { type: "Installation" },
+//   });
+// });
 
 const activeInstallations = computed(() =>
   installations.value?.filter(
@@ -97,7 +102,17 @@ const update = async () => {
       </div>
       <div
         v-else
-        class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+        class="
+          shadow-md
+          mt-4
+          rounded-md
+          max-w-sm
+          flex
+          items-center
+          bg-yellow-50
+          border-l-4 border-yellow-400
+          p-4
+        "
       >
         <div class="flex">
           <div class="flex-shrink-0">
@@ -112,7 +127,12 @@ const update = async () => {
             <!-- TODO: use :to="{ name: 'installation-add' }" -->
             <router-link
               to="#"
-              class="font-medium underline text-yellow-700 hover:text-yellow-600"
+              class="
+                font-medium
+                underline
+                text-yellow-700
+                hover:text-yellow-600
+              "
             >
               {{ $t("installation.clickToAdd") }}
             </router-link>

@@ -2,7 +2,7 @@
 import Logo from "@/components/Logo.vue";
 import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import {
   Dialog,
   DialogOverlay,
@@ -18,13 +18,12 @@ import {
   XIcon,
   UserGroupIcon,
 } from "@heroicons/vue/outline";
-import OrganizationMenu from "./components/OrganizationMenu.vue";
-import ProfileMenu from "./components/ProfileMenu.vue";
-import LanguageSelect from "./components/LanguageSelect.vue";
+import OrganizationMenu from "@/components/OrganizationMenu.vue";
+import ProfileMenu from "@/components/ProfileMenu.vue";
+import LanguageSelect from "@/components/LanguageSelect.vue";
 
 const store = useStore();
 const route = useRoute();
-const router = useRouter();
 
 // TODO: what about feedback and help? (before, this pointed to a Clair email/domain)?
 
@@ -61,9 +60,18 @@ const isCurrentRoute = (routeName) => route.name === routeName;
 
 const sidebarOpen = ref(false);
 
-const currentOrgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+const isOrgContext = computed(() => store.getters["nav/isOrgContext"]);
 const isUserLoading = computed(() => store.getters["authuser/isLoading"]);
-const isOrgContext = computed(() => typeof currentOrgId.value === "string");
+const isOrgLoading = computed(() => {
+  return store.state.nav.orgIsLoading;
+});
+
+const isLoading = computed(() => {
+  return isUserLoading.value || isOrgLoading.value;
+});
 
 onMounted(async () => {
   await store.dispatch("authuser/fetchAuthenticatedUser");
@@ -72,26 +80,9 @@ onMounted(async () => {
 watch(
   () => route.params.orgId,
   async (orgId) => {
-    console.log(`Organization context changed. Clearing inventory store.`);
-    clearStore();
-    if (isOrgContext.value) {
-      console.log(`New organization context with orgId ${orgId}.`);
-      await store.dispatch("jv/get", `organizations/${orgId}`);
-      router.push({ name: "overview", params: { orgId: orgId } });
-    } else {
-      console.log("Entering a route outside of an organization context.");
-      router.push({ name: "org-management" });
-    }
+    await store.dispatch("nav/changeOrganization", orgId);
   }
 );
-
-const clearStore = () => {
-  store.commit("jv/clearRecords", { _jv: { type: "Installation" } });
-  store.commit("jv/clearRecords", { _jv: { type: "Room" } });
-  store.commit("jv/clearRecords", { _jv: { type: "Node" } });
-  store.commit("jv/clearRecords", { _jv: { type: "Site" } });
-  store.commit("jv/clearRecords", { _jv: { type: "Address" } });
-};
 </script>
 
 <template>
@@ -135,7 +126,16 @@ const clearStore = () => {
               <div class="absolute top-0 right-0 -mr-12 pt-2">
                 <button
                   type="button"
-                  class="ml-1 flex items-center justify-center h-10 w-10 rounded-full como-focus"
+                  class="
+                    ml-1
+                    flex
+                    items-center
+                    justify-center
+                    h-10
+                    w-10
+                    rounded-full
+                    como-focus
+                  "
                   @click="sidebarOpen = false"
                 >
                   <span class="sr-only">Close sidebar</span>
@@ -194,7 +194,13 @@ const clearStore = () => {
     <div class="hidden lg:flex lg:flex-shrink-0">
       <div class="flex flex-col w-64">
         <div
-          class="flex-1 flex flex-col min-h-0 border-r border-gray-200 shadow-md bg-white"
+          class="
+            flex-1 flex flex-col
+            min-h-0
+            border-r border-gray-200
+            shadow-md
+            bg-white
+          "
         >
           <div class="flex-1 flex mx-2 px-1 flex-col pt-6 pb-1 overflow-y-auto">
             <Logo />
@@ -242,7 +248,20 @@ const clearStore = () => {
       <div class="lg:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
         <button
           type="button"
-          class="-ml-0.5 -mt-0.5 mb-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 como-focus"
+          class="
+            -ml-0.5
+            -mt-0.5
+            mb-0.5
+            h-12
+            w-12
+            inline-flex
+            items-center
+            justify-center
+            rounded-md
+            text-gray-500
+            hover:text-gray-900
+            como-focus
+          "
           @click="sidebarOpen = true"
         >
           <span class="sr-only">Open sidebar</span>
@@ -252,7 +271,7 @@ const clearStore = () => {
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
         <div
           class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md"
-          v-if="!isUserLoading"
+          v-if="!isLoading"
         >
           <router-view />
         </div>

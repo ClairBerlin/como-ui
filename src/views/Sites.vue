@@ -1,6 +1,5 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { ExclamationIcon, PlusIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
@@ -8,11 +7,11 @@ import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 // TODO: Add number of rooms to each site's table row.
 // TODO: Add "remove site" button, visible for owners only.
-const route = useRoute();
 const store = useStore();
 
-// This view is routed to in an organization context only, this orgId is defined.
-const currentOrgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
 const sites = ref(undefined);
 
 const showDeleteSiteModal = ref(false);
@@ -23,10 +22,9 @@ const formatAdress = (address) => {
   return `${address.street1}, ${address.zip} ${address.city}`;
 };
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const hasSites = computed(() => sites.value?.length > 0);
 const isLoading = ref(true);

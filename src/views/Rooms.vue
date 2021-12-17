@@ -1,16 +1,15 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
-const route = useRoute();
 const store = useStore();
 
-// This view is routed to in an organization context only, this orgId is defined.
-const currentOrgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
 const rooms = ref(undefined);
 
 const hasRooms = computed(() => rooms.value?.length > 0);
@@ -20,10 +19,9 @@ const showDeleteRoomModal = ref(false);
 const deleteRoomId = ref();
 const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const deleteRoom = async () => {
   await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);

@@ -34,10 +34,9 @@ const hasInstallations = computed(
 );
 const isLoading = ref(true);
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const updateData = async () => {
   if (

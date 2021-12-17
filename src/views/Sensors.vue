@@ -1,15 +1,14 @@
 <script setup>
 import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
-const route = useRoute();
 const store = useStore();
 
-// This view is routed to in an organization context only, this orgId is defined.
-const currentOrgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
 const sensors = ref(undefined);
 
 const hasSensors = computed(() => sensors.value?.length > 0);
@@ -40,32 +39,74 @@ watch(currentOrgId, () => update());
   <LoadingSpinner v-if="isLoading" />
   <div
     v-else-if="hasSensors"
-    class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
+    class="
+      ring-1 ring-gray-300
+      rounded-md
+      bg-white
+      text-md
+      overflow-hidden
+      mt-8
+    "
   >
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("node.name") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden xl:table-cell"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              xl:table-cell
+            "
           >
             {{ $t("node.identifier") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden sm:table-cell"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
           >
             {{ $t("node.model") }}
           </th>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-xs font-medium text-gray-500 tracking-wider text-right"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              text-right
+            "
           >
             {{ $t("node.sampleCount") }}
           </th>
@@ -103,7 +144,17 @@ watch(currentOrgId, () => update());
   </div>
   <div
     v-else
-    class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+    class="
+      shadow-md
+      mt-4
+      rounded-md
+      max-w-sm
+      flex
+      items-center
+      bg-yellow-50
+      border-l-4 border-yellow-400
+      p-4
+    "
   >
     <div class="flex">
       <div class="flex-shrink-0">

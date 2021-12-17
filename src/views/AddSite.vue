@@ -2,16 +2,17 @@
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 
 const store = useStore();
 const toast = useToast();
-const route = useRoute();
 const router = useRouter();
 const { t } = useI18n();
 
-const orgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
 
 const newSiteName = ref(undefined);
 const newSiteDescription = ref(undefined);
@@ -19,6 +20,8 @@ const newStreet1 = ref(undefined);
 const newStreet2 = ref(undefined);
 const newZip = ref(undefined);
 const newCity = ref(undefined);
+
+// TODO: Check if the user is owner of the site.
 
 const createSite = async () => {
   if (newSiteName.value && newStreet1.value && newCity.value && newZip.value) {
@@ -30,7 +33,7 @@ const createSite = async () => {
           operator: {
             data: {
               type: "Organization",
-              id: orgId.value,
+              id: currentOrgId.value,
             },
           },
           address: {
