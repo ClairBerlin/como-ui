@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import InstallationCard from "@/components/InstallationCard.vue";
@@ -7,19 +7,14 @@ import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 
 const store = useStore();
-// const isLoading = ref(true);
-const isLoading = ref(false);
 
-const currentOrgId = computed(() => {
-  return store.state.nav.currentOrgId;
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
 });
-onMounted(async () => update());
-const installations = ref(undefined);
-// const installations = computed(() => {
-//   return store.getters["jv/get"]({
-//     _jv: { type: "Installation" },
-//   });
-// });
+
+const installations = computed(() => {
+  return store.getters["nav/getInstallations"];
+});
 
 const activeInstallations = computed(() =>
   installations.value?.filter(
@@ -47,33 +42,9 @@ const getLatestMeasurement = (sample) => {
   }
   return undefined;
 };
-
-const update = async () => {
-  isLoading.value = true;
-  const instObj = await store.dispatch("jv/get", [
-    "installations",
-    { params: { "filter[organization]": currentOrgId.value } },
-  ]);
-  const instList = Object.entries(instObj);
-  installations.value = instList.map(([, inst]) => inst);
-  const relatedResourcePromises = instList.map(([instId, inst]) => {
-    console.log(`Get related objects for installation ${instId}.`);
-    return store
-      .dispatch("jv/getRelated", `installations/${instId}`)
-      .then(() => {
-        // At this point vuex-jsonapi has fetched the room object in inst.room, if any
-        if (typeof inst.room === "object") {
-          store.dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`);
-        }
-      });
-  });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-};
 </script>
 
 <template>
-  <!-- TODO: replace with a spinner or another indication of loading data (e.g. skeleton) -->
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="mx-2">
     <h2 class="font-bold text-xl mt-8">{{ $t("Active Installations") }}</h2>

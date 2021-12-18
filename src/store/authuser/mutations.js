@@ -1,10 +1,10 @@
 const mutation = {
   START_USERLOADING(authuser) {
-    authuser.userIsLoading = true;
+    authuser.isUserLoading = true;
   },
 
   STOP_USERLOADING(authuser) {
-    authuser.userIsLoading = false;
+    authuser.isUserLoading = false;
   },
 
   START_MEMBERSHIPSLOADING(authuser) {

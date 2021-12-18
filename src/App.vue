@@ -66,7 +66,7 @@ const currentOrgId = computed(() => {
 const isOrgContext = computed(() => store.getters["nav/isOrgContext"]);
 const isUserLoading = computed(() => store.getters["authuser/isLoading"]);
 const isOrgLoading = computed(() => {
-  return store.state.nav.orgIsLoading;
+  return store.state.nav.isOrgLoading;
 });
 
 const isLoading = computed(() => {

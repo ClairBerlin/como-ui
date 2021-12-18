@@ -6,7 +6,6 @@ import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 // TODO: Add number of rooms to each site's table row.
-// TODO: Add "remove site" button, visible for owners only.
 const store = useStore();
 
 const currentOrgId = computed(() => {

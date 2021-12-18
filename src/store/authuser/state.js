@@ -1,7 +1,7 @@
 export default function () {
   return {
     error: undefined,
-    userIsLoading: true,
+    isUserLoading: true,
     membershipsAreLoading: true,
     id: undefined,
     email: undefined,
