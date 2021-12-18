@@ -1,10 +1,9 @@
 <script setup>
 import { onMounted, computed, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 
 const route = useRoute();
-const router = useRouter();
 const store = useStore();
 
 const currentOrgId = computed(() => {
@@ -25,20 +24,7 @@ const updateInventory = async (orgId) => {
 };
 
 onMounted(async () => {
-  if (route.name === "dashboard") {
-    // If no organization is selected, default to the user's first organization.
-    // TODO: Read most recently used membership from cookie.
-    const memberships = store.getters["authuser/getMemberships"];
-    if (memberships?.length > 0) {
-      const defaultOrgId = memberships[0].orgId;
-      await updateInventory(defaultOrgId);
-      router.push({ name: "overview", params: { orgId: defaultOrgId } });
-    } else {
-      router.push({ name: "org-management-add" });
-    }
-  } else {
-    await updateInventory(currentOrgId.value);
-  }
+  await updateInventory(currentOrgId.value);
 });
 
 watch(

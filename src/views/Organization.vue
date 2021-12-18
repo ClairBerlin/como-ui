@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch, computed, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { roleToString } from "@/utils";
@@ -9,17 +9,26 @@ import { UserAddIcon, TrashIcon } from "@heroicons/vue/outline";
 
 const router = useRouter();
 const store = useStore();
-const members = ref([]);
-const org = ref();
-const orgName = computed(() => org?.value?.name || "…");
+
+const org = computed(() => store.getters["nav/getOrgMembership"]);
+const orgName = computed(() => org?.value.orgName || "…");
+
+const memberships = computed(() => {
+  const msObj = store.getters["jv/get"](
+    "Membership",
+    `$[?(@.organization_name=="${org?.value.orgName}")]`
+  );
+  const msList = Object.entries(msObj);
+  return msList.map(([, ms]) => ms);
+});
 
 const currentOrgId = computed(() => {
   return store.state.nav.currentOrgId;
 });
-onMounted(async () => update());
-watch(currentOrgId, () => update());
 
-const isLoading = ref(true);
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
 
 const isOwner = computed(() => {
   return store.getters["nav/isOwner"];
@@ -29,43 +38,17 @@ const showDeleteOrgModal = ref(false);
 
 const openDeleteOrgModal = () => (showDeleteOrgModal.value = true);
 const deleteOrg = async () => {
+  console.log(`Deleting organization with ID ${currentOrgId.value}`);
   await store.dispatch("jv/delete", `organizations/${currentOrgId.value}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Organization", id: currentOrgId.value },
+  });
   router.push({ name: "org-management" });
 };
+
 const inviteMembers = () => console.log("TODO: open invite modal");
 const removeMember = () => console.log("TODO: open modal to confirm removal");
 const changeRole = () => console.log("TODO: open modal to change role");
-
-const getRole = (memberships, username) =>
-  roleToString(
-    Object.values(memberships).find((m) => m.user_name === username).role
-  );
-
-const update = async () => {
-  members.value = [];
-  isLoading.value = true;
-  org.value = await store.dispatch(
-    "jv/get",
-    `organizations/${currentOrgId.value}`
-  );
-  const membersIds = await store.dispatch(
-    "jv/get",
-    `organizations/${currentOrgId.value}/users`
-  );
-  const memberships = await store.dispatch(
-    "jv/get",
-    `organizations/${currentOrgId.value}/memberships`
-  );
-  const getMembers = Object.keys(membersIds).map(async (id) => {
-    const member = await store.dispatch("jv/get", `users/${id}`);
-    members.value.push({
-      ...member,
-      role: getRole(memberships, member.username),
-    });
-  });
-  await Promise.all(getMembers);
-  isLoading.value = false;
-};
 </script>
 
 <template>
@@ -174,23 +157,26 @@ const update = async () => {
           </thead>
           <tbody>
             <tr
-              v-for="(member, memberIdx) in members"
-              :key="member.id"
+              v-for="(membership, memberIdx) in memberships"
+              :key="membership._jv.id"
               :class="[memberIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
             >
               <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
                 <div class="flex">
-                  {{ member.first_name }} {{ member.last_name }}
+                  {{ membership.user.first_name }}
+                  {{ membership.user.last_name }}
                 </div>
-                <div class="text-gray-700 text-sm">{{ member.username }}</div>
+                <div class="text-gray-700 text-sm">
+                  {{ membership.user.username }}
+                </div>
               </td>
               <td class="sm:px-6 py-4 whitespace-nowrap">
-                {{ member.email }}
+                {{ membership.user.email }}
               </td>
               <td
                 class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap"
               >
-                {{ $t(member.role) }}
+                {{ $t(roleToString(membership.role)) }}
               </td>
               <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
                 <!-- <Dropdown :options="options" :icon="icon" /> -->

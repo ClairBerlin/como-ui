@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -15,6 +15,10 @@ const store = useStore();
 const toast = useToast();
 const { t } = useI18n();
 
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
+
 const roomId = computed(() => route.params.roomId);
 const room = computed(() =>
   store.getters["jv/get"]({
@@ -22,21 +26,28 @@ const room = computed(() =>
   })
 );
 
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
+
+const installations = computed(() => {
+  const instObj = store.getters["jv/get"](
+    "Installation",
+    `$[?(@.room._jv.id=="${roomId.value}")]`
+  );
+  const instList = Object.entries(instObj);
+  return instList.map(([, inst]) => inst);
+});
+
+const hasInstallations = computed(
+  () => !isLoading.value && installations.value?.length > 0
+);
+
 const newRoomName = ref(undefined);
 const newRoomDescription = ref(undefined);
 const newRoomSize = ref(undefined);
 const newRoomHeight = ref(undefined);
 const newRoomMaxOccupancy = ref(undefined);
-
-const installations = ref([]);
-const hasInstallations = computed(
-  () => !isLoading.value && installations.value?.length > 0
-);
-const isLoading = ref(true);
-
-const isOwner = computed(() => {
-  return store.getters["nav/isOwner"];
-});
 
 const updateData = async () => {
   if (
@@ -72,7 +83,6 @@ const updateData = async () => {
         newRoom,
         { url: `rooms/${roomId.value}/` },
       ]);
-      updateView();
       toast.success(t("room.updateSuccess"));
     } catch (e) {
       toast.error(t("room.updateError"));
@@ -95,41 +105,11 @@ const terminateInstallation = async (installationId) => {
       { url: `installations/${installationId}/` },
     ]);
     toast.success(t("installation.successTerminate"));
-    updateView();
   } catch (e) {
     toast.error(t("installation.errorTerminate"));
     console.log(e);
   }
 };
-
-const updateView = async () => {
-  isLoading.value = true;
-  if (typeof room.value?.name === "undefined") {
-    console.log(
-      `Room with ID ${roomId.value} has not been loaded yet; fetching...`
-    );
-    await store.dispatch("jv/get", `rooms/${roomId.value}/`);
-  }
-  console.log(`Fetch related objects for room ${roomId.value}.`);
-  await store.dispatch("jv/getRelated", `rooms/${roomId.value}`);
-  const installationObj = await store.dispatch(
-    "jv/get",
-    `rooms/${roomId.value}/installations`
-  );
-  const installationList = Object.entries(installationObj);
-  console.log(`Fetched ${installationList.length} installations`);
-  installations.value = installationList.map(
-    ([, installation]) => installation
-  );
-  const relatedResourcePromises = installationList.map(([instId]) => {
-    console.log(`Get related objects for installation ${instId}.`);
-    return store.dispatch("jv/getRelated", `installations/${instId}`);
-  });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-};
-
-onMounted(async () => updateView());
 </script>
 
 <template>
@@ -137,7 +117,16 @@ onMounted(async () => updateView());
   <div v-else>
     <div class="max-w-sm sm:max-w-lg">
       <div
-        class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
+        class="
+          text-black
+          mt-2
+          p-4
+          card
+          rounded-md
+          shadow-md
+          ring-1 ring-gray-300
+          bg-white
+        "
       >
         <div class="form-control">
           <label class="label">
@@ -216,7 +205,14 @@ onMounted(async () => updateView());
 
     <div
       v-if="hasInstallations"
-      class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
+      class="
+        ring-1 ring-gray-300
+        rounded-md
+        bg-white
+        text-md
+        overflow-hidden
+        mt-8
+      "
     >
       <div class="flex justify-end items-center">
         <div class="flex flex-row">
@@ -237,31 +233,70 @@ onMounted(async () => updateView());
           <tr>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                px-2
+                sm:px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("room.sensor") }}
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                sm:px-6
+                py-3
+                text-right text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("installation.isPublic") }}
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                sm:px-6
+                py-3
+                text-right text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("installation.installedOn") }}
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+              class="
+                sm:px-6
+                py-3
+                text-right text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+                hidden
+                md:table-cell
+              "
             >
               {{ $t("installation.removedOn") }}
             </th>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                px-2
+                sm:px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("actions") }}
             </th>

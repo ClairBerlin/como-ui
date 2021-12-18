@@ -1,5 +1,8 @@
 const actions = {
-  async changeOrganization({ dispatch, commit, state }, targetOrgId) {
+  async changeOrganization(
+    { dispatch, commit, state, rootGetters },
+    targetOrgId
+  ) {
     if (targetOrgId !== undefined) {
       console.log(`Change context to organization with ID ${targetOrgId}.`);
       commit("START_ORG_LOADING");
@@ -9,7 +12,30 @@ const actions = {
       ) {
         clearInventory(commit);
       }
-      await dispatch("jv/get", `organizations/${targetOrgId}`, { root: true });
+      const orgPromise = dispatch("jv/get", `organizations/${targetOrgId}`, {
+        root: true,
+      });
+      const userPromise = dispatch(
+        "jv/get",
+        `organizations/${targetOrgId}/users`,
+        {
+          root: true,
+        }
+      );
+      const membershipPromise = dispatch(
+        "jv/get",
+        ["memberships", { params: { "filter[organization]": targetOrgId } }],
+        { root: true }
+      );
+      await Promise.all([orgPromise, userPromise, membershipPromise]);
+      // The /users list API returns the username only. To get full user information,
+      // need query every member user individually.
+      const userObj = rootGetters["jv/get"]("User");
+      const msList = Object.keys(userObj);
+      const memberPromises = msList.map(async (id) => {
+        dispatch("jv/get", `users/${id}`, { root: true });
+      });
+      await Promise.all(memberPromises);
       commit("STOP_ORG_LOADING");
     } else {
       console.log("No target organization provided.");
@@ -23,7 +49,7 @@ const actions = {
       console.log(
         `Loading inventory for organization with ID ${targetOrgId}...`
       );
-      const orgPromise = dispatch(
+      const sitePromise = dispatch(
         "jv/get",
         ["sites", { params: { "filter[organization]": targetOrgId } }],
         { root: true }
@@ -43,7 +69,7 @@ const actions = {
         ["installations", { params: { "filter[organization]": targetOrgId } }],
         { root: true }
       );
-      await Promise.all([orgPromise, roomPromise, sensorPromise, instPromise]);
+      await Promise.all([sitePromise, roomPromise, sensorPromise, instPromise]);
       commit("SET_LOADED_ORG", targetOrgId);
       commit("STOP_INVENTORY_LOADING");
       console.log(

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -15,6 +15,10 @@ const route = useRoute();
 const store = useStore();
 const toast = useToast();
 
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
+
 const siteId = computed(() => route.params.siteId);
 const site = computed(() =>
   store.getters["jv/get"]({
@@ -23,17 +27,31 @@ const site = computed(() =>
 );
 const addressId = computed(() => site.value.address._jv.id);
 
-const rooms = ref([]);
+const rooms = computed(() => {
+  const roomObj = store.getters["jv/get"](
+    "Room",
+    `$[?(@._jv.relationships.site.data.id=="${siteId.value}")]`
+  );
+  const roomList = Object.entries(roomObj);
+  return roomList.map(([, room]) => room);
+});
 const hasRooms = computed(() => !isLoading.value && rooms.value?.length > 0);
-const isLoading = ref(true);
+
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const showDeleteRoomModal = ref(false);
 const deleteRoomId = ref();
 const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
-const isOwner = computed(() => {
-  return store.getters["nav/isOwner"];
-});
+const deleteRoom = async () => {
+  console.log(`Deleting room with ID ${deleteRoomId.value}`);
+  await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Room", id: deleteRoomId.value },
+  });
+};
 
 const newSiteName = ref(undefined);
 const newSiteDescription = ref(undefined);
@@ -41,11 +59,6 @@ const newStreet1 = ref(undefined);
 const newStreet2 = ref(undefined);
 const newZip = ref(undefined);
 const newCity = ref(undefined);
-
-const deleteRoom = async () => {
-  await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
-  updateView();
-};
 
 const updateSite = async () => {
   let newSite = {
@@ -115,27 +128,7 @@ const updateData = async () => {
     newZip.value = undefined;
     newCity.value = undefined;
   }
-  updateView();
 };
-
-const updateView = async () => {
-  isLoading.value = true;
-  if (typeof site.value?.name === "undefined") {
-    console.log(
-      `Site with ID ${siteId.value} has not been loaded yet; fetching...`
-    );
-    const site = await store.dispatch("jv/get", `sites/${siteId.value}/`);
-  }
-  console.log(`Fetch related objects for site ${siteId.value}.`);
-  await store.dispatch("jv/getRelated", `sites/${siteId.value}`);
-  const roomObj = await store.dispatch("jv/get", `sites/${siteId.value}/rooms`);
-  const roomList = Object.entries(roomObj);
-  console.log(`Fetched ${roomList.length} rooms`);
-  rooms.value = roomList.map(([, room]) => room);
-  isLoading.value = false;
-};
-
-onMounted(async () => updateView());
 </script>
 
 <template>
@@ -145,7 +138,15 @@ onMounted(async () => updateView());
       <div>
         <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
           <div
-            class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+            class="
+              sm:grid
+              sm:grid-cols-3
+              sm:gap-4
+              sm:items-start
+              sm:border-t
+              sm:border-gray-200
+              sm:pt-5
+            "
           >
             <label
               for="site-name"
@@ -160,7 +161,16 @@ onMounted(async () => updateView());
                 id="site-name"
                 v-model.trim="newSiteName"
                 :placeholder="site.name"
-                class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+                class="
+                  max-w-lg
+                  block
+                  w-full
+                  shadow-sm
+                  focus:ring-indigo-500 focus:border-indigo-500
+                  sm:max-w-xs sm:text-sm
+                  border-gray-300
+                  rounded-md
+                "
               />
             </div>
           </div>
@@ -169,7 +179,15 @@ onMounted(async () => updateView());
 
       <div class="space-y-6 sm:space-y-5">
         <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
         >
           <label
             for="description"
@@ -184,13 +202,30 @@ onMounted(async () => updateView());
               rows="3"
               v-model.trim="newSiteDescription"
               :placeholder="site.description || '-'"
-              class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
+              class="
+                max-w-lg
+                shadow-sm
+                block
+                w-full
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:text-sm
+                border border-gray-300
+                rounded-md
+              "
             />
           </div>
         </div>
 
         <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
         >
           <label
             for="street-address"
@@ -206,13 +241,30 @@ onMounted(async () => updateView());
               autocomplete="street-address"
               v-model.trim="newStreet1"
               :placeholder="site.address.street1"
-              class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+              class="
+                block
+                max-w-lg
+                w-full
+                shadow-sm
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:text-sm
+                border-gray-300
+                rounded-md
+              "
             />
           </div>
         </div>
 
         <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
         >
           <label
             for="street-address2"
@@ -228,13 +280,30 @@ onMounted(async () => updateView());
               v-model.trim="newStreet2"
               :placeholder="site.address.street2"
               autocomplete="address-level4"
-              class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
+              class="
+                block
+                max-w-lg
+                w-full
+                shadow-sm
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:text-sm
+                border-gray-300
+                rounded-md
+              "
             />
           </div>
         </div>
 
         <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+          class="
+            sm:grid
+            sm:grid-cols-3
+            sm:gap-4
+            sm:items-start
+            sm:border-t
+            sm:border-gray-200
+            sm:pt-5
+          "
         >
           <label
             for="postal-code"
@@ -250,14 +319,31 @@ onMounted(async () => updateView());
               autocomplete="postal-code"
               v-model.trim="newZip"
               :placeholder="site.address.zip"
-              class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+              class="
+                max-w-lg
+                block
+                w-full
+                shadow-sm
+                focus:ring-indigo-500 focus:border-indigo-500
+                sm:max-w-xs sm:text-sm
+                border-gray-300
+                rounded-md
+              "
             />
           </div>
         </div>
       </div>
 
       <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
+        class="
+          sm:grid
+          sm:grid-cols-3
+          sm:gap-4
+          sm:items-start
+          sm:border-t
+          sm:border-gray-200
+          sm:pt-5
+        "
       >
         <label
           for="city"
@@ -273,7 +359,16 @@ onMounted(async () => updateView());
             autocomplete="address-level2"
             v-model.trim="newCity"
             :placeholder="site.address.city"
-            class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
+            class="
+              max-w-lg
+              block
+              w-full
+              shadow-sm
+              focus:ring-indigo-500 focus:border-indigo-500
+              sm:max-w-xs sm:text-sm
+              border-gray-300
+              rounded-md
+            "
           />
         </div>
       </div>
@@ -282,7 +377,25 @@ onMounted(async () => updateView());
         <div class="flex justify-end">
           <button
             type="submit"
-            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="
+              ml-3
+              inline-flex
+              justify-center
+              py-2
+              px-4
+              border border-transparent
+              shadow-sm
+              text-sm
+              font-medium
+              rounded-md
+              text-white
+              bg-indigo-600
+              hover:bg-indigo-700
+              focus:outline-none
+              focus:ring-2
+              focus:ring-offset-2
+              focus:ring-indigo-500
+            "
             v-if="isOwner"
             @click="updateData"
           >
@@ -322,37 +435,83 @@ onMounted(async () => updateView());
       </div>
 
       <table
-        class="min-w-full divide-y divide-gray-200 ring-1 ring-gray-300 rounded-md bg-white overflow-hidden"
+        class="
+          min-w-full
+          divide-y divide-gray-200
+          ring-1 ring-gray-300
+          rounded-md
+          bg-white
+          overflow-hidden
+        "
       >
         <thead class="bg-gray-50">
           <tr>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                px-2
+                sm:px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("room.name") }}
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                sm:px-6
+                py-3
+                text-right text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("room.size") }} [m<sup>2</sup>]
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                sm:px-6
+                py-3
+                text-right text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("room.height") }} [m]
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+              class="
+                sm:px-6
+                py-3
+                text-right text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+                hidden
+                md:table-cell
+              "
             >
               {{ $t("room.maxOccupancy") }}
             </th>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="
+                px-2
+                sm:px-6
+                py-3
+                text-left text-xs
+                font-medium
+                text-gray-500
+                tracking-wider
+              "
             >
               {{ $t("action") }}
             </th>
@@ -382,7 +541,15 @@ onMounted(async () => updateView());
               {{ room.height_m || "-" }}
             </td>
             <td
-              class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
+              class="
+                hidden
+                md:table-cell
+                px-2
+                sm:px-6
+                py-4
+                whitespace-nowrap
+                text-right
+              "
             >
               {{ room.max_occupancy || "-" }}
             </td>
@@ -409,7 +576,17 @@ onMounted(async () => updateView());
     </div>
     <div
       v-else
-      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+      class="
+        shadow-md
+        mt-4
+        rounded-md
+        max-w-sm
+        flex
+        items-center
+        bg-yellow-50
+        border-l-4 border-yellow-400
+        p-4
+      "
     >
       <div class="flex">
         <div class="flex-shrink-0">

@@ -2,7 +2,7 @@
 import Logo from "@/components/Logo.vue";
 import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import {
   Dialog,
   DialogOverlay,
@@ -24,6 +24,7 @@ import LanguageSelect from "@/components/LanguageSelect.vue";
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 
 // TODO: what about feedback and help? (before, this pointed to a Clair email/domain)?
 
@@ -69,12 +70,25 @@ const isOrgLoading = computed(() => {
   return store.state.nav.isOrgLoading;
 });
 
+const loadOrganization = async (orgId) => {
+  store.dispatch("nav/changeOrganization", orgId);
+};
+
 const isLoading = computed(() => {
   return isUserLoading.value || isOrgLoading.value;
 });
 
 onMounted(async () => {
   await store.dispatch("authuser/fetchAuthenticatedUser");
+  const memberships = store.getters["authuser/getMemberships"];
+  if (memberships?.length > 0) {
+    // If no organization is selected, default to the user's first organization.
+    // TODO: Read most recently used membership from cookie.
+    const defaultOrgId = memberships[0].orgId;
+    await loadOrganization(defaultOrgId);
+  } else {
+    router.push({ name: "org-management-add" });
+  }
 });
 
 watch(
