@@ -1,38 +1,20 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const store = useStore();
 
-const currentOrgId = computed(() => {
-  return store.state.nav.currentOrgId;
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
 });
-const sensors = ref(undefined);
+
+const sensors = computed(() => {
+  return store.getters["nav/getSensors"];
+});
 
 const hasSensors = computed(() => sensors.value?.length > 0);
-const isLoading = ref(true);
-
-async function update() {
-  isLoading.value = true;
-  const sensorObj = await store.dispatch("jv/get", [
-    "nodes",
-    { params: { "filter[organization]": currentOrgId.value } },
-  ]);
-  const sensorList = Object.entries(sensorObj);
-  console.log(`Organization has ${sensorList.length} sensor(s).`);
-  sensors.value = sensorList.map(([, sensor]) => sensor);
-  const relatedResourcePromises = sensorList.map(([sensorId]) => {
-    console.log(`Fetch related objects for sensor ${sensorId}.`);
-    return store.dispatch("jv/getRelated", `nodes/${sensorId}`);
-  });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-}
-
-onMounted(async () => update());
-watch(currentOrgId, () => update());
 </script>
 
 <template>

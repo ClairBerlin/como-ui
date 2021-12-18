@@ -15,6 +15,24 @@ const getters = {
     return instList.map(([, inst]) => inst);
   },
 
+  getSites(nav, getters, rootState, rootGetters) {
+    const siteObj = rootGetters["jv/get"]({ _jv: { type: "Site" } });
+    const siteList = Object.entries(siteObj);
+    return siteList.map(([, site]) => site);
+  },
+
+  getRooms(nav, getters, rootState, rootGetters) {
+    const roomObj = rootGetters["jv/get"]({ _jv: { type: "Room" } });
+    const roomList = Object.entries(roomObj);
+    return roomList.map(([, room]) => room);
+  },
+
+  getSensors(nav, getters, rootState, rootGetters) {
+    const sensorObj = rootGetters["jv/get"]({ _jv: { type: "Node" } });
+    const sensorList = Object.entries(sensorObj);
+    return sensorList.map(([, sensor]) => sensor);
+  },
+
   isOwner(nav, getters) {
     const currentMembership = getters["getOrgMembership"];
     return currentMembership?.role === "O";
@@ -22,8 +40,8 @@ const getters = {
 
   isOrgContextLoading(nav, getters, rootState, rootGetters) {
     const isUserLoading = rootGetters["authuser/isLoading"];
-    return (nav.isOrgLoading || nav.isInventoryLoading || isUserLoading);
-  }
+    return nav.isOrgLoading || nav.isInventoryLoading || isUserLoading;
+  },
 };
 
 export default getters;

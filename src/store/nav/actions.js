@@ -3,7 +3,10 @@ const actions = {
     if (targetOrgId !== undefined) {
       console.log(`Change context to organization with ID ${targetOrgId}.`);
       commit("START_ORG_LOADING");
-      if (state.loadedOrgId !== targetOrgId) {
+      if (
+        state.loadedOrgId !== undefined &&
+        state.loadedOrgId !== targetOrgId
+      ) {
         clearInventory(commit);
       }
       await dispatch("jv/get", `organizations/${targetOrgId}`, { root: true });
@@ -17,31 +20,30 @@ const actions = {
   async loadInvetory({ dispatch, commit, state }, targetOrgId) {
     if (targetOrgId !== undefined && state.loadedOrgId !== targetOrgId) {
       commit("START_INVENTORY_LOADING");
-      clearInventory(commit);
       console.log(
         `Loading inventory for organization with ID ${targetOrgId}...`
       );
-      const instObj = await dispatch(
+      const orgPromise = dispatch(
+        "jv/get",
+        ["sites", { params: { "filter[organization]": targetOrgId } }],
+        { root: true }
+      );
+      const roomPromise = dispatch(
+        "jv/get",
+        ["rooms", { params: { "filter[organization]": targetOrgId } }],
+        { root: true }
+      );
+      const sensorPromise = dispatch(
+        "jv/get",
+        ["nodes", { params: { "filter[organization]": targetOrgId } }],
+        { root: true }
+      );
+      const instPromise = dispatch(
         "jv/get",
         ["installations", { params: { "filter[organization]": targetOrgId } }],
         { root: true }
       );
-      const instList = Object.entries(instObj);
-      instList.map(([, inst]) => inst);
-      const relatedResourcePromises = instList.map(([instId, inst]) => {
-        console.log(`Get related objects for installation ${instId}.`);
-        return dispatch("jv/getRelated", `installations/${instId}`, {
-          root: true,
-        }).then(() => {
-          // At this point vuex-jsonapi has fetched the room object in inst.room, if any
-          if (typeof inst.room === "object") {
-            dispatch("jv/getRelated", `rooms/${inst.room._jv.id}`, {
-              root: true,
-            });
-          }
-        });
-      });
-      await Promise.all(relatedResourcePromises);
+      await Promise.all([orgPromise, roomPromise, sensorPromise, instPromise]);
       commit("SET_LOADED_ORG", targetOrgId);
       commit("STOP_INVENTORY_LOADING");
       console.log(

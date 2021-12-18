@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { ExclamationIcon, PlusIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
@@ -8,50 +8,34 @@ import LoadingSpinner from "@/components/LoadingSpinner.vue";
 // TODO: Add number of rooms to each site's table row.
 const store = useStore();
 
-const currentOrgId = computed(() => {
-  return store.state.nav.currentOrgId;
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
 });
-const sites = ref(undefined);
-
-const showDeleteSiteModal = ref(false);
-const deleteSiteId = ref();
-const openDeleteSiteModal = () => (showDeleteSiteModal.value = true);
-
-const formatAdress = (address) => {
-  return `${address.street1}, ${address.zip} ${address.city}`;
-};
 
 const isOwner = computed(() => {
   return store.getters["nav/isOwner"];
 });
 
+const sites = computed(() => {
+  return store.getters["nav/getSites"];
+});
 const hasSites = computed(() => sites.value?.length > 0);
-const isLoading = ref(true);
+
+const showDeleteSiteModal = ref(false);
+const deleteSiteId = ref();
+const openDeleteSiteModal = () => (showDeleteSiteModal.value = true);
 
 const deleteSite = async () => {
+  console.log(`Deleting site with ID ${deleteSiteId.value}`);
   await store.dispatch("jv/delete", `sites/${deleteSiteId.value}`);
-  updateView();
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Site", id: deleteSiteId.value },
+  });
 };
 
-async function updateView() {
-  isLoading.value = true;
-  const siteObj = await store.dispatch("jv/get", [
-    "sites",
-    { params: { "filter[organization]": currentOrgId.value } },
-  ]);
-  const siteList = Object.entries(siteObj);
-  console.log(`Organization has ${siteList.length} site(s).`);
-  sites.value = siteList.map(([_, site]) => site);
-  const relatedResourcePromises = siteList.map(([siteId, _]) => {
-    console.log(`Fetch related objects for site ${siteId}.`);
-    return store.dispatch("jv/getRelated", `sites/${siteId}`);
-  });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-}
-
-onMounted(async () => updateView());
-watch(currentOrgId, () => updateView());
+const formatAdress = (address) => {
+  return `${address.street1}, ${address.zip} ${address.city}`;
+};
 </script>
 
 <template>
@@ -81,25 +65,56 @@ watch(currentOrgId, () => updateView());
     </div>
 
     <table
-      class="overflow-hidden rounded-md ring-1 ring-gray-300 bg-white min-w-full divide-y divide-gray-200"
+      class="
+        overflow-hidden
+        rounded-md
+        ring-1 ring-gray-300
+        bg-white
+        min-w-full
+        divide-y divide-gray-200
+      "
     >
       <thead class="bg-gray-50">
         <tr>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("site.name") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden sm:table-cell"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              sm:table-cell
+            "
           >
             {{ $t("address.singular") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("action") }}
           </th>
@@ -149,7 +164,17 @@ watch(currentOrgId, () => updateView());
   </div>
   <div
     v-else
-    class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+    class="
+      shadow-md
+      mt-4
+      rounded-md
+      max-w-sm
+      flex
+      items-center
+      bg-yellow-50
+      border-l-4 border-yellow-400
+      p-4
+    "
   >
     <div class="flex">
       <div class="flex-shrink-0">

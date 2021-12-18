@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
@@ -7,53 +7,45 @@ import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const store = useStore();
 
-const currentOrgId = computed(() => {
-  return store.state.nav.currentOrgId;
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
 });
-const rooms = ref(undefined);
-
-const hasRooms = computed(() => rooms.value?.length > 0);
-const isLoading = ref(true);
-
-const showDeleteRoomModal = ref(false);
-const deleteRoomId = ref();
-const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
 const isOwner = computed(() => {
   return store.getters["nav/isOwner"];
 });
 
+const rooms = computed(() => {
+  return store.getters["nav/getRooms"];
+});
+
+const hasRooms = computed(() => rooms.value?.length > 0);
+
+const showDeleteRoomModal = ref(false);
+const deleteRoomId = ref();
+const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
+
 const deleteRoom = async () => {
+  console.log(`Deleting room with ID ${deleteRoomId.value}`);
   await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
-  updateView();
-};
-
-async function updateView() {
-  isLoading.value = true;
-  const roomObj = await store.dispatch("jv/get", [
-    "rooms",
-    { params: { "filter[organization]": currentOrgId.value } },
-  ]);
-  const roomList = Object.entries(roomObj);
-  console.log(`Organization has ${roomList.length} room(s).`);
-  rooms.value = roomList.map(([_, room]) => room);
-  const relatedResourcePromises = roomList.map(([roomId, _]) => {
-    console.log(`Fetch related objects for room ${roomId}.`);
-    return store.dispatch("jv/getRelated", `rooms/${roomId}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Room", id: deleteRoomId.value },
   });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-}
-
-onMounted(async () => updateView());
-watch(currentOrgId, () => updateView());
+};
 </script>
 
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div
     v-else-if="hasRooms"
-    class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
+    class="
+      ring-1 ring-gray-300
+      rounded-md
+      bg-white
+      text-md
+      overflow-hidden
+      mt-8
+    "
   >
     <DeletionModal
       :open="showDeleteRoomModal"
@@ -63,42 +55,89 @@ watch(currentOrgId, () => updateView());
     >
       <p class="text-sm text-gray-500">{{ $t("delete-room-modal.message") }}</p>
     </DeletionModal>
+
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("room.name") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              sm:px-6
+              py-3
+              text-right text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("room.size") }} [m<sup>2</sup>]
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              sm:px-6
+              py-3
+              text-right text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("room.height") }} [m]
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+            class="
+              sm:px-6
+              py-3
+              text-right text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+              hidden
+              md:table-cell
+            "
           >
             {{ $t("room.maxOccupancy") }}
           </th>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              px-2
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("site.singular") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="
+              sm:px-6
+              py-3
+              text-left text-xs
+              font-medium
+              text-gray-500
+              tracking-wider
+            "
           >
             {{ $t("action") }}
           </th>
@@ -128,7 +167,15 @@ watch(currentOrgId, () => updateView());
             {{ room.height_m || "-" }}
           </td>
           <td
-            class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
+            class="
+              hidden
+              md:table-cell
+              px-2
+              sm:px-6
+              py-4
+              whitespace-nowrap
+              text-right
+            "
           >
             {{ room.max_occupancy || "-" }}
           </td>
@@ -166,7 +213,17 @@ watch(currentOrgId, () => updateView());
   </div>
   <div
     v-else
-    class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+    class="
+      shadow-md
+      mt-4
+      rounded-md
+      max-w-sm
+      flex
+      items-center
+      bg-yellow-50
+      border-l-4 border-yellow-400
+      p-4
+    "
   >
     <div class="flex">
       <div class="flex-shrink-0">
