@@ -255,7 +255,7 @@ const installNow = async () => {
 
   <div v-if="isOwner && !hasActiveInstallations && hasRooms" class="mt-8">
     <div
-      class="btn bg-indigo-600 normal-case"
+      class="btn bg-indigo-600 hover:bg-indigo-700 normal-case"
       @click="showInstallNowModal = true"
     >
       {{ $t("installation.installNow") }}
