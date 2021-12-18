@@ -31,8 +31,8 @@
     "title": "Raum löschen"
   },
   "delete-site-modal": {
-    "message": "Sind Sie sicher, dass Sie diesen Ort löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
-    "title": "Ort löschen"
+    "message": "Sind Sie sicher, dass Sie diesen Standort löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "title": "Standort löschen"
   },
   "description": "Beschreibung",
   "edit": "Bearbeiten",
@@ -103,7 +103,7 @@
   "org": {
     "add": "Organisation hinzufügen",
     "addNode": "Sensor registrieren",
-    "addSite": "Ort hinzufügen",
+    "addSite": "Standort hinzufügen",
     "all": "All Ihre Organisationen",
     "create": "Organisation hinzufügen",
     "createError": "Fehler beim Anlegen der Organisation!",
@@ -116,7 +116,7 @@
     "name": "Organisationsname",
     "noInstallations": "Diese Organisation hat keine aktiven Installationen.",
     "none": "Keine Organisation",
-    "noSite": "Die gewählte Organisation verfügt über keine Orte",
+    "noSite": "Die gewählte Organisation verfügt über keine Standorte",
     "plural": "Organisationen",
     "singular": "Organisation",
     "switch": "Organisation wechseln",
@@ -138,7 +138,7 @@
   "room": {
     "add": "Raum hinzufügen",
     "addInstallation": "Installation hinzufügen",
-    "addRoomToSite": "Raum hinzufügen zum Ort",
+    "addRoomToSite": "Raum hinzufügen zum Standort",
     "createError": "Fehler beim Anlegen des Raumes!",
     "details": "Raumdetails",
     "height": "Höhe",
@@ -148,7 +148,7 @@
     "noRoom": "Die gewählte Organisation hat keine Räume",
     "sensor": "Sensor",
     "singular": "Raum",
-    "siteForRoom": "Wählen Sie einen Ort aus, um in diesem Räume anzulegen",
+    "siteForRoom": "Wählen Sie einen Standort aus, um in diesem Räume anzulegen",
     "size": "Größe",
     "updateError": "Fehler beim Aktualisieren des Raums!",
     "updateSuccess": "Raumdetails wurden erfolgreich akualisiert!"
@@ -156,18 +156,18 @@
   "rooms": "Räume",
   "select": "Auswählen",
   "site": {
-    "add": "Ort hinzufügen",
-    "createError": "Fehler beim Anlegen des Orts!",
-    "details": "Ort-Details",
-    "missingNameAddress": "Name und Adresse des Orts müssen angegeben werden!",
-    "name": "Name des Orts",
-    "noRooms": "Dieser Ort hat noch keine Räume.",
-    "singular": "Ort",
+    "add": "Standort hinzufügen",
+    "createError": "Fehler beim Anlegen des Standorts!",
+    "details": "Standort-Details",
+    "missingNameAddress": "Name und Adresse des Standorts müssen angegeben werden!",
+    "name": "Name des Standorts",
+    "noRooms": "Dieser Standort hat noch keine Räume.",
+    "singular": "Standort",
     "update": "Aktualisieren",
-    "updateError": "Fehler beim Aktualisieren des Orts!",
-    "updateSuccess": "Details des Orts wurden erfolgreich akualisiert!"
+    "updateError": "Fehler beim Aktualisieren des Standorts!",
+    "updateSuccess": "Details des Standorts wurden erfolgreich akualisiert!"
   },
-  "sites": "Orte",
+  "sites": "Standorte",
   "team": "Team",
   "time": "Zeit",
   "update": "Aktualisieren",
