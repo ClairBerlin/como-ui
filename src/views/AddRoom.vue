@@ -46,10 +46,10 @@ const createRoom = async () => {
       newRoom["description"] = newRoomDescription.value;
     }
     if (newRoomSize.value) {
-      newRoom["size_sqm"] = newRoomSize.value;
+      newRoom["size_sqm"] = newRoomSize.value.replace(",", ".");
     }
     if (newRoomHeight.value) {
-      newRoom["height_m"] = newRoomHeight.value;
+      newRoom["height_m"] = newRoomHeight.value.replace(",", ".");
     }
     if (newRoomMaxOccupancy.value) {
       newRoom["max_occupancy"] = newRoomMaxOccupancy.value;
@@ -138,7 +138,7 @@ const createRoom = async () => {
           </span>
         </label>
         <input
-          type="text"
+          type="number"
           v-model.trim="newRoomMaxOccupancy"
           placeholder="(optional)"
           class="input-bordered como-focus rounded bg-white text-gray-600"
