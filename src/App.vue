@@ -21,6 +21,7 @@ import {
 import OrganizationMenu from "@/components/OrganizationMenu.vue";
 import ProfileMenu from "@/components/ProfileMenu.vue";
 import LanguageSelect from "@/components/LanguageSelect.vue";
+import Cookies from "js-cookie";
 
 const store = useStore();
 const route = useRoute();
@@ -82,9 +83,9 @@ onMounted(async () => {
   await store.dispatch("authuser/fetchAuthenticatedUser");
   const memberships = store.getters["authuser/getMemberships"];
   if (memberships?.length > 0) {
-    // If no organization is selected, default to the user's first organization.
-    // TODO: Read most recently used membership from cookie.
-    const defaultOrgId = memberships[0].orgId;
+    // If no organization is selected or stored in the cookie, default to the user's first organization.
+    const lastVistedOrg = Cookies.get("lastVistedOrg");
+    const defaultOrgId = lastVistedOrg || memberships[0].orgId;
     await loadOrganization(defaultOrgId);
     router.push({ name: "overview", params: { orgId: defaultOrgId } });
   } else {

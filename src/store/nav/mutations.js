@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const mutation = {
   START_ORG_LOADING(nav) {
     nav.isOrgLoading = true;
@@ -16,6 +18,7 @@ const mutation = {
   },
 
   SET_CURRENT_ORG(nav, orgId) {
+    Cookies.set("lastVistedOrg", orgId);
     nav.currentOrgId = orgId;
   },
 
