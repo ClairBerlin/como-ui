@@ -74,7 +74,7 @@ const updateSite = async () => {
     newSite["description"] = newSiteDescription.value;
   }
   try {
-    const { _jv } = await store.dispatch("jv/patch", [
+    await store.dispatch("jv/patch", [
       newSite,
       { url: `sites/${siteId.value}/` },
     ]);
@@ -105,7 +105,7 @@ const updateAddress = async () => {
     newAddress["city"] = newCity.value;
   }
   try {
-    const { _jv } = await store.dispatch("jv/patch", [
+    await store.dispatch("jv/patch", [
       newAddress,
       { url: `addresses/${addressId.value}/` },
     ]);
