@@ -7,15 +7,6 @@ import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import { maxUnixEpoch, detailFormatTimestamp } from "@/utils";
 import { ExclamationIcon } from "@heroicons/vue/outline";
-import {
-  Listbox,
-  ListboxButton,
-  ListboxOptions,
-  ListboxOption,
-  Switch,
-  SwitchLabel,
-  SwitchGroup,
-} from "@headlessui/vue";
 import Datepicker from "vue3-date-time-picker";
 import "vue3-date-time-picker/dist/main.css";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
@@ -396,53 +387,49 @@ const terminateInstallation = async (installationId) => {
           class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
         >
           <div class="form-control">
-            <label class="label">
-              <span class="label-text text-black font-bold">{{
-                $t("node.singular")
-              }}</span>
+            <label for="room" class="block text-sm font-bold text-black">
+              {{ $t("node.singular") }}
             </label>
-            <Listbox v-model="selectedSensor">
-              <ListboxButton v-if="isSensorSelected"
-                >{{ selectedSensor?.alias }} (EUI:
-                {{ selectedSensor?.eui64 }})</ListboxButton
+            <select
+              id="sensor"
+              name="sensor"
+              v-model="selectedSensor"
+              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+            >
+              <option disabled :value="undefined">
+                {{ $t("installation.selectSensor") }}
+              </option>
+              <option
+                v-for="sensor in sensors"
+                :key="sensor._jv.id"
+                :value="sensor"
               >
-              <ListboxButton v-else>{{
-                $t("installation.selectSensor")
-              }}</ListboxButton>
-              <ListboxOptions>
-                <ListboxOption
-                  v-for="sensor in sensors"
-                  :key="sensor._jv.id"
-                  :value="sensor"
-                >
-                  {{ sensor.alias }} (EUI: {{ sensor.eui64 }})
-                </ListboxOption>
-              </ListboxOptions>
-            </Listbox>
+                {{ sensor.alias }} (EUI: {{ sensor.eui64 }})
+              </option>
+            </select>
           </div>
-          <div v-if="isSensorInstalled">
-            {{ $t("node.isInstalled") }}
+          <div class="mt-2 text-sm text-red-600" v-if="isSensorInstalled">
+            {{ $t("node.isInstalled") }}.
           </div>
-          <div v-else-if="isSensorSelected">
-            <SwitchGroup>
-              <div class="flex items-center">
-                <SwitchLabel class="label-text text-black font-bold">{{
-                  $t("installation.makePublic")
-                }}</SwitchLabel>
-                <Switch
-                  v-model="isPublic"
-                  :class="isPublic ? 'bg-green' : 'bg-blue'"
-                  class="relative inline-flex items-center h-6 rounded-full w-11"
-                >
-                  <span
-                    :class="isPublic ? 'translate-x-6' : 'translate-x-1'"
-                    class="inline-block w-4 h-4 transform bg-white shadow-lg rounded-full transition"
-                  />
-                </Switch>
+          <div>
+            <div class="flex my-2">
+              <div class="flex items-center h-5">
+                <input
+                  id="makePublic"
+                  name="makePublic"
+                  type="checkbox"
+                  v-model="makeInstallationPublic"
+                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                />
               </div>
-            </SwitchGroup>
-            <div class="form-control py-4">
-              <label class="label">
+              <div class="ml-3 text-sm">
+                <label for="makePublic" class="font-bold text-black">
+                  {{ $t("installation.makePublic") }}
+                </label>
+              </div>
+            </div>
+            <div class="form-control pb-2">
+              <label class="label pl-0">
                 <span class="label-text text-black font-bold">{{
                   $t("installation.from")
                 }}</span>
@@ -464,8 +451,8 @@ const terminateInstallation = async (installationId) => {
                 :select-text="$t('select')"
               ></Datepicker>
             </div>
-            <div class="form-control">
-              <label class="label">
+            <div class="form-control pb-2">
+              <label class="label pl-0">
                 <span class="label-text text-black font-bold"
                   >{{ $t("installation.to") }}
                 </span>
@@ -480,7 +467,7 @@ const terminateInstallation = async (installationId) => {
                 :min-date="toMinDate.toDate()"
                 :max-date="toMaxDate.toDate()"
                 :allowed-dates="admissibleToDates"
-                :state="endIsValid"
+                :state="toDateTime ? endIsValid : null"
                 :placeholder="$t('optional')"
                 show-now-button
                 :now-button-label="$t('now')"
@@ -488,8 +475,8 @@ const terminateInstallation = async (installationId) => {
                 :select-text="$t('select')"
               ></Datepicker>
             </div>
-            <div class="form-control py-4">
-              <label class="label">
+            <div class="form-control pb-2">
+              <label class="label pl-0">
                 <span class="label-text text-black font-bold">{{
                   $t("description")
                 }}</span>
