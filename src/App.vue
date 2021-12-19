@@ -95,7 +95,7 @@ onMounted(async () => {
 watch(
   () => route.params.orgId,
   async (orgId) => {
-    await store.dispatch("nav/changeOrganization", orgId);
+    await loadOrganization(orgId);
   }
 );
 </script>
