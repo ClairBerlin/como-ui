@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { useToast } from "vue-toastification";
@@ -11,25 +11,14 @@ const route = useRoute();
 const toast = useToast();
 const { t } = useI18n();
 
+const currentOrg = computed(() => store.getters["nav/getOrgMembership"]);
+
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
+
 const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);
-
-onMounted(
-  async () =>
-    await store.dispatch("jv/get", `organizations/${route.params.orgId}`)
-);
-
-const currentOrg = computed(() =>
-  store.getters["jv/get"]({
-    _jv: { type: "Organization", id: route.params.orgId },
-  })
-);
-
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-
-const isOwner = computed(() => orgMembership.value?.role === "O");
 
 const updateOrganization = async () => {
   if (newOrgName.value || newOrgDescription.value) {

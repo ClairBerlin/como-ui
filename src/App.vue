@@ -18,9 +18,9 @@ import {
   XIcon,
   UserGroupIcon,
 } from "@heroicons/vue/outline";
-import OrganizationMenu from "./components/OrganizationMenu.vue";
-import ProfileMenu from "./components/ProfileMenu.vue";
-import LanguageSelect from "./components/LanguageSelect.vue";
+import OrganizationMenu from "@/components/OrganizationMenu.vue";
+import ProfileMenu from "@/components/ProfileMenu.vue";
+import LanguageSelect from "@/components/LanguageSelect.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -61,26 +61,41 @@ const isCurrentRoute = (routeName) => route.name === routeName;
 
 const sidebarOpen = ref(false);
 
-const currentOrgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+const isOrgContext = computed(() => store.getters["nav/isOrgContext"]);
 const isUserLoading = computed(() => store.getters["authuser/isLoading"]);
-const isOrgContext = computed(() => typeof currentOrgId.value === "string");
+const isOrgLoading = computed(() => {
+  return store.state.nav.isOrgLoading;
+});
+
+const loadOrganization = async (orgId) => {
+  store.dispatch("nav/changeOrganization", orgId);
+};
+
+const isLoading = computed(() => {
+  return isUserLoading.value || isOrgLoading.value;
+});
 
 onMounted(async () => {
   await store.dispatch("authuser/fetchAuthenticatedUser");
+  const memberships = store.getters["authuser/getMemberships"];
+  if (memberships?.length > 0) {
+    // If no organization is selected, default to the user's first organization.
+    // TODO: Read most recently used membership from cookie.
+    const defaultOrgId = memberships[0].orgId;
+    await loadOrganization(defaultOrgId);
+    router.push({ name: "overview", params: { orgId: defaultOrgId } });
+  } else {
+    router.push({ name: "org-management-add" });
+  }
 });
 
 watch(
   () => route.params.orgId,
   async (orgId) => {
-    if (isOrgContext.value) {
-      console.log(
-        `Organization changed to orgId ${orgId}. Fetching related data...`
-      );
-      store.dispatch("jv/get", `organizations/${orgId}`);
-      router.push({ name: "", params: { orgId: orgId } });
-    } else {
-      console.log("Entering a route outside of an organization context.");
-    }
+    await loadOrganization(orgId);
   }
 );
 </script>
@@ -243,7 +258,7 @@ watch(
       <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
         <div
           class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md"
-          v-if="!isUserLoading"
+          v-if="!isLoading"
         >
           <router-view />
         </div>

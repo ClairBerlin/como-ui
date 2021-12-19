@@ -6,7 +6,7 @@ const getters = {
   },
 
   isLoading(authUser) {
-    return authUser.userIsLoading || authUser.membershipsAreLoading;
+    return authUser.isUserLoading || authUser.membershipsAreLoading;
   },
 
   isError(authuser) {

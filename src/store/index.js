@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import axios from "axios";
 import { jsonapiModule } from "jsonapi-vuex";
 import authuser from "./authuser";
+import nav from "./nav";
 
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -41,6 +42,7 @@ export const Store = createStore({
   modules: {
     authuser,
     jv: jsonapiModule(jsonapi),
+    nav,
   },
 });
 

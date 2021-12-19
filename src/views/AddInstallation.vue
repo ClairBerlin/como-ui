@@ -24,12 +24,15 @@ const minFrom = dayjs("2020-11-01T00:00:00.000Z");
 // ---- Context ----
 
 const locale = computed(() => i18n.locale.value);
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
 
-const orgId = computed(() => route.params.orgId);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
+
 const roomId = computed(() => route.params.roomId);
 const room = computed(() =>
   store.getters["jv/get"]({
@@ -57,7 +60,7 @@ async function loadSensors() {
   isLoading.value = true;
   const sensorObj = await store.dispatch("jv/get", [
     "nodes",
-    { params: { "filter[organization]": orgId.value } },
+    { params: { "filter[organization]": currentOrgId.value } },
   ]);
   const sensorList = Object.entries(sensorObj);
   console.log(sensorList);
