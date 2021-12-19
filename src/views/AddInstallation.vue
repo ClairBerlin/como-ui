@@ -396,16 +396,7 @@ const terminateInstallation = async (installationId) => {
     <div v-if="isOwner">
       <div v-if="hasSensors" class="max-w-sm sm:max-w-lg">
         <div
-          class="
-            text-black
-            mt-2
-            p-4
-            card
-            rounded-md
-            shadow-md
-            ring-1 ring-gray-300
-            bg-white
-          "
+          class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
         >
           <div class="form-control">
             <label class="label">
@@ -444,27 +435,11 @@ const terminateInstallation = async (installationId) => {
                 <Switch
                   v-model="isPublic"
                   :class="isPublic ? 'bg-green' : 'bg-blue'"
-                  class="
-                    relative
-                    inline-flex
-                    items-center
-                    h-6
-                    rounded-full
-                    w-11
-                  "
+                  class="relative inline-flex items-center h-6 rounded-full w-11"
                 >
                   <span
                     :class="isPublic ? 'translate-x-6' : 'translate-x-1'"
-                    class="
-                      inline-block
-                      w-4
-                      h-4
-                      transform
-                      bg-white
-                      shadow-lg
-                      rounded-full
-                      transition
-                    "
+                    class="inline-block w-4 h-4 transform bg-white shadow-lg rounded-full transition"
                   />
                 </Switch>
               </div>
@@ -541,14 +516,7 @@ const terminateInstallation = async (installationId) => {
       </div>
       <div
         v-if="hasSensors"
-        class="
-          ring-1 ring-gray-300
-          rounded-md
-          bg-white
-          text-md
-          overflow-hidden
-          mt-8
-        "
+        class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
       >
         <div v-if="hasInstallations">
           {{ $t("installation.otherInstallations") }}
@@ -558,56 +526,25 @@ const terminateInstallation = async (installationId) => {
               <tr>
                 <th
                   scope="col"
-                  class="
-                    px-2
-                    sm:px-6
-                    py-3
-                    text-left text-xs
-                    font-medium
-                    text-gray-500
-                    tracking-wider
-                  "
+                  class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
                 >
                   {{ $t("room.singular") }}
                 </th>
                 <th
                   scope="col"
-                  class="
-                    sm:px-6
-                    py-3
-                    text-right text-xs
-                    font-medium
-                    text-gray-500
-                    tracking-wider
-                  "
+                  class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
                 >
                   {{ $t("installation.isPublic") }}
                 </th>
                 <th
                   scope="col"
-                  class="
-                    sm:px-6
-                    py-3
-                    text-right text-xs
-                    font-medium
-                    text-gray-500
-                    tracking-wider
-                  "
+                  class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
                 >
                   {{ $t("installation.installedOn") }}
                 </th>
                 <th
                   scope="col"
-                  class="
-                    sm:px-6
-                    py-3
-                    text-right text-xs
-                    font-medium
-                    text-gray-500
-                    tracking-wider
-                    hidden
-                    md:table-cell
-                  "
+                  class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
                 >
                   {{ $t("installation.removedOn") }}
                 </th>
@@ -649,17 +586,7 @@ const terminateInstallation = async (installationId) => {
       </div>
       <div
         v-else
-        class="
-          shadow-md
-          mt-4
-          rounded-md
-          max-w-sm
-          flex
-          items-center
-          bg-yellow-50
-          border-l-4 border-yellow-400
-          p-4
-        "
+        class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
       >
         <div class="flex">
           <div class="flex-shrink-0">
@@ -674,12 +601,7 @@ const terminateInstallation = async (installationId) => {
               :to="{
                 name: 'addSensor',
               }"
-              class="
-                font-medium
-                underline
-                text-yellow-700
-                hover:text-yellow-600
-              "
+              class="font-medium underline text-yellow-700 hover:text-yellow-600"
             >
               {{ $t("org.addNode") }}.
             </router-link>
@@ -689,17 +611,7 @@ const terminateInstallation = async (installationId) => {
     </div>
     <div
       v-else
-      class="
-        shadow-md
-        mt-4
-        rounded-md
-        max-w-sm
-        flex
-        items-center
-        bg-yellow-50
-        border-l-4 border-yellow-400
-        p-4
-      "
+      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
     >
       <div class="flex">
         <div class="flex-shrink-0">

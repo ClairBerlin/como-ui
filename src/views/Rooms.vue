@@ -38,14 +38,7 @@ const deleteRoom = async () => {
   <LoadingSpinner v-if="isLoading" />
   <div
     v-else-if="hasRooms"
-    class="
-      ring-1 ring-gray-300
-      rounded-md
-      bg-white
-      text-md
-      overflow-hidden
-      mt-8
-    "
+    class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
   >
     <DeletionModal
       :open="showDeleteRoomModal"
@@ -61,83 +54,37 @@ const deleteRoom = async () => {
         <tr>
           <th
             scope="col"
-            class="
-              px-2
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("room.name") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("room.size") }} [m<sup>2</sup>]
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("room.height") }} [m]
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-right text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-              hidden
-              md:table-cell
-            "
+            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
           >
             {{ $t("room.maxOccupancy") }}
           </th>
           <th
             scope="col"
-            class="
-              px-2
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("site.singular") }}
           </th>
           <th
             scope="col"
-            class="
-              sm:px-6
-              py-3
-              text-left text-xs
-              font-medium
-              text-gray-500
-              tracking-wider
-            "
+            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
           >
             {{ $t("action") }}
           </th>
@@ -167,15 +114,7 @@ const deleteRoom = async () => {
             {{ room.height_m || "-" }}
           </td>
           <td
-            class="
-              hidden
-              md:table-cell
-              px-2
-              sm:px-6
-              py-4
-              whitespace-nowrap
-              text-right
-            "
+            class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
           >
             {{ room.max_occupancy || "-" }}
           </td>
@@ -213,17 +152,7 @@ const deleteRoom = async () => {
   </div>
   <div
     v-else
-    class="
-      shadow-md
-      mt-4
-      rounded-md
-      max-w-sm
-      flex
-      items-center
-      bg-yellow-50
-      border-l-4 border-yellow-400
-      p-4
-    "
+    class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
   >
     <div class="flex">
       <div class="flex-shrink-0">

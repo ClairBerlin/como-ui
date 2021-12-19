@@ -25,21 +25,7 @@ const iconClasses = () =>
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"
-        class="
-          w-full
-          inline-flex
-          items-center
-          px-2
-          py-4
-          text-sm
-          font-medium
-          text-black
-          rounded-md
-          group
-          hover:text-opacity-100 hover:bg-gray-100
-          como-focus
-          justify-between
-        "
+        class="w-full inline-flex items-center px-2 py-4 text-sm font-medium text-black rounded-md group hover:text-opacity-100 hover:bg-gray-100 como-focus justify-between"
       >
         <div class="flex items-center">
           <component
@@ -56,15 +42,7 @@ const iconClasses = () =>
         <component
           :is="popOverAbove ? ChevronUpIcon : ChevronDownIcon"
           :class="open ? '' : 'text-opacity-70'"
-          class="
-            w-5
-            h-5
-            ml-2
-            transition
-            duration-150
-            ease-in-out
-            group-hover:text-opacity-80
-          "
+          class="w-5 h-5 ml-2 transition duration-150 ease-in-out group-hover:text-opacity-80"
           aria-hidden="true"
         />
       </PopoverButton>
@@ -103,20 +81,7 @@ const iconClasses = () =>
                   params: item.params,
                 }"
                 @click="close"
-                class="
-                  flex
-                  items-center
-                  px-4
-                  py-2
-                  transition
-                  duration-150
-                  ease-in-out
-                  hover:bg-gray-100
-                  como-focus
-                  border-t border-gray-200
-                  cursor-pointer
-                  last:rounded-b-md
-                "
+                class="flex items-center px-4 py-2 transition duration-150 ease-in-out hover:bg-gray-100 como-focus border-t border-gray-200 cursor-pointer last:rounded-b-md"
               >
                 <div class="flex">
                   <CheckIcon :class="iconClasses()" v-if="item.selected" />

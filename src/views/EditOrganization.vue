@@ -58,16 +58,7 @@ const updateOrganization = async () => {
   <div class="max-w-sm sm:max-w-lg mt-8">
     <div
       v-if="!isOwner"
-      class="
-        shadow-md
-        mt-4
-        rounded-md
-        flex
-        items-center
-        bg-red-50
-        border-l-4 border-red-400
-        p-4
-      "
+      class="shadow-md mt-4 rounded-md flex items-center bg-red-50 border-l-4 border-red-400 p-4"
     >
       <div class="flex">
         <div class="flex-shrink-0">

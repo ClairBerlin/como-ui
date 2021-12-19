@@ -138,15 +138,7 @@ const updateData = async () => {
       <div>
         <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
           <div
-            class="
-              sm:grid
-              sm:grid-cols-3
-              sm:gap-4
-              sm:items-start
-              sm:border-t
-              sm:border-gray-200
-              sm:pt-5
-            "
+            class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
           >
             <label
               for="site-name"
@@ -161,16 +153,7 @@ const updateData = async () => {
                 id="site-name"
                 v-model.trim="newSiteName"
                 :placeholder="site.name"
-                class="
-                  max-w-lg
-                  block
-                  w-full
-                  shadow-sm
-                  focus:ring-indigo-500 focus:border-indigo-500
-                  sm:max-w-xs sm:text-sm
-                  border-gray-300
-                  rounded-md
-                "
+                class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
               />
             </div>
           </div>
@@ -179,15 +162,7 @@ const updateData = async () => {
 
       <div class="space-y-6 sm:space-y-5">
         <div
-          class="
-            sm:grid
-            sm:grid-cols-3
-            sm:gap-4
-            sm:items-start
-            sm:border-t
-            sm:border-gray-200
-            sm:pt-5
-          "
+          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
         >
           <label
             for="description"
@@ -202,30 +177,13 @@ const updateData = async () => {
               rows="3"
               v-model.trim="newSiteDescription"
               :placeholder="site.description || '-'"
-              class="
-                max-w-lg
-                shadow-sm
-                block
-                w-full
-                focus:ring-indigo-500 focus:border-indigo-500
-                sm:text-sm
-                border border-gray-300
-                rounded-md
-              "
+              class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
             />
           </div>
         </div>
 
         <div
-          class="
-            sm:grid
-            sm:grid-cols-3
-            sm:gap-4
-            sm:items-start
-            sm:border-t
-            sm:border-gray-200
-            sm:pt-5
-          "
+          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
         >
           <label
             for="street-address"
@@ -241,30 +199,13 @@ const updateData = async () => {
               autocomplete="street-address"
               v-model.trim="newStreet1"
               :placeholder="site.address.street1"
-              class="
-                block
-                max-w-lg
-                w-full
-                shadow-sm
-                focus:ring-indigo-500 focus:border-indigo-500
-                sm:text-sm
-                border-gray-300
-                rounded-md
-              "
+              class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
             />
           </div>
         </div>
 
         <div
-          class="
-            sm:grid
-            sm:grid-cols-3
-            sm:gap-4
-            sm:items-start
-            sm:border-t
-            sm:border-gray-200
-            sm:pt-5
-          "
+          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
         >
           <label
             for="street-address2"
@@ -280,30 +221,13 @@ const updateData = async () => {
               v-model.trim="newStreet2"
               :placeholder="site.address.street2"
               autocomplete="address-level4"
-              class="
-                block
-                max-w-lg
-                w-full
-                shadow-sm
-                focus:ring-indigo-500 focus:border-indigo-500
-                sm:text-sm
-                border-gray-300
-                rounded-md
-              "
+              class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
             />
           </div>
         </div>
 
         <div
-          class="
-            sm:grid
-            sm:grid-cols-3
-            sm:gap-4
-            sm:items-start
-            sm:border-t
-            sm:border-gray-200
-            sm:pt-5
-          "
+          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
         >
           <label
             for="postal-code"
@@ -319,31 +243,14 @@ const updateData = async () => {
               autocomplete="postal-code"
               v-model.trim="newZip"
               :placeholder="site.address.zip"
-              class="
-                max-w-lg
-                block
-                w-full
-                shadow-sm
-                focus:ring-indigo-500 focus:border-indigo-500
-                sm:max-w-xs sm:text-sm
-                border-gray-300
-                rounded-md
-              "
+              class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
             />
           </div>
         </div>
       </div>
 
       <div
-        class="
-          sm:grid
-          sm:grid-cols-3
-          sm:gap-4
-          sm:items-start
-          sm:border-t
-          sm:border-gray-200
-          sm:pt-5
-        "
+        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
       >
         <label
           for="city"
@@ -359,16 +266,7 @@ const updateData = async () => {
             autocomplete="address-level2"
             v-model.trim="newCity"
             :placeholder="site.address.city"
-            class="
-              max-w-lg
-              block
-              w-full
-              shadow-sm
-              focus:ring-indigo-500 focus:border-indigo-500
-              sm:max-w-xs sm:text-sm
-              border-gray-300
-              rounded-md
-            "
+            class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
           />
         </div>
       </div>
@@ -377,25 +275,7 @@ const updateData = async () => {
         <div class="flex justify-end">
           <button
             type="submit"
-            class="
-              ml-3
-              inline-flex
-              justify-center
-              py-2
-              px-4
-              border border-transparent
-              shadow-sm
-              text-sm
-              font-medium
-              rounded-md
-              text-white
-              bg-indigo-600
-              hover:bg-indigo-700
-              focus:outline-none
-              focus:ring-2
-              focus:ring-offset-2
-              focus:ring-indigo-500
-            "
+            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             v-if="isOwner"
             @click="updateData"
           >
@@ -435,83 +315,37 @@ const updateData = async () => {
       </div>
 
       <table
-        class="
-          min-w-full
-          divide-y divide-gray-200
-          ring-1 ring-gray-300
-          rounded-md
-          bg-white
-          overflow-hidden
-        "
+        class="min-w-full divide-y divide-gray-200 ring-1 ring-gray-300 rounded-md bg-white overflow-hidden"
       >
         <thead class="bg-gray-50">
           <tr>
             <th
               scope="col"
-              class="
-                px-2
-                sm:px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-              "
+              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
             >
               {{ $t("room.name") }}
             </th>
             <th
               scope="col"
-              class="
-                sm:px-6
-                py-3
-                text-right text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-              "
+              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
             >
               {{ $t("room.size") }} [m<sup>2</sup>]
             </th>
             <th
               scope="col"
-              class="
-                sm:px-6
-                py-3
-                text-right text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-              "
+              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
             >
               {{ $t("room.height") }} [m]
             </th>
             <th
               scope="col"
-              class="
-                sm:px-6
-                py-3
-                text-right text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-                hidden
-                md:table-cell
-              "
+              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
             >
               {{ $t("room.maxOccupancy") }}
             </th>
             <th
               scope="col"
-              class="
-                px-2
-                sm:px-6
-                py-3
-                text-left text-xs
-                font-medium
-                text-gray-500
-                tracking-wider
-              "
+              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
             >
               {{ $t("action") }}
             </th>
@@ -541,15 +375,7 @@ const updateData = async () => {
               {{ room.height_m || "-" }}
             </td>
             <td
-              class="
-                hidden
-                md:table-cell
-                px-2
-                sm:px-6
-                py-4
-                whitespace-nowrap
-                text-right
-              "
+              class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
             >
               {{ room.max_occupancy || "-" }}
             </td>
@@ -576,17 +402,7 @@ const updateData = async () => {
     </div>
     <div
       v-else
-      class="
-        shadow-md
-        mt-4
-        rounded-md
-        max-w-sm
-        flex
-        items-center
-        bg-yellow-50
-        border-l-4 border-yellow-400
-        p-4
-      "
+      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
     >
       <div class="flex">
         <div class="flex-shrink-0">

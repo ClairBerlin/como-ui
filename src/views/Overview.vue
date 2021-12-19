@@ -73,17 +73,7 @@ const getLatestMeasurement = (sample) => {
       </div>
       <div
         v-else
-        class="
-          shadow-md
-          mt-4
-          rounded-md
-          max-w-sm
-          flex
-          items-center
-          bg-yellow-50
-          border-l-4 border-yellow-400
-          p-4
-        "
+        class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
       >
         <div class="flex">
           <div class="flex-shrink-0">
@@ -98,12 +88,7 @@ const getLatestMeasurement = (sample) => {
             <!-- TODO: use :to="{ name: 'installation-add' }" -->
             <router-link
               to="#"
-              class="
-                font-medium
-                underline
-                text-yellow-700
-                hover:text-yellow-600
-              "
+              class="font-medium underline text-yellow-700 hover:text-yellow-600"
             >
               {{ $t("installation.clickToAdd") }}
             </router-link>

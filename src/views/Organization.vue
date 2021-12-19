@@ -98,58 +98,25 @@ const changeRole = () => console.log("TODO: open modal to change role");
             <tr>
               <th
                 scope="col"
-                class="
-                  px-2
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
+                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
               >
                 {{ $t("name") }}
               </th>
               <th
                 scope="col"
-                class="
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
+                class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
               >
                 {{ $t("email") }}
               </th>
               <th
                 scope="col"
-                class="
-                  px-2
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                  hidden
-                  md:table-cell
-                "
+                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
               >
                 {{ $t("role.singular") }}
               </th>
               <th
                 scope="col"
-                class="
-                  px-2
-                  sm:px-6
-                  py-3
-                  text-left text-xs
-                  font-medium
-                  text-gray-500
-                  tracking-wider
-                "
+                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
               >
                 {{ $t("actions") }}
               </th>
