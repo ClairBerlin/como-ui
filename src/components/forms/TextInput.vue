@@ -37,10 +37,7 @@ const {
 </script>
 
 <template>
-  <div
-    class="TextInput"
-    :class="{ 'has-error': !!errorMessage, success: meta.valid }"
-  >
+  <TextInput :class="{ 'has-error': !!errorMessage, success: meta.valid }">
     <label :for="name">{{ label }}</label>
     <input
       :name="name"
@@ -50,10 +47,11 @@ const {
       :placeholder="placeholder"
       @input="handleChange"
       @blur="handleBlur"
+      class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
     />
 
     <p class="help-message" v-show="errorMessage || meta.valid">
       {{ errorMessage || successMessage }}
     </p>
-  </div>
+  </TextInput>
 </template>

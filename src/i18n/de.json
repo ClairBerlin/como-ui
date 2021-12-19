@@ -46,7 +46,7 @@
   "installation": {
     "add": "Installation Hinzufügen",
     "addInRoom": "Installation hinzufügen im Raum",
-    "clickToAdd": "Klicken Sie hier um eine hinzuzufügen.",
+    "clickToAdd": "Klicken Sie hier um eine Installation hinzuzufügen.",
     "details": "Installationsdetails",
     "errorCreate": "Fehler beim Anlegen der Installation!",
     "errorInvalidEnd": "Der Endzeitpunkt liegt vor dem Anfangszeitpunkt oder ist anderweitig ungültig!",
