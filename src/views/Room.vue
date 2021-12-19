@@ -311,22 +311,28 @@ onMounted(async () => updateView());
         </tbody>
       </table>
     </div>
-    <div v-else class="flex">
-      <div class="flex-shrink-0">
-        <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
-      </div>
-      <div class="ml-3">
-        {{ $t("room.noInstallations") }}
-        <router-link
-          v-if="isOwner"
-          class="font-medium underline text-yellow-700 hover:text-yellow-600"
-          :to="{
-            name: 'addInstallation',
-            params: { roomId: roomId },
-          }"
-        >
-          {{ $t("room.addInstallation") }}.
-        </router-link>
+    <div
+      v-else
+      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+    >
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+        </div>
+        <div class="ml-3">
+          {{ $t("room.noInstallations") }}.
+          {{ " " }}
+          <!-- TODO: use :to="{ name: 'installation-add' }" -->
+          <router-link
+            :to="{
+              name: 'addInstallation',
+              params: { roomId: roomId },
+            }"
+            class="font-medium underline text-yellow-700 hover:text-yellow-600"
+          >
+            {{ $t("room.addInstallation") }}
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
