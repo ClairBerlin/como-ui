@@ -86,6 +86,7 @@ onMounted(async () => {
     // TODO: Read most recently used membership from cookie.
     const defaultOrgId = memberships[0].orgId;
     await loadOrganization(defaultOrgId);
+    router.push({ name: "overview", params: { orgId: defaultOrgId } });
   } else {
     router.push({ name: "org-management-add" });
   }
