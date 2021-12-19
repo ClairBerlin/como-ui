@@ -18,6 +18,8 @@ const site = computed(() =>
   })
 );
 
+// TODO: Check ownership status first.
+
 const newRoomName = ref(undefined);
 const newRoomDescription = ref(undefined);
 const newRoomSize = ref(undefined);

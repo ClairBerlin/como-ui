@@ -1,25 +1,19 @@
 <script setup>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
 import PopoverMenu from "@/components/PopoverMenu.vue";
 import { PlusIcon } from "@heroicons/vue/outline";
 import { OfficeBuildingIcon } from "@heroicons/vue/solid";
 
 const store = useStore();
-const route = useRoute();
 
-const currentOrgId = computed(() => route.params.orgId);
-const isOrgContext = computed(() => typeof currentOrgId.value === "string");
-
-const selectedMembership = computed(() =>
-  isOrgContext.value
-    ? store.getters["authuser/getMembershipByOrgId"](currentOrgId.value)
-    : undefined
-);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+const orgMembership = computed(() => store.getters["nav/getOrgMembership"]);
 
 const currentOrgName = computed(() => {
-  const orgName = selectedMembership.value?.orgName;
+  const orgName = orgMembership.value?.orgName;
   return orgName ? orgName : "———";
 });
 
@@ -27,7 +21,7 @@ const orgEntries = computed(() => {
   const memberships = store.getters["authuser/getMemberships"];
   return memberships.map((m) => {
     return {
-      selected: m.orgId === selectedMembership.value?.orgId,
+      selected: m.orgId === currentOrgId.value,
       name: m.orgName,
       route: "overview",
       params: { orgId: m.orgId },

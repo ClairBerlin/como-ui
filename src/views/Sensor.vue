@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
+import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -19,10 +19,13 @@ const store = useStore();
 const toast = useToast();
 const { t } = useI18n();
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
+
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
 
 const sensorId = computed(() => route.params.sensorId);
 const sensor = computed(() =>
@@ -30,61 +33,33 @@ const sensor = computed(() =>
     _jv: { type: "Node", id: sensorId.value },
   })
 );
-const installations = ref([]);
-const hasInstallations = computed(
-  () => !isLoading.value && installations.value?.length > 0
-);
+
+const installations = computed(() => {
+  const instObj = store.getters["jv/get"](
+    "Installation",
+    `$[?(@.node._jv.id=="${sensorId.value}")]`
+  );
+  const instList = Object.entries(instObj);
+  return instList.map(([, inst]) => inst);
+});
+const hasInstallations = computed(() => {
+  return installations.value?.length > 0;
+});
 const hasActiveInstallations = computed(() =>
   isAnyInstallationActive(installations.value)
 );
 
-const rooms = ref(undefined);
+const rooms = computed(() => {
+  return store.getters["nav/getRooms"];
+});
 const hasRooms = computed(() => rooms.value?.length > 0);
 
-const isLoading = ref(true);
 const showInstallNowModal = ref(false);
 
 const newSensorAlias = ref(undefined);
 const newSensorDescription = ref(undefined);
-const selectedRoom = ref(undefined);
+const selectedRoom = ref(rooms.value[0]);
 const makeInstallationPublic = ref(false);
-
-const updateView = async () => {
-  isLoading.value = true;
-  if (typeof sensor.value?.name === "undefined") {
-    console.log(
-      `Sensor with ID ${sensorId.value} has not been loaded yet; fetching...`
-    );
-    await store.dispatch("jv/get", `nodes/${sensorId.value}/`);
-    await store.dispatch("jv/getRelated", `nodes/${sensorId.value}`);
-  }
-  console.log(`Fetch installations for sensor ${sensorId.value}.`);
-  const installationObj = await store.dispatch(
-    "jv/get",
-    `nodes/${sensorId.value}/installations`
-  );
-  const installationList = Object.entries(installationObj);
-  console.log(`Fetched ${installationList.length} installations`);
-  installations.value = installationList.map(
-    ([, installation]) => installation
-  );
-  const relatedResourcePromises = installationList.map(([instId]) => {
-    console.log(`Get related objects for installation ${instId}.`);
-    return store.dispatch("jv/getRelated", `installations/${instId}`);
-  });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-
-  const roomObj = await store.dispatch("jv/get", [
-    "rooms",
-    { params: { "filter[organization]": route.params.orgId } },
-  ]);
-  const roomList = Object.entries(roomObj);
-  rooms.value = roomList.map(([, room]) => room);
-  selectedRoom.value = rooms.value[0];
-};
-
-onMounted(async () => updateView());
 
 const updateData = async () => {
   if (newSensorAlias.value || newSensorDescription.value) {
@@ -105,7 +80,6 @@ const updateData = async () => {
         newNode,
         { url: `nodes/${sensorId.value}/` },
       ]);
-      updateView();
       toast.success(t("node.updateSuccess"));
     } catch (e) {
       toast.error(t("node.updateError"));
@@ -128,7 +102,6 @@ const terminateInstallation = async (installationId) => {
       { url: `installations/${installationId}/` },
     ]);
     toast.success(t("installation.successTerminate"));
-    updateView();
   } catch (e) {
     toast.error(t("installation.errorTerminate"));
     console.log(e);
@@ -168,7 +141,6 @@ const installNow = async () => {
 
     toast.success(t("installation.successCreate"));
     selectedRoom.value = undefined;
-    updateView();
   } catch (e) {
     toast.error(t("installation.errorCreate"));
     selectedRoom.value = undefined;

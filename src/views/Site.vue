@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -15,6 +15,10 @@ const route = useRoute();
 const store = useStore();
 const toast = useToast();
 
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
+
 const siteId = computed(() => route.params.siteId);
 const site = computed(() =>
   store.getters["jv/get"]({
@@ -23,18 +27,31 @@ const site = computed(() =>
 );
 const addressId = computed(() => site.value.address._jv.id);
 
-const rooms = ref([]);
+const rooms = computed(() => {
+  const roomObj = store.getters["jv/get"](
+    "Room",
+    `$[?(@._jv.relationships.site.data.id=="${siteId.value}")]`
+  );
+  const roomList = Object.entries(roomObj);
+  return roomList.map(([, room]) => room);
+});
 const hasRooms = computed(() => !isLoading.value && rooms.value?.length > 0);
-const isLoading = ref(true);
+
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
 
 const showDeleteRoomModal = ref(false);
 const deleteRoomId = ref();
 const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
+const deleteRoom = async () => {
+  console.log(`Deleting room with ID ${deleteRoomId.value}`);
+  await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Room", id: deleteRoomId.value },
+  });
+};
 
 const newSiteName = ref(undefined);
 const newSiteDescription = ref(undefined);
@@ -42,11 +59,6 @@ const newStreet1 = ref(undefined);
 const newStreet2 = ref(undefined);
 const newZip = ref(undefined);
 const newCity = ref(undefined);
-
-const deleteRoom = async () => {
-  await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
-  updateView();
-};
 
 const updateSite = async () => {
   let newSite = {
@@ -116,27 +128,7 @@ const updateData = async () => {
     newZip.value = undefined;
     newCity.value = undefined;
   }
-  updateView();
 };
-
-const updateView = async () => {
-  isLoading.value = true;
-  if (typeof site.value?.name === "undefined") {
-    console.log(
-      `Site with ID ${siteId.value} has not been loaded yet; fetching...`
-    );
-    const site = await store.dispatch("jv/get", `sites/${siteId.value}/`);
-  }
-  console.log(`Fetch related objects for site ${siteId.value}.`);
-  await store.dispatch("jv/getRelated", `sites/${siteId.value}`);
-  const roomObj = await store.dispatch("jv/get", `sites/${siteId.value}/rooms`);
-  const roomList = Object.entries(roomObj);
-  console.log(`Fetched ${roomList.length} rooms`);
-  rooms.value = roomList.map(([, room]) => room);
-  isLoading.value = false;
-};
-
-onMounted(async () => updateView());
 </script>
 
 <template>

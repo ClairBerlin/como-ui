@@ -1,54 +1,37 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
-const route = useRoute();
 const store = useStore();
 
-// This view is routed to in an organization context only, this orgId is defined.
-const currentOrgId = computed(() => route.params.orgId);
-const rooms = ref(undefined);
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
+
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
+
+const rooms = computed(() => {
+  return store.getters["nav/getRooms"];
+});
 
 const hasRooms = computed(() => rooms.value?.length > 0);
-const isLoading = ref(true);
 
 const showDeleteRoomModal = ref(false);
 const deleteRoomId = ref();
 const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
-
 const deleteRoom = async () => {
+  console.log(`Deleting room with ID ${deleteRoomId.value}`);
   await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
-  updateView();
-};
-
-async function updateView() {
-  isLoading.value = true;
-  const roomObj = await store.dispatch("jv/get", [
-    "rooms",
-    { params: { "filter[organization]": currentOrgId.value } },
-  ]);
-  const roomList = Object.entries(roomObj);
-  console.log(`Organization has ${roomList.length} room(s).`);
-  rooms.value = roomList.map(([_, room]) => room);
-  const relatedResourcePromises = roomList.map(([roomId, _]) => {
-    console.log(`Fetch related objects for room ${roomId}.`);
-    return store.dispatch("jv/getRelated", `rooms/${roomId}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Room", id: deleteRoomId.value },
   });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-}
-
-onMounted(async () => updateView());
-watch(currentOrgId, () => updateView());
+};
 </script>
 
 <template>
@@ -65,6 +48,7 @@ watch(currentOrgId, () => updateView());
     >
       <p class="text-sm text-gray-500">{{ $t("delete-room-modal.message") }}</p>
     </DeletionModal>
+
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>

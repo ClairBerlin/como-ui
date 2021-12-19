@@ -1,60 +1,41 @@
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { ExclamationIcon, PlusIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 // TODO: Add number of rooms to each site's table row.
-// TODO: Add "remove site" button, visible for owners only.
-const route = useRoute();
 const store = useStore();
 
-// This view is routed to in an organization context only, this orgId is defined.
-const currentOrgId = computed(() => route.params.orgId);
-const sites = ref(undefined);
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
+
+const isOwner = computed(() => {
+  return store.getters["nav/isOwner"];
+});
+
+const sites = computed(() => {
+  return store.getters["nav/getSites"];
+});
+const hasSites = computed(() => sites.value?.length > 0);
 
 const showDeleteSiteModal = ref(false);
 const deleteSiteId = ref();
 const openDeleteSiteModal = () => (showDeleteSiteModal.value = true);
 
+const deleteSite = async () => {
+  console.log(`Deleting site with ID ${deleteSiteId.value}`);
+  await store.dispatch("jv/delete", `sites/${deleteSiteId.value}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Site", id: deleteSiteId.value },
+  });
+};
+
 const formatAdress = (address) => {
   return `${address.street1}, ${address.zip} ${address.city}`;
 };
-
-const orgMembership = computed(() =>
-  store.getters["authuser/getMembershipByOrgId"](route.params.orgId)
-);
-const isOwner = computed(() => orgMembership.value?.role === "O");
-
-const hasSites = computed(() => sites.value?.length > 0);
-const isLoading = ref(true);
-
-const deleteSite = async () => {
-  await store.dispatch("jv/delete", `sites/${deleteSiteId.value}`);
-  updateView();
-};
-
-async function updateView() {
-  isLoading.value = true;
-  const siteObj = await store.dispatch("jv/get", [
-    "sites",
-    { params: { "filter[organization]": currentOrgId.value } },
-  ]);
-  const siteList = Object.entries(siteObj);
-  console.log(`Organization has ${siteList.length} site(s).`);
-  sites.value = siteList.map(([_, site]) => site);
-  const relatedResourcePromises = siteList.map(([siteId, _]) => {
-    console.log(`Fetch related objects for site ${siteId}.`);
-    return store.dispatch("jv/getRelated", `sites/${siteId}`);
-  });
-  await Promise.all(relatedResourcePromises);
-  isLoading.value = false;
-}
-
-onMounted(async () => updateView());
-watch(currentOrgId, () => updateView());
 </script>
 
 <template>
