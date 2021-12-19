@@ -1,5 +1,5 @@
 import Dashboard from "@/views/Dashboard.vue";
-const Overview = () => import("@/views/Overview.vue");
+import Overview from "@/views/Overview.vue";
 const Organizations = () => import("@/views/Organizations.vue");
 const Organization = () => import("@/views/Organization.vue");
 const AddOrganization = () => import("@/views/AddOrganization.vue");

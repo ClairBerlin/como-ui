@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from "vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import {
   CheckIcon,

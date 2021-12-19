@@ -101,7 +101,7 @@
   "org": {
     "add": "Organisation hinzufügen",
     "addNode": "Sensor registrieren",
-    "addSite": "Ort hinzufügen",
+    "addSite": "Standorrt hinzufügen",
     "all": "Ihre Organisationen",
     "create": "Organisation hinzufügen",
     "createError": "Fehler beim Anlegen der Organisation!",
