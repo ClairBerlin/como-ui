@@ -2,6 +2,10 @@
 import { useField } from "vee-validate";
 
 const props = defineProps({
+  element: {
+    type: String,
+    default: "input",
+  },
   type: {
     type: String,
     default: "text",
@@ -17,10 +21,6 @@ const props = defineProps({
   label: {
     type: String,
     required: true,
-  },
-  successMessage: {
-    type: String,
-    default: "",
   },
   placeholder: {
     type: String,
@@ -39,7 +39,8 @@ const {
 <template>
   <TextInput :class="{ 'has-error': !!errorMessage, success: meta.valid }">
     <label :for="name">{{ label }}</label>
-    <input
+    <component
+      :is="element"
       :name="name"
       :id="name"
       :type="type"
@@ -50,8 +51,8 @@ const {
       class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
     />
 
-    <p class="help-message" v-show="errorMessage || meta.valid">
-      {{ errorMessage || successMessage }}
+    <p class="mt-2 text-sm text-red-600" v-show="errorMessage">
+      {{ errorMessage }}
     </p>
   </TextInput>
 </template>

@@ -4,6 +4,7 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
+import OrganizationForm from "@/components/forms/OrganizationForm.vue";
 
 const store = useStore();
 const toast = useToast();
@@ -12,6 +13,8 @@ const { t } = useI18n();
 
 const newOrgName = ref(undefined);
 const newOrgDescription = ref(undefined);
+
+const isOwner = true; // TODO: check
 
 const createOrg = async () => {
   if (newOrgName.value || newOrgDescription.value) {
@@ -75,4 +78,13 @@ const createOrg = async () => {
       </button>
     </div>
   </div>
+  <div>testing</div>
+  <OrganizationForm
+    :name="newOrgName"
+    :description="newOrgDescription"
+    :allow-edit="isOwner"
+    button-text="org.create"
+    :submit="createOrg"
+  />
+  <div>testing</div>
 </template>
