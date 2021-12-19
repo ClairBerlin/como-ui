@@ -82,14 +82,16 @@ const isLoading = computed(() => {
 onMounted(async () => {
   await store.dispatch("authuser/fetchAuthenticatedUser");
   const memberships = store.getters["authuser/getMemberships"];
-  if (memberships?.length > 0) {
-    // If no organization is selected or stored in the cookie, default to the user's first organization.
-    const lastVistedOrg = Cookies.get("lastVistedOrg");
-    const defaultOrgId = lastVistedOrg || memberships[0].orgId;
-    await loadOrganization(defaultOrgId);
-    router.push({ name: "overview", params: { orgId: defaultOrgId } });
-  } else {
-    router.push({ name: "org-management-add" });
+  if (route.name === "dashboard") {
+    if (memberships?.length > 0) {
+      // If no organization is selected or stored in the cookie, default to the user's first organization.
+      const lastVistedOrg = Cookies.get("lastVistedOrg");
+      const defaultOrgId = lastVistedOrg || memberships[0].orgId;
+      await loadOrganization(defaultOrgId);
+      router.push({ name: "overview", params: { orgId: defaultOrgId } });
+    } else {
+      router.push({ name: "org-management-add" });
+    }
   }
 });
 

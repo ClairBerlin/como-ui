@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 
-const mutation = {
+const mutations = {
   START_ORG_LOADING(nav) {
     nav.isOrgLoading = true;
   },
@@ -35,4 +35,4 @@ const mutation = {
   },
 };
 
-export default mutation;
+export default mutations;
