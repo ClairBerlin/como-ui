@@ -115,7 +115,8 @@ const updateAddress = async () => {
   }
 };
 
-const updateData = async () => {
+const updateData = async (e) => {
+  e?.preventDefault();
   if (newSiteName.value || newSiteDescription.value) {
     updateSite();
     newSiteName.value = undefined;
