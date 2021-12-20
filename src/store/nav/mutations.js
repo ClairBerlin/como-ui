@@ -18,7 +18,9 @@ const mutations = {
   },
 
   SET_CURRENT_ORG(nav, orgId) {
-    Cookies.set("lastVistedOrg", orgId);
+    if (orgId !== undefined) {
+      Cookies.set("lastVistedOrg", orgId);
+    }
     nav.currentOrgId = orgId;
   },
 
