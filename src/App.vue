@@ -86,7 +86,10 @@ onMounted(async () => {
     if (memberships?.length > 0) {
       // If no organization is selected or stored in the cookie, default to the user's first organization.
       const lastVistedOrg = parseInt(Cookies.get("lastVistedOrg"));
-      const defaultOrgId = lastVistedOrg || memberships[0].orgId;
+      const lastVistedOrgId = !Number.isNaN(lastVistedOrg)
+        ? lastVistedOrg.toString()
+        : undefined;
+      const defaultOrgId = lastVistedOrgId || memberships[0].orgId;
       await loadOrganization(defaultOrgId);
       router.push({ name: "overview", params: { orgId: defaultOrgId } });
     } else {

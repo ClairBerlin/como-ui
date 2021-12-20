@@ -33,7 +33,7 @@ export const routes = [
   {
     path: "/org-management/:orgId",
     name: "org-management-detail",
-    meta: { title: "org.detail" },
+    meta: { title: "org.details" },
     component: Organization,
   },
   {
