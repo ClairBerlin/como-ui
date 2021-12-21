@@ -119,7 +119,7 @@
     "singular": "Organisation",
     "switch": "Organisation wechseln",
     "updateError": "Fehler beim Aktualisieren der Organisation!",
-    "updateSucces": "Details der Organisation wurden erfolgreich aktualsiert."
+    "updateSuccess": "Details der Organisation wurden erfolgreich aktualsiert."
   },
   "overview": "Überblick",
   "previous": "Zurück",

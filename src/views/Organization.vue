@@ -10,6 +10,10 @@ import { UserAddIcon, TrashIcon } from "@heroicons/vue/outline";
 const router = useRouter();
 const store = useStore();
 
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+
 const org = computed(() => store.getters["nav/getOrgMembership"]);
 const orgName = computed(() => org?.value.orgName || "…");
 
@@ -20,10 +24,6 @@ const memberships = computed(() => {
   );
   const msList = Object.entries(msObj);
   return msList.map(([, ms]) => ms);
-});
-
-const currentOrgId = computed(() => {
-  return store.state.nav.currentOrgId;
 });
 
 const isLoading = computed(() => {
