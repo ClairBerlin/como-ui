@@ -100,6 +100,8 @@
   "options": "Optionen",
   "org": {
     "add": "Organisation hinzufügen",
+    "addMember": "Mitglied hinzufügen",
+    "addMemberError": "Fehler beim Hinzufügen des Mitglieds",
     "addNode": "Sensor registrieren",
     "addSite": "Standorrt hinzufügen",
     "all": "Ihre Organisationen",
@@ -112,12 +114,16 @@
     "manage": "Organisationen verwalten",
     "members": "Mitglieder",
     "name": "Organisationsname",
+    "noEmailError": "Bitte gib die E-Mail des neuen Team-Mitglieds an.",
     "noInstallations": "Diese Organisation hat keine aktiven Installationen.",
     "none": "Keine Organisation",
     "noSite": "Die gewählte Organisation verfügt über keine Standorte",
+    "noUserWithGivenEmail": "Konnte keinen Benutzer finden mit der Email-Adresse",
     "plural": "Organisationen",
     "singular": "Organisation",
+    "successAddMember": "Neues Mitglied hinzugefügt:",
     "switch": "Organisation wechseln",
+    "unexpectedUserResult": "Etwas scheint nicht in Ordnung zu sein mit den Benutzerdaten, die der Server zurückgegeben hat.",
     "updateError": "Fehler beim Aktualisieren der Organisation!",
     "updateSuccess": "Details der Organisation wurden erfolgreich aktualsiert."
   },
@@ -125,6 +131,10 @@
   "previous": "Zurück",
   "ppm": "CO2 Gehalt in ppm",
   "remove": "Entfernen",
+  "remove-member-modal": {
+    "message": "Möchten Sie das Mitglied aus Ihrer Organisation entfernen? (Keine Sorge, das Benutzerkonto des Mitglieds wird nicht gelöscht.)",
+    "title": "Mitglied entfernen"
+  },  
   "role": {
     "assistant": "Assistent",
     "change": "Rolle ändern",
@@ -172,10 +182,12 @@
   "user": {
     "change-email": "Email-Adresse ändern",
     "change-password": "Passwort ändern",
+    "email": "E-Mail-Adresse",
     "logout": "Ausloggen",
-    "plural": "Nutzer",
+    "plural": "Benutzer",
     "settings": "Nutzereinstellungen",
-    "singular": "Nutzer"
+    "singular": "Benutzer",
+    "username": "Benutzername"
   },
   "week": "Woche",
   "404": {
