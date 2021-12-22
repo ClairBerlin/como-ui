@@ -111,6 +111,7 @@ const terminateInstallation = async (installationId) => {
 const installNow = async () => {
   if (typeof selectedRoom.value === "undefined") {
     toast.error(t("installation.errorNoTarget"));
+    return;
   }
   let newInstallation = {
     _jv: {
