@@ -80,6 +80,7 @@ const isLoading = computed(() => {
 });
 
 onMounted(async () => {
+  store.dispatch("nav/loadSensorTypes");
   await store.dispatch("authuser/fetchAuthenticatedUser");
   const memberships = store.getters["authuser/getMemberships"];
   if (route.name === "dashboard") {

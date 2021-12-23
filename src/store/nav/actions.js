@@ -1,4 +1,11 @@
 const actions = {
+  async loadSensorTypes({ dispatch }) {
+    const quantityPromise = dispatch("jv/get", "quantities", { root: true });
+    const protocolPromise = dispatch("jv/get", "protocols", { root: true });
+    const modelPromise = dispatch("jv/get", "models", { root: true });
+    await Promise.all([quantityPromise, protocolPromise, modelPromise]);
+  },
+
   async changeOrganization(
     { dispatch, commit, state, rootGetters },
     targetOrgId
