@@ -82,7 +82,7 @@
     "identifier": "Sensor-ID",
     "installationLocation": "Installed in Room",
     "isInstalled": "The sensor node currently is installed in a room",
-    "manufacturer": "Hersteller",
+    "manufacturer": "Manufacturer",
     "model": "Model",
     "name": "Sensor Name",
     "noNodes": "The selected organization has no sensors.",

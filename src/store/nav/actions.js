@@ -19,12 +19,12 @@ const actions = {
       ) {
         clearInventory(commit);
       }
-      const orgPromise = dispatch("jv/get", `organizations/${targetOrgId}`, {
+      const orgPromise = dispatch("jv/get", `organizations/${targetOrgId}/`, {
         root: true,
       });
       const userPromise = dispatch(
         "jv/get",
-        `organizations/${targetOrgId}/users`,
+        `organizations/${targetOrgId}/users/`,
         {
           root: true,
         }
