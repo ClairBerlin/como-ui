@@ -171,6 +171,7 @@ watch(
                       name: item.routeName,
                       params: { orgId: currentOrgId },
                     }"
+                    @click="sidebarOpen = false"
                     :class="[
                       isCurrentRoute(item.routeName)
                         ? 'bg-indigo-50 text-indigo-900'
