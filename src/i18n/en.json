@@ -59,6 +59,10 @@
     "isPublic": "Data public?",
     "makePublic": "Make installation data public?",
     "otherInstallations": "Other installations of sensor",
+    "public": {
+      "true": "Public",
+      "false": "Private"
+    },
     "removedOn": "Removed on",
     "selectRoom": "Select Room...",
     "selectSensor": "Select Sensor...",

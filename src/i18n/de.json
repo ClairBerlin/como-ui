@@ -62,6 +62,10 @@
     "isPublic": "Daten öffentlich?",
     "makePublic": "Installationsdaten veröffentlichen?",
     "otherInstallations": "Andere Installationen des Sensors",
+    "public": {
+      "true": "Öffentlich",
+      "false": "Privat"
+    },
     "removedOn": "Entfernt am",
     "selectRoom": "Raum wählen...",
     "selectSensor": "Sensor wählen...",
