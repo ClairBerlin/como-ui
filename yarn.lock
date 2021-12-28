@@ -325,7 +325,7 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.26.tgz#7acd1621783571b9a82eca1f041b4a0a983481d9"
   integrity sha512-vPV6Cq+NIWbH5pZu+V+2QHE9y1qfuTq49uNWw4f7FDEeZaDU2H2cx5jcUZOAKW7qTrUS4k6qZPbMy1x4N96nbA==
 
-"@vueuse/core@^7.3.0":
+"@vueuse/core@^7.4.1":
   version "7.4.1"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-7.4.1.tgz#81ede3f67dfd58af8284c910ac2fee25458892c6"
   integrity sha512-8UeLPCAieeQLXFHF1/28SIEK6ILLPb/4hp03hR+xkXF00gB/YUp0CEVcRAL9uQ8HTZa3S2T/jTISMc1ZjilM0A==
@@ -508,10 +508,10 @@ chalk@^4.0.0, chalk@^4.1.2:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chart.js@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.6.2.tgz#47342c551f688ffdda2cd53b534cb7e461ecec33"
-  integrity sha512-Xz7f/fgtVltfQYWq0zL1Xbv7N2inpG+B54p3D5FSvpCdy3sM+oZhbqa42eNuYXltaVvajgX5UpKCU2GeeJIgxg==
+chart.js@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.7.0.tgz#7a19c93035341df801d613993c2170a1fcf1d882"
+  integrity sha512-31gVuqqKp3lDIFmzpKIrBeum4OpZsQjSIAqlOpgjosHDJZlULtvwLEZKtEhIAZc7JMPaHlYMys40Qy9Mf+1AAg==
 
 chartjs-adapter-dayjs@^1.0.0:
   version "1.0.0"
@@ -597,10 +597,10 @@ csstype@^2.6.8:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.19.tgz#feeb5aae89020bb389e1f63669a5ed490e391caa"
   integrity sha512-ZVxXaNy28/k3kJg0Fou5MiYpp88j7H9hLZp8PDC3jV0WFjfH5E9xHb56L0W59cPbKbcHXeP4qyT8PrHp8t6LcQ==
 
-daisyui@^1.16.6:
-  version "1.19.0"
-  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-1.19.0.tgz#fb8c1c1b45f093e539ad1651756f6fffee8f2e43"
-  integrity sha512-SaKe2acN734KVtrrCvxXFnrl1BOQzXqQybHbUZnXz3kK5h903mK/kKHWx+423Y03+DikWJbuGYWgcYHTQk3dwQ==
+daisyui@^1.20.0:
+  version "1.20.0"
+  resolved "https://registry.yarnpkg.com/daisyui/-/daisyui-1.20.0.tgz#3f7acfe7213139b2cd7a6d1398299a48de57970d"
+  integrity sha512-vHXw/M9KRIkdPE6r2KSqfGNg/evoCXyZFsGZQDi4PNDOlP7wL+3YmPev5M+CvmviB2kXhorekQXpulbTTqLAZQ==
 
 date-fns@^2.27.0:
   version "2.27.0"
@@ -1732,10 +1732,10 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vite@^2.7.3:
-  version "2.7.6"
-  resolved "https://registry.yarnpkg.com/vite/-/vite-2.7.6.tgz#766c7524d27ba21ff27ab37aaffba7abf2e72917"
-  integrity sha512-PBNoc87rDYLtkpFU9dbVeGdbcyKzz6c34oScqivE3FEa3BhVa4ASupCzcz0eDIiSECovfLcQnLUJt9vhiEU08g==
+vite@^2.7.8:
+  version "2.7.8"
+  resolved "https://registry.yarnpkg.com/vite/-/vite-2.7.8.tgz#0bfd4b513f8dfc8edcf2ea2d2490655dd44f404a"
+  integrity sha512-NOgvRtXUq4/7srE2cTQ2IU1oERdGq2njVOlZtgRrjMO+PPJpncd61/AUzxzZklQ1zBkiWXEVrw3Csq0Sbgr0rQ==
   dependencies:
     esbuild "^0.13.12"
     postcss "^8.4.5"
@@ -1795,10 +1795,10 @@ vue-toastification@^2.0.0-rc.5:
   resolved "https://registry.yarnpkg.com/vue-toastification/-/vue-toastification-2.0.0-rc.5.tgz#92798604d806ae473cfb76ed776fae294280f8f8"
   integrity sha512-q73e5jy6gucEO/U+P48hqX+/qyXDozAGmaGgLFm5tXX4wJBcVsnGp4e/iJqlm9xzHETYOilUuwOUje2Qg1JdwA==
 
-vue3-date-time-picker@^2.4.2:
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/vue3-date-time-picker/-/vue3-date-time-picker-2.4.3.tgz#d09a699e5d92c2018510247dbf3f2960a89159a9"
-  integrity sha512-KA2YEOjaX1/9LBLr3VSBS6jw16iXFztupxdDpcg2cDQmKL2ug4GK8ShYElvzJu5JAVzqGJ+uDQQtSKKHxgytww==
+vue3-date-time-picker@^2.4.4:
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/vue3-date-time-picker/-/vue3-date-time-picker-2.4.4.tgz#600b444ab6580ebde9edc89cbdb127354912b410"
+  integrity sha512-TmFpTesh3cseCfAcjl3DssGnS/Fhk4HJkgBemq5VmrnEFBkrRde3eJZj5NGd3RNhp4+hHwZIaRlfyMOsVPUhCg==
   dependencies:
     date-fns "^2.27.0"
 
