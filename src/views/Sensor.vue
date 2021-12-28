@@ -322,7 +322,7 @@ const installNow = async () => {
             {{ installation.room.name }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-            {{ installation.is_public }}
+            {{ $t(`installation.public.${installation.is_public}`) }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
             {{ dayFormatTimestamp(installation.from_timestamp_s) }}
