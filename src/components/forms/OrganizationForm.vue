@@ -3,13 +3,14 @@ import * as yup from "yup";
 import { Form } from "vee-validate";
 import TextInput from "./TextInput.vue";
 import { useI18n } from "vue-i18n";
+import SubmitButton from "./SubmitButton.vue";
 
 const props = defineProps({
   orgName: { type: String, default: "" },
   orgDescription: { type: String, default: "" },
   allowEdit: { type: Boolean, default: false },
   buttonText: { type: String, required: true },
-  submit: { type: Function, required: true },
+  onSubmit: { type: Function, required: true },
 });
 
 const { t } = useI18n();
@@ -22,30 +23,22 @@ const schema = yup.object().shape({
 });
 </script>
 <template>
-  <Form
-    class="space-y-8 divide-y divide-gray-200"
-    @submit="submit"
-    :validation-schema="schema"
-  >
+  <Form class="space-y-6" @submit="onSubmit" :validation-schema="schema">
     <TextInput
+      :disabled="!allowEdit"
       :value="orgName"
       name="name"
       :label="t('org.name')"
-      :placeholder="name"
     />
     <TextInput
+      :disabled="!allowEdit"
       element="textarea"
       :value="orgDescription"
       name="description"
       :label="`${t('description')} (${t('optional')})`"
-      :placeholder="orgDescription"
     />
-    <button
-      type="submit"
-      class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      v-if="allowEdit"
-    >
+    <SubmitButton :allow-submit="allowEdit">
       {{ $t(buttonText) }}
-    </button>
+    </SubmitButton>
   </Form>
 </template>
