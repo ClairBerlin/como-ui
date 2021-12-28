@@ -13,7 +13,7 @@ import dayjs from "dayjs";
 const route = useRoute();
 const store = useStore();
 const toast = useToast();
-const { t } = useI18n();
+const { t, n } = useI18n();
 
 const isLoading = computed(() => {
   return store.getters["nav/isOrgContextLoading"];
@@ -70,10 +70,10 @@ const updateData = async () => {
       newRoom["description"] = newRoomDescription.value;
     }
     if (newRoomSize.value) {
-      newRoom["size_sqm"] = newRoomSize.value;
+      newRoom["size_sqm"] = newRoomSize.value.replace(",", ".");
     }
     if (newRoomHeight.value) {
-      newRoom["height_m"] = newRoomHeight.value;
+      newRoom["height_m"] = newRoomHeight.value.replace(",", ".");
     }
     if (newRoomMaxOccupancy.value) {
       newRoom["max_occupancy"] = newRoomMaxOccupancy.value;
@@ -154,7 +154,7 @@ const terminateInstallation = async (installationId) => {
           <input
             type="text"
             v-model.trim="newRoomSize"
-            :placeholder="room.size_sqm"
+            :placeholder="n(Number(room.size_sqm))"
             class="input-bordered como-focus rounded bg-white text-gray-600"
           />
         </div>
@@ -167,7 +167,7 @@ const terminateInstallation = async (installationId) => {
           <input
             type="text"
             v-model.trim="newRoomHeight"
-            :placeholder="room.height_m"
+            :placeholder="n(Number(room.height_m))"
             class="input-bordered como-focus rounded bg-white text-gray-600"
           />
         </div>
@@ -178,7 +178,7 @@ const terminateInstallation = async (installationId) => {
             </span>
           </label>
           <input
-            type="text"
+            type="number"
             v-model.trim="newRoomMaxOccupancy"
             :placeholder="room.max_occupancy"
             class="input-bordered como-focus rounded bg-white text-gray-600"

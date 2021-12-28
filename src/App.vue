@@ -21,6 +21,7 @@ import {
 import OrganizationMenu from "@/components/OrganizationMenu.vue";
 import ProfileMenu from "@/components/ProfileMenu.vue";
 import LanguageSelect from "@/components/LanguageSelect.vue";
+import Cookies from "js-cookie";
 
 const store = useStore();
 const route = useRoute();
@@ -79,16 +80,22 @@ const isLoading = computed(() => {
 });
 
 onMounted(async () => {
+  store.dispatch("nav/loadSensorTypes");
   await store.dispatch("authuser/fetchAuthenticatedUser");
   const memberships = store.getters["authuser/getMemberships"];
-  if (memberships?.length > 0) {
-    // If no organization is selected, default to the user's first organization.
-    // TODO: Read most recently used membership from cookie.
-    const defaultOrgId = memberships[0].orgId;
-    await loadOrganization(defaultOrgId);
-    router.push({ name: "overview", params: { orgId: defaultOrgId } });
-  } else {
-    router.push({ name: "org-management-add" });
+  if (route.name === "dashboard") {
+    if (memberships?.length > 0) {
+      // If no organization is selected or stored in the cookie, default to the user's first organization.
+      const lastVistedOrg = parseInt(Cookies.get("lastVistedOrg"));
+      const lastVistedOrgId = !Number.isNaN(lastVistedOrg)
+        ? lastVistedOrg.toString()
+        : undefined;
+      const defaultOrgId = lastVistedOrgId || memberships[0].orgId;
+      await loadOrganization(defaultOrgId);
+      router.push({ name: "overview", params: { orgId: defaultOrgId } });
+    } else {
+      router.push({ name: "org-management-add" });
+    }
   }
 });
 
@@ -164,6 +171,7 @@ watch(
                       name: item.routeName,
                       params: { orgId: currentOrgId },
                     }"
+                    @click="sidebarOpen = false"
                     :class="[
                       isCurrentRoute(item.routeName)
                         ? 'bg-indigo-50 text-indigo-900'

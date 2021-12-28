@@ -1,4 +1,6 @@
-const mutation = {
+import Cookies from "js-cookie";
+
+const mutations = {
   START_ORG_LOADING(nav) {
     nav.isOrgLoading = true;
   },
@@ -16,6 +18,9 @@ const mutation = {
   },
 
   SET_CURRENT_ORG(nav, orgId) {
+    if (orgId !== undefined) {
+      Cookies.set("lastVistedOrg", orgId);
+    }
     nav.currentOrgId = orgId;
   },
 
@@ -32,4 +37,4 @@ const mutation = {
   },
 };
 
-export default mutation;
+export default mutations;

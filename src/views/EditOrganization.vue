@@ -11,7 +11,15 @@ const route = useRoute();
 const toast = useToast();
 const { t } = useI18n();
 
-const currentOrg = computed(() => store.getters["nav/getOrgMembership"]);
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+
+const currentOrg = computed(() =>
+  store.getters["jv/get"]({
+    _jv: { type: "Organization", id: currentOrgId.value },
+  })
+);
 
 const isOwner = computed(() => {
   return store.getters["nav/isOwner"];
@@ -70,7 +78,7 @@ const updateOrganization = async () => {
           <router-link
             :to="{
               name: 'org-management-detail',
-              params: { orgId: route.params.orgId },
+              params: { orgId: currentOrgId },
             }"
             class="font-medium underline text-red-700 hover:text-red-600"
           >

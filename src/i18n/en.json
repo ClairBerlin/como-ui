@@ -84,7 +84,7 @@
     "identifier": "Sensor-ID",
     "installationLocation": "Installed in Room",
     "isInstalled": "The sensor node currently is installed in a room",
-    "manufacturer": "Hersteller",
+    "manufacturer": "Manufacturer",
     "model": "Model",
     "name": "Sensor Name",
     "noNodes": "The selected organization has no sensors.",
@@ -102,6 +102,8 @@
   "options": "Options",
   "org": {
     "add": "Add Organization",
+    "addMember": "Add Member",
+    "addMemberError": "Error adding member",
     "addNode": "Register a Sensor",
     "addSite": "Add a Site",
     "all": "All your Organizations",
@@ -114,12 +116,16 @@
     "manage": "Manage Organizations",
     "members": "Members",
     "name": "Organization Name",
+    "noEmailError": "You must provide the email address of the member to add.",
     "noInstallations": "This organization has no active installations.",
     "none": "No Organization",
     "noSite": "The selected organization has no sites",
+    "noUserWithGivenEmail": "Could not find a user with email",
     "plural": "Organizations",
     "singular": "Organization",
+    "successAddMember": "Successfully added member",
     "switch": "Switch Organization",
+    "unexpectedUserResult": "There seems to be something wrong with the user returned by the server.",
     "updateError": "Failed to update the organization!",
     "updateSuccess": "Organization details have been updated!"
   },
@@ -127,6 +133,10 @@
   "ppm": "CO2-Concentration [PPM]",
   "previous": "Previous",
   "remove": "Remove",
+  "remove-member-modal": {
+    "message": "Are you sure you want to remove this member from your organization? (No worries, the user's account won't be deleted.)",
+    "title": "Remove Member"
+  },
   "role": {
     "assistant": "Assistant",
     "change": "Change Role",
@@ -172,12 +182,14 @@
   "time": "Time",
   "update": "Update",
   "user": {
-    "change-email": "Change your email",
-    "change-password": "Change password",
+    "change-email": "Change Your Email",
+    "change-password": "Change Password",
+    "email": "User Email",
     "logout": "Logout",
     "plural": "Users",
     "settings": "User Settings",
-    "singular": "User"
+    "singular": "User",
+    "username": "Username"
   },
   "week": "Week",
   "404": {

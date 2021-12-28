@@ -4,8 +4,11 @@ import { useStore } from "vuex";
 import { ExclamationIcon, TrashIcon } from "@heroicons/vue/outline";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import { useI18n } from "vue-i18n";
 
 const store = useStore();
+
+const { n } = useI18n();
 
 const isLoading = computed(() => {
   return store.getters["nav/isOrgContextLoading"];
@@ -108,10 +111,10 @@ const deleteRoom = async () => {
             </router-link>
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-            {{ room.size_sqm || "-" }}
+            {{ n(Number(room.size_sqm)) || "-" }}
           </td>
           <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-            {{ room.height_m || "-" }}
+            {{ n(Number(room.height_m)) || "-" }}
           </td>
           <td
             class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
