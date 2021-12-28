@@ -13,7 +13,7 @@ const currentOrgId = computed(() => {
   <router-link
     :to="{
       name: 'overview',
-      params: { orgId: currentOrgId },
+      params: { orgId: currentOrgId || 1 },
     }"
     class="flex items-center flex-shrink-0 px-4 py-0.5 mb-4"
   >
