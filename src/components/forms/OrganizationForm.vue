@@ -5,7 +5,7 @@ import TextInput from "./TextInput.vue";
 import { useI18n } from "vue-i18n";
 import SubmitButton from "./SubmitButton.vue";
 
-const props = defineProps({
+defineProps({
   orgName: { type: String, default: "" },
   orgDescription: { type: String, default: "" },
   allowEdit: { type: Boolean, default: false },
@@ -15,11 +15,14 @@ const props = defineProps({
 
 const { t } = useI18n();
 yup.setLocale({
-  mixed: { required: ({ label }) => label + " " + t("field_required") },
+  mixed: { required: ({ label }) => t("field_required", { field: label }) },
+  string: {
+    max: ({ label, max }) => t("field_too_big", { field: label, max }),
+  },
 });
 const schema = yup.object().shape({
-  name: yup.string().required().label(t("org.name")),
-  description: yup.string().label(t("org.name")),
+  name: yup.string().required().max(50).label(t("org.name")),
+  description: yup.string().label(t("description")),
 });
 </script>
 <template>

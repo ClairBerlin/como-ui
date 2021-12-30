@@ -38,7 +38,8 @@
   "edit": "Bearbeiten",
   "email": "E-Mail",
   "field_invalid": "Die Angabe ist ungültig.",
-  "field_required": "ist erforderlich.",
+  "field_required": "{field} ist erforderlich.",
+  "field_too_big": "{field} kann maximal {max} Zeichen haben.",
   "leave": "Verlassen",
   "loading...": "lädt...",
   "logging-out": "Sie werden ausgeloggt...",
@@ -140,7 +141,7 @@
   "remove-member-modal": {
     "message": "Möchten Sie das Mitglied aus Ihrer Organisation entfernen? (Keine Sorge, das Benutzerkonto des Mitglieds wird nicht gelöscht.)",
     "title": "Mitglied entfernen"
-  },  
+  },
   "role": {
     "assistant": "Assistent",
     "change": "Rolle ändern",
