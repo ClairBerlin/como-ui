@@ -26,11 +26,11 @@ yup.setLocale({
 });
 const schema = yup.object().shape({
   alias: yup.string().required().max(100).label(t("node.name")),
-  description: yup.string().nullable().optional().label(t("description")),
-  eui: yup.string().label(t("node.eui")),
-  id: yup.string().label(t("node.id")),
-  type: yup.string().label(t("node.type")),
-  manufacturer: yup.string().label(t("node.manufacturer")),
+  description: yup.string().nullable().label(t("description")),
+  eui: yup.string().nullable().label(t("node.eui")),
+  id: yup.string().nullable().label(t("node.id")),
+  type: yup.string().nullable().label(t("node.type")),
+  manufacturer: yup.string().nullable().label(t("node.manufacturer")),
 });
 </script>
 <template>
