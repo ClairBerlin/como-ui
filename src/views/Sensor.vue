@@ -12,6 +12,7 @@ import {
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 import InstallNowModal from "@/components/InstallNowModal.vue";
+import SensorForm from "@/components/forms/SensorForm.vue";
 
 // TODO: Add room name to dashboard title.
 const route = useRoute();
@@ -42,49 +43,37 @@ const installations = computed(() => {
   const instList = Object.entries(instObj);
   return instList.map(([, inst]) => inst);
 });
-const hasInstallations = computed(() => {
-  return installations.value?.length > 0;
-});
+const hasInstallations = computed(() => installations.value?.length > 0);
 const hasActiveInstallations = computed(() =>
   isAnyInstallationActive(installations.value)
 );
 
-const rooms = computed(() => {
-  return store.getters["nav/getRooms"];
-});
+const rooms = computed(() => store.getters["nav/getRooms"]);
 const hasRooms = computed(() => rooms.value?.length > 0);
 
 const showInstallNowModal = ref(false);
 
-const newSensorAlias = ref(undefined);
-const newSensorDescription = ref(undefined);
 const selectedRoom = ref(rooms.value[0]);
 const makeInstallationPublic = ref(false);
 
-const updateData = async () => {
-  if (newSensorAlias.value || newSensorDescription.value) {
-    let newNode = {
-      _jv: {
-        type: "Node",
-        id: sensorId.value,
-      },
-    };
-    if (newSensorAlias.value) {
-      newNode["alias"] = newSensorAlias.value;
-    }
-    if (newSensorDescription.value) {
-      newNode["description"] = newSensorDescription.value;
-    }
-    try {
-      await store.dispatch("jv/patch", [
-        newNode,
-        { url: `nodes/${sensorId.value}/` },
-      ]);
-      toast.success(t("node.updateSuccess"));
-    } catch (e) {
-      toast.error(t("node.updateError"));
-      console.log(e);
-    }
+const updateData = async ({ alias, description }) => {
+  let newNode = {
+    _jv: {
+      type: "Node",
+      id: sensorId.value,
+    },
+    alias,
+    description,
+  };
+  try {
+    await store.dispatch("jv/patch", [
+      newNode,
+      { url: `nodes/${sensorId.value}/` },
+    ]);
+    toast.success(t("node.updateSuccess"));
+  } catch (e) {
+    toast.error(t("node.updateError"));
+    console.log(e);
   }
 };
 
@@ -154,74 +143,18 @@ const installNow = async () => {
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
     <div class="max-w-sm sm:max-w-lg">
-      <div
-        class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
-      >
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("node.name")
-            }}</span>
-          </label>
-          <input
-            type="text"
-            v-model.trim="newSensorAlias"
-            :placeholder="sensor.alias"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control py-4">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("description")
-            }}</span>
-          </label>
-          <textarea
-            type="text"
-            v-model.trim="newSensorDescription"
-            :placeholder="sensor.description"
-            class="como-focus rounded h-24 text-gray-600"
-          />
-        </div>
-        <button
-          class="mt-2 btn gray-button font-semibold"
-          v-if="isOwner"
-          @click="updateData"
-        >
-          {{ $t("update") }}
-        </button>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("node.eui")
-            }}</span>
-          </label>
-          <text>{{ sensor.eui64 }}</text>
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("node.id")
-            }}</span>
-          </label>
-          <text>{{ sensorId }}</text>
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("node.type")
-            }}</span>
-          </label>
-          <text>{{ sensor.model.trade_name }}</text>
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("node.manufacturer")
-            }}</span>
-          </label>
-          <text>{{ sensor.model.manufacturer }}</text>
-        </div>
+      <div class="bg-white rounded-md shadow-md p-6">
+        <SensorForm
+          :sensor-alias="sensor.alias"
+          :sensor-description="sensor.description"
+          :eui64="sensor.eui64"
+          :sensor-id="sensorId"
+          :trade-name="sensor.model.trade_name"
+          :sensor-manufacturer="sensor.model.manufacturer"
+          :allow-edit="isOwner"
+          button-text="update"
+          :on-submit="updateData"
+        />
       </div>
     </div>
   </div>

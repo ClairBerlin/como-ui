@@ -22,7 +22,7 @@ yup.setLocale({
 });
 const schema = yup.object().shape({
   name: yup.string().required().max(50).label(t("org.name")),
-  description: yup.string().label(t("description")),
+  description: yup.string().nullable().optional().label(t("description")),
 });
 </script>
 <template>
