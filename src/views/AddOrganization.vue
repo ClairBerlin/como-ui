@@ -33,10 +33,12 @@ const createOrg = async ({ name, description }) => {
     </div>
   </header>
   <div class="max-w-sm sm:max-w-lg mt-8">
-    <OrganizationForm
-      allow-edit
-      button-text="org.create"
-      :on-submit="createOrg"
-    />
+    <div class="bg-white rounded-md shadow-md p-6">
+      <OrganizationForm
+        allow-edit
+        button-text="org.create"
+        :on-submit="createOrg"
+      />
+    </div>
   </div>
 </template>

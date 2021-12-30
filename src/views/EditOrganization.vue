@@ -1,10 +1,11 @@
 <script setup>
-import { ref, computed } from "vue";
+import { computed } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { useToast } from "vue-toastification";
 import { useI18n } from "vue-i18n";
 import { BanIcon } from "@heroicons/vue/outline";
+import OrganizationForm from "@/components/forms/OrganizationForm.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -25,39 +26,30 @@ const isOwner = computed(() => {
   return store.getters["nav/isOwner"];
 });
 
-const newOrgName = ref(undefined);
-const newOrgDescription = ref(undefined);
-
-const updateOrganization = async () => {
-  if (newOrgName.value || newOrgDescription.value) {
-    let updatedOrg = {
-      _jv: {
-        type: "Organization",
-        id: route.params.orgId,
-      },
-    };
-    if (newOrgName.value) {
-      updatedOrg["name"] = newOrgName.value;
-    }
-    if (newOrgDescription.value) {
-      updatedOrg["description"] = newOrgDescription.value;
-    }
-    try {
-      await store.dispatch("jv/patch", [
-        updatedOrg,
-        { url: `organizations/${route.params.orgId}/` },
-      ]);
-      toast.success(t("org.updateSuccess"));
-    } catch (e) {
-      toast.error(t("org.updateError"));
-    }
+const updateOrganization = async ({ name, description }) => {
+  let updatedOrg = {
+    _jv: {
+      type: "Organization",
+      id: route.params.orgId,
+    },
+    name,
+    description,
+  };
+  try {
+    await store.dispatch("jv/patch", [
+      updatedOrg,
+      { url: `organizations/${route.params.orgId}/` },
+    ]);
+    toast.success(t("org.updateSuccess"));
+  } catch (e) {
+    toast.error(t("org.updateError"));
   }
 };
 </script>
 
 <template>
   <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
+    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6">
       <h1 class="text-3xl font-bold leading-tight text-gray-900">
         {{ $t("org.edit") }}
       </h1>
@@ -87,42 +79,14 @@ const updateOrganization = async () => {
         </div>
       </div>
     </div>
-    <div
-      v-else
-      class="text-black p-4 card rounded-md ring-1 ring-gray-300 bg-white"
-    >
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text text-black font-bold">{{
-            $t("org.name")
-          }}</span>
-        </label>
-        <input
-          type="text"
-          v-model.trim="newOrgName"
-          :placeholder="currentOrg.name"
-          class="input-bordered como-focus rounded-md bg-white text-gray-600"
-        />
-      </div>
-      <div class="form-control py-4">
-        <label class="label">
-          <span class="label-text text-black font-bold">
-            {{ $t("description") }}
-          </span>
-        </label>
-        <textarea
-          type="text"
-          v-model.trim="newOrgDescription"
-          :placeholder="currentOrg?.description || '(optional)'"
-          class="como-focus area rounded-md h-24 text-gray-600"
-        />
-      </div>
-      <button
-        class="mt-2 btn gray-button font-semibold"
-        @click="updateOrganization"
-      >
-        {{ $t("update") }}
-      </button>
+    <div v-else class="bg-white rounded-md shadow-md p-6">
+      <OrganizationForm
+        :allow-edit="isOwner"
+        :org-name="currentOrg?.name"
+        :org-description="currentOrg?.description"
+        button-text="update"
+        :on-submit="updateOrganization"
+      />
     </div>
   </div>
 </template>
