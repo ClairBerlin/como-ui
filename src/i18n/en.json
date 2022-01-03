@@ -38,6 +38,7 @@
   "edit": "Edit",
   "email": "Email",
   "field_invalid": "The field is invalid",
+  "field_length_mismatch": "{field} has to be exaclty {length} characters long.",
   "field_required": "{field} is required.",
   "field_too_big": "{field} must be at most {max} characters.",
   "inspect": "Inspect",
