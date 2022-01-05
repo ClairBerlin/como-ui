@@ -403,20 +403,20 @@ const terminateInstallation = async (installationId) => {
               {{ $t("node.isInstalled") }}.
             </div>
           </div>
-          <div class="flex my-2">
-            <div class="mr-3">
-              <label class="block font-semibold text-gray-900 mb-1">
-                {{ $t("installation.makePublic") }}
-              </label>
-            </div>
-            <div class="flex items-center h-5">
+          <div class="flex my-2 align-middle">
+            <div class="">
               <input
                 id="makePublic"
                 name="makePublic"
                 type="checkbox"
                 v-model="isPublic"
-                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-2 border-gray-300 rounded cursor-pointer"
+                class="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-2 border-gray-300 rounded cursor-pointer"
               />
+            </div>
+            <div class="ml-3">
+              <label class="block font-semibold text-gray-900 mb-1">
+                {{ $t("installation.makePublic") }}
+              </label>
             </div>
           </div>
           <div class="">
