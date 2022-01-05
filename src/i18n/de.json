@@ -37,6 +37,10 @@
   "description": "Beschreibung",
   "edit": "Bearbeiten",
   "email": "E-Mail",
+  "field_invalid": "Die Angabe ist ungültig.",
+  "field_length_mismatch": "{field} muss genau {length} Zeichen haben.",
+  "field_required": "{field} ist erforderlich.",
+  "field_too_big": "{field} kann maximal {max} Zeichen haben.",
   "leave": "Verlassen",
   "loading...": "lädt...",
   "logging-out": "Sie werden ausgeloggt...",
@@ -44,7 +48,7 @@
   "installation": {
     "add": "Installation Hinzufügen",
     "addInRoom": "Installation hinzufügen im Raum",
-    "clickToAdd": "Klicken Sie hier um eine hinzuzufügen.",
+    "clickToAdd": "Klicken Sie hier um eine Installation hinzuzufügen.",
     "details": "Installationsdetails",
     "errorCreate": "Fehler beim Anlegen der Installation!",
     "errorInvalidEnd": "Der Endzeitpunkt liegt vor dem Anfangszeitpunkt oder ist anderweitig ungültig!",
@@ -138,7 +142,7 @@
   "remove-member-modal": {
     "message": "Möchten Sie das Mitglied aus Ihrer Organisation entfernen? (Keine Sorge, das Benutzerkonto des Mitglieds wird nicht gelöscht.)",
     "title": "Mitglied entfernen"
-  },  
+  },
   "role": {
     "assistant": "Assistent",
     "change": "Rolle ändern",

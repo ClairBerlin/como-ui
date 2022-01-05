@@ -17,7 +17,7 @@ export const roleToString = (role) => {
 };
 
 // (2^31) - 1, 03:14:08 UTC on Tuesday, 19 January 2038
-export const maxUnixEpoch = 2_147_483_647;
+export const maxUnixEpoch = 2147483647;
 
 export const dayFormatTimestamp = (unixTimestamp) => {
   if (unixTimestamp === maxUnixEpoch) {

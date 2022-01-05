@@ -7,6 +7,7 @@ import { ExclamationIcon, TrashIcon, PlusIcon } from "@heroicons/vue/outline";
 import { useI18n } from "vue-i18n";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import SiteForm from "@/components/forms/SiteForm.vue";
 
 const { t } = useI18n();
 
@@ -53,26 +54,19 @@ const deleteRoom = async () => {
   });
 };
 
-const newSiteName = ref(undefined);
-const newSiteDescription = ref(undefined);
-const newStreet1 = ref(undefined);
-const newStreet2 = ref(undefined);
-const newZip = ref(undefined);
-const newCity = ref(undefined);
-
-const updateSite = async () => {
+const updateSite = async ({ name, description }) => {
+  // only update if something changed
+  if (site.value.name === name && site.value.description === description) {
+    return;
+  }
   let newSite = {
     _jv: {
       type: "Site",
       id: siteId.value,
     },
+    name,
+    description,
   };
-  if (newSiteName.value) {
-    newSite["name"] = newSiteName.value;
-  }
-  if (newSiteDescription.value) {
-    newSite["description"] = newSiteDescription.value;
-  }
   try {
     await store.dispatch("jv/patch", [
       newSite,
@@ -85,25 +79,25 @@ const updateSite = async () => {
   }
 };
 
-const updateAddress = async () => {
+const updateAddress = async ({ street1, street2, zip, city }) => {
+  if (
+    site.value.address.street1 === street1 &&
+    site.value.address.street2 === street2 &&
+    site.value.address.zip === zip &&
+    site.value.address.city === city
+  ) {
+    return;
+  }
   let newAddress = {
     _jv: {
       type: "Address",
       id: addressId.value,
     },
+    street1,
+    street2,
+    zip,
+    city,
   };
-  if (newStreet1.value) {
-    newAddress["street1"] = newStreet1.value;
-  }
-  if (newStreet2.value) {
-    newAddress["street2"] = newStreet2.value;
-  }
-  if (newZip.value) {
-    newAddress["zip"] = newZip.value;
-  }
-  if (newCity.value) {
-    newAddress["city"] = newCity.value;
-  }
   try {
     await store.dispatch("jv/patch", [
       newAddress,
@@ -115,176 +109,30 @@ const updateAddress = async () => {
   }
 };
 
-const updateData = async (e) => {
-  e?.preventDefault();
-  if (newSiteName.value || newSiteDescription.value) {
-    updateSite();
-    newSiteName.value = undefined;
-    newSiteDescription.value = undefined;
-  }
-  if (newStreet1.value || newStreet2.value || newZip.value || newCity.value) {
-    updateAddress();
-    newStreet1.value = undefined;
-    newStreet2.value = undefined;
-    newZip.value = undefined;
-    newCity.value = undefined;
-  }
+const update = async ({ name, description, street1, street2, zip, city }) => {
+  updateSite({ name, description });
+  updateAddress({ street1, street2, zip, city });
 };
 </script>
 
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="divide-y-2 divide-gray-300">
-    <form class="space-y-8 divide-y divide-gray-200">
-      <div>
-        <div class="mt-6 sm:mt-5 space-y-6 sm:space-y-5">
-          <div
-            class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-          >
-            <label
-              for="site-name"
-              class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-            >
-              {{ $t("site.name") }}
-            </label>
-            <div class="mt-1 sm:mt-0 sm:col-span-2">
-              <input
-                type="text"
-                name="site-name"
-                id="site-name"
-                v-model.trim="newSiteName"
-                :placeholder="site.name"
-                class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-              />
-            </div>
-          </div>
-        </div>
+    <div class="max-w-sm sm:max-w-lg mt-8">
+      <div class="bg-white rounded-md shadow-md p-6">
+        <SiteForm
+          :allow-edit="isOwner"
+          :site-name="site.name"
+          :site-description="site.description"
+          :address-street1="site.address.street1"
+          :address-street2="site.address.street2"
+          :address-zip="site.address.zip"
+          :address-city="site.address.city"
+          button-text="site.update"
+          :on-submit="update"
+        />
       </div>
-
-      <div class="space-y-6 sm:space-y-5">
-        <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-        >
-          <label
-            for="description"
-            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-          >
-            {{ $t("description") }} ({{ $t("optional") }})
-          </label>
-          <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <textarea
-              id="description"
-              name="description"
-              rows="3"
-              v-model.trim="newSiteDescription"
-              :placeholder="site.description || '-'"
-              class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
-
-        <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-        >
-          <label
-            for="street-address"
-            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-          >
-            {{ $t("address.street1") }}
-          </label>
-          <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <input
-              type="text"
-              name="street-address"
-              id="street-address"
-              autocomplete="street-address"
-              v-model.trim="newStreet1"
-              :placeholder="site.address.street1"
-              class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
-
-        <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-        >
-          <label
-            for="street-address2"
-            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-          >
-            {{ $t("address.street2") }}
-          </label>
-          <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <input
-              type="text"
-              name="street-address2"
-              id="street-address2"
-              v-model.trim="newStreet2"
-              :placeholder="site.address.street2"
-              autocomplete="address-level4"
-              class="block max-w-lg w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
-
-        <div
-          class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-        >
-          <label
-            for="postal-code"
-            class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-          >
-            {{ $t("address.zip") }}
-          </label>
-          <div class="mt-1 sm:mt-0 sm:col-span-2">
-            <input
-              type="text"
-              name="postal-code"
-              id="postal-code"
-              autocomplete="postal-code"
-              v-model.trim="newZip"
-              :placeholder="site.address.zip"
-              class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-t sm:border-gray-200 sm:pt-5"
-      >
-        <label
-          for="city"
-          class="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
-        >
-          {{ $t("address.city") }}
-        </label>
-        <div class="mt-1 sm:mt-0 sm:col-span-2">
-          <input
-            type="text"
-            name="city"
-            id="city"
-            autocomplete="address-level2"
-            v-model.trim="newCity"
-            :placeholder="site.address.city"
-            class="max-w-lg block w-full shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:max-w-xs sm:text-sm border-gray-300 rounded-md"
-          />
-        </div>
-      </div>
-
-      <div class="pt-5">
-        <div class="flex justify-end">
-          <button
-            type="submit"
-            class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            v-if="isOwner"
-            @click="updateData"
-          >
-            {{ $t("site.update") }}
-          </button>
-        </div>
-      </div>
-    </form>
+    </div>
     <div v-if="hasRooms" class="text-md mt-8 pt-8">
       <DeletionModal
         :open="showDeleteRoomModal"
@@ -370,10 +218,10 @@ const updateData = async (e) => {
               </router-link>
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-              {{ room.size_sqm || "-" }}
+              {{ room.size_sqm ? $n(Number(room.size_sqm)) : "-" }}
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-              {{ room.height_m || "-" }}
+              {{ room.height_m ? $n(Number(room.height_m)) : "-" }}
             </td>
             <td
               class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"

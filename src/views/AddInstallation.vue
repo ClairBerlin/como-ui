@@ -10,6 +10,7 @@ import { ExclamationIcon } from "@heroicons/vue/outline";
 import Datepicker from "vue3-date-time-picker";
 import "vue3-date-time-picker/dist/main.css";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import SubmitButton from "@/components/forms/SubmitButton.vue";
 
 const store = useStore();
 const toast = useToast();
@@ -29,16 +30,9 @@ const currentOrgId = computed(() => {
   return store.state.nav.currentOrgId;
 });
 
-const isOwner = computed(() => {
-  return store.getters["nav/isOwner"];
-});
+const isOwner = computed(() => store.getters["nav/isOwner"]);
 
 const roomId = computed(() => route.params.roomId);
-const room = computed(() =>
-  store.getters["jv/get"]({
-    _jv: { type: "Room", id: roomId.value },
-  })
-);
 
 const dateRangeArray = (from, to) => {
   let fromD = from.startOf("day");
@@ -146,7 +140,8 @@ const fromMinDate = computed(() => {
 const fromMaxDate = computed(() => {
   if (
     hasInstallations.value &&
-    installations.value.at(-1).to_timestamp_s === maxUnixEpoch
+    installations.value[installations.value.length - 2]?.to_timestamp_s ===
+      maxUnixEpoch
   ) {
     return dayjs.unix(installations.value.at(-1).from_timestamp_s);
   } else {
@@ -374,30 +369,20 @@ const terminateInstallation = async (installationId) => {
 </script>
 
 <template>
-  <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold leading-tight text-gray-900">
-        {{ $t("installation.addInRoom") }} {{ room.name }}
-      </h1>
-    </div>
-  </header>
-
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
     <div v-if="isOwner">
       <div v-if="hasSensors" class="max-w-sm sm:max-w-lg">
-        <div
-          class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
-        >
-          <div class="form-control">
-            <label for="room" class="block text-sm font-bold text-black">
+        <div class="bg-white rounded-md shadow-md p-6 space-y-6">
+          <div>
+            <label class="block font-semibold text-gray-900 mb-1">
               {{ $t("node.singular") }}
             </label>
             <select
               id="sensor"
               name="sensor"
               v-model="selectedSensor"
-              class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              class="border-2 focus:outline-none focus:ring-1 border-gray-300 focus:ring-indigo-500 w-full text-gray-900 rounded-md cursor-pointer"
             >
               <option disabled :value="undefined">
                 {{ $t("installation.selectSensor") }}
@@ -406,99 +391,90 @@ const terminateInstallation = async (installationId) => {
                 v-for="sensor in sensors"
                 :key="sensor._jv.id"
                 :value="sensor"
+                class="py-2"
               >
                 {{ sensor.alias }} (EUI: {{ sensor.eui64 }})
               </option>
             </select>
+            <div
+              class="mt-2 text-sm font-medium text-red-600"
+              v-if="isSensorInstalled"
+            >
+              {{ $t("node.isInstalled") }}.
+            </div>
           </div>
-          <div class="mt-2 text-sm text-red-600" v-if="isSensorInstalled">
-            {{ $t("node.isInstalled") }}.
-          </div>
-          <div>
-            <div class="flex my-2">
-              <div class="flex items-center h-5">
-                <input
-                  id="makePublic"
-                  name="makePublic"
-                  type="checkbox"
-                  v-model="makeInstallationPublic"
-                  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                />
-              </div>
-              <div class="ml-3 text-sm">
-                <label for="makePublic" class="font-bold text-black">
-                  {{ $t("installation.makePublic") }}
-                </label>
-              </div>
-            </div>
-            <div class="form-control pb-2">
-              <label class="label pl-0">
-                <span class="label-text text-black font-bold">{{
-                  $t("installation.from")
-                }}</span>
-              </label>
-              <Datepicker
-                v-model="fromDateTime"
-                :locale="locale"
-                week-numbers
-                text-input
-                format="yyyy-MM-dd HH:mm"
-                :clearable="true"
-                :min-date="fromMinDate.toDate()"
-                :max-date="fromMaxDate.toDate()"
-                :disabled-dates="disabledFromDates"
-                :state="startIsValid"
-                show-now-button
-                :now-button-label="$t('now')"
-                :cancel-text="$t('cancel')"
-                :select-text="$t('select')"
-              ></Datepicker>
-            </div>
-            <div class="form-control pb-2">
-              <label class="label pl-0">
-                <span class="label-text text-black font-bold"
-                  >{{ $t("installation.to") }}
-                </span>
-              </label>
-              <Datepicker
-                v-model="toDateTime"
-                :locale="locale"
-                week-numbers
-                text-input
-                format="yyyy-MM-dd HH:mm"
-                :clearable="true"
-                :min-date="toMinDate.toDate()"
-                :max-date="toMaxDate.toDate()"
-                :allowed-dates="admissibleToDates"
-                :state="toDateTime ? endIsValid : null"
-                :placeholder="$t('optional')"
-                show-now-button
-                :now-button-label="$t('now')"
-                :cancel-text="$t('cancel')"
-                :select-text="$t('select')"
-              ></Datepicker>
-            </div>
-            <div class="form-control pb-2">
-              <label class="label pl-0">
-                <span class="label-text text-black font-bold">{{
-                  $t("description")
-                }}</span>
-              </label>
-              <textarea
-                type="text"
-                v-model.trim="installationDescription"
-                :placeholder="$t('optional')"
-                class="como-focus rounded h-24 text-gray-600"
+          <div class="flex my-2 align-middle">
+            <div class="">
+              <input
+                id="makePublic"
+                name="makePublic"
+                type="checkbox"
+                v-model="isPublic"
+                class="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-2 border-gray-300 rounded cursor-pointer"
               />
             </div>
-
-            <button
-              class="mt-2 btn gray-button font-semibold"
-              @click="createInstallation"
-            >
-              {{ $t("installation.add") }}
-            </button>
+            <div class="ml-3">
+              <label class="block font-semibold text-gray-900 mb-1">
+                {{ $t("installation.makePublic") }}
+              </label>
+            </div>
           </div>
+          <div class="">
+            <label class="block font-semibold text-gray-900 mb-1">
+              {{ $t("installation.from") }}
+            </label>
+            <Datepicker
+              v-model="fromDateTime"
+              :locale="locale"
+              week-numbers
+              text-input
+              format="yyyy-MM-dd HH:mm"
+              :clearable="true"
+              :min-date="fromMinDate.toDate()"
+              :max-date="fromMaxDate.toDate()"
+              :disabled-dates="disabledFromDates"
+              :state="startIsValid"
+              show-now-button
+              :now-button-label="$t('now')"
+              :cancel-text="$t('cancel')"
+              :select-text="$t('select')"
+            ></Datepicker>
+          </div>
+          <div class="">
+            <label class="block font-semibold text-gray-900 mb-1"
+              >{{ `${$t("installation.to")} (${$t("optional")})` }}
+            </label>
+            <Datepicker
+              v-model="toDateTime"
+              :locale="locale"
+              week-numbers
+              text-input
+              format="yyyy-MM-dd HH:mm"
+              :clearable="true"
+              :min-date="toMinDate.toDate()"
+              :max-date="toMaxDate.toDate()"
+              :allowed-dates="admissibleToDates"
+              :state="toDateTime ? endIsValid : null"
+              show-now-button
+              :now-button-label="$t('now')"
+              :cancel-text="$t('cancel')"
+              :select-text="$t('select')"
+            ></Datepicker>
+          </div>
+          <div class="">
+            <label class="block font-semibold text-gray-900 mb-1"
+              >{{ `${$t("description")} (${$t("optional")})` }}
+            </label>
+            <textarea
+              type="text"
+              v-model.trim="installationDescription"
+              class="border-2 focus:outline-none focus:ring-1 border-gray-300 focus:ring-indigo-500 w-full text-gray-900 shadow-inner rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            />
+          </div>
+
+          <SubmitButton :allow-submit="isOwner" @click="createInstallation">
+            {{ $t("installation.add") }}
+          </SubmitButton>
         </div>
       </div>
       <div
@@ -506,8 +482,10 @@ const terminateInstallation = async (installationId) => {
         class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
       >
         <div v-if="hasInstallations">
-          {{ $t("installation.otherInstallations") }}
-          {{ selectedSensor.alias }} (EUI: {{ selectedSensor.eui64 }})
+          <h3 class="text-red-800 font-semibold text-xl p-2">
+            {{ $t("installation.otherInstallations") }}
+            {{ selectedSensor.alias }} (EUI: {{ selectedSensor.eui64 }})
+          </h3>
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>

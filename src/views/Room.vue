@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -8,6 +8,7 @@ import { dayFormatTimestamp, isInstallationActive } from "@/utils";
 import { ExclamationIcon } from "@heroicons/vue/outline";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
+import RoomForm from "@/components/forms/RoomForm.vue";
 
 // TODO: Add room name to dashboard title.
 const route = useRoute();
@@ -43,51 +44,36 @@ const hasInstallations = computed(
   () => !isLoading.value && installations.value?.length > 0
 );
 
-const newRoomName = ref(undefined);
-const newRoomDescription = ref(undefined);
-const newRoomSize = ref(undefined);
-const newRoomHeight = ref(undefined);
-const newRoomMaxOccupancy = ref(undefined);
-
-const updateData = async () => {
+const update = async ({ name, description, size, height, capacity }) => {
   if (
-    newRoomName.value ||
-    newRoomDescription.value ||
-    newRoomSize.value ||
-    newRoomHeight.value ||
-    newRoomMaxOccupancy.value
+    room.value.name === name &&
+    room.value.description === description &&
+    room.value.size_sqm === size &&
+    room.value.height_m === height &&
+    room.value.max_occupancy === capacity
   ) {
-    let newRoom = {
-      _jv: {
-        type: "Room",
-        id: roomId.value,
-      },
-    };
-    if (newRoomName.value) {
-      newRoom["name"] = newRoomName.value;
-    }
-    if (newRoomDescription.value) {
-      newRoom["description"] = newRoomDescription.value;
-    }
-    if (newRoomSize.value) {
-      newRoom["size_sqm"] = newRoomSize.value.replace(",", ".");
-    }
-    if (newRoomHeight.value) {
-      newRoom["height_m"] = newRoomHeight.value.replace(",", ".");
-    }
-    if (newRoomMaxOccupancy.value) {
-      newRoom["max_occupancy"] = newRoomMaxOccupancy.value;
-    }
-    try {
-      await store.dispatch("jv/patch", [
-        newRoom,
-        { url: `rooms/${roomId.value}/` },
-      ]);
-      toast.success(t("room.updateSuccess"));
-    } catch (e) {
-      toast.error(t("room.updateError"));
-      console.log(e);
-    }
+    return;
+  }
+  const newRoom = {
+    _jv: {
+      type: "Room",
+      id: roomId.value,
+    },
+    name,
+    description,
+    size_sqm: size?.replace(",", ".") || undefined,
+    height_m: height?.replace(",", ".") || undefined,
+    max_occupancy: capacity || undefined,
+  };
+  try {
+    await store.dispatch("jv/patch", [
+      newRoom,
+      { url: `rooms/${roomId.value}/` },
+    ]);
+    toast.success(t("room.updateSuccess"));
+  } catch (e) {
+    toast.error(t("room.updateError"));
+    console.log(e);
   }
 };
 
@@ -115,82 +101,18 @@ const terminateInstallation = async (installationId) => {
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
-    <div class="max-w-sm sm:max-w-lg">
-      <div
-        class="text-black mt-2 p-4 card rounded-md shadow-md ring-1 ring-gray-300 bg-white"
-      >
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("room.name")
-            }}</span>
-          </label>
-          <input
-            type="text"
-            v-model.trim="newRoomName"
-            :placeholder="room.name"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control py-4">
-          <label class="label">
-            <span class="label-text text-black font-bold">{{
-              $t("description")
-            }}</span>
-          </label>
-          <textarea
-            type="text"
-            v-model.trim="newRoomDescription"
-            :placeholder="room.description"
-            class="como-focus rounded h-24 text-gray-600"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold"
-              >{{ $t("room.size") }} [m<sup>2</sup>]
-            </span>
-          </label>
-          <input
-            type="text"
-            v-model.trim="newRoomSize"
-            :placeholder="n(Number(room.size_sqm))"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold"
-              >{{ $t("room.height") }} [m]
-            </span>
-          </label>
-          <input
-            type="text"
-            v-model.trim="newRoomHeight"
-            :placeholder="n(Number(room.height_m))"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <div class="form-control">
-          <label class="label">
-            <span class="label-text text-black font-bold"
-              >{{ $t("room.maxOccupancy") }}
-            </span>
-          </label>
-          <input
-            type="number"
-            v-model.trim="newRoomMaxOccupancy"
-            :placeholder="room.max_occupancy"
-            class="input-bordered como-focus rounded bg-white text-gray-600"
-          />
-        </div>
-        <button
-          class="mt-2 btn gray-button font-semibold"
-          v-if="isOwner"
-          @click="updateData"
-        >
-          {{ $t("update") }}
-        </button>
+    <div class="max-w-sm sm:max-w-lg mt-8">
+      <div class="bg-white rounded-md shadow-md p-6">
+        <RoomForm
+          :allow-edit="isOwner"
+          :room-name="room.name"
+          :room-description="room.description"
+          :room-size="n(Number(room.size_sqm))"
+          :room-height="n(Number(room.height_m))"
+          :room-capacity="n(Number(room.max_occupancy))"
+          button-text="update"
+          :on-submit="update"
+        />
       </div>
     </div>
 
