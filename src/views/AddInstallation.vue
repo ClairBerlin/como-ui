@@ -140,7 +140,8 @@ const fromMinDate = computed(() => {
 const fromMaxDate = computed(() => {
   if (
     hasInstallations.value &&
-    installations.value.at(-1).to_timestamp_s === maxUnixEpoch
+    installations.value[installations.value.length - 2]?.to_timestamp_s ===
+      maxUnixEpoch
   ) {
     return dayjs.unix(installations.value.at(-1).from_timestamp_s);
   } else {
@@ -395,9 +396,12 @@ const terminateInstallation = async (installationId) => {
                 {{ sensor.alias }} (EUI: {{ sensor.eui64 }})
               </option>
             </select>
-          </div>
-          <div class="mt-2 text-sm text-red-600" v-if="isSensorInstalled">
-            {{ $t("node.isInstalled") }}.
+            <div
+              class="mt-2 text-sm font-medium text-red-600"
+              v-if="isSensorInstalled"
+            >
+              {{ $t("node.isInstalled") }}.
+            </div>
           </div>
           <div class="flex my-2">
             <div class="mr-3">
