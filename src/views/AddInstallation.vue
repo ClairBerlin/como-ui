@@ -482,8 +482,10 @@ const terminateInstallation = async (installationId) => {
         class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
       >
         <div v-if="hasInstallations">
-          {{ $t("installation.otherInstallations") }}
-          {{ selectedSensor.alias }} (EUI: {{ selectedSensor.eui64 }})
+          <h3 class="text-red-800 font-semibold text-xl p-2">
+            {{ $t("installation.otherInstallations") }}
+            {{ selectedSensor.alias }} (EUI: {{ selectedSensor.eui64 }})
+          </h3>
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
