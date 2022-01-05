@@ -9,7 +9,7 @@ import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import SiteForm from "@/components/forms/SiteForm.vue";
 
-const { t } = useI18n();
+const { t, n } = useI18n();
 
 // TODO: Add Site name to dashboard title.
 const route = useRoute();
@@ -218,10 +218,10 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
               </router-link>
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-              {{ room.size_sqm || "-" }}
+              {{ room.size_sqm ? $n(Number(room.size_sqm)) : "-" }}
             </td>
             <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
-              {{ room.height_m || "-" }}
+              {{ room.height_m ? $n(Number(room.height_m)) : "-" }}
             </td>
             <td
               class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
