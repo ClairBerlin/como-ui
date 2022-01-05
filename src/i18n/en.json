@@ -89,7 +89,7 @@
     "id": "COMo Sensor-ID",
     "identifier": "Sensor-ID",
     "installationLocation": "Installed in Room",
-    "isInstalled": "The sensor node currently is installed in a room",
+    "isInstalled": "The sensor is currently installed in a room",
     "manufacturer": "Manufacturer",
     "model": "Model",
     "name": "Sensor Name",
