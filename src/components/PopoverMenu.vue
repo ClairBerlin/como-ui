@@ -7,7 +7,7 @@ import {
   XIcon,
 } from "@heroicons/vue/solid";
 
-const props = defineProps({
+defineProps({
   icon: { type: Function, default: undefined },
   title: { type: String, required: true },
   contextTitle: { type: String, default: "" },

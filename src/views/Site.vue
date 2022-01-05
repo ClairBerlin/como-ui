@@ -9,7 +9,7 @@ import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import SiteForm from "@/components/forms/SiteForm.vue";
 
-const { t, n } = useI18n();
+const { t } = useI18n();
 
 // TODO: Add Site name to dashboard title.
 const route = useRoute();

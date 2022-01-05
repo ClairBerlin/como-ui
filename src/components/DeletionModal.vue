@@ -8,7 +8,7 @@ import {
 } from "@headlessui/vue";
 import { ExclamationIcon, XIcon } from "@heroicons/vue/outline";
 
-const props = defineProps({
+defineProps({
   open: { type: Boolean, required: true },
   modalTitle: { type: String, required: true },
 });

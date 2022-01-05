@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   icon: { type: Function, default: undefined },
   buttonText: { type: String, default: undefined },
   options: { type: Array, required: true },
