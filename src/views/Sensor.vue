@@ -140,26 +140,7 @@ const installNow = async () => {
 </script>
 
 <template>
-  <LoadingSpinner v-if="isLoading" />
-  <div v-else>
-    <div class="max-w-sm sm:max-w-lg">
-      <div class="bg-white rounded-md shadow-md p-6">
-        <SensorForm
-          :sensor-alias="sensor.alias"
-          :sensor-description="sensor.description"
-          :eui64="sensor.eui64"
-          :sensor-id="sensorId"
-          :trade-name="sensor.model.trade_name"
-          :sensor-manufacturer="sensor.model.manufacturer"
-          :allow-edit="isOwner"
-          button-text="update"
-          :on-submit="updateData"
-        />
-      </div>
-    </div>
-  </div>
-
-  <div v-if="isOwner && !hasActiveInstallations && hasRooms" class="mt-8">
+  <div v-if="isOwner && !hasActiveInstallations && hasRooms" class="">
     <div
       class="btn bg-indigo-600 hover:bg-indigo-700 normal-case"
       @click="showInstallNowModal = true"
@@ -204,6 +185,25 @@ const installNow = async () => {
         </div>
       </div>
     </InstallNowModal>
+  </div>
+
+  <LoadingSpinner v-if="isLoading" />
+  <div v-else>
+    <div class="max-w-sm sm:max-w-lg mt-8">
+      <div class="bg-white rounded-md shadow-md p-6">
+        <SensorForm
+          :sensor-alias="sensor.alias"
+          :sensor-description="sensor.description"
+          :eui64="sensor.eui64"
+          :sensor-id="sensorId"
+          :trade-name="sensor.model.trade_name"
+          :sensor-manufacturer="sensor.model.manufacturer"
+          :allow-edit="isOwner"
+          button-text="update"
+          :on-submit="updateData"
+        />
+      </div>
+    </div>
   </div>
 
   <div
