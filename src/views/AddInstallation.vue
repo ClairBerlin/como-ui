@@ -11,6 +11,7 @@ import Datepicker from "vue3-date-time-picker";
 import "vue3-date-time-picker/dist/main.css";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import SubmitButton from "@/components/forms/SubmitButton.vue";
+import PrivacyToggle from "@/components/PrivacyToggle.vue";
 
 const store = useStore();
 const toast = useToast();
@@ -404,19 +405,13 @@ const terminateInstallation = async (installationId) => {
             </div>
           </div>
           <div class="flex my-2 align-middle">
-            <div class="">
-              <input
-                id="makePublic"
-                name="makePublic"
-                type="checkbox"
-                v-model="isPublic"
-                class="focus:ring-indigo-500 h-5 w-5 text-indigo-600 border-2 border-gray-300 rounded cursor-pointer"
-              />
-            </div>
-            <div class="ml-3">
+            <div class="mr-3">
               <label class="block font-semibold text-gray-900 mb-1">
                 {{ $t("installation.makePublic") }}
               </label>
+            </div>
+            <div>
+              <PrivacyToggle v-model="isPublic" />
             </div>
           </div>
           <div class="">

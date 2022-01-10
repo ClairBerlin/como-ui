@@ -13,6 +13,7 @@ import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 import InstallNowModal from "@/components/InstallNowModal.vue";
 import SensorForm from "@/components/forms/SensorForm.vue";
+import PrivacyToggle from "@/components/PrivacyToggle.vue";
 
 // TODO: Add room name to dashboard title.
 const route = useRoute();
@@ -168,20 +169,14 @@ const installNow = async () => {
           </option>
         </select>
       </div>
-      <div class="flex my-2">
-        <div class="flex items-center h-5">
-          <input
-            id="makePublic"
-            name="makePublic"
-            type="checkbox"
-            v-model="makeInstallationPublic"
-            class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-          />
-        </div>
-        <div class="ml-3 text-sm">
-          <label for="makePublic" class="font-bold text-gray-700">
+      <div class="flex items-center my-2">
+        <div class="mr-3 text-sm">
+          <label for="makePublic" class="font-medium text-gray-700">
             {{ $t("installation.makePublic") }}
           </label>
+        </div>
+        <div>
+          <PrivacyToggle v-model="makeInstallationPublic" />
         </div>
       </div>
     </InstallNowModal>
