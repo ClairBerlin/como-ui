@@ -108,6 +108,7 @@ watch(
 </script>
 
 <template>
+  <a href="#content" class="sr-only focus:not-sr-only">{{ $t("skip") }} </a>
   <div class="h-screen flex overflow-hidden bg-gray-100">
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog
@@ -263,7 +264,10 @@ watch(
           <MenuIcon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+      <main
+        id="content"
+        class="flex-1 relative z-0 overflow-y-auto focus:outline-none"
+      >
         <div
           class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md"
           v-if="!isLoading"
