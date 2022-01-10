@@ -25,12 +25,54 @@ yup.setLocale({
       t("field_length_mismatch", { field: label, length }),
   },
 });
+
+const countDecimalPlaces = (numString) => {
+  const seperator = numString.includes(",") ? "," : ".";
+  const [, places] = numString.split(seperator);
+  return places?.length || 0;
+};
+
+const isValidSize = (value) => {
+  if (!value) return true;
+  if (countDecimalPlaces(value) > 1) return false;
+  const size = parseFloat(value.replace(",", "."));
+  if (isNaN(size)) return false;
+  if (size < 0 || size >= 10000) return false;
+  return true;
+};
+
+const isValidHeight = (value) => {
+  if (!value) return true;
+  if (countDecimalPlaces(value) > 1) return false;
+  const size = parseFloat(value.replace(",", "."));
+  if (isNaN(size)) return false;
+  if (size < 0 || size > 20) return false;
+  return true;
+};
+
+const isValidCapacity = (value) => {
+  if (!value) return true;
+  const size = parseInt(value);
+  if (isNaN(size)) return false;
+  if (size < 0 || size > 500) return false;
+  return true;
+};
+
 const schema = yup.object().shape({
   name: yup.string().required().max(50).label(t("room.name")),
   description: yup.string().nullable().optional().label(t("description")),
-  size: yup.string().nullable().optional().max(5).label(t("room.size")),
-  height: yup.string().nullable().optional().max(3).label(t("room.height")),
-  capacity: yup.string().nullable().optional().label(t("room.maxOccupancy")),
+  size: yup
+    .string()
+    .test("is-valid-size", t("room.invalidSize"), isValidSize)
+    .label(t("room.size")),
+  height: yup
+    .string()
+    .test("is-valid-height", t("room.invalidHeight"), isValidHeight)
+    .label(t("room.height")),
+  capacity: yup
+    .string()
+    .test("is-valid-capacity", t("room.invalidMaxOccupancy"), isValidCapacity)
+    .label(t("room.maxOccupancy")),
 });
 </script>
 <template>
