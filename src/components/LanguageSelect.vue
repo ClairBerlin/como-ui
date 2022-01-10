@@ -32,13 +32,6 @@ const languages = [
     locale: "en",
     unavailable: false,
   },
-  {
-    id: 3,
-    name: "Türkçe - TR",
-    short: "🇹🇷",
-    locale: "tr",
-    unavailable: true,
-  },
 ];
 
 const { locale } = useI18n({ useScope: "global" });
