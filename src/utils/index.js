@@ -9,8 +9,6 @@ export const roleToString = (role) => {
       return "role.owner";
     case "i":
       return "role.inspector";
-    case "a":
-      return "role.assistant";
     default:
       return "-";
   }
