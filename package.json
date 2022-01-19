@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@vueuse/core": "^7.5.3",
-    "axios": "^0.24.0",
+    "axios": "^0.25.0",
     "chart.js": "^3.7.0",
     "chartjs-adapter-dayjs": "^1.0.0",
-    "daisyui": "^1.22.0",
+    "daisyui": "^1.24.3",
     "dayjs": "^1.10.7",
     "dayjs-plugin-utc": "^0.1.2",
     "js-cookie": "^3.0.1",
@@ -30,22 +30,22 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@headlessui/vue": "^1.4.2",
+    "@headlessui/vue": "^1.4.3",
     "@heroicons/vue": "^1.0.5",
     "@intlify/vite-plugin-vue-i18n": "^3.2.1",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",
-    "@tailwindcss/line-clamp": "^0.3.0",
+    "@tailwindcss/line-clamp": "^0.3.1",
     "@tailwindcss/typography": "^0.5.0",
     "@types/tailwindcss": "^3.0.2",
     "@vitejs/plugin-vue": "^2.0.1",
     "autoprefixer": "^10.4.2",
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-vue": "^8.2.0",
+    "eslint-plugin-vue": "^8.3.0",
     "prettier": "^2.5.1",
-    "tailwindcss": "^3.0.12",
-    "vite": "^2.7.10"
+    "tailwindcss": "^3.0.15",
+    "vite": "^2.7.13"
   }
 }
