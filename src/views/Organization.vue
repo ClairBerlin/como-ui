@@ -20,12 +20,12 @@ const currentOrgId = computed(() => {
 });
 
 const org = computed(() => store.getters["nav/getOrgMembership"]);
-const orgName = computed(() => org?.value.orgName || "…");
+const orgName = computed(() => org?.value?.orgName || "…");
 
 const memberships = computed(() => {
   const msObj = store.getters["jv/get"](
     "Membership",
-    `$[?(@.organization_name=="${org?.value.orgName}")]`
+    `$[?(@.organization_name=="${org?.value?.orgName}")]`
   );
   const msList = Object.entries(msObj);
   return msList.map(([, ms]) => ms);
@@ -48,6 +48,7 @@ const deleteOrg = async () => {
   store.commit("jv/deleteRecord", {
     _jv: { type: "Organization", id: currentOrgId.value },
   });
+  await store.dispatch("authuser/fetchMemberships");
   router.push({ name: "org-management" });
 };
 
