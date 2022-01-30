@@ -17,6 +17,7 @@ const createOrg = async ({ name, description }) => {
       newOrg,
       { url: `organizations/` },
     ]);
+    await store.dispatch("authuser/fetchMemberships");
     router.push({ name: "org-management-detail", params: { orgId: _jv.id } });
   } catch (e) {
     toast.error(t("org.createError"));
