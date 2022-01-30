@@ -80,11 +80,12 @@ const isLoading = computed(() => {
 });
 
 onMounted(async () => {
+  console.log("Starting application...");
   store.dispatch("nav/loadSensorTypes");
   await store.dispatch("authuser/fetchAuthenticatedUser");
   const memberships = store.getters["authuser/getMemberships"];
-  if (route.name === "dashboard") {
-    if (memberships?.length > 0) {
+  if (memberships?.length > 0) {
+    if (route.name === "dashboard") {
       // If no organization is selected or stored in the cookie, default to the user's first organization.
       const lastVistedOrg = parseInt(Cookies.get("lastVistedOrg"));
       const lastVistedOrgId = !Number.isNaN(lastVistedOrg)
@@ -93,9 +94,10 @@ onMounted(async () => {
       const defaultOrgId = lastVistedOrgId || memberships[0].orgId;
       await loadOrganization(defaultOrgId);
       router.push({ name: "overview", params: { orgId: defaultOrgId } });
-    } else {
-      router.push({ name: "org-management-add" });
     }
+  } else {
+    store.dispatch("nav/clearOrganization");
+    router.push({ name: "org-management-add" });
   }
 });
 

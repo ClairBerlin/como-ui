@@ -84,6 +84,13 @@ const actions = {
       );
     }
   },
+
+  clearOrganization({ commit }) {
+    console.log("No organization present, clearing store...");
+    commit("CLEAR_LOADED_ORG");
+    commit("STOP_INVENTORY_LOADING");
+    commit("STOP_ORG_LOADING");
+  },
 };
 
 export default actions;
@@ -96,4 +103,6 @@ const clearInventory = (commit) => {
   commit("jv/clearRecords", { _jv: { type: "Site" } }, { root: true });
   commit("jv/clearRecords", { _jv: { type: "Address" } }, { root: true });
   commit("CLEAR_LOADED_ORG");
+  commit("STOP_INVENTORY_LOADING");
+  commit("STOP_ORG_LOADING");
 };
