@@ -146,9 +146,11 @@
   "role": {
     "assistant": "Assistant",
     "change": "Change Role",
+    "downgrade": "Downgrade to Inspector",
     "inspector": "Inspector",
     "owner": "Owner",
     "singular": "Role",
+    "upgrade": "Upgrade to Owner",
     "your": "Your Role"
   },
   "room": {
