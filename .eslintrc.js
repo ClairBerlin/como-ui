@@ -6,5 +6,13 @@ module.exports = {
   ],
   rules: {
     "vue/no-unused-vars": "error",
+    "vue/script-setup-uses-vars": "error",
+  },
+  env: {
+    "vue/setup-compiler-macros": true,
+  },
+  parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
   },
 };
