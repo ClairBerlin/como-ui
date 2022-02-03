@@ -146,6 +146,8 @@
   "role": {
     "assistant": "Assistant",
     "change": "Change Role",
+    "changeError": "Failed to change the role",
+    "changeSucces": "Successfully updated the role",
     "downgrade": "Downgrade to Inspector",
     "inspector": "Inspector",
     "owner": "Owner",

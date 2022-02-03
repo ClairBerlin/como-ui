@@ -134,7 +134,23 @@ const addMember = async () => {
   }
 };
 
-const changeRole = (user) => console.log({ user });
+const changeRole = async (membership) => {
+  const { id: mid } = membership._jv;
+  const newRole = membership.role === "O" ? "I" : "O";
+  try {
+    const newMembership = {
+      _jv: { type: "Membership", id: mid, role: newRole },
+    };
+    await store.dispatch("jv/patch", [
+      newMembership,
+      { url: `memberships/${mid}/` },
+    ]);
+    toast.success(t("role.changeSucces"));
+  } catch (e) {
+    toast.error(t("role.changeError"));
+    console.log(e);
+  }
+};
 const changeRoleTooltip = (role) =>
   t(role === "I" ? "role.upgrade" : "role.downgrade");
 </script>
@@ -269,7 +285,7 @@ const changeRoleTooltip = (role) =>
                     :data-tip="changeRoleTooltip(membership.role)"
                     v-if="isOwner"
                     class="btn-sm m-2 gray-button font-semibold w-max tooltip"
-                    @click="() => changeRole(membership.user)"
+                    @click="() => changeRole(membership)"
                   >
                     <ArrowCircleDownIcon
                       v-if="membership?.role === 'O'"
