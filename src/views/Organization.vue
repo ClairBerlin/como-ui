@@ -139,7 +139,8 @@ const changeRole = async (membership) => {
   const newRole = membership.role === "O" ? "I" : "O";
   try {
     const newMembership = {
-      _jv: { type: "Membership", id: mid, role: newRole },
+      _jv: { type: "Membership", id: mid },
+      role: newRole,
     };
     await store.dispatch("jv/patch", [
       newMembership,
