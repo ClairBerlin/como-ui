@@ -7,7 +7,12 @@ import { useToast } from "vue-toastification";
 import { roleToString } from "@/utils";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
-import { UserAddIcon, TrashIcon } from "@heroicons/vue/outline";
+import {
+  UserAddIcon,
+  TrashIcon,
+  ArrowCircleUpIcon,
+  ArrowCircleDownIcon,
+} from "@heroicons/vue/outline";
 import AddMemberModal from "@/components/AddMemberModal.vue";
 
 const router = useRouter();
@@ -129,7 +134,26 @@ const addMember = async () => {
   }
 };
 
-const changeRole = () => console.log("TODO: open modal to change role");
+const changeRole = async (membership) => {
+  const { id: mid } = membership._jv;
+  const newRole = membership.role === "O" ? "I" : "O";
+  try {
+    const newMembership = {
+      _jv: { type: "Membership", id: mid },
+      role: newRole,
+    };
+    await store.dispatch("jv/patch", [
+      newMembership,
+      { url: `memberships/${mid}/` },
+    ]);
+    toast.success(t("role.changeSucces"));
+  } catch (e) {
+    toast.error(t("role.changeError"));
+    console.log(e);
+  }
+};
+const changeRoleTooltip = (role) =>
+  t(role === "I" ? "role.upgrade" : "role.downgrade");
 </script>
 
 <template>
@@ -256,19 +280,27 @@ const changeRole = () => console.log("TODO: open modal to change role");
               >
                 {{ $t(roleToString(membership.role)) }}
               </td>
-              <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
-                <!-- <Dropdown :options="options" :icon="icon" /> -->
+              <td class="px-4 py-4 whitespace-nowrap">
                 <div class="flex flex-col sm:flex-row">
                   <div
+                    :data-tip="changeRoleTooltip(membership.role)"
                     v-if="isOwner"
-                    class="btn-sm m-2 gray-button font-semibold w-max"
-                    @click="changeRole"
+                    class="btn-sm m-2 gray-button font-semibold w-max tooltip"
+                    @click="() => changeRole(membership)"
                   >
-                    {{ $t("role.change") }}
+                    <ArrowCircleDownIcon
+                      v-if="membership?.role === 'O'"
+                      class="w-5 h-5"
+                    />
+                    <ArrowCircleUpIcon
+                      v-if="membership?.role === 'I'"
+                      class="w-5 h-5"
+                    />
                   </div>
                   <div
                     v-if="isOwner"
-                    class="btn-sm m-2 mr-0 gray-button font-semibold"
+                    :data-tip="$t('remove')"
+                    class="btn-sm tooltip m-2 mr-0 gray-button bg-red-600 hover:bg-red-700"
                     @click="
                       () => {
                         openMemberRemovalModal();
@@ -276,8 +308,7 @@ const changeRole = () => console.log("TODO: open modal to change role");
                       }
                     "
                   >
-                    <TrashIcon class="w-4 h-4 mr-2" />
-                    <span>{{ $t("remove") }}</span>
+                    <TrashIcon class="w-4 h-4 text-red-100" />
                   </div>
                 </div>
               </td>
