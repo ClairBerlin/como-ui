@@ -49,16 +49,16 @@ const updateOrganization = async ({ name, description }) => {
 
 <template>
   <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6">
+    <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6">
       <h1 class="text-3xl font-bold leading-tight text-gray-900">
         {{ $t("org.edit") }}
       </h1>
     </div>
   </header>
-  <div class="max-w-sm sm:max-w-lg mt-8">
+  <div class="mt-8 max-w-sm sm:max-w-lg">
     <div
       v-if="!isOwner"
-      class="shadow-md mt-4 rounded-md flex items-center bg-red-50 border-l-4 border-red-400 p-4"
+      class="mt-4 flex items-center rounded-md border-l-4 border-red-400 bg-red-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">
@@ -72,14 +72,14 @@ const updateOrganization = async ({ name, description }) => {
               name: 'org-management-detail',
               params: { orgId: currentOrgId },
             }"
-            class="font-medium underline text-red-700 hover:text-red-600"
+            class="font-medium text-red-700 underline hover:text-red-600"
           >
             Find their contact information here.
           </router-link>
         </div>
       </div>
     </div>
-    <div v-else class="bg-white rounded-md shadow-md p-6">
+    <div v-else class="rounded-md bg-white p-6 shadow-md">
       <OrganizationForm
         :allow-edit="isOwner"
         :org-name="currentOrg?.name"

@@ -7,20 +7,20 @@ defineProps({
 </script>
 
 <template>
-  <div class="dropdown dropdown-end text-gray-900">
-    <div tabindex="0" class="m-1 btn gray-button">
+  <div class="dropdown-end dropdown text-gray-900">
+    <div tabindex="0" class="gray-button btn m-1">
       <component v-if="icon" :is="icon" class="h-5 w-5" />
       <div v-else>{{ buttonText }}</div>
     </div>
 
     <ul
       tabindex="0"
-      class="shadow-lg rounded-md menu dropdown-content w-52 ring-1 ring-gray-200 bg-white text-xs"
+      class="dropdown-content menu w-52 rounded-md bg-white text-xs shadow-lg ring-1 ring-gray-200"
     >
       <li
         v-for="option in options"
         :key="option.href"
-        class="font-medium hover:bg-gray-50 border-b border-gray-200 last:border-none como-focus"
+        class="como-focus border-b border-gray-200 font-medium last:border-none hover:bg-gray-50"
       >
         <router-link :to="option.href">{{ $t(option.title) }}</router-link>
       </li>

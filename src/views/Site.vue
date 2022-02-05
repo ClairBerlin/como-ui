@@ -118,8 +118,8 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="divide-y-2 divide-gray-300">
-    <div class="max-w-sm sm:max-w-lg mt-8">
-      <div class="bg-white rounded-md shadow-md p-6">
+    <div class="mt-8 max-w-sm sm:max-w-lg">
+      <div class="rounded-md bg-white p-6 shadow-md">
         <SiteForm
           :allow-edit="isOwner"
           :site-name="site.name"
@@ -144,57 +144,57 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
           {{ $t("delete-room-modal.message") }}
         </p>
       </DeletionModal>
-      <div class="flex justify-between items-center">
-        <h2 class="font-bold text-xl">
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">
           {{ $t("rooms") }} {{ $t("of") }} {{ site.name }}
         </h2>
         <div class="flex flex-row">
           <router-link
             v-if="isOwner"
-            class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+            class="gray-button btn-sm m-2 mr-0 w-max font-semibold"
             :to="{
               name: 'addRoom',
               params: { siteId: siteId },
             }"
           >
-            <PlusIcon class="w-4 h-4 mr-2" />
+            <PlusIcon class="mr-2 h-4 w-4" />
             <span>{{ $t("room.add") }}</span>
           </router-link>
         </div>
       </div>
 
       <table
-        class="min-w-full divide-y divide-gray-200 ring-1 ring-gray-300 rounded-md bg-white overflow-hidden"
+        class="min-w-full divide-y divide-gray-200 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
       >
         <thead class="bg-gray-50">
           <tr>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("room.name") }}
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+              class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("room.size") }} [m<sup>2</sup>]
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+              class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("room.height") }} [m]
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+              class="hidden py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
             >
               {{ $t("room.maxOccupancy") }}
             </th>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("action") }}
             </th>
@@ -206,7 +206,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
             :key="room._jv.id"
             :class="[roomIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
           >
-            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               <router-link
                 class="como-link"
                 :to="{
@@ -217,22 +217,22 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
                 {{ room.name }}
               </router-link>
             </td>
-            <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+            <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
               {{ room.size_sqm ? $n(Number(room.size_sqm)) : "-" }}
             </td>
-            <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+            <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
               {{ room.height_m ? $n(Number(room.height_m)) : "-" }}
             </td>
             <td
-              class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
+              class="hidden whitespace-nowrap px-2 py-4 text-right sm:px-6 md:table-cell"
             >
               {{ room.max_occupancy || "-" }}
             </td>
-            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               <div class="flex flex-col sm:flex-row">
                 <div
                   v-if="isOwner"
-                  class="btn-sm m-2 mr-0 gray-button font-semibold"
+                  class="gray-button btn-sm m-2 mr-0 font-semibold"
                   @click="
                     () => {
                       openDeleteRoomModal();
@@ -240,7 +240,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
                     }
                   "
                 >
-                  <TrashIcon class="w-4 h-4 mr-2" />
+                  <TrashIcon class="mr-2 h-4 w-4" />
                   <span>{{ $t("remove") }}</span>
                 </div>
               </div>
@@ -251,7 +251,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
     </div>
     <div
       v-else
-      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+      class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">
@@ -261,7 +261,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
           {{ $t("site.noRooms") }}.
           <router-link
             v-if="isOwner"
-            class="font-medium underline text-yellow-700 hover:text-yellow-600"
+            class="font-medium text-yellow-700 underline hover:text-yellow-600"
             :to="{
               name: 'addRoom',
               params: { siteId: siteId },

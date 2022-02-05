@@ -47,7 +47,7 @@ const getLatestMeasurement = (sample) => {
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="mx-2">
-    <h2 class="font-bold text-xl mt-8">{{ $t("Active Installations") }}</h2>
+    <h2 class="mt-8 text-xl font-bold">{{ $t("Active Installations") }}</h2>
     <div class="">
       <div v-if="hasActiveSensors">
         <ul
@@ -73,7 +73,7 @@ const getLatestMeasurement = (sample) => {
       </div>
       <div
         v-else
-        class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+        class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
       >
         <div class="flex">
           <div class="flex-shrink-0">
@@ -88,7 +88,7 @@ const getLatestMeasurement = (sample) => {
             <!-- TODO: use :to="{ name: 'installation-add' }" -->
             <router-link
               to="#"
-              class="font-medium underline text-yellow-700 hover:text-yellow-600"
+              class="font-medium text-yellow-700 underline hover:text-yellow-600"
             >
               {{ $t("installation.clickToAdd") }}
             </router-link>

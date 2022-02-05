@@ -158,7 +158,7 @@ const changeRoleTooltip = (role) =>
 
 <template>
   <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8">
       <h1 class="text-3xl font-bold leading-tight text-gray-900">
         {{ $t("org.members") }} {{ $t("of") }} {{ orgName }}
       </h1>
@@ -185,22 +185,22 @@ const changeRoleTooltip = (role) =>
       </p>
     </DeletionModal>
     <div class="text-black">
-      <div class="flex justify-end items-center">
+      <div class="flex items-center justify-end">
         <div class="flex">
           <div
             v-if="isOwner"
-            class="m-2 gray-button font-semibold"
+            class="gray-button m-2 font-semibold"
             @click="openDeleteOrgModal"
           >
-            <TrashIcon class="w-4 h-4 mr-2" />
+            <TrashIcon class="mr-2 h-4 w-4" />
             <span>{{ $t("org.delete") }}</span>
           </div>
           <div
             v-if="isOwner"
-            class="m-2 mr-0 gray-button font-semibold"
+            class="gray-button m-2 mr-0 font-semibold"
             @click="showAddMemberModal = true"
           >
-            <UserAddIcon class="w-4 h-4 mr-2" />
+            <UserAddIcon class="mr-2 h-4 w-4" />
             <span>{{ $t("org.addMember") }}</span>
           </div>
           <AddMemberModal
@@ -211,7 +211,7 @@ const changeRoleTooltip = (role) =>
           >
             <div class="form-control">
               <label class="label">
-                <span class="label-text text-black font-bold">{{
+                <span class="label-text font-bold text-black">{{
                   $t("user.email")
                 }}</span>
               </label>
@@ -219,39 +219,39 @@ const changeRoleTooltip = (role) =>
                 type="email"
                 v-model.trim="searchUserEmail"
                 placeholder="name@domain.org"
-                class="input-bordered como-focus rounded bg-white text-gray-600"
+                class="como-focus input-bordered rounded bg-white text-gray-600"
               />
             </div>
           </AddMemberModal>
         </div>
       </div>
       <div
-        class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden"
+        class="text-md overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
       >
         <table class="min-w-full divide-y divide-gray-200">
           <thead class="bg-gray-50">
             <tr>
               <th
                 scope="col"
-                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+                class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
               >
                 {{ $t("name") }}
               </th>
               <th
                 scope="col"
-                class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+                class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
               >
                 {{ $t("email") }}
               </th>
               <th
                 scope="col"
-                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+                class="hidden px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
               >
                 {{ $t("role.singular") }}
               </th>
               <th
                 scope="col"
-                class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+                class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
               >
                 {{ $t("actions") }}
               </th>
@@ -263,44 +263,44 @@ const changeRoleTooltip = (role) =>
               :key="membership._jv.id"
               :class="[memberIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
             >
-              <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+              <td class="whitespace-nowrap px-2 py-4 sm:px-6">
                 <div class="flex">
                   {{ membership.user.first_name }}
                   {{ membership.user.last_name }}
                 </div>
-                <div class="text-gray-700 text-sm">
+                <div class="text-sm text-gray-700">
                   {{ membership.user.username }}
                 </div>
               </td>
-              <td class="sm:px-6 py-4 whitespace-nowrap">
+              <td class="whitespace-nowrap py-4 sm:px-6">
                 {{ membership.user.email }}
               </td>
               <td
-                class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap"
+                class="hidden whitespace-nowrap px-2 py-4 sm:px-6 md:table-cell"
               >
                 {{ $t(roleToString(membership.role)) }}
               </td>
-              <td class="px-4 py-4 whitespace-nowrap">
+              <td class="whitespace-nowrap px-4 py-4">
                 <div class="flex flex-col sm:flex-row">
                   <div
                     :data-tip="changeRoleTooltip(membership.role)"
                     v-if="isOwner"
-                    class="btn-sm m-2 gray-button font-semibold w-max tooltip"
+                    class="gray-button tooltip btn-sm m-2 w-max font-semibold"
                     @click="() => changeRole(membership)"
                   >
                     <ArrowCircleDownIcon
                       v-if="membership?.role === 'O'"
-                      class="w-5 h-5"
+                      class="h-5 w-5"
                     />
                     <ArrowCircleUpIcon
                       v-if="membership?.role === 'I'"
-                      class="w-5 h-5"
+                      class="h-5 w-5"
                     />
                   </div>
                   <div
                     v-if="isOwner"
                     :data-tip="$t('remove')"
-                    class="btn-sm tooltip m-2 mr-0 gray-button bg-red-600 hover:bg-red-700"
+                    class="gray-button tooltip btn-sm m-2 mr-0 bg-red-600 hover:bg-red-700"
                     @click="
                       () => {
                         openMemberRemovalModal();
@@ -308,7 +308,7 @@ const changeRoleTooltip = (role) =>
                       }
                     "
                   >
-                    <TrashIcon class="w-4 h-4 text-red-100" />
+                    <TrashIcon class="h-4 w-4 text-red-100" />
                   </div>
                 </div>
               </td>

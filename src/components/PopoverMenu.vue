@@ -24,7 +24,7 @@ const iconClasses = () =>
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"
-        class="w-full inline-flex items-center px-2 py-4 text-sm font-medium text-black rounded-md group hover:text-opacity-100 hover:bg-gray-100 como-focus justify-between"
+        class="group como-focus inline-flex w-full items-center justify-between rounded-md px-2 py-4 text-sm font-medium text-black hover:bg-gray-100 hover:text-opacity-100"
       >
         <div class="flex items-center">
           <component
@@ -32,7 +32,7 @@ const iconClasses = () =>
             :is="icon"
             :class="[
               'text-gray-500 group-hover:text-gray-600',
-              'mr-3 flex-shrink-0 h-6 w-6',
+              'mr-3 h-6 w-6 flex-shrink-0',
             ]"
             aria-hidden="true"
           />
@@ -41,7 +41,7 @@ const iconClasses = () =>
         <component
           :is="popOverAbove ? ChevronUpIcon : ChevronDownIcon"
           :class="open ? '' : 'text-opacity-70'"
-          class="w-5 h-5 ml-2 transition duration-150 ease-in-out group-hover:text-opacity-80"
+          class="ml-2 h-5 w-5 transition duration-150 ease-in-out group-hover:text-opacity-80"
           aria-hidden="true"
         />
       </PopoverButton>
@@ -57,18 +57,18 @@ const iconClasses = () =>
         <PopoverPanel
           :class="[
             popOverAbove ? 'top-[-9rem]' : 'top-16',
-            'w-full absolute z-10',
+            'absolute z-10 w-full',
           ]"
           v-slot="{ close }"
         >
-          <div class="shadow-lg rounded-lg ring-1 ring-gray-300">
-            <div class="relative bg-white text-xs rounded-lg">
-              <div class="flex items-center pl-4 pr-2 py-2 justify-between">
+          <div class="rounded-lg shadow-lg ring-1 ring-gray-300">
+            <div class="relative rounded-lg bg-white text-xs">
+              <div class="flex items-center justify-between py-2 pl-4 pr-2">
                 <div class="font-semibold text-gray-500">
                   {{ $t(contextTitle) }}
                 </div>
                 <XIcon
-                  class="h-4 w-4 text-gray-600 cursor-pointer"
+                  class="h-4 w-4 cursor-pointer text-gray-600"
                   @click="close"
                 />
               </div>
@@ -80,7 +80,7 @@ const iconClasses = () =>
                   params: item.params,
                 }"
                 @click="close"
-                class="flex items-center px-4 py-2 transition duration-150 ease-in-out hover:bg-gray-100 como-focus border-t border-gray-200 cursor-pointer last:rounded-b-md"
+                class="como-focus flex cursor-pointer items-center border-t border-gray-200 px-4 py-2 transition duration-150 ease-in-out last:rounded-b-md hover:bg-gray-100"
               >
                 <div class="flex">
                   <CheckIcon :class="iconClasses()" v-if="item.selected" />
@@ -91,7 +91,7 @@ const iconClasses = () =>
                     aria-hidden="true"
                   />
                   <div v-else class="w-6" />
-                  <p class="font-medium text-gray-900 whitespace-nowrap">
+                  <p class="whitespace-nowrap font-medium text-gray-900">
                     {{ item?.icon ? $t(item.name) : item.name }}
                   </p>
                 </div>

@@ -111,11 +111,11 @@ watch(
 
 <template>
   <a href="#content" class="sr-only focus:not-sr-only">{{ $t("skip") }} </a>
-  <div class="h-screen flex overflow-hidden bg-gray-100">
+  <div class="flex h-screen overflow-hidden bg-gray-100">
     <TransitionRoot as="template" :show="sidebarOpen">
       <Dialog
         as="div"
-        class="fixed inset-0 flex z-40 lg:hidden"
+        class="fixed inset-0 z-40 flex lg:hidden"
         @close="sidebarOpen = false"
       >
         <TransitionChild
@@ -138,7 +138,7 @@ watch(
           leave-from="translate-x-0"
           leave-to="-translate-x-full"
         >
-          <div class="relative flex-1 flex flex-col max-w-xs w-full bg-white">
+          <div class="relative flex w-full max-w-xs flex-1 flex-col bg-white">
             <TransitionChild
               as="template"
               enter="ease-in-out duration-300"
@@ -151,7 +151,7 @@ watch(
               <div class="absolute top-0 right-0 -mr-12 pt-2">
                 <button
                   type="button"
-                  class="ml-1 flex items-center justify-center h-10 w-10 rounded-full como-focus"
+                  class="como-focus ml-1 flex h-10 w-10 items-center justify-center rounded-full"
                   @click="sidebarOpen = false"
                 >
                   <span class="sr-only">Close sidebar</span>
@@ -159,13 +159,13 @@ watch(
                 </button>
               </div>
             </TransitionChild>
-            <div class="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+            <div class="h-0 flex-1 overflow-y-auto pt-5 pb-4">
               <Logo />
-              <div class="w-full px-3 border-b border-gray-200" />
-              <nav class="mt-1 flex-1 px-2 space-y-1">
+              <div class="w-full border-b border-gray-200 px-3" />
+              <nav class="mt-1 flex-1 space-y-1 px-2">
                 <OrganizationMenu />
                 <LanguageSelect class="py-1" />
-                <div class="w-full px-3 my-1 border-b border-gray-200" />
+                <div class="my-1 w-full border-b border-gray-200 px-3" />
                 <div v-if="isOrgContext">
                   <router-link
                     v-for="item in orgNavigation"
@@ -179,7 +179,7 @@ watch(
                       isCurrentRoute(item.routeName)
                         ? 'bg-indigo-50 text-indigo-900'
                         : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                      'group flex items-center px-2 py-2 text-base font-medium rounded-md como-focus',
+                      'group como-focus flex items-center rounded-md px-2 py-2 text-base font-medium',
                     ]"
                   >
                     <component
@@ -188,20 +188,20 @@ watch(
                         isCurrentRoute(item.routeName)
                           ? 'text-indigo-900'
                           : 'text-gray-500 group-hover:text-gray-600',
-                        'mr-4 flex-shrink-0 h-6 w-6',
+                        'mr-4 h-6 w-6 flex-shrink-0',
                       ]"
                       aria-hidden="true"
                     />
                     {{ $t(item.name) }}
                   </router-link>
                 </div>
-                <div class="w-full px-3 my-1 border-b border-gray-200" />
+                <div class="my-1 w-full border-b border-gray-200 px-3" />
                 <ProfileMenu />
               </nav>
             </div>
           </div>
         </TransitionChild>
-        <div class="flex-shrink-0 w-14">
+        <div class="w-14 flex-shrink-0">
           <!-- Force sidebar to shrink to fit close icon -->
         </div>
       </Dialog>
@@ -209,17 +209,17 @@ watch(
 
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:flex lg:flex-shrink-0">
-      <div class="flex flex-col w-64">
+      <div class="flex w-64 flex-col">
         <div
-          class="flex-1 flex flex-col min-h-0 border-r border-gray-200 shadow-md bg-white"
+          class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white shadow-md"
         >
-          <div class="flex-1 flex mx-2 px-1 flex-col pt-6 pb-1 overflow-y-auto">
+          <div class="mx-2 flex flex-1 flex-col overflow-y-auto px-1 pt-6 pb-1">
             <Logo />
-            <div class="w-full px-3 border-b border-gray-200" />
-            <nav class="mt-1 flex-1 bg-white space-y-1">
+            <div class="w-full border-b border-gray-200 px-3" />
+            <nav class="mt-1 flex-1 space-y-1 bg-white">
               <OrganizationMenu />
               <LanguageSelect class="py-1" />
-              <div class="w-full px-3 my-1 border-b border-gray-200" />
+              <div class="my-1 w-full border-b border-gray-200 px-3" />
               <div v-if="isOrgContext">
                 <router-link
                   v-for="item in orgNavigation"
@@ -230,9 +230,9 @@ watch(
                   }"
                   :class="[
                     isCurrentRoute(item.routeName)
-                      ? 'bg-indigo-50 text-indigo-900 font-bold'
+                      ? 'bg-indigo-50 font-bold text-indigo-900'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                    'group flex items-center my-1 px-2 py-4 text-sm font-medium rounded-md como-focus',
+                    'group como-focus my-1 flex items-center rounded-md px-2 py-4 text-sm font-medium',
                   ]"
                 >
                   <component
@@ -241,7 +241,7 @@ watch(
                       isCurrentRoute(item.routeName)
                         ? 'text-indigo-900'
                         : 'text-gray-500 group-hover:text-gray-600',
-                      'mr-3 flex-shrink-0 h-6 w-6',
+                      'mr-3 h-6 w-6 flex-shrink-0',
                     ]"
                     aria-hidden="true"
                   />
@@ -249,17 +249,17 @@ watch(
                 </router-link>
               </div>
             </nav>
-            <div class="w-full px-3 my-1 border-b border-gray-200" />
+            <div class="my-1 w-full border-b border-gray-200 px-3" />
             <ProfileMenu class="w-full" />
           </div>
         </div>
       </div>
     </div>
-    <div class="flex flex-col w-0 flex-1 overflow-hidden">
-      <div class="lg:hidden pl-1 pt-1 sm:pl-3 sm:pt-3">
+    <div class="flex w-0 flex-1 flex-col overflow-hidden">
+      <div class="pl-1 pt-1 sm:pl-3 sm:pt-3 lg:hidden">
         <button
           type="button"
-          class="-ml-0.5 -mt-0.5 mb-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-gray-500 hover:text-gray-900 como-focus"
+          class="como-focus -ml-0.5 -mt-0.5 mb-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
           @click="sidebarOpen = true"
         >
           <span class="sr-only">Open sidebar</span>
@@ -268,10 +268,10 @@ watch(
       </div>
       <main
         id="content"
-        class="flex-1 relative z-0 overflow-y-auto focus:outline-none"
+        class="relative z-0 flex-1 overflow-y-auto focus:outline-none"
       >
         <div
-          class="max-w-screen-xl sm:py-6 mx-auto sm:px-6 rounded-md"
+          class="mx-auto max-w-screen-xl rounded-md sm:py-6 sm:px-6"
           v-if="!isLoading"
         >
           <router-view />

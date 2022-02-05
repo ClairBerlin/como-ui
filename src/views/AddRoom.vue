@@ -47,8 +47,8 @@ const createRoom = async ({ name, description, size, height, capacity }) => {
 </script>
 
 <template>
-  <div class="max-w-sm sm:max-w-lg mt-8">
-    <div class="bg-white rounded-md shadow-md p-6">
+  <div class="mt-8 max-w-sm sm:max-w-lg">
+    <div class="rounded-md bg-white p-6 shadow-md">
       <RoomForm
         :allow-edit="isOwner"
         button-text="room.add"

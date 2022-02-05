@@ -42,7 +42,7 @@ const {
 
 <template>
   <div>
-    <label class="block font-semibold text-gray-900 mb-1" :for="name">{{
+    <label class="mb-1 block font-semibold text-gray-900" :for="name">{{
       label
     }}</label>
     <component
@@ -58,10 +58,10 @@ const {
       :class="[
         'border-2 focus:outline-none focus:ring-1',
         !meta.valid
-          ? 'border-red-500 focus:ring-red-500 !important'
-          : 'border-gray-300 focus:ring-indigo-500 !important',
-        'w-full text-gray-900 shadow-inner rounded-md',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
+          ? '!important border-red-500 focus:ring-red-500'
+          : '!important border-gray-300 focus:ring-indigo-500',
+        'w-full rounded-md text-gray-900 shadow-inner',
+        'disabled:cursor-not-allowed disabled:opacity-50',
       ]"
     />
 

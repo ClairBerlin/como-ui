@@ -50,7 +50,7 @@ const ppmColor = getColor();
         : ppm <= 1200
         ? 'bg-[#EBAC56]'
         : 'bg-[#E1665E]',
-      'max-w-xs rounded-md shadow-md hover:shadow-lg drop-shadow-md hover:drop-shadow-lg p-8 ring-1 ring-gray-300 ring-opacity-50 text-black',
+      'max-w-xs rounded-md p-8 text-black shadow-md ring-1 ring-gray-300 ring-opacity-50 drop-shadow-md hover:shadow-lg hover:drop-shadow-lg',
     ]"
   >
     <div class="flex justify-between font-bold">
@@ -60,7 +60,7 @@ const ppmColor = getColor();
             name: 'sensor',
             params: { sensorId: sensorId },
           }"
-          class="underline text-2xl hover:text-gray-900 hover:no-underline"
+          class="text-2xl underline hover:text-gray-900 hover:no-underline"
         >
           {{ sensorName }}
         </router-link>
@@ -69,7 +69,7 @@ const ppmColor = getColor();
             name: 'room',
             params: { roomId: roomId },
           }"
-          class="underline text-xl hover:text-gray-900 hover:no-underline"
+          class="text-xl underline hover:text-gray-900 hover:no-underline"
         >
           {{ roomName }}
         </router-link>
@@ -81,14 +81,14 @@ const ppmColor = getColor();
     </div>
     <div class="mt-6 flex justify-between">
       <div class="flex flex-col">
-        <div class="text-gray-900 text-lg font-bold">
+        <div class="text-lg font-bold text-gray-900">
           {{ $t("Latest") }} CO<sub>2</sub> {{ $t("Value") }}
         </div>
-        <div class="text-right mt-2">
+        <div class="mt-2 text-right">
           <div class="text-5xl font-black tracking-tight">
             {{ latestMeasurement || "-" }}
           </div>
-          <div class="text-2xl font-bold tracking-tight leading-3">ppm</div>
+          <div class="text-2xl font-bold leading-3 tracking-tight">ppm</div>
         </div>
       </div>
       <div>
@@ -110,9 +110,9 @@ const ppmColor = getColor();
     <div class="mt-8">
       <router-link
         :to="{ name: 'installation', params: { installationId } }"
-        class="bg-black hover:ring hover:ring-gray-300 shadow-md drop-shadow-md flex p-2 w-full rounded-lg text-lg text-gray-300 font-semibold items-center justify-center"
+        class="flex w-full items-center justify-center rounded-lg bg-black p-2 text-lg font-semibold text-gray-300 shadow-md drop-shadow-md hover:ring hover:ring-gray-300"
       >
-        <ChartBarIcon class="w-5 h-5 mr-3" />
+        <ChartBarIcon class="mr-3 h-5 w-5" />
         <span>{{ $t("View") }} CO<sub>2</sub> {{ $t("Chart") }}</span>
       </router-link>
     </div>

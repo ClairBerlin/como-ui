@@ -11,10 +11,10 @@ const hasMemberships = () => memberships.value?.length > 0;
 
 <template>
   <div class="text-black">
-    <div class="flex justify-between items-center">
-      <h2 class="font-bold text-xl">{{ $t("org.all") }}</h2>
+    <div class="flex items-center justify-between">
+      <h2 class="text-xl font-bold">{{ $t("org.all") }}</h2>
       <router-link
-        class="m-2 font-semibold gray-button"
+        class="gray-button m-2 font-semibold"
         :to="{ name: 'org-management-add' }"
       >
         {{ $t("org.create") }}
@@ -22,26 +22,26 @@ const hasMemberships = () => memberships.value?.length > 0;
     </div>
     <div
       v-if="hasMemberships"
-      class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden"
+      class="text-md overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
     >
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("org.name") }}
             </th>
             <th
               scope="col"
-              class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider hidden sm:table-cell"
+              class="hidden py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:table-cell sm:px-6"
             >
               {{ $t("role.your") }}
             </th>
             <th
               scope="col"
-              class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("options") }}
             </th>
@@ -53,7 +53,7 @@ const hasMemberships = () => memberships.value?.length > 0;
             :key="m.orgId"
             :class="[mIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
           >
-            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               <router-link
                 class="como-link"
                 :to="{
@@ -63,10 +63,10 @@ const hasMemberships = () => memberships.value?.length > 0;
                 >{{ m.orgName }}
               </router-link>
             </td>
-            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               {{ $t(roleToString(m.role)) }}
             </td>
-            <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+            <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               <div class="flex flex-row">
                 <router-link
                   v-if="m.role === 'O'"
@@ -92,7 +92,7 @@ const hasMemberships = () => memberships.value?.length > 0;
     </div>
     <div
       v-else
-      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+      class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex-shrink-0">
         <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
@@ -101,7 +101,7 @@ const hasMemberships = () => memberships.value?.length > 0;
         You are not a member of any organization yet.
         <router-link
           :to="{ name: 'org-management-add' }"
-          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+          class="font-medium text-yellow-700 underline hover:text-yellow-600"
         >
           Click here to create one
         </router-link>

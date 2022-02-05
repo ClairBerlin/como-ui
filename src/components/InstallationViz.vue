@@ -175,7 +175,7 @@ const isTabActive = (index) => selectedTab.value === index;
 </script>
 
 <template>
-  <div class="text-black card bg-white p-4 max-w-xs sm:max-w-lg">
+  <div class="card max-w-xs bg-white p-4 text-black sm:max-w-lg">
     <div class="flex justify-between">
       <div class="card-title">
         Installation #{{ installationId }} in {{ roomName }}
@@ -242,17 +242,17 @@ const isTabActive = (index) => selectedTab.value === index;
     <div>Reference day for display: {{ referenceDayFormatted }}</div>
     <div class="flex justify-between">
       <div>
-        <div class="btn-sm gray-button" @click="previousInstant">
+        <div class="gray-button btn-sm" @click="previousInstant">
           {{ $t("previous") }}
         </div>
       </div>
       <div>
-        <div class="btn-sm gray-button" @click="nowInstant">
+        <div class="gray-button btn-sm" @click="nowInstant">
           {{ $t("now") }}
         </div>
       </div>
       <div>
-        <div class="btn-sm gray-button" @click="nextInstant">
+        <div class="gray-button btn-sm" @click="nextInstant">
           {{ $t("next") }}
         </div>
       </div>

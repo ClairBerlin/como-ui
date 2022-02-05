@@ -143,7 +143,7 @@ const installNow = async () => {
 <template>
   <div v-if="isOwner && !hasActiveInstallations && hasRooms" class="">
     <div
-      class="btn bg-indigo-600 hover:bg-indigo-700 normal-case"
+      class="btn bg-indigo-600 normal-case hover:bg-indigo-700"
       @click="showInstallNowModal = true"
     >
       {{ $t("installation.installNow") }}
@@ -162,14 +162,14 @@ const installNow = async () => {
           id="location"
           name="room"
           v-model="selectedRoom"
-          class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+          class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
         >
           <option v-for="room in rooms" :key="room._jv.id" :value="room">
             {{ room.name }}
           </option>
         </select>
       </div>
-      <div class="flex items-center my-2">
+      <div class="my-2 flex items-center">
         <div class="mr-3 text-sm">
           <label for="makePublic" class="font-medium text-gray-700">
             {{ $t("installation.makePublic") }}
@@ -184,8 +184,8 @@ const installNow = async () => {
 
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
-    <div class="max-w-sm sm:max-w-lg mt-8">
-      <div class="bg-white rounded-md shadow-md p-6">
+    <div class="mt-8 max-w-sm sm:max-w-lg">
+      <div class="rounded-md bg-white p-6 shadow-md">
         <SensorForm
           :sensor-alias="sensor.alias"
           :sensor-description="sensor.description"
@@ -203,38 +203,38 @@ const installNow = async () => {
 
   <div
     v-if="hasInstallations"
-    class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
+    class="text-md mt-8 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
   >
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("node.installationLocation") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+            class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("installation.isPublic") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+            class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("installation.installedOn") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+            class="hidden py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
           >
             {{ $t("installation.removedOn") }}
           </th>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("actions") }}
           </th>
@@ -246,23 +246,23 @@ const installNow = async () => {
           :key="installation._jv.id"
           :class="[installationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
         >
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="whitespace-nowrap px-2 py-4 sm:px-6">
             {{ installation.room.name }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+          <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
             {{ $t(`installation.public.${installation.is_public}`) }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+          <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
             {{ dayFormatTimestamp(installation.from_timestamp_s) }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+          <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
             {{ dayFormatTimestamp(installation.to_timestamp_s) }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="whitespace-nowrap px-2 py-4 sm:px-6">
             <div class="flex flex-col sm:flex-row">
               <div class="flex flex-row">
                 <router-link
-                  class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                  class="gray-button btn-sm m-2 mr-0 w-max font-semibold"
                   :to="{
                     name: 'installation',
                     params: { installationId: installation._jv.id },
@@ -272,7 +272,7 @@ const installNow = async () => {
               </div>
               <div
                 v-if="isOwner && isInstallationActive(installation)"
-                class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                class="gray-button btn-sm m-2 mr-0 w-max font-semibold"
                 @click="terminateInstallation(installation._jv.id)"
               >
                 {{ $t("installation.terminate") }}

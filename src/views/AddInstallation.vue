@@ -374,16 +374,16 @@ const terminateInstallation = async (installationId) => {
   <div v-else>
     <div v-if="isOwner">
       <div v-if="hasSensors" class="max-w-sm sm:max-w-lg">
-        <div class="bg-white rounded-md shadow-md p-6 space-y-6">
+        <div class="space-y-6 rounded-md bg-white p-6 shadow-md">
           <div>
-            <label class="block font-semibold text-gray-900 mb-1">
+            <label class="mb-1 block font-semibold text-gray-900">
               {{ $t("node.singular") }}
             </label>
             <select
               id="sensor"
               name="sensor"
               v-model="selectedSensor"
-              class="border-2 focus:outline-none focus:ring-1 border-gray-300 focus:ring-indigo-500 w-full text-gray-900 rounded-md cursor-pointer"
+              class="w-full cursor-pointer rounded-md border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
               <option disabled :value="undefined">
                 {{ $t("installation.selectSensor") }}
@@ -404,9 +404,9 @@ const terminateInstallation = async (installationId) => {
               {{ $t("node.isInstalled") }}.
             </div>
           </div>
-          <div class="flex my-2 align-middle">
+          <div class="my-2 flex align-middle">
             <div class="mr-3">
-              <label class="block font-semibold text-gray-900 mb-1">
+              <label class="mb-1 block font-semibold text-gray-900">
                 {{ $t("installation.makePublic") }}
               </label>
             </div>
@@ -415,7 +415,7 @@ const terminateInstallation = async (installationId) => {
             </div>
           </div>
           <div class="">
-            <label class="block font-semibold text-gray-900 mb-1">
+            <label class="mb-1 block font-semibold text-gray-900">
               {{ $t("installation.from") }}
             </label>
             <Datepicker
@@ -436,7 +436,7 @@ const terminateInstallation = async (installationId) => {
             ></Datepicker>
           </div>
           <div class="">
-            <label class="block font-semibold text-gray-900 mb-1"
+            <label class="mb-1 block font-semibold text-gray-900"
               >{{ `${$t("installation.to")} (${$t("optional")})` }}
             </label>
             <Datepicker
@@ -457,13 +457,13 @@ const terminateInstallation = async (installationId) => {
             ></Datepicker>
           </div>
           <div class="">
-            <label class="block font-semibold text-gray-900 mb-1"
+            <label class="mb-1 block font-semibold text-gray-900"
               >{{ `${$t("description")} (${$t("optional")})` }}
             </label>
             <textarea
               type="text"
               v-model.trim="installationDescription"
-              class="border-2 focus:outline-none focus:ring-1 border-gray-300 focus:ring-indigo-500 w-full text-gray-900 shadow-inner rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full rounded-md border-2 border-gray-300 text-gray-900 shadow-inner focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
 
@@ -474,10 +474,10 @@ const terminateInstallation = async (installationId) => {
       </div>
       <div
         v-if="hasSensors"
-        class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
+        class="text-md mt-8 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
       >
         <div v-if="hasInstallations">
-          <h3 class="text-red-800 font-semibold text-xl p-2">
+          <h3 class="p-2 text-xl font-semibold text-red-800">
             {{ $t("installation.otherInstallations") }}
             {{ selectedSensor.alias }} (EUI: {{ selectedSensor.eui64 }})
           </h3>
@@ -486,25 +486,25 @@ const terminateInstallation = async (installationId) => {
               <tr>
                 <th
                   scope="col"
-                  class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+                  class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
                 >
                   {{ $t("room.singular") }}
                 </th>
                 <th
                   scope="col"
-                  class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+                  class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
                 >
                   {{ $t("installation.isPublic") }}
                 </th>
                 <th
                   scope="col"
-                  class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+                  class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
                 >
                   {{ $t("installation.installedOn") }}
                 </th>
                 <th
                   scope="col"
-                  class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+                  class="hidden py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
                 >
                   {{ $t("installation.removedOn") }}
                 </th>
@@ -516,23 +516,23 @@ const terminateInstallation = async (installationId) => {
                 :key="installation._jv.id"
                 :class="[installationIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
               >
-                <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                <td class="whitespace-nowrap px-2 py-4 sm:px-6">
                   {{ installation.room.name }}
                 </td>
-                <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+                <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
                   {{ $t(`installation.public.${installation.is_public}`) }}
                 </td>
-                <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+                <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
                   {{ detailFormatTimestamp(installation.from_timestamp_s) }}
                 </td>
-                <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+                <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
                   {{ detailFormatTimestamp(installation.to_timestamp_s) }}
                 </td>
-                <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+                <td class="whitespace-nowrap px-2 py-4 sm:px-6">
                   <div class="flex flex-col sm:flex-row">
                     <div
                       v-if="isOwner && isInstallationActive(installation)"
-                      class="btn-sm m-2 mr-0 gray-button font-semibold w-max"
+                      class="gray-button btn-sm m-2 mr-0 w-max font-semibold"
                       @click="terminateInstallation(installation._jv.id)"
                     >
                       {{ $t("installation.terminate") }}
@@ -546,7 +546,7 @@ const terminateInstallation = async (installationId) => {
       </div>
       <div
         v-else
-        class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+        class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
       >
         <div class="flex">
           <div class="flex-shrink-0">
@@ -561,7 +561,7 @@ const terminateInstallation = async (installationId) => {
               :to="{
                 name: 'addSensor',
               }"
-              class="font-medium underline text-yellow-700 hover:text-yellow-600"
+              class="font-medium text-yellow-700 underline hover:text-yellow-600"
             >
               {{ $t("org.addNode") }}.
             </router-link>
@@ -571,7 +571,7 @@ const terminateInstallation = async (installationId) => {
     </div>
     <div
       v-else
-      class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+      class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">

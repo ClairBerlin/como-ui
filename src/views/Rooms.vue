@@ -41,7 +41,7 @@ const deleteRoom = async () => {
   <LoadingSpinner v-if="isLoading" />
   <div
     v-else-if="hasRooms"
-    class="ring-1 ring-gray-300 rounded-md bg-white text-md overflow-hidden mt-8"
+    class="text-md mt-8 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
   >
     <DeletionModal
       :open="showDeleteRoomModal"
@@ -57,37 +57,37 @@ const deleteRoom = async () => {
         <tr>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("room.name") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+            class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("room.size") }} [m<sup>2</sup>]
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider"
+            class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("room.height") }} [m]
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-wider hidden md:table-cell"
+            class="hidden py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
           >
             {{ $t("room.maxOccupancy") }}
           </th>
           <th
             scope="col"
-            class="px-2 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("site.singular") }}
           </th>
           <th
             scope="col"
-            class="sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-wider"
+            class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
           >
             {{ $t("action") }}
           </th>
@@ -99,7 +99,7 @@ const deleteRoom = async () => {
           :key="room._jv.id"
           :class="[roomIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
         >
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="whitespace-nowrap px-2 py-4 sm:px-6">
             <router-link
               class="como-link"
               :to="{
@@ -110,18 +110,18 @@ const deleteRoom = async () => {
               {{ room.name }}
             </router-link>
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+          <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
             {{ n(Number(room.size_sqm)) || "-" }}
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap text-right">
+          <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
             {{ n(Number(room.height_m)) || "-" }}
           </td>
           <td
-            class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap text-right"
+            class="hidden whitespace-nowrap px-2 py-4 text-right sm:px-6 md:table-cell"
           >
             {{ room.max_occupancy || "-" }}
           </td>
-          <td class="hidden md:table-cell px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="hidden whitespace-nowrap px-2 py-4 sm:px-6 md:table-cell">
             <router-link
               class="como-link"
               :to="{
@@ -132,11 +132,11 @@ const deleteRoom = async () => {
               {{ room.site.name }}
             </router-link>
           </td>
-          <td class="px-2 sm:px-6 py-4 whitespace-nowrap">
+          <td class="whitespace-nowrap px-2 py-4 sm:px-6">
             <div class="flex flex-col sm:flex-row">
               <div
                 v-if="isOwner"
-                class="btn-sm gray-button font-semibold w-max"
+                class="gray-button btn-sm w-max font-semibold"
                 @click="
                   () => {
                     openDeleteRoomModal();
@@ -144,7 +144,7 @@ const deleteRoom = async () => {
                   }
                 "
               >
-                <TrashIcon class="w-4 h-4 mr-2" />
+                <TrashIcon class="mr-2 h-4 w-4" />
                 <span>{{ $t("remove") }}</span>
               </div>
             </div>
@@ -155,7 +155,7 @@ const deleteRoom = async () => {
   </div>
   <div
     v-else
-    class="shadow-md mt-4 rounded-md max-w-sm flex items-center bg-yellow-50 border-l-4 border-yellow-400 p-4"
+    class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
   >
     <div class="flex">
       <div class="flex-shrink-0">
@@ -165,7 +165,7 @@ const deleteRoom = async () => {
         {{ $t("room.noRoom") }}.
         <router-link
           to="sites"
-          class="font-medium underline text-yellow-700 hover:text-yellow-600"
+          class="font-medium text-yellow-700 underline hover:text-yellow-600"
         >
           {{ $t("room.siteForRoom") }}
         </router-link>

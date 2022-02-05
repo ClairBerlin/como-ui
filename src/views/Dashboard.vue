@@ -38,13 +38,13 @@ watch(
 <template>
   <div>
     <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-      <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6">
+      <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6">
         <h1 class="text-3xl font-bold leading-tight text-gray-900">
           {{ organization.orgName }} – {{ $t(route.meta.title) }}
         </h1>
       </div>
     </header>
-    <div class="max-w-screen-xl py-6 mx-auto rounded-md">
+    <div class="mx-auto max-w-screen-xl rounded-md py-6">
       <router-view />
     </div>
   </div>

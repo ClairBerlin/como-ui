@@ -27,14 +27,14 @@ const createOrg = async ({ name, description }) => {
 
 <template>
   <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-    <div class="max-w-screen-xl px-4 py-6 mx-auto sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8">
       <h1 class="text-3xl font-bold leading-tight text-gray-900">
         {{ $t("org.add") }}
       </h1>
     </div>
   </header>
-  <div class="max-w-sm sm:max-w-lg mt-8">
-    <div class="bg-white rounded-md shadow-md p-6">
+  <div class="mt-8 max-w-sm sm:max-w-lg">
+    <div class="rounded-md bg-white p-6 shadow-md">
       <OrganizationForm
         allow-edit
         button-text="org.create"
