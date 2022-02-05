@@ -136,6 +136,10 @@
     "updateSuccess": "Organization details have been updated!"
   },
   "overview": "Overview",
+  "owner-leave-modal": {
+    "message": "Are you sure you want to leave this organization? This can only be undone by another owner of this organization.",
+    "title": "Leave Organization"
+  },
   "ppm": "CO2-Concentration [PPM]",
   "previous": "Previous",
   "remove": "Remove",

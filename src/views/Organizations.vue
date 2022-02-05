@@ -1,12 +1,51 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import { roleToString } from "@/utils";
-import { ExclamationIcon } from "@heroicons/vue/outline";
+import {
+  ExclamationIcon,
+  PlusIcon,
+  PencilAltIcon,
+  LogoutIcon,
+} from "@heroicons/vue/outline";
+import { useI18n } from "vue-i18n";
+import DeletionModal from "@/components/DeletionModal.vue";
 
+const { t } = useI18n();
 const store = useStore();
 const memberships = computed(() => store.state.authuser.memberships);
 const hasMemberships = () => memberships.value?.length > 0;
+
+const orgOwnerMap = computed(() => {
+  return Object.assign(
+    ...memberships.value.map(({ orgId, orgName }) => {
+      const msObj = store.getters["jv/get"](
+        "Membership",
+        `$[?(@.organization_name=="${orgName}")]`
+      );
+      const msList = Object.entries(msObj).map(([, ms]) => ms);
+      return { [orgId]: msList.filter((m) => m.role === "O") };
+    })
+  );
+});
+
+const hasMoreOwners = ({ orgId, role }) => {
+  if (role !== "O") return false;
+  if (orgOwnerMap.value[orgId].length > 1) return true;
+  return false;
+};
+
+const showOwnerLeaveModal = ref(false);
+const openOwnerLeaveModal = () => (showOwnerLeaveModal.value = true);
+const toRemove = ref({});
+const removeOwner = async () => {
+  const { mId, orgId } = toRemove.value;
+  console.log(
+    `Removing OWNER with ID ${mId} from the organization with ID ${orgId}`
+  );
+  await store.dispatch("jv/delete", `memberships/${mId}`);
+  store.commit("jv/deleteRecord", { _jv: { type: "Membership", id: mId } });
+};
 </script>
 
 <template>
@@ -17,13 +56,28 @@ const hasMemberships = () => memberships.value?.length > 0;
         class="gray-button m-2 font-semibold"
         :to="{ name: 'org-management-add' }"
       >
-        {{ $t("org.create") }}
+        <div class="flex items-center">
+          <PlusIcon class="mr-2 h-5 w-5" />
+          <span>
+            {{ $t("org.create") }}
+          </span>
+        </div>
       </router-link>
     </div>
     <div
       v-if="hasMemberships"
       class="text-md overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
     >
+      <DeletionModal
+        :open="showOwnerLeaveModal"
+        @close-modal="showOwnerLeaveModal = false"
+        @delete-clicked="removeOwner"
+        modal-title="owner-leave-modal.title"
+      >
+        <p class="text-sm text-gray-500">
+          {{ $t("owner-leave-modal.message") }}
+        </p>
+      </DeletionModal>
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
@@ -70,19 +124,32 @@ const hasMemberships = () => memberships.value?.length > 0;
               <div class="flex flex-row">
                 <router-link
                   v-if="m.role === 'O'"
-                  class="gray-button"
+                  class="gray-button tooltip p-3"
+                  :data-tip="t('edit')"
                   :to="{
                     name: 'org-management-edit',
                     params: { orgId: m.orgId },
                   }"
-                  >{{ $t("edit") }}</router-link
                 >
+                  <div class="flex items-center">
+                    <PencilAltIcon class="h-5 w-5" />
+                  </div>
+                </router-link>
                 <button
-                  @click="console.log('todo: leave org')"
+                  @click="
+                    () => {
+                      openOwnerLeaveModal();
+                      toRemove = { orgId: m.orgId, mId: m.id };
+                    }
+                  "
+                  v-if="hasMoreOwners(m)"
                   type="button"
-                  class="gray-button ml-2"
+                  :data-tip="t('leave')"
+                  class="gray-button tooltip ml-3 bg-red-600 p-3 hover:bg-red-700"
                 >
-                  {{ $t("leave") }}
+                  <div class="flex items-center">
+                    <LogoutIcon class="h-5 w-5 text-red-100" />
+                  </div>
                 </button>
               </div>
             </td>

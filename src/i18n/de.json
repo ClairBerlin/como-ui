@@ -136,6 +136,10 @@
     "updateSuccess": "Details der Organisation wurden erfolgreich aktualsiert."
   },
   "overview": "Überblick",
+  "owner-leave-modal": {
+    "message": "Möchten Sie diese Organisation wirklich verlassen? Dies kann nur von einem anderen Besitzer der Organisation rückgängig gemacht werden.",
+    "title": "Organisation verlassen"
+  },
   "previous": "Zurück",
   "ppm": "CO2 Gehalt in ppm",
   "remove": "Entfernen",

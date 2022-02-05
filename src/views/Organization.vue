@@ -285,7 +285,7 @@ const changeRoleTooltip = (role) =>
                   <div
                     :data-tip="changeRoleTooltip(membership.role)"
                     v-if="isOwner"
-                    class="gray-button tooltip btn-sm m-2 w-max font-semibold"
+                    class="gray-button tooltip btn-sm m-2 w-max p-3 font-semibold"
                     @click="() => changeRole(membership)"
                   >
                     <ArrowCircleDownIcon
@@ -300,7 +300,7 @@ const changeRoleTooltip = (role) =>
                   <div
                     v-if="isOwner"
                     :data-tip="$t('remove')"
-                    class="gray-button tooltip btn-sm m-2 mr-0 bg-red-600 hover:bg-red-700"
+                    class="gray-button tooltip btn-sm m-2 mr-0 bg-red-600 p-3 hover:bg-red-700"
                     @click="
                       () => {
                         openMemberRemovalModal();
@@ -308,7 +308,7 @@ const changeRoleTooltip = (role) =>
                       }
                     "
                   >
-                    <TrashIcon class="h-4 w-4 text-red-100" />
+                    <TrashIcon class="h-5 w-5 text-red-100" />
                   </div>
                 </div>
               </td>
