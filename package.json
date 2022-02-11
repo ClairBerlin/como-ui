@@ -10,7 +10,7 @@
     "format": "prettier .  --write"
   },
   "dependencies": {
-    "@vueuse/core": "^7.5.5",
+    "@vueuse/core": "^7.6.1",
     "axios": "^0.25.0",
     "chart.js": "^3.7.0",
     "chartjs-adapter-dayjs": "^1.0.0",
@@ -19,11 +19,11 @@
     "dayjs-plugin-utc": "^0.1.2",
     "js-cookie": "^3.0.1",
     "jsonapi-vuex": "^5.7.0",
-    "vee-validate": "^4.5.6",
-    "vue": "^3.2.26",
+    "vee-validate": "^4.5.8",
+    "vue": "^3.2.30",
     "vue-chart-3": "^3.0.9",
     "vue-i18n": "^9.1.9",
-    "vue-router": "^4.0.11",
+    "vue-router": "^4.0.12",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-date-time-picker": "^2.5.0",
     "vuex": "^4.0.2",
@@ -32,21 +32,21 @@
   "devDependencies": {
     "@headlessui/vue": "^1.4.3",
     "@heroicons/vue": "^1.0.5",
-    "@intlify/vite-plugin-vue-i18n": "^3.2.1",
+    "@intlify/vite-plugin-vue-i18n": "^3.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.0",
     "@tailwindcss/forms": "^0.4.0",
     "@tailwindcss/line-clamp": "^0.3.1",
     "@tailwindcss/typography": "^0.5.1",
     "@types/tailwindcss": "^3.0.7",
-    "@vitejs/plugin-vue": "^2.1.0",
+    "@vitejs/plugin-vue": "^2.2.0",
     "autoprefixer": "^10.4.2",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.4.1",
     "prettier": "^2.5.1",
-    "prettier-plugin-tailwindcss": "^0.1.5",
-    "tailwindcss": "^3.0.18",
-    "vite": "^2.7.13"
+    "prettier-plugin-tailwindcss": "^0.1.7",
+    "tailwindcss": "^3.0.21",
+    "vite": "^2.8.0"
   }
 }
