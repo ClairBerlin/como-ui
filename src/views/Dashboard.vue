@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, computed, watch } from "vue";
+import { onMounted, computed, watch, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 
@@ -27,12 +27,23 @@ onMounted(async () => {
   await updateInventory(currentOrgId.value);
 });
 
+const subheading = ref(undefined);
+
 watch(
   () => currentOrgId.value,
   async (orgId) => {
     updateInventory(orgId);
   }
 );
+
+watch(
+  () => route.name,
+  () => {
+    subheading.value = undefined;
+  }
+);
+
+const changeSubheading = (value) => (subheading.value = value);
 </script>
 
 <template>
@@ -42,10 +53,13 @@ watch(
         <h1 class="text-3xl font-bold leading-tight text-gray-900">
           {{ organization.orgName }} – {{ $t(route.meta.title) }}
         </h1>
+        <h2 class="text-xl font-semibold text-gray-700" v-if="subheading">
+          {{ subheading }}
+        </h2>
       </div>
     </header>
     <div class="mx-auto max-w-screen-xl rounded-md py-6">
-      <router-view />
+      <router-view @change-subheading="changeSubheading" />
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -10,7 +10,6 @@ import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 import RoomForm from "@/components/forms/RoomForm.vue";
 
-// TODO: Add room name to dashboard title.
 const route = useRoute();
 const store = useStore();
 const toast = useToast();
@@ -26,6 +25,13 @@ const room = computed(() =>
     _jv: { type: "Room", id: roomId.value },
   })
 );
+
+const emit = defineEmits(["changeSubheading"]);
+watchEffect(() => {
+  if (room.value?.name) {
+    emit("changeSubheading", room.value.name);
+  }
+});
 
 const isOwner = computed(() => {
   return store.getters["nav/isOwner"];

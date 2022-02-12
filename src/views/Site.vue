@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -11,7 +11,6 @@ import SiteForm from "@/components/forms/SiteForm.vue";
 
 const { t } = useI18n();
 
-// TODO: Add Site name to dashboard title.
 const route = useRoute();
 const store = useStore();
 const toast = useToast();
@@ -26,6 +25,14 @@ const site = computed(() =>
     _jv: { type: "Site", id: siteId.value },
   })
 );
+
+const emit = defineEmits(["changeSubheading"]);
+watchEffect(() => {
+  if (site.value?.name) {
+    emit("changeSubheading", site.value.name);
+  }
+});
+
 const addressId = computed(() => site.value.address._jv.id);
 
 const rooms = computed(() => {

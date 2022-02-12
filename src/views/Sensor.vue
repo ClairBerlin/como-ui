@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
@@ -15,7 +15,6 @@ import InstallNowModal from "@/components/InstallNowModal.vue";
 import SensorForm from "@/components/forms/SensorForm.vue";
 import PrivacyToggle from "@/components/PrivacyToggle.vue";
 
-// TODO: Add room name to dashboard title.
 const route = useRoute();
 const store = useStore();
 const toast = useToast();
@@ -35,6 +34,13 @@ const sensor = computed(() =>
     _jv: { type: "Node", id: sensorId.value },
   })
 );
+
+const emit = defineEmits(["changeSubheading"]);
+watchEffect(() => {
+  if (sensor.value?.alias) {
+    emit("changeSubheading", sensor.value.alias);
+  }
+});
 
 const installations = computed(() => {
   const instObj = store.getters["jv/get"](
