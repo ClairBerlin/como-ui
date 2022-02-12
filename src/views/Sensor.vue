@@ -149,11 +149,6 @@ const installNow = async () => {
 </script>
 
 <template>
-  <pre>
-  {{ JSON.stringify(route.params, null, 2) }}
-
-</pre
-  >
   <div v-if="isOwner && !hasActiveInstallations && hasRooms" class="">
     <div
       class="btn bg-indigo-600 normal-case hover:bg-indigo-700"
