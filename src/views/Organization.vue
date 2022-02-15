@@ -153,7 +153,7 @@ const changeRole = async (membership) => {
   }
 };
 const changeRoleTooltip = (role) =>
-  t(role === "I" ? "role.upgrade" : "role.downgrade");
+  t(role === "O" ? "role.downgrade" : "role.upgrade");
 </script>
 
 <template>
@@ -292,10 +292,7 @@ const changeRoleTooltip = (role) =>
                       v-if="membership?.role === 'O'"
                       class="h-5 w-5"
                     />
-                    <ArrowCircleUpIcon
-                      v-if="membership?.role === 'I'"
-                      class="h-5 w-5"
-                    />
+                    <ArrowCircleUpIcon v-else class="h-5 w-5" />
                   </div>
                   <div
                     v-if="isOwner"
