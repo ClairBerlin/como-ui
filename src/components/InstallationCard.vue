@@ -74,7 +74,10 @@ const ppmColor = getColor();
           {{ roomName }}
         </router-link>
       </div>
-      <div :data-tip="installationTooltip(isPublic)" class="tooltip h-8 w-8">
+      <div
+        :data-tip="installationTooltip(isPublic)"
+        class="tooltip h-8 w-8 shrink-0"
+      >
         <EyeIcon v-if="isPublic" />
         <EyeOffIcon v-else />
       </div>
