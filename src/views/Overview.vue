@@ -12,8 +12,16 @@ const isLoading = computed(() => {
   return store.getters["nav/isOrgContextLoading"];
 });
 
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
+
 const installations = computed(() => {
   return store.getters["nav/getInstallations"];
+});
+
+const sensors = computed(() => {
+  return store.getters["nav/getSensors"];
 });
 
 const activeInstallations = computed(() =>
@@ -83,15 +91,28 @@ const getLatestMeasurement = (sample) => {
             />
           </div>
           <div class="ml-3">
-            {{ $t("org.noInstallations") }}
-            {{ " " }}
-            <!-- TODO: use :to="{ name: 'installation-add' }" -->
-            <router-link
-              to="#"
-              class="font-medium text-yellow-700 underline hover:text-yellow-600"
-            >
-              {{ $t("installation.clickToAdd") }}
-            </router-link>
+            <div v-if="sensors && sensors.length !== 0">
+              {{ $t("createInstallationViaSensors") }}
+              <router-link
+                :to="{
+                  name: 'sensors',
+                  params: { orgId: currentOrgId },
+                }"
+                class="font-medium text-yellow-700 underline hover:text-yellow-600"
+              >
+                {{ $t("clickToSensors") }}
+              </router-link>
+            </div>
+            <span v-else>
+              {{ $t("node.noNodes") }} {{ " " }}
+              {{ $t("contactSupportToGetSensors") }} {{ " " }}
+              <a
+                href="mailto:info@como-berlin.de"
+                class="font-medium text-yellow-700 underline hover:text-yellow-600"
+              >
+                info@como-berlin.de
+              </a>
+            </span>
           </div>
         </div>
       </div>

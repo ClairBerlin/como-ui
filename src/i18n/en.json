@@ -20,7 +20,9 @@
     "updateSuccess": "Address has been updated!"
   },
   "cancel": "Cancel",
+  "clickToSensors": "Click here to get to your sensors.",
   "contactSupportToGetSensors": "To request sensors send an email to:",
+  "createInstallationViaSensors": "To create an installation select a sensor and click \"Install Sensor Now\".",
   "day": "Day",
   "delete": "Delete",
   "delete-org-modal": {

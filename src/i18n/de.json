@@ -20,7 +20,9 @@
     "updateSuccess": "Adresse wurde erfolgreich aktualisiert!"
   },
   "cancel": "Abbrechen",
+  "clickToSensors": "Klicken Sie hier, um zu den bestehenden Sensoren zu gelangen.",
   "contactSupportToGetSensors": "Um Sensoren zu erhalten, wenden Sie sich an:",
+  "createInstallationViaSensors": "Um eine Installation zu erstellen, wählen Sie einen bestehenden Sensor und klicken Sie auf \"Sensor jetzt installieren\".",
   "day": "Tag",
   "delete": "Löschen",
   "delete-org-modal": {
