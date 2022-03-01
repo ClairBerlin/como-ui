@@ -92,13 +92,13 @@ const hasSensors = computed(() => sensors.value?.length > 0);
       </div>
       <div class="ml-3">
         {{ $t("node.noNodes") }} {{ " " }}
-        <!-- TODO: use :to="{ name: 'sensors-add' }" -->
-        <router-link
-          to="#"
+        {{ $t("contactSupportToGetSensors") }} {{ " " }}
+        <a
+          href="mailto:info@como-berlin.de"
           class="font-medium text-yellow-700 underline hover:text-yellow-600"
         >
-          {{ $t("node.add") }}.
-        </router-link>
+          info@como-berlin.de
+        </a>
       </div>
     </div>
   </div>

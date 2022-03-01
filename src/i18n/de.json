@@ -20,6 +20,7 @@
     "updateSuccess": "Adresse wurde erfolgreich aktualisiert!"
   },
   "cancel": "Abbrechen",
+  "contactSupportToGetSensors": "Um Sensoren zu erhalten, wenden Sie sich an:",
   "day": "Tag",
   "delete": "Löschen",
   "delete-org-modal": {

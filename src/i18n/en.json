@@ -20,6 +20,7 @@
     "updateSuccess": "Address has been updated!"
   },
   "cancel": "Cancel",
+  "contactSupportToGetSensors": "To request sensors send an email to:",
   "day": "Day",
   "delete": "Delete",
   "delete-org-modal": {
