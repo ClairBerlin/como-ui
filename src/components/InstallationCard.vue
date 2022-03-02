@@ -54,7 +54,7 @@ const ppmColor = getColor();
     ]"
   >
     <div class="flex justify-between font-bold">
-      <div class="flex flex-col text-black">
+      <div class="flex flex-col truncate text-black">
         <router-link
           :to="{
             name: 'sensor',
@@ -76,7 +76,7 @@ const ppmColor = getColor();
       </div>
       <div
         :data-tip="installationTooltip(isPublic)"
-        class="tooltip h-8 w-8 shrink-0"
+        class="tooltip ml-1 h-8 w-8 shrink-0"
       >
         <EyeIcon v-if="isPublic" />
         <EyeOffIcon v-else />
