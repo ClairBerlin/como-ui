@@ -151,19 +151,19 @@ const terminateInstallation = async (installationId) => {
             </th>
             <th
               scope="col"
-              class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+              class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("installation.isPublic") }}
             </th>
             <th
               scope="col"
-              class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+              class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
             >
               {{ $t("installation.installedOn") }}
             </th>
             <th
               scope="col"
-              class="hidden py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
+              class="hidden py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
             >
               {{ $t("installation.removedOn") }}
             </th>
@@ -184,20 +184,20 @@ const terminateInstallation = async (installationId) => {
             <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               {{ installation.node.alias }}
             </td>
-            <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
+            <td class="whitespace-nowrap px-2 py-4 text-left sm:px-6">
               {{ $t(`installation.public.${installation.is_public}`) }}
             </td>
-            <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
+            <td class="whitespace-nowrap px-2 py-4 text-left sm:px-6">
               {{ dayFormatTimestamp(installation.from_timestamp_s) }}
             </td>
-            <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
+            <td class="whitespace-nowrap px-2 py-4 text-left sm:px-6">
               {{ dayFormatTimestamp(installation.to_timestamp_s) }}
             </td>
             <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               <div class="flex flex-col sm:flex-row">
                 <div class="flex flex-row">
                   <router-link
-                    class="gray-button btn-sm m-2 mr-0 w-max font-semibold"
+                    class="gray-button btn-sm my-2 w-max font-semibold"
                     :to="{
                       name: 'installation',
                       params: { installationId: installation._jv.id },
