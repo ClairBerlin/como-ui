@@ -179,7 +179,7 @@ watch(
                       isCurrentRoute(item.routeName)
                         ? 'bg-indigo-50 text-indigo-900'
                         : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                      'group como-focus flex items-center rounded-md px-2 py-2 text-base font-medium',
+                      'como-focus group flex items-center rounded-md px-2 py-2 text-base font-medium',
                     ]"
                   >
                     <component
@@ -232,7 +232,7 @@ watch(
                     isCurrentRoute(item.routeName)
                       ? 'bg-indigo-50 font-bold text-indigo-900'
                       : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                    'group como-focus my-1 flex items-center rounded-md px-2 py-4 text-sm font-medium',
+                    'como-focus group my-1 flex items-center rounded-md px-2 py-4 text-sm font-medium',
                   ]"
                 >
                   <component
@@ -250,7 +250,7 @@ watch(
               </div>
             </nav>
             <div class="my-1 w-full border-b border-gray-200 px-3" />
-            <ProfileMenu class="w-full" />
+            <ProfileMenu class="mb-1 w-full" />
           </div>
         </div>
       </div>
