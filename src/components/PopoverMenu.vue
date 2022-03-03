@@ -24,7 +24,7 @@ const iconClasses = () =>
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"
-        class="group como-focus inline-flex w-full items-center justify-between rounded-md px-2 py-4 text-sm font-medium text-black hover:bg-gray-100 hover:text-opacity-100"
+        class="como-focus group inline-flex w-full items-center justify-between rounded-md px-2 py-4 text-sm font-medium text-black hover:bg-gray-100 hover:text-opacity-100"
       >
         <div class="flex items-center">
           <component
