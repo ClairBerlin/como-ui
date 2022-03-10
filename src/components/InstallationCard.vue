@@ -113,7 +113,7 @@ const ppmColor = getColor();
     <div class="mt-8">
       <router-link
         :to="{ name: 'installation', params: { installationId } }"
-        class="flex w-full items-center justify-center rounded-lg bg-black p-2 text-lg font-semibold text-gray-300 shadow-md drop-shadow-md hover:ring hover:ring-gray-300"
+        class="flex w-full items-center justify-center rounded-lg bg-black p-2 text-lg font-semibold text-gray-300 shadow-md drop-shadow-md hover:ring-2 hover:ring-gray-300"
       >
         <ChartBarIcon class="mr-3 h-5 w-5" />
         <span>{{ $t("View") }} CO<sub>2</sub> {{ $t("Chart") }}</span>

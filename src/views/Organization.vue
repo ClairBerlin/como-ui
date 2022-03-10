@@ -157,15 +157,18 @@ const changeRoleTooltip = (role) =>
 </script>
 
 <template>
-  <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-    <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6 lg:px-8">
+  <header
+    class="border-b border-gray-200 bg-white px-6 pt-12 pb-4"
+    v-if="$route.meta.title"
+  >
+    <div class="">
       <h1 class="text-3xl font-bold leading-tight text-gray-900">
         {{ $t("org.members") }} {{ $t("of") }} {{ orgName }}
       </h1>
     </div>
   </header>
   <LoadingSpinner v-if="isLoading" />
-  <div v-else class="mt-8">
+  <div v-else class="mt-8 max-w-screen-xl">
     <DeletionModal
       :open="showDeleteOrgModal"
       @close-modal="showDeleteOrgModal = false"

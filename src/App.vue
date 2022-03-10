@@ -211,7 +211,7 @@ watch(
     <div class="hidden lg:flex lg:flex-shrink-0">
       <div class="flex w-64 flex-col">
         <div
-          class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white shadow-md"
+          class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
         >
           <div class="mx-2 flex flex-1 flex-col overflow-y-auto px-1 pt-6 pb-1">
             <Logo />
@@ -270,10 +270,7 @@ watch(
         id="content"
         class="relative z-0 flex-1 overflow-y-auto focus:outline-none"
       >
-        <div
-          class="mx-auto max-w-screen-xl rounded-md sm:py-6 sm:px-6"
-          v-if="!isLoading"
-        >
+        <div class="" v-if="!isLoading">
           <router-view />
         </div>
       </main>

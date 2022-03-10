@@ -4,24 +4,27 @@
 
 @layer components {
   .como-focus {
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-900 focus:ring-opacity-80 focus:border-transparent;
+    @apply focus:border-transparent focus:outline-none focus:ring-2 focus:ring-indigo-900 focus:ring-opacity-80 focus:ring-offset-2;
   }
   .gray-label {
-    @apply font-semibold text-sm text-white bg-gray-500 border-2 border-gray-400 border-opacity-20 rounded-full px-1 mx-2 select-none;
+    @apply mx-2 select-none rounded-full border-2 border-gray-400 border-opacity-20 bg-gray-500 px-1 text-sm font-semibold text-white;
   }
   .gray-button {
-    @apply flex items-center 
-    bg-gray-300
-    hover:bg-gray-400
-    drop-shadow-sm
-    shadow-sm
-    hover:ring ring-gray-300
-     text-gray-900
-    font-medium px-4 py-1
-    rounded-md h-auto normal-case cursor-pointer select-none 
-    como-focus;
+    @apply como-focus flex 
+    h-auto
+    cursor-pointer
+    select-none
+    items-center
+    rounded-md bg-gray-300
+    px-4
+    py-1 font-medium normal-case
+    text-gray-900 shadow-sm ring-gray-300 drop-shadow-sm hover:bg-gray-400 
+    hover:ring-2;
+  }
+  .indigo-button {
+    @apply inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto;
   }
   .como-link {
-    @apply font-bold underline text-indigo-700 hover:text-indigo-600 hover:no-underline rounded como-focus;
+    @apply como-focus rounded font-bold text-indigo-700 underline hover:text-indigo-600 hover:no-underline;
   }
 }

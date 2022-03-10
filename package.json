@@ -14,7 +14,7 @@
     "axios": "^0.26.1",
     "chart.js": "^3.7.1",
     "chartjs-adapter-dayjs": "^1.0.0",
-    "daisyui": "^2.6.3",
+    "daisyui": "^2.6.4",
     "dayjs": "^1.10.8",
     "dayjs-plugin-utc": "^0.1.2",
     "js-cookie": "^3.0.1",
