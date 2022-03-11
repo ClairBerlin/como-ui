@@ -55,7 +55,7 @@ const getLatestMeasurement = (sample) => {
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="">
-    <h2 class="mt-8 text-xl font-bold">{{ $t("Active Installations") }}</h2>
+    <h2 class="mt-4 text-xl font-bold">{{ $t("Active Installations") }}</h2>
     <div class="">
       <div v-if="hasActiveSensors">
         <ul

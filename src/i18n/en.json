@@ -168,6 +168,7 @@
     "addRoomToSite": "Add Room to Site",
     "createError": "Failed to create the room!",
     "details": "Room Details",
+    "description": "The list of all rooms with name, site, and further details. A new room can be created via a site.",
     "height": "Height",
     "invalidHeight": "The number must be between 0 and 20, with at most one decimal place.",
     "invalidMaxOccupancy": "The number must be between 0 and 500.",
@@ -180,19 +181,26 @@
     "singular": "Room",
     "siteForRoom": "Select a site to add a room.",
     "size": "Size",
+    "title": "All Rooms",
     "updateError": "Failed to update the room!",
     "updateSuccess": "Room details have been updated!"
   },
   "rooms": "Rooms",
   "select": "Select",
+  "sensor": {
+    "description": "The list of all sensors with name, id, model, and number of measurements. To get new sensors contact info@como-berlin.de.",
+    "title": "All Sensors"
+  },
   "site": {
     "add": "Add Site",
     "createError": "Failed to create the site!",
+    "description": "The list of all sites with name and address.",
     "details": "Site Details",
     "missingNameAddress": "Site name and address must be provided!",
     "name": "Site Name",
     "noRooms": "This site has no rooms",
     "singular": "Site",
+    "title": "All Sites",
     "update": "Update",
     "updateError": "Failed to update the site!",
     "updateSuccess": "Sites details have been updated!"

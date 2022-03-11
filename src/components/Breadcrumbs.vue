@@ -13,7 +13,7 @@ const pages = [
     <ol role="list" class="mx-auto flex w-full max-w-screen-xl space-x-4 px-4">
       <li class="flex">
         <div class="flex items-center">
-          <a href="#" class="text-gray-400 hover:text-gray-500">
+          <a href="/" class="text-gray-400 hover:text-gray-500">
             <HomeIcon class="h-5 w-5 flex-shrink-0" aria-hidden="true" />
             <span class="sr-only">Home</span>
           </a>

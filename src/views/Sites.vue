@@ -53,11 +53,10 @@ const formatAdress = (address) => {
     <div class="sm:flex sm:items-center">
       <div class="sm:flex-auto">
         <h1 class="text-xl font-semibold text-gray-900">
-          <!-- TODO: translate text -->
-          Alle Standorte des Teams
+          {{ $t("site.title") }}
         </h1>
         <p class="mt-2 text-sm text-gray-700">
-          Die Liste aller Standorte mit Namen und Adresse.
+          {{ $t("site.description") }}
         </p>
       </div>
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
