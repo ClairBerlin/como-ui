@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 @layer components {
   .como-focus {
@@ -15,14 +15,14 @@
     cursor-pointer
     select-none
     items-center
-    rounded-sm bg-gray-300
+    rounded-md bg-gray-300
     px-4
     py-1 font-medium normal-case
     text-gray-900 shadow-sm ring-gray-300 drop-shadow-sm hover:bg-gray-400 
     hover:ring-2;
   }
   .indigo-button {
-    @apply inline-flex items-center justify-center rounded-sm border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto;
+    @apply inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto;
   }
   .como-link {
     @apply como-focus rounded font-bold text-indigo-700 underline hover:text-indigo-600 hover:no-underline;
