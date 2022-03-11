@@ -157,18 +157,20 @@ const changeRoleTooltip = (role) =>
 </script>
 
 <template>
-  <header
-    class="border-b border-gray-200 bg-white px-6 pt-12 pb-4"
-    v-if="$route.meta.title"
-  >
-    <div class="">
-      <h1 class="text-3xl font-bold leading-tight text-gray-900">
-        {{ $t("org.members") }} {{ $t("of") }} {{ orgName }}
-      </h1>
-    </div>
-  </header>
+  <div class="border-b border-gray-200 bg-white">
+    <header
+      class="mx-auto max-w-screen-xl px-4 pt-12 pb-4"
+      v-if="$route.meta.title"
+    >
+      <div class="">
+        <h1 class="text-3xl font-bold leading-tight text-gray-900">
+          {{ $t("org.members") }} {{ $t("of") }} {{ orgName }}
+        </h1>
+      </div>
+    </header>
+  </div>
   <LoadingSpinner v-if="isLoading" />
-  <div v-else class="mt-8 max-w-screen-xl">
+  <div v-else class="mx-auto mt-8 max-w-screen-xl px-4">
     <DeletionModal
       :open="showDeleteOrgModal"
       @close-modal="showDeleteOrgModal = false"
@@ -283,24 +285,24 @@ const changeRoleTooltip = (role) =>
               >
                 {{ $t(roleToString(membership.role)) }}
               </td>
-              <td class="whitespace-nowrap px-4 py-4">
+              <td class="whitespace-nowrap px-2 py-2">
                 <div class="flex flex-col sm:flex-row">
                   <div
                     :data-tip="changeRoleTooltip(membership.role)"
                     v-if="isOwner"
-                    class="gray-button tooltip btn-sm m-2 w-max p-3 font-semibold"
+                    class="gray-button tooltip btn-sm mr-3 w-max p-3"
                     @click="() => changeRole(membership)"
                   >
                     <ArrowCircleDownIcon
                       v-if="membership?.role === 'O'"
-                      class="h-5 w-5"
+                      class="h-6 w-6"
                     />
-                    <ArrowCircleUpIcon v-else class="h-5 w-5" />
+                    <ArrowCircleUpIcon v-else class="h-6 w-6" />
                   </div>
                   <div
                     v-if="isOwner"
                     :data-tip="$t('remove')"
-                    class="gray-button tooltip btn-sm m-2 mr-0 bg-red-600 p-3 hover:bg-red-700"
+                    class="gray-button tooltip btn-sm bg-red-600 p-3 hover:bg-red-700"
                     @click="
                       () => {
                         openMemberRemovalModal();
