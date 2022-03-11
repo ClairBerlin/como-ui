@@ -207,7 +207,11 @@
   },
   "sites": "Standorte",
   "skip": "Zum Hauptinhalt wechseln",
-  "team": "Team",
+  "team": {
+    "description": "Die Liste aller Mitglieder mit Namen, E-Mail und Rolle.",
+    "name": "Team",
+    "title": "Alle Mitglieder"
+  },
   "time": "Zeit",
   "update": "Aktualisieren",
   "user": {

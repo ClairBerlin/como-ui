@@ -207,7 +207,11 @@
   },
   "sites": "Sites",
   "skip": "Skip to content",
-  "team": "Team",
+  "team": {
+    "description": "List of all members with name, e-mail and role.",
+    "name": "Team",
+    "title": "All members"
+  },
   "time": "Time",
   "update": "Update",
   "user": {

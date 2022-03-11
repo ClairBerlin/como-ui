@@ -40,7 +40,7 @@ const formatAdress = (address) => {
 
 <template>
   <LoadingSpinner v-if="isLoading" />
-  <div v-else-if="hasSites" class="text-md mt-4">
+  <div v-else-if="hasSites" class="mt-4">
     <DeletionModal
       :open="showDeleteSiteModal"
       @close-modal="showDeleteSiteModal = false"
@@ -85,10 +85,7 @@ const formatAdress = (address) => {
                   <th scope="col" class="px-2 py-3 text-left sm:px-6">
                     {{ $t("site.name") }}
                   </th>
-                  <th
-                    scope="col"
-                    class="hidden py-3 text-left sm:table-cell sm:px-6"
-                  >
+                  <th scope="col" class="py-3 text-left sm:px-6">
                     {{ $t("address.singular") }}
                   </th>
                   <th scope="col" class="py-3 text-left sm:px-6">
@@ -113,9 +110,7 @@ const formatAdress = (address) => {
                       {{ site.name }}
                     </router-link>
                   </td>
-                  <td
-                    class="hidden whitespace-nowrap px-2 py-4 sm:table-cell sm:px-6"
-                  >
+                  <td class="whitespace-nowrap px-2 py-4 sm:px-6">
                     {{ formatAdress(site.address) }}
                   </td>
                   <td class="whitespace-nowrap px-2 py-4 sm:px-6">

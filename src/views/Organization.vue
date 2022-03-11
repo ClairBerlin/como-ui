@@ -14,6 +14,7 @@ import {
   ArrowCircleDownIcon,
 } from "@heroicons/vue/outline";
 import AddMemberModal from "@/components/AddMemberModal.vue";
+import Breadcrumbs from "@/components/Breadcrumbs.vue";
 
 const router = useRouter();
 const store = useStore();
@@ -169,8 +170,9 @@ const changeRoleTooltip = (role) =>
       </div>
     </header>
   </div>
+  <Breadcrumbs />
   <LoadingSpinner v-if="isLoading" />
-  <div v-else class="mx-auto mt-8 max-w-screen-xl px-4">
+  <div v-else class="mx-auto mt-4 max-w-screen-xl px-4 py-6">
     <DeletionModal
       :open="showDeleteOrgModal"
       @close-modal="showDeleteOrgModal = false"
@@ -189,25 +191,39 @@ const changeRoleTooltip = (role) =>
         {{ $t("remove-member-modal.message") }}
       </p>
     </DeletionModal>
+
+    <div class="sm:flex sm:items-center">
+      <div class="sm:flex-auto">
+        <h1 class="text-xl font-semibold text-gray-900">
+          {{ $t("team.title") }}
+        </h1>
+        <p class="mt-2 text-sm text-gray-700">
+          {{ $t("team.description") }}
+        </p>
+      </div>
+      <div class="mt-4 sm:mt-0 sm:ml-16">
+        <div
+          v-if="isOwner"
+          class="indigo-button"
+          @click="showAddMemberModal = true"
+        >
+          <UserAddIcon class="mr-2 h-4 w-4" />
+          <span>{{ $t("org.addMember") }}</span>
+        </div>
+        <div
+          v-if="isOwner"
+          class="indigo-button ml-2 bg-gray-300 text-gray-900 hover:bg-gray-400"
+          @click="openDeleteOrgModal"
+        >
+          <TrashIcon class="mr-2 h-4 w-4" />
+          <span>{{ $t("org.delete") }}</span>
+        </div>
+      </div>
+    </div>
+
     <div class="text-black">
       <div class="flex items-center justify-end">
         <div class="flex">
-          <div
-            v-if="isOwner"
-            class="gray-button m-2 font-semibold"
-            @click="openDeleteOrgModal"
-          >
-            <TrashIcon class="mr-2 h-4 w-4" />
-            <span>{{ $t("org.delete") }}</span>
-          </div>
-          <div
-            v-if="isOwner"
-            class="gray-button m-2 mr-0 font-semibold"
-            @click="showAddMemberModal = true"
-          >
-            <UserAddIcon class="mr-2 h-4 w-4" />
-            <span>{{ $t("org.addMember") }}</span>
-          </div>
           <AddMemberModal
             :open="showAddMemberModal"
             @close-modal="showAddMemberModal = false"
@@ -230,93 +246,93 @@ const changeRoleTooltip = (role) =>
           </AddMemberModal>
         </div>
       </div>
-      <div
-        class="text-md overflow-hidden rounded-sm bg-white ring-1 ring-gray-300"
-      >
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
-              >
-                {{ $t("name") }}
-              </th>
-              <th
-                scope="col"
-                class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
-              >
-                {{ $t("email") }}
-              </th>
-              <th
-                scope="col"
-                class="hidden px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
-              >
-                {{ $t("role.singular") }}
-              </th>
-              <th
-                scope="col"
-                class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
-              >
-                {{ $t("actions") }}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(membership, memberIdx) in memberships"
-              :key="membership._jv.id"
-              :class="[memberIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+
+      <div class="mt-8 flex flex-col">
+        <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div
+            class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8"
+          >
+            <div
+              class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-md"
             >
-              <td class="whitespace-nowrap px-2 py-4 sm:px-6">
-                <div class="flex">
-                  {{ membership.user.first_name }}
-                  {{ membership.user.last_name }}
-                </div>
-                <div class="text-sm text-gray-700">
-                  {{ membership.user.username }}
-                </div>
-              </td>
-              <td class="whitespace-nowrap py-4 sm:px-6">
-                {{ membership.user.email }}
-              </td>
-              <td
-                class="hidden whitespace-nowrap px-2 py-4 sm:px-6 md:table-cell"
-              >
-                {{ $t(roleToString(membership.role)) }}
-              </td>
-              <td class="whitespace-nowrap px-2 py-2">
-                <div class="flex flex-col sm:flex-row">
-                  <div
-                    :data-tip="changeRoleTooltip(membership.role)"
-                    v-if="isOwner"
-                    class="gray-button tooltip btn-sm mr-3 w-max p-3"
-                    @click="() => changeRole(membership)"
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead class="bg-gray-50 text-sm font-medium text-gray-900">
+                  <tr>
+                    <th scope="col" class="px-2 py-3 text-left sm:px-6">
+                      {{ $t("name") }}
+                    </th>
+                    <th scope="col" class="py-3 text-left sm:px-6">
+                      {{ $t("email") }}
+                    </th>
+                    <th
+                      scope="col"
+                      class="hidden px-2 py-3 text-left sm:px-6 md:table-cell"
+                    >
+                      {{ $t("role.singular") }}
+                    </th>
+                    <th scope="col" class="px-2 py-3 text-left">
+                      {{ $t("actions") }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(membership, memberIdx) in memberships"
+                    :key="membership._jv.id"
+                    :class="[memberIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
                   >
-                    <ArrowCircleDownIcon
-                      v-if="membership?.role === 'O'"
-                      class="h-6 w-6"
-                    />
-                    <ArrowCircleUpIcon v-else class="h-6 w-6" />
-                  </div>
-                  <div
-                    v-if="isOwner"
-                    :data-tip="$t('remove')"
-                    class="gray-button tooltip btn-sm bg-red-600 p-3 hover:bg-red-700"
-                    @click="
-                      () => {
-                        openMemberRemovalModal();
-                        memberToRemoveId = membership._jv.id;
-                      }
-                    "
-                  >
-                    <TrashIcon class="h-5 w-5 text-red-100" />
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    <td class="whitespace-nowrap px-2 py-4 sm:px-6">
+                      <div class="flex">
+                        {{ membership.user.first_name }}
+                        {{ membership.user.last_name }}
+                      </div>
+                      <div class="text-sm text-gray-700">
+                        {{ membership.user.username }}
+                      </div>
+                    </td>
+                    <td class="whitespace-nowrap py-4 sm:px-6">
+                      {{ membership.user.email }}
+                    </td>
+                    <td
+                      class="hidden whitespace-nowrap px-2 py-4 sm:px-6 md:table-cell"
+                    >
+                      {{ $t(roleToString(membership.role)) }}
+                    </td>
+                    <td class="whitespace-nowrap px-2 py-2">
+                      <div class="flex flex-col sm:flex-row">
+                        <div
+                          :data-tip="changeRoleTooltip(membership.role)"
+                          v-if="isOwner"
+                          class="gray-button tooltip btn-sm mr-3 w-max p-3"
+                          @click="() => changeRole(membership)"
+                        >
+                          <ArrowCircleDownIcon
+                            v-if="membership?.role === 'O'"
+                            class="h-6 w-6"
+                          />
+                          <ArrowCircleUpIcon v-else class="h-6 w-6" />
+                        </div>
+                        <div
+                          v-if="isOwner"
+                          :data-tip="$t('remove')"
+                          class="gray-button tooltip btn-sm bg-red-600 p-3 hover:bg-red-700"
+                          @click="
+                            () => {
+                              openMemberRemovalModal();
+                              memberToRemoveId = membership._jv.id;
+                            }
+                          "
+                        >
+                          <TrashIcon class="h-5 w-5 text-red-100" />
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

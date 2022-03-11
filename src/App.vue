@@ -37,7 +37,7 @@ const orgNavigation = [
     icon: ChartBarIcon,
   },
   {
-    name: "team",
+    name: "team.name",
     routeName: "org-management-detail",
     icon: UserGroupIcon,
   },
