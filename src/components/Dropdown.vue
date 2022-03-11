@@ -7,16 +7,13 @@ defineProps({
 </script>
 
 <template>
-  <div class="dropdown-end dropdown text-gray-900">
+  <div class="dropdown dropdown-end text-gray-900">
     <div tabindex="0" class="gray-button btn m-1">
       <component v-if="icon" :is="icon" class="h-5 w-5" />
       <div v-else>{{ buttonText }}</div>
     </div>
 
-    <ul
-      tabindex="0"
-      class="dropdown-content menu w-52 rounded-md bg-white text-xs shadow-lg ring-1 ring-gray-200"
-    >
+    <ul tabindex="0" class="dropdown-content menu w-52 rounded-sm bg-white text-xs shadow-lg ring-1 ring-gray-200">
       <li
         v-for="option in options"
         :key="option.href"

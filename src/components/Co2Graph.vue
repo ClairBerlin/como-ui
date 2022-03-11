@@ -1,8 +1,8 @@
 <script setup>
-import { computed } from "vue";
-import dayjs from "dayjs";
-import "chartjs-adapter-dayjs";
-import { LineChart, useLineChart } from "vue-chart-3";
+import { computed } from 'vue';
+import dayjs from 'dayjs';
+import 'chartjs-adapter-dayjs';
+import { LineChart, useLineChart } from 'vue-chart-3';
 import {
   Chart,
   PointElement,
@@ -13,21 +13,12 @@ import {
   Legend,
   Title,
   Tooltip,
-} from "chart.js";
-import { useI18n } from "vue-i18n";
+} from 'chart.js';
+import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-Chart.register(
-  LineElement,
-  PointElement,
-  LineController,
-  TimeScale,
-  LinearScale,
-  Legend,
-  Title,
-  Tooltip
-);
+Chart.register(LineElement, PointElement, LineController, TimeScale, LinearScale, Legend, Title, Tooltip);
 
 const props = defineProps({
   installationId: { type: String, required: true },
@@ -43,22 +34,22 @@ const props = defineProps({
 });
 
 const displayFrom = computed(() => {
-  if (props.displayScope === "month") {
-    return props.referenceInstant.startOf("month");
-  } else if (props.displayScope === "week") {
-    return props.referenceInstant.startOf("week");
+  if (props.displayScope === 'month') {
+    return props.referenceInstant.startOf('month');
+  } else if (props.displayScope === 'week') {
+    return props.referenceInstant.startOf('week');
   } else {
-    return props.referenceInstant.startOf("day");
+    return props.referenceInstant.startOf('day');
   }
 });
 
 const displayTo = computed(() => {
-  if (props.displayScope === "month") {
-    return props.referenceInstant.endOf("month");
-  } else if (props.displayScope === "week") {
-    return props.referenceInstant.endOf("week");
+  if (props.displayScope === 'month') {
+    return props.referenceInstant.endOf('month');
+  } else if (props.displayScope === 'week') {
+    return props.referenceInstant.endOf('week');
   } else {
-    return props.referenceInstant.endOf("day");
+    return props.referenceInstant.endOf('day');
   }
 });
 
@@ -67,12 +58,12 @@ const displayTimeRange = computed(() => {
 });
 
 const displayUnit = computed(() => {
-  if (props.displayScope === "month") {
-    return "day";
-  } else if (props.displayScope === "week") {
-    return "day";
+  if (props.displayScope === 'month') {
+    return 'day';
+  } else if (props.displayScope === 'week') {
+    return 'day';
   } else {
-    return "hour";
+    return 'hour';
   }
 });
 
@@ -85,12 +76,12 @@ const timeseries = computed(() =>
 const chartData = computed(() => ({
   datasets: [
     {
-      label: t("ppm"),
+      label: t('ppm'),
       pointRadius: 0,
       lineTension: 0,
       borderWidth: 3,
-      backgroundColor: "#4338CA",
-      borderColor: "#4338CA",
+      backgroundColor: '#4338CA',
+      borderColor: '#4338CA',
       data: timeseries.value,
       parsing: false,
     },
@@ -98,57 +89,57 @@ const chartData = computed(() => ({
 }));
 
 const getColor = (value) => {
-  if (value <= 600) return "#27ff00";
-  if (value <= 800) return "#95fe00";
-  if (value <= 1000) return "#d0fc00";
-  if (value <= 1200) return "#fff800";
-  if (value <= 1400) return "#ffd400";
-  if (value <= 1600) return "#ff8700";
-  return "#ff0000";
+  if (value <= 600) return '#27ff00';
+  if (value <= 800) return '#95fe00';
+  if (value <= 1000) return '#d0fc00';
+  if (value <= 1200) return '#fff800';
+  if (value <= 1400) return '#ffd400';
+  if (value <= 1600) return '#ff8700';
+  return '#ff0000';
 };
 
 const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
-  animation: { duration: 600, easing: "easeOutCubic" },
+  animation: { duration: 600, easing: 'easeOutCubic' },
   scales: {
     x: {
-      type: "time",
+      type: 'time',
       time: {
         displayFormats: {
-          datetime: "YYYY-MM-DD HH:mm:ss",
-          millisecond: "H:mm:ss.SSS",
-          second: "H:mm:ss",
-          minute: "H:mm",
-          hour: "H",
-          day: "D. MMM",
-          week: "ll",
-          month: "MMM YYYY",
-          quarter: "[Q]Q - YYYY",
-          year: "YYYY",
+          datetime: 'YYYY-MM-DD HH:mm:ss',
+          millisecond: 'H:mm:ss.SSS',
+          second: 'H:mm:ss',
+          minute: 'H:mm',
+          hour: 'H',
+          day: 'D. MMM',
+          week: 'll',
+          month: 'MMM YYYY',
+          quarter: '[Q]Q - YYYY',
+          year: 'YYYY',
         },
         isoWeekday: true,
         unit: displayUnit.value,
       },
-      position: "bottom",
+      position: 'bottom',
       alignToPixels: true,
       title: {
-        color: "#4338CA",
+        color: '#4338CA',
         display: true,
-        font: { weight: "bold", size: 16 },
-        text: t("time"),
+        font: { weight: 'bold', size: 16 },
+        text: t('time'),
       },
       ...displayTimeRange.value,
     },
     y: {
-      type: "linear",
-      position: "left",
+      type: 'linear',
+      position: 'left',
       alignToPixels: true,
       title: {
-        color: "#4338CA",
+        color: '#4338CA',
         display: true,
-        font: { weight: "bold", size: 16 },
-        text: t("ppm"),
+        font: { weight: 'bold', size: 16 },
+        text: t('ppm'),
       },
       min: 400,
       max: 1800,

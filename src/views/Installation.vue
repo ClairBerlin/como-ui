@@ -1,8 +1,8 @@
 <script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-import { useStore } from "vuex";
-import InstallationViz from "@/components/InstallationViz.vue";
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+import InstallationViz from '@/components/InstallationViz.vue';
 
 const route = useRoute();
 const store = useStore();
@@ -12,13 +12,13 @@ const currentInstallationId = computed(() => {
 });
 
 const installation = computed(() =>
-  store.getters["jv/get"]({
-    _jv: { type: "Installation", id: currentInstallationId.value },
+  store.getters['jv/get']({
+    _jv: { type: 'Installation', id: currentInstallationId.value },
   })
 );
 
 const isInstallationLoaded = computed(() => {
-  return typeof installation.value !== "undefined";
+  return typeof installation.value !== 'undefined';
 });
 </script>
 

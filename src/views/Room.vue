@@ -1,14 +1,14 @@
 <script setup>
-import { computed, watchEffect } from "vue";
-import { useRoute } from "vue-router";
-import { useStore } from "vuex";
-import { useToast } from "vue-toastification";
-import { useI18n } from "vue-i18n";
-import { dayFormatTimestamp, isInstallationActive } from "@/utils";
-import { ExclamationIcon } from "@heroicons/vue/outline";
-import LoadingSpinner from "@/components/LoadingSpinner.vue";
-import dayjs from "dayjs";
-import RoomForm from "@/components/forms/RoomForm.vue";
+import { computed, watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+import { useStore } from 'vuex';
+import { useToast } from 'vue-toastification';
+import { useI18n } from 'vue-i18n';
+import { dayFormatTimestamp, isInstallationActive } from '@/utils';
+import { ExclamationIcon } from '@heroicons/vue/outline';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import dayjs from 'dayjs';
+import RoomForm from '@/components/forms/RoomForm.vue';
 
 const route = useRoute();
 const store = useStore();
@@ -16,39 +16,34 @@ const toast = useToast();
 const { t, n } = useI18n();
 
 const isLoading = computed(() => {
-  return store.getters["nav/isOrgContextLoading"];
+  return store.getters['nav/isOrgContextLoading'];
 });
 
 const roomId = computed(() => route.params.roomId);
 const room = computed(() =>
-  store.getters["jv/get"]({
-    _jv: { type: "Room", id: roomId.value },
+  store.getters['jv/get']({
+    _jv: { type: 'Room', id: roomId.value },
   })
 );
 
-const emit = defineEmits(["changeSubheading"]);
+const emit = defineEmits(['changeSubheading']);
 watchEffect(() => {
   if (room.value?.name) {
-    emit("changeSubheading", room.value.name);
+    emit('changeSubheading', room.value.name);
   }
 });
 
 const isOwner = computed(() => {
-  return store.getters["nav/isOwner"];
+  return store.getters['nav/isOwner'];
 });
 
 const installations = computed(() => {
-  const instObj = store.getters["jv/get"](
-    "Installation",
-    `$[?(@.room._jv.id=="${roomId.value}")]`
-  );
+  const instObj = store.getters['jv/get']('Installation', `$[?(@.room._jv.id=="${roomId.value}")]`);
   const instList = Object.entries(instObj);
   return instList.map(([, inst]) => inst);
 });
 
-const hasInstallations = computed(
-  () => !isLoading.value && installations.value?.length > 0
-);
+const hasInstallations = computed(() => !isLoading.value && installations.value?.length > 0);
 
 const update = async ({ name, description, size, height, capacity }) => {
   if (
@@ -62,23 +57,20 @@ const update = async ({ name, description, size, height, capacity }) => {
   }
   const newRoom = {
     _jv: {
-      type: "Room",
+      type: 'Room',
       id: roomId.value,
     },
     name,
     description,
-    size_sqm: size?.replace(",", ".") || undefined,
-    height_m: height?.replace(",", ".") || undefined,
+    size_sqm: size?.replace(',', '.') || undefined,
+    height_m: height?.replace(',', '.') || undefined,
     max_occupancy: capacity || undefined,
   };
   try {
-    await store.dispatch("jv/patch", [
-      newRoom,
-      { url: `rooms/${roomId.value}/` },
-    ]);
-    toast.success(t("room.updateSuccess"));
+    await store.dispatch('jv/patch', [newRoom, { url: `rooms/${roomId.value}/` }]);
+    toast.success(t('room.updateSuccess'));
   } catch (e) {
-    toast.error(t("room.updateError"));
+    toast.error(t('room.updateError'));
     console.log(e);
   }
 };
@@ -86,19 +78,16 @@ const update = async ({ name, description, size, height, capacity }) => {
 const terminateInstallation = async (installationId) => {
   const installation = {
     _jv: {
-      type: "Installation",
+      type: 'Installation',
       id: installationId,
     },
     to_timestamp_s: dayjs().unix(),
   };
   try {
-    await store.dispatch("jv/patch", [
-      installation,
-      { url: `installations/${installationId}/` },
-    ]);
-    toast.success(t("installation.successTerminate"));
+    await store.dispatch('jv/patch', [installation, { url: `installations/${installationId}/` }]);
+    toast.success(t('installation.successTerminate'));
   } catch (e) {
-    toast.error(t("installation.errorTerminate"));
+    toast.error(t('installation.errorTerminate'));
     console.log(e);
   }
 };
@@ -108,7 +97,7 @@ const terminateInstallation = async (installationId) => {
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
     <div class="mt-8 max-w-sm sm:max-w-lg">
-      <div class="rounded-md bg-white p-6 shadow-md">
+      <div class="rounded-sm bg-white p-6 shadow-md">
         <RoomForm
           :allow-edit="isOwner"
           :room-name="room.name"
@@ -122,10 +111,7 @@ const terminateInstallation = async (installationId) => {
       </div>
     </div>
 
-    <div
-      v-if="hasInstallations"
-      class="text-md mt-8 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
-    >
+    <div v-if="hasInstallations" class="text-md mt-8 overflow-hidden rounded-sm bg-white ring-1 ring-gray-300">
       <div class="flex items-center justify-end">
         <div class="flex flex-row">
           <router-link
@@ -135,7 +121,7 @@ const terminateInstallation = async (installationId) => {
               name: 'addInstallation',
               params: { roomId: roomId },
             }"
-            >{{ $t("installation.add") }}</router-link
+            >{{ $t('installation.add') }}</router-link
           >
         </div>
       </div>
@@ -143,35 +129,23 @@ const terminateInstallation = async (installationId) => {
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
-            <th
-              scope="col"
-              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
-            >
-              {{ $t("room.sensor") }}
+            <th scope="col" class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
+              {{ $t('room.sensor') }}
             </th>
-            <th
-              scope="col"
-              class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
-            >
-              {{ $t("installation.isPublic") }}
+            <th scope="col" class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
+              {{ $t('installation.isPublic') }}
             </th>
-            <th
-              scope="col"
-              class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
-            >
-              {{ $t("installation.installedOn") }}
+            <th scope="col" class="py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
+              {{ $t('installation.installedOn') }}
             </th>
             <th
               scope="col"
               class="hidden py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
             >
-              {{ $t("installation.removedOn") }}
+              {{ $t('installation.removedOn') }}
             </th>
-            <th
-              scope="col"
-              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
-            >
-              {{ $t("actions") }}
+            <th scope="col" class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
+              {{ $t('actions') }}
             </th>
           </tr>
         </thead>
@@ -202,7 +176,7 @@ const terminateInstallation = async (installationId) => {
                       name: 'installation',
                       params: { installationId: installation._jv.id },
                     }"
-                    >{{ $t("inspect") }}</router-link
+                    >{{ $t('inspect') }}</router-link
                   >
                 </div>
                 <div
@@ -210,7 +184,7 @@ const terminateInstallation = async (installationId) => {
                   class="gray-button btn-sm m-2 mr-0 w-max font-semibold"
                   @click="terminateInstallation(installation._jv.id)"
                 >
-                  {{ $t("installation.terminate") }}
+                  {{ $t('installation.terminate') }}
                 </div>
               </div>
             </td>
@@ -220,15 +194,15 @@ const terminateInstallation = async (installationId) => {
     </div>
     <div
       v-else
-      class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+      class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">
           <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
         </div>
         <div class="ml-3">
-          {{ $t("room.noInstallations") }}.
-          {{ " " }}
+          {{ $t('room.noInstallations') }}.
+          {{ ' ' }}
           <!-- TODO: use :to="{ name: 'installation-add' }" -->
           <router-link
             :to="{
@@ -237,7 +211,7 @@ const terminateInstallation = async (installationId) => {
             }"
             class="font-medium text-yellow-700 underline hover:text-yellow-600"
           >
-            {{ $t("room.addInstallation") }}
+            {{ $t('room.addInstallation') }}
           </router-link>
         </div>
       </div>

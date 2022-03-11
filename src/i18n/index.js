@@ -1,5 +1,5 @@
-import enUS from "./en.json";
-import deDE from "./de.json";
+import enUS from './en.json';
+import deDE from './de.json';
 
 export default {
   en: enUS,

@@ -1,158 +1,158 @@
-import Dashboard from "@/views/Dashboard.vue";
-import Overview from "@/views/Overview.vue";
-const Organizations = () => import("@/views/Organizations.vue");
-const Organization = () => import("@/views/Organization.vue");
-const AddOrganization = () => import("@/views/AddOrganization.vue");
-const EditOrganization = () => import("@/views/EditOrganization.vue");
-const NotFound = () => import("@/views/NotFound.vue");
-const Sites = () => import("@/views/Sites.vue");
-const Site = () => import("@/views/Site.vue");
-const AddSite = () => import("@/views/AddSite.vue");
-const AddRoom = () => import("@/views/AddRoom.vue");
-const Rooms = () => import("@/views/Rooms.vue");
-const Room = () => import("@/views/Room.vue");
-const Installation = () => import("@/views/Installation.vue");
-const AddInstallation = () => import("@/views/AddInstallation.vue");
-const Sensors = () => import("@/views/Sensors.vue");
-const Sensor = () => import("@/views/Sensor.vue");
-const AddSensor = () => import("@/views/AddSensor.vue");
-const Logout = () => import("@/views/Logout.vue");
+import Dashboard from '@/views/Dashboard.vue';
+import Overview from '@/views/Overview.vue';
+const Organizations = () => import('@/views/Organizations.vue');
+const Organization = () => import('@/views/Organization.vue');
+const AddOrganization = () => import('@/views/AddOrganization.vue');
+const EditOrganization = () => import('@/views/EditOrganization.vue');
+const NotFound = () => import('@/views/NotFound.vue');
+const Sites = () => import('@/views/Sites.vue');
+const Site = () => import('@/views/Site.vue');
+const AddSite = () => import('@/views/AddSite.vue');
+const AddRoom = () => import('@/views/AddRoom.vue');
+const Rooms = () => import('@/views/Rooms.vue');
+const Room = () => import('@/views/Room.vue');
+const Installation = () => import('@/views/Installation.vue');
+const AddInstallation = () => import('@/views/AddInstallation.vue');
+const Sensors = () => import('@/views/Sensors.vue');
+const Sensor = () => import('@/views/Sensor.vue');
+const AddSensor = () => import('@/views/AddSensor.vue');
+const Logout = () => import('@/views/Logout.vue');
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
   {
-    path: "/",
-    redirect: "/dashboard",
+    path: '/',
+    redirect: '/dashboard',
   },
   {
-    path: "/org-management",
-    name: "org-management",
-    meta: { title: "org.manage" },
+    path: '/org-management',
+    name: 'org-management',
+    meta: { title: 'org.manage' },
     component: Organizations,
   },
   {
-    path: "/org-management/:orgId",
-    name: "org-management-detail",
-    meta: { title: "org.details" },
+    path: '/org-management/:orgId',
+    name: 'org-management-detail',
+    meta: { title: 'org.details' },
     component: Organization,
   },
   {
-    path: "/org-management/:orgId/edit",
-    name: "org-management-edit",
-    meta: { title: "org.edit" },
+    path: '/org-management/:orgId/edit',
+    name: 'org-management-edit',
+    meta: { title: 'org.edit' },
     component: EditOrganization,
   },
   {
-    path: "/org-management/add",
-    name: "org-management-add",
-    meta: { title: "org.add" },
+    path: '/org-management/add',
+    name: 'org-management-add',
+    meta: { title: 'org.add' },
     component: AddOrganization,
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
+    path: '/dashboard',
+    name: 'dashboard',
     component: Dashboard,
   },
   {
-    path: "/dashboard/:orgId",
-    name: "home",
+    path: '/dashboard/:orgId',
+    name: 'home',
     component: Dashboard,
     props: true,
-    meta: { title: "org.singular" },
+    meta: { title: 'org.singular' },
     children: [
       {
-        path: "",
-        name: "overview",
+        path: '',
+        name: 'overview',
         component: Overview,
-        meta: { title: "overview" },
+        meta: { title: 'overview' },
       },
       {
-        path: "installation/:installationId",
-        name: "installation",
+        path: 'installation/:installationId',
+        name: 'installation',
         component: Installation,
-        meta: { title: "installation.details" },
+        meta: { title: 'installation.details' },
       },
       {
-        path: "sites",
-        name: "sites",
+        path: 'sites',
+        name: 'sites',
         component: Sites,
-        meta: { title: "sites" },
+        meta: { title: 'sites' },
       },
       {
-        path: "sites/addSite",
-        name: "addSite",
+        path: 'sites/addSite',
+        name: 'addSite',
         component: AddSite,
-        meta: { title: "site.add" },
+        meta: { title: 'site.add' },
       },
       {
-        path: "sites/:siteId",
-        name: "site",
+        path: 'sites/:siteId',
+        name: 'site',
         component: Site,
-        meta: { title: "site.details" },
+        meta: { title: 'site.details' },
       },
       {
-        path: "sites/:siteId/addRoom",
-        name: "addRoom",
+        path: 'sites/:siteId/addRoom',
+        name: 'addRoom',
         component: AddRoom,
-        meta: { title: "room.add" },
+        meta: { title: 'room.add' },
       },
       {
-        path: "rooms",
-        name: "rooms",
+        path: 'rooms',
+        name: 'rooms',
         component: Rooms,
-        meta: { title: "rooms" },
+        meta: { title: 'rooms' },
       },
       {
-        path: "rooms/:roomId",
-        name: "room",
+        path: 'rooms/:roomId',
+        name: 'room',
         component: Room,
-        meta: { title: "room.details" },
+        meta: { title: 'room.details' },
       },
       {
-        path: "rooms/:roomId/addInstallation",
-        name: "addInstallation",
+        path: 'rooms/:roomId/addInstallation',
+        name: 'addInstallation',
         component: AddInstallation,
-        meta: { title: "installation.add" },
+        meta: { title: 'installation.add' },
       },
       {
-        path: "sensors",
-        name: "sensors",
+        path: 'sensors',
+        name: 'sensors',
         component: Sensors,
-        meta: { title: "nodes" },
+        meta: { title: 'nodes' },
       },
       {
-        path: "addSensor",
-        name: "addSensor",
+        path: 'addSensor',
+        name: 'addSensor',
         component: AddSensor,
-        meta: { title: "node.add" },
+        meta: { title: 'node.add' },
       },
       {
-        path: "sensors/:sensorId",
-        name: "sensor",
+        path: 'sensors/:sensorId',
+        name: 'sensor',
         component: Sensor,
-        meta: { title: "node.details" },
+        meta: { title: 'node.details' },
       },
     ],
   },
   {
-    path: "/accounts/email",
-    name: "change-email",
+    path: '/accounts/email',
+    name: 'change-email',
     beforeEnter() {
-      window.location.href = "/accounts/email";
+      window.location.href = '/accounts/email';
     },
   },
   {
-    path: "/accounts/password/change",
-    name: "change-password",
+    path: '/accounts/password/change',
+    name: 'change-password',
     beforeEnter() {
-      window.location.href = "/accounts/password/change";
+      window.location.href = '/accounts/password/change';
     },
   },
   {
-    path: "/logout",
-    name: "logout",
-    meta: { title: "user.logout" },
+    path: '/logout',
+    name: 'logout',
+    meta: { title: 'user.logout' },
     component: Logout,
   },
-  { path: "/:pathMatch(.*)", component: NotFound },
+  { path: '/:pathMatch(.*)', component: NotFound },
 ];

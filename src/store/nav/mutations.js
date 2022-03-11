@@ -1,4 +1,4 @@
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
 const mutations = {
   START_ORG_LOADING(nav) {
@@ -19,7 +19,7 @@ const mutations = {
 
   SET_CURRENT_ORG(nav, orgId) {
     if (orgId !== undefined) {
-      Cookies.set("lastVistedOrg", orgId);
+      Cookies.set('lastVistedOrg', orgId);
     }
     nav.currentOrgId = orgId;
   },

@@ -1,14 +1,14 @@
 <script setup>
-import { onMounted, ref, computed } from "vue";
-import { useStore } from "vuex";
-import { useI18n } from "vue-i18n";
-import dayjs from "dayjs";
-import DayjsMinMax from "dayjs/plugin/minMax";
+import { onMounted, ref, computed } from 'vue';
+import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
+import dayjs from 'dayjs';
+import DayjsMinMax from 'dayjs/plugin/minMax';
 dayjs.extend(DayjsMinMax);
 
-import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import Co2Graph from "@/components/Co2Graph.vue";
-import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
+import Co2Graph from '@/components/Co2Graph.vue';
+import { EyeIcon, EyeOffIcon } from '@heroicons/vue/outline';
 
 const store = useStore();
 
@@ -17,17 +17,15 @@ const samplePool = ref([]);
 const { t } = useI18n();
 
 // The window of sample data to display is taken relative to this day
-const referenceDay = ref(dayjs().startOf("day"));
-const referenceDayFormatted = computed(() =>
-  referenceDay.value.format("YYYY-MM-DD")
-);
+const referenceDay = ref(dayjs().startOf('day'));
+const referenceDayFormatted = computed(() => referenceDay.value.format('YYYY-MM-DD'));
 const props = defineProps({
   installationId: { type: String, required: true },
 });
 
 const installation = computed(() =>
-  store.getters["jv/get"]({
-    _jv: { type: "Installation", id: props.installationId },
+  store.getters['jv/get']({
+    _jv: { type: 'Installation', id: props.installationId },
   })
 );
 
@@ -35,34 +33,22 @@ const room = ref();
 const roomName = computed(() => room.value?.name);
 
 const loadRoom = async () => {
-  return await store.dispatch(
-    "jv/get",
-    `installations/${props.installationId}/room`,
-    { root: true }
-  );
+  return await store.dispatch('jv/get', `installations/${props.installationId}/room`, { root: true });
 };
 
 const loadInstallation = async () => {
-  return await store.dispatch(
-    "jv/get",
-    `installations/${props.installationId}`,
-    { root: true }
-  );
+  return await store.dispatch('jv/get', `installations/${props.installationId}`, { root: true });
 };
 
 const loadSamples = async (from, to) => {
   const params = {
     include_timeseries: 1,
-    "filter[from]": from,
-    "filter[to]": to,
+    'filter[from]': from,
+    'filter[to]': to,
   };
-  console.log(
-    `Fetching sample data from ${dayjs.unix(
-      params["filter[from]"]
-    )} to ${dayjs.unix(params["filter[to]"])}`
-  );
+  console.log(`Fetching sample data from ${dayjs.unix(params['filter[from]'])} to ${dayjs.unix(params['filter[to]'])}`);
   // jv/search bypasses the vuex store.
-  const { timeseries } = await store.dispatch("jv/search", [
+  const { timeseries } = await store.dispatch('jv/search', [
     `installations/${props.installationId}`,
     {
       params: params,
@@ -75,7 +61,7 @@ const loadSamples = async (from, to) => {
 onMounted(async () => {
   await loadInstallation(); // Fetch installation information into the store.
   room.value = await loadRoom();
-  const from = referenceDay.value.startOf("month").unix();
+  const from = referenceDay.value.startOf('month').unix();
   const to = dayjs().unix();
   // Fetch samples of the installation, bypass the store.
   samplePool.value = await loadSamples(from, to);
@@ -110,16 +96,16 @@ const previousInstant = async () => {
   let prev = referenceDay.value;
   console.log(`Current reference day: ${prev}`);
   if (selectedTab.value == 0) {
-    prev = referenceDay.value.subtract(1, "d");
+    prev = referenceDay.value.subtract(1, 'd');
   } else if (selectedTab.value == 1) {
-    prev = referenceDay.value.subtract(1, "w");
+    prev = referenceDay.value.subtract(1, 'w');
   } else {
-    prev = referenceDay.value.subtract(1, "M");
+    prev = referenceDay.value.subtract(1, 'M');
   }
   referenceDay.value = prev;
   console.log(`New reference day: ${referenceDay.value}`);
   if (oldestSampleInstant.value > prev.unix()) {
-    addOldSamplesToPool(prev.startOf("month").unix());
+    addOldSamplesToPool(prev.startOf('month').unix());
   }
 };
 
@@ -130,11 +116,7 @@ const addNewSamplesToPool = async () => {
   }
   const now = dayjs().unix();
   if (latestSampleInstant.value < now) {
-    console.log(
-      `Current time: ${dayjs.unix(now)}. Latest sample instant: ${dayjs.unix(
-        latestSampleInstant.value
-      )}`
-    );
+    console.log(`Current time: ${dayjs.unix(now)}. Latest sample instant: ${dayjs.unix(latestSampleInstant.value)}`);
 
     const nextSamples = await loadSamples(latestSampleInstant.value + 1, now);
     if (nextSamples.length > 0) {
@@ -146,28 +128,26 @@ const addNewSamplesToPool = async () => {
 
 const nowInstant = async () => {
   addNewSamplesToPool();
-  referenceDay.value = dayjs().startOf("day");
+  referenceDay.value = dayjs().startOf('day');
 };
 
 const nextInstant = () => {
   let next = referenceDay.value;
   console.log(`Current reference day: ${next}`);
   if (selectedTab.value == 0) {
-    next = referenceDay.value.add(1, "d");
+    next = referenceDay.value.add(1, 'd');
   } else if (selectedTab.value == 1) {
-    next = referenceDay.value.add(1, "w");
+    next = referenceDay.value.add(1, 'w');
   } else {
-    next = referenceDay.value.add(1, "M");
+    next = referenceDay.value.add(1, 'M');
   }
   addNewSamplesToPool();
-  referenceDay.value = dayjs.min(next, dayjs().startOf("day"));
+  referenceDay.value = dayjs.min(next, dayjs().startOf('day'));
   console.log(`New reference day: ${referenceDay.value}`);
 };
 
 const installationTooltip = (isPublic) => {
-  const tip = isPublic
-    ? "This installation is public."
-    : "This installation is not public.";
+  const tip = isPublic ? 'This installation is public.' : 'This installation is not public.';
   return t(tip);
 };
 
@@ -177,40 +157,17 @@ const isTabActive = (index) => selectedTab.value === index;
 <template>
   <div class="card max-w-xs bg-white p-4 text-black sm:max-w-lg">
     <div class="flex justify-between">
-      <div class="card-title">
-        Installation #{{ installationId }} in {{ roomName }}
-      </div>
-      <div
-        :data-tip="installationTooltip(installation['is_public'])"
-        class="tooltip tooltip-left h-6 w-6"
-      >
+      <div class="card-title">Installation #{{ installationId }} in {{ roomName }}</div>
+      <div :data-tip="installationTooltip(installation['is_public'])" class="tooltip tooltip-left h-6 w-6">
         <EyeIcon v-if="installation['is_public']" />
         <EyeOffIcon v-else />
       </div>
     </div>
     <TabGroup @change="tabChanged">
       <TabList class="tabs py-2">
-        <Tab
-          :class="[
-            'tab tab-bordered flex-grow',
-            isTabActive(0) ? 'tab-active' : '',
-          ]"
-          >{{ $t("day") }}</Tab
-        >
-        <Tab
-          :class="[
-            'tab tab-bordered flex-grow',
-            isTabActive(1) ? 'tab-active' : '',
-          ]"
-          >{{ $t("week") }}</Tab
-        >
-        <Tab
-          :class="[
-            'tab tab-bordered flex-grow',
-            isTabActive(2) ? 'tab-active' : '',
-          ]"
-          >{{ $t("month") }}</Tab
-        >
+        <Tab :class="['tab tab-bordered flex-grow', isTabActive(0) ? 'tab-active' : '']">{{ $t('day') }}</Tab>
+        <Tab :class="['tab tab-bordered flex-grow', isTabActive(1) ? 'tab-active' : '']">{{ $t('week') }}</Tab>
+        <Tab :class="['tab tab-bordered flex-grow', isTabActive(2) ? 'tab-active' : '']">{{ $t('month') }}</Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
@@ -243,17 +200,17 @@ const isTabActive = (index) => selectedTab.value === index;
     <div class="flex justify-between">
       <div>
         <div class="gray-button btn-sm" @click="previousInstant">
-          {{ $t("previous") }}
+          {{ $t('previous') }}
         </div>
       </div>
       <div>
         <div class="gray-button btn-sm" @click="nowInstant">
-          {{ $t("now") }}
+          {{ $t('now') }}
         </div>
       </div>
       <div>
         <div class="gray-button btn-sm" @click="nextInstant">
-          {{ $t("next") }}
+          {{ $t('next') }}
         </div>
       </div>
     </div>

@@ -1,16 +1,15 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
-export const getInitials = (...args) =>
-  args.map((a) => a[0].toUpperCase()).join("");
+export const getInitials = (...args) => args.map((a) => a[0].toUpperCase()).join('');
 
 export const roleToString = (role) => {
   switch (role.toLowerCase()) {
-    case "o":
-      return "role.owner";
-    case "i":
-      return "role.inspector";
+    case 'o':
+      return 'role.owner';
+    case 'i':
+      return 'role.inspector';
     default:
-      return "-";
+      return '-';
   }
 };
 
@@ -19,17 +18,17 @@ export const maxUnixEpoch = 2147483647;
 
 export const dayFormatTimestamp = (unixTimestamp) => {
   if (unixTimestamp === maxUnixEpoch) {
-    return "—";
+    return '—';
   } else {
-    return dayjs.unix(unixTimestamp).format("YYYY-MM-DD");
+    return dayjs.unix(unixTimestamp).format('YYYY-MM-DD');
   }
 };
 
 export const detailFormatTimestamp = (unixTimestamp) => {
   if (unixTimestamp === maxUnixEpoch) {
-    return "—";
+    return '—';
   } else {
-    return dayjs.unix(unixTimestamp).format("YYYY-MM-DD HH:mm");
+    return dayjs.unix(unixTimestamp).format('YYYY-MM-DD HH:mm');
   }
 };
 
@@ -38,12 +37,8 @@ export const isInstallationActive = (installation) => {
     return false;
   } else {
     let now_s = dayjs().unix();
-    return (
-      installation.from_timestamp_s < now_s &&
-      installation.to_timestamp_s > now_s
-    );
+    return installation.from_timestamp_s < now_s && installation.to_timestamp_s > now_s;
   }
 };
 
-export const isAnyInstallationActive = (installations) =>
-  installations.some(isInstallationActive);
+export const isAnyInstallationActive = (installations) => installations.some(isInstallationActive);

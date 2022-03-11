@@ -1,18 +1,18 @@
 <script setup>
-import { useField } from "vee-validate";
+import { useField } from 'vee-validate';
 
 const props = defineProps({
   element: {
     type: String,
-    default: "input",
+    default: 'input',
   },
   type: {
     type: String,
-    default: "text",
+    default: 'text',
   },
   value: {
     type: String,
-    default: "",
+    default: '',
   },
   name: {
     type: String,
@@ -24,7 +24,7 @@ const props = defineProps({
   },
   placeholder: {
     type: String,
-    default: "",
+    default: '',
   },
   disabled: {
     type: Boolean,
@@ -42,9 +42,7 @@ const {
 
 <template>
   <div>
-    <label class="mb-1 block font-semibold text-gray-900" :for="name">{{
-      label
-    }}</label>
+    <label class="mb-1 block font-semibold text-gray-900" :for="name">{{ label }}</label>
     <component
       :disabled="disabled ? true : undefined"
       :is="element"
@@ -60,7 +58,7 @@ const {
         !meta.valid
           ? '!important border-red-500 focus:ring-red-500'
           : '!important border-gray-300 focus:ring-indigo-500',
-        'w-full rounded-md text-gray-900 shadow-inner',
+        'w-full rounded-sm text-gray-900 shadow-inner',
         'disabled:cursor-not-allowed disabled:opacity-50',
       ]"
     />

@@ -1,22 +1,16 @@
 <script setup>
-import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-  XIcon,
-} from "@heroicons/vue/solid";
+import { Popover, PopoverButton, PopoverPanel } from '@headlessui/vue';
+import { CheckIcon, ChevronDownIcon, ChevronUpIcon, XIcon } from '@heroicons/vue/solid';
 
 defineProps({
   icon: { type: Function, default: undefined },
   title: { type: String, required: true },
-  contextTitle: { type: String, default: "" },
+  contextTitle: { type: String, default: '' },
   popOverAbove: { type: Boolean, default: false },
   options: { type: Array, required: true },
 });
 
-const iconClasses = () =>
-  `text-gray-500 group-hover:text-gray-600 mr-2 flex-shrink-0 h-4 w-4`;
+const iconClasses = () => `text-gray-500 group-hover:text-gray-600 mr-2 flex-shrink-0 h-4 w-4`;
 </script>
 
 <template>
@@ -24,16 +18,13 @@ const iconClasses = () =>
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"
-        class="como-focus group inline-flex w-full items-center justify-between rounded-md px-2 py-4 text-sm font-medium text-black hover:bg-gray-100 hover:text-opacity-100"
+        class="como-focus group inline-flex w-full items-center justify-between rounded-sm px-2 py-4 text-sm font-medium text-black hover:bg-gray-100 hover:text-opacity-100"
       >
         <div class="flex items-center">
           <component
             v-if="icon"
             :is="icon"
-            :class="[
-              'text-gray-500 group-hover:text-gray-600',
-              'mr-3 h-6 w-6 flex-shrink-0',
-            ]"
+            :class="['text-gray-500 group-hover:text-gray-600', 'mr-3 h-6 w-6 flex-shrink-0']"
             aria-hidden="true"
           />
           <span class="text-left">{{ title }}</span>
@@ -54,23 +45,14 @@ const iconClasses = () =>
         leave-from-class="translate-y-0 opacity-100"
         leave-to-class="translate-y-1 opacity-0"
       >
-        <PopoverPanel
-          :class="[
-            popOverAbove ? 'top-[-9rem]' : 'top-16',
-            'absolute z-10 w-full',
-          ]"
-          v-slot="{ close }"
-        >
-          <div class="rounded-lg shadow-lg ring-1 ring-gray-300">
-            <div class="relative rounded-lg bg-white text-xs">
+        <PopoverPanel :class="[popOverAbove ? 'top-[-9rem]' : 'top-16', 'absolute z-10 w-full']" v-slot="{ close }">
+          <div class="rounded-md shadow-lg ring-1 ring-gray-300">
+            <div class="relative rounded-md bg-white text-xs">
               <div class="flex items-center justify-between py-2 pl-4 pr-2">
                 <div class="font-semibold text-gray-500">
                   {{ $t(contextTitle) }}
                 </div>
-                <XIcon
-                  class="h-4 w-4 cursor-pointer text-gray-600"
-                  @click="close"
-                />
+                <XIcon class="h-4 w-4 cursor-pointer text-gray-600" @click="close" />
               </div>
               <router-link
                 v-for="item in options"
@@ -84,12 +66,7 @@ const iconClasses = () =>
               >
                 <div class="flex">
                   <CheckIcon :class="iconClasses()" v-if="item.selected" />
-                  <component
-                    v-else-if="item.icon"
-                    :is="item.icon"
-                    :class="iconClasses()"
-                    aria-hidden="true"
-                  />
+                  <component v-else-if="item.icon" :is="item.icon" :class="iconClasses()" aria-hidden="true" />
                   <div v-else class="w-6" />
                   <p class="whitespace-nowrap font-medium text-gray-900">
                     {{ item?.icon ? $t(item.name) : item.name }}

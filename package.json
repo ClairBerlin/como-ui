@@ -7,10 +7,10 @@
     "build-prod": "vite build --base=/dashboard/",
     "serve": "vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier .  --write"
+    "format": "prettier  --write src '!**/*.{vue}'"
   },
   "dependencies": {
-    "@vueuse/core": "^7.7.1",
+    "@vueuse/core": "^8.0.0",
     "axios": "^0.26.1",
     "chart.js": "^3.7.1",
     "chartjs-adapter-dayjs": "^1.0.0",
@@ -23,7 +23,7 @@
     "vue": "^3.2.31",
     "vue-chart-3": "^3.1.4",
     "vue-i18n": "^9.1.9",
-    "vue-router": "^4.0.13",
+    "vue-router": "^4.0.14",
     "vue-toastification": "^2.0.0-rc.5",
     "vue3-date-time-picker": "^2.7.0",
     "vuex": "^4.0.2",

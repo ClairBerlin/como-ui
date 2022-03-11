@@ -1,8 +1,8 @@
-import Cookies from "js-cookie";
+import Cookies from 'js-cookie';
 
 const getters = {
   isLoggedIn(authuser) {
-    return authuser.id !== null && Cookies.get("csrftoken");
+    return authuser.id !== null && Cookies.get('csrftoken');
   },
 
   isLoading(authUser) {

@@ -1,14 +1,9 @@
 <script setup>
-import Logo from "@/components/Logo.vue";
-import { onMounted, ref, watch, computed } from "vue";
-import { useStore } from "vuex";
-import { useRoute, useRouter } from "vue-router";
-import {
-  Dialog,
-  DialogOverlay,
-  TransitionChild,
-  TransitionRoot,
-} from "@headlessui/vue";
+import Logo from '@/components/Logo.vue';
+import { onMounted, ref, watch, computed } from 'vue';
+import { useStore } from 'vuex';
+import { useRoute, useRouter } from 'vue-router';
+import { Dialog, DialogOverlay, TransitionChild, TransitionRoot } from '@headlessui/vue';
 import {
   LocationMarkerIcon,
   CubeIcon,
@@ -17,11 +12,11 @@ import {
   MenuIcon,
   XIcon,
   UserGroupIcon,
-} from "@heroicons/vue/outline";
-import OrganizationMenu from "@/components/OrganizationMenu.vue";
-import ProfileMenu from "@/components/ProfileMenu.vue";
-import LanguageSelect from "@/components/LanguageSelect.vue";
-import Cookies from "js-cookie";
+} from '@heroicons/vue/outline';
+import OrganizationMenu from '@/components/OrganizationMenu.vue';
+import ProfileMenu from '@/components/ProfileMenu.vue';
+import LanguageSelect from '@/components/LanguageSelect.vue';
+import Cookies from 'js-cookie';
 
 const store = useStore();
 const route = useRoute();
@@ -32,28 +27,28 @@ const router = useRouter();
 //Navigation within the context of the selected organization.
 const orgNavigation = [
   {
-    name: "overview",
-    routeName: "overview",
+    name: 'overview',
+    routeName: 'overview',
     icon: ChartBarIcon,
   },
   {
-    name: "team",
-    routeName: "org-management-detail",
+    name: 'team',
+    routeName: 'org-management-detail',
     icon: UserGroupIcon,
   },
   {
-    name: "sites",
-    routeName: "sites",
+    name: 'sites',
+    routeName: 'sites',
     icon: LocationMarkerIcon,
   },
   {
-    name: "rooms",
-    routeName: "rooms",
+    name: 'rooms',
+    routeName: 'rooms',
     icon: CubeIcon,
   },
   {
-    name: "nodes",
-    routeName: "sensors",
+    name: 'nodes',
+    routeName: 'sensors',
     icon: ChipIcon,
   },
 ];
@@ -65,14 +60,14 @@ const sidebarOpen = ref(false);
 const currentOrgId = computed(() => {
   return store.state.nav.currentOrgId;
 });
-const isOrgContext = computed(() => store.getters["nav/isOrgContext"]);
-const isUserLoading = computed(() => store.getters["authuser/isLoading"]);
+const isOrgContext = computed(() => store.getters['nav/isOrgContext']);
+const isUserLoading = computed(() => store.getters['authuser/isLoading']);
 const isOrgLoading = computed(() => {
   return store.state.nav.isOrgLoading;
 });
 
 const loadOrganization = async (orgId) => {
-  store.dispatch("nav/changeOrganization", orgId);
+  store.dispatch('nav/changeOrganization', orgId);
 };
 
 const isLoading = computed(() => {
@@ -80,24 +75,22 @@ const isLoading = computed(() => {
 });
 
 onMounted(async () => {
-  console.log("Starting application...");
-  store.dispatch("nav/loadSensorTypes");
-  await store.dispatch("authuser/fetchAuthenticatedUser");
-  const memberships = store.getters["authuser/getMemberships"];
+  console.log('Starting application...');
+  store.dispatch('nav/loadSensorTypes');
+  await store.dispatch('authuser/fetchAuthenticatedUser');
+  const memberships = store.getters['authuser/getMemberships'];
   if (memberships?.length > 0) {
-    if (route.name === "dashboard") {
+    if (route.name === 'dashboard') {
       // If no organization is selected or stored in the cookie, default to the user's first organization.
-      const lastVistedOrg = parseInt(Cookies.get("lastVistedOrg"));
-      const lastVistedOrgId = !Number.isNaN(lastVistedOrg)
-        ? lastVistedOrg.toString()
-        : undefined;
+      const lastVistedOrg = parseInt(Cookies.get('lastVistedOrg'));
+      const lastVistedOrgId = !Number.isNaN(lastVistedOrg) ? lastVistedOrg.toString() : undefined;
       const defaultOrgId = lastVistedOrgId || memberships[0].orgId;
       await loadOrganization(defaultOrgId);
-      router.push({ name: "overview", params: { orgId: defaultOrgId } });
+      router.push({ name: 'overview', params: { orgId: defaultOrgId } });
     }
   } else {
-    store.dispatch("nav/clearOrganization");
-    router.push({ name: "org-management-add" });
+    store.dispatch('nav/clearOrganization');
+    router.push({ name: 'org-management-add' });
   }
 });
 
@@ -110,14 +103,10 @@ watch(
 </script>
 
 <template>
-  <a href="#content" class="sr-only focus:not-sr-only">{{ $t("skip") }} </a>
+  <a href="#content" class="sr-only focus:not-sr-only">{{ $t('skip') }} </a>
   <div class="flex h-screen overflow-hidden bg-gray-100">
     <TransitionRoot as="template" :show="sidebarOpen">
-      <Dialog
-        as="div"
-        class="fixed inset-0 z-40 flex lg:hidden"
-        @close="sidebarOpen = false"
-      >
+      <Dialog as="div" class="fixed inset-0 z-40 flex lg:hidden" @close="sidebarOpen = false">
         <TransitionChild
           as="template"
           enter="transition-opacity ease-linear duration-300"
@@ -180,15 +169,13 @@ watch(
                       isCurrentRoute(item.routeName)
                         ? 'bg-indigo-50 text-indigo-900'
                         : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                      'como-focus group flex items-center rounded-md px-2 py-2 text-base font-medium',
+                      'como-focus group flex items-center rounded-sm px-2 py-2 text-base font-medium',
                     ]"
                   >
                     <component
                       :is="item.icon"
                       :class="[
-                        isCurrentRoute(item.routeName)
-                          ? 'text-indigo-900'
-                          : 'text-gray-500 group-hover:text-gray-600',
+                        isCurrentRoute(item.routeName) ? 'text-indigo-900' : 'text-gray-500 group-hover:text-gray-600',
                         'mr-4 h-6 w-6 flex-shrink-0',
                       ]"
                       aria-hidden="true"
@@ -211,16 +198,12 @@ watch(
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:flex lg:flex-shrink-0">
       <div class="flex w-64 flex-col">
-        <div
-          class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
-        >
+        <div class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white">
           <div class="flex flex-1 flex-col overflow-y-auto px-1 pt-6 pb-1">
             <Logo />
-            <div class="w-full border-b border-gray-200 px-3" />
             <nav class="mt-1 flex-1 space-y-1 bg-white">
               <OrganizationMenu />
               <LanguageSelect class="py-1" />
-              <div class="my-1 w-full border-b border-gray-200 px-3" />
               <div v-if="isOrgContext">
                 <router-link
                   v-for="item in orgNavigation"
@@ -239,9 +222,7 @@ watch(
                   <component
                     :is="item.icon"
                     :class="[
-                      isCurrentRoute(item.routeName)
-                        ? 'text-indigo-900'
-                        : 'text-gray-500 group-hover:text-gray-600',
+                      isCurrentRoute(item.routeName) ? 'text-indigo-900' : 'text-gray-500 group-hover:text-gray-600',
                       'mr-3 h-6 w-6 flex-shrink-0',
                     ]"
                     aria-hidden="true"
@@ -260,17 +241,14 @@ watch(
       <div class="pl-1 pt-1 sm:pl-3 sm:pt-3 lg:hidden">
         <button
           type="button"
-          class="como-focus -ml-0.5 -mt-0.5 mb-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
+          class="como-focus -ml-0.5 -mt-0.5 mb-0.5 inline-flex h-12 w-12 items-center justify-center rounded-sm text-gray-500 hover:text-gray-900"
           @click="sidebarOpen = true"
         >
           <span class="sr-only">Open sidebar</span>
           <MenuIcon class="h-6 w-6" aria-hidden="true" />
         </button>
       </div>
-      <main
-        id="content"
-        class="relative z-0 flex-1 overflow-y-auto bg-white focus:outline-none"
-      >
+      <main id="content" class="relative z-0 flex-1 overflow-y-auto bg-white focus:outline-none">
         <div class="h-full w-full bg-gray-100" v-if="!isLoading">
           <router-view />
         </div>
