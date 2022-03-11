@@ -49,21 +49,23 @@ const changeSubheading = (value) => (subheading.value = value);
 
 <template>
   <div class="">
-    <header
-      class="border-b border-gray-200 bg-white px-6 pt-12 pb-4"
-      v-if="$route.meta.title"
-    >
-      <div class="">
-        <h1 class="text-3xl font-bold leading-tight text-gray-900">
-          {{ organization.orgName }} – {{ $t(route.meta.title) }}
-        </h1>
-        <h2 class="text-xl font-semibold text-gray-700" v-if="subheading">
-          {{ subheading }}
-        </h2>
-      </div>
-    </header>
+    <div class="border-b border-gray-200 bg-white">
+      <header
+        class="mx-auto flex w-full max-w-screen-xl px-4 pt-12 pb-4"
+        v-if="$route.meta.title"
+      >
+        <div class="">
+          <h1 class="text-3xl font-bold leading-tight text-gray-900">
+            {{ organization.orgName }} – {{ $t(route.meta.title) }}
+          </h1>
+          <h2 class="text-xl font-semibold text-gray-700" v-if="subheading">
+            {{ subheading }}
+          </h2>
+        </div>
+      </header>
+    </div>
     <Breadcrumbs />
-    <div class="max-w-screen-xl px-4 py-6">
+    <div class="mx-auto max-w-screen-xl px-4 py-6">
       <router-view @change-subheading="changeSubheading" />
     </div>
   </div>

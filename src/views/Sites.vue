@@ -57,7 +57,7 @@ const formatAdress = (address) => {
           Alle Standorte des Teams
         </h1>
         <p class="mt-2 text-sm text-gray-700">
-          Die Liste aller Standorte des Test-Teams mit Namen und Adresse.
+          Die Liste aller Standorte mit Namen und Adresse.
         </p>
       </div>
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">

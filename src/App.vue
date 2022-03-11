@@ -268,9 +268,9 @@ watch(
       </div>
       <main
         id="content"
-        class="relative z-0 flex-1 overflow-y-auto focus:outline-none"
+        class="relative z-0 flex-1 overflow-y-auto bg-white focus:outline-none"
       >
-        <div class="" v-if="!isLoading">
+        <div class="h-full w-full bg-gray-100" v-if="!isLoading">
           <router-view />
         </div>
       </main>
