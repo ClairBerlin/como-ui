@@ -176,6 +176,7 @@ watch(
                     }"
                     @click="sidebarOpen = false"
                     :class="[
+                      // TODO: replicate adjustments from desktop nav
                       isCurrentRoute(item.routeName)
                         ? 'bg-indigo-50 text-indigo-900'
                         : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
@@ -213,7 +214,7 @@ watch(
         <div
           class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
         >
-          <div class="mx-2 flex flex-1 flex-col overflow-y-auto px-1 pt-6 pb-1">
+          <div class="flex flex-1 flex-col overflow-y-auto px-1 pt-6 pb-1">
             <Logo />
             <div class="w-full border-b border-gray-200 px-3" />
             <nav class="mt-1 flex-1 space-y-1 bg-white">
@@ -230,9 +231,9 @@ watch(
                   }"
                   :class="[
                     isCurrentRoute(item.routeName)
-                      ? 'bg-indigo-50 font-bold text-indigo-900'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                    'como-focus group my-1 flex items-center rounded-md px-2 py-4 text-sm font-medium',
+                      ? 'border-l-4 border-indigo-600 bg-indigo-50 font-bold text-indigo-900'
+                      : 'text-gray-800 hover:bg-gray-100 hover:text-gray-900',
+                    'como-focus group my-1 flex items-center rounded-sm px-2 py-4 text-sm font-medium',
                   ]"
                 >
                   <component
