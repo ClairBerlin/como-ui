@@ -1,13 +1,13 @@
 <script setup>
-import { computed, ref, watchEffect } from 'vue';
-import { useRoute } from 'vue-router';
-import { useStore } from 'vuex';
-import { useToast } from 'vue-toastification';
-import { ExclamationIcon, TrashIcon, PlusIcon } from '@heroicons/vue/outline';
-import { useI18n } from 'vue-i18n';
-import DeletionModal from '@/components/DeletionModal.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import SiteForm from '@/components/forms/SiteForm.vue';
+import { computed, ref, watchEffect } from "vue";
+import { useRoute } from "vue-router";
+import { useStore } from "vuex";
+import { useToast } from "vue-toastification";
+import { ExclamationIcon, TrashIcon, PlusIcon } from "@heroicons/vue/outline";
+import { useI18n } from "vue-i18n";
+import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import SiteForm from "@/components/forms/SiteForm.vue";
 
 const { t } = useI18n();
 
@@ -16,34 +16,37 @@ const store = useStore();
 const toast = useToast();
 
 const isLoading = computed(() => {
-  return store.getters['nav/isOrgContextLoading'];
+  return store.getters["nav/isOrgContextLoading"];
 });
 
 const siteId = computed(() => route.params.siteId);
 const site = computed(() =>
-  store.getters['jv/get']({
-    _jv: { type: 'Site', id: siteId.value },
+  store.getters["jv/get"]({
+    _jv: { type: "Site", id: siteId.value },
   })
 );
 
-const emit = defineEmits(['changeSubheading']);
+const emit = defineEmits(["changeSubheading"]);
 watchEffect(() => {
   if (site.value?.name) {
-    emit('changeSubheading', site.value.name);
+    emit("changeSubheading", site.value.name);
   }
 });
 
 const addressId = computed(() => site.value.address._jv.id);
 
 const rooms = computed(() => {
-  const roomObj = store.getters['jv/get']('Room', `$[?(@._jv.relationships.site.data.id=="${siteId.value}")]`);
+  const roomObj = store.getters["jv/get"](
+    "Room",
+    `$[?(@._jv.relationships.site.data.id=="${siteId.value}")]`
+  );
   const roomList = Object.entries(roomObj);
   return roomList.map(([, room]) => room);
 });
 const hasRooms = computed(() => !isLoading.value && rooms.value?.length > 0);
 
 const isOwner = computed(() => {
-  return store.getters['nav/isOwner'];
+  return store.getters["nav/isOwner"];
 });
 
 const showDeleteRoomModal = ref(false);
@@ -52,9 +55,9 @@ const openDeleteRoomModal = () => (showDeleteRoomModal.value = true);
 
 const deleteRoom = async () => {
   console.log(`Deleting room with ID ${deleteRoomId.value}`);
-  await store.dispatch('jv/delete', `rooms/${deleteRoomId.value}`);
-  store.commit('jv/deleteRecord', {
-    _jv: { type: 'Room', id: deleteRoomId.value },
+  await store.dispatch("jv/delete", `rooms/${deleteRoomId.value}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Room", id: deleteRoomId.value },
   });
 };
 
@@ -65,17 +68,20 @@ const updateSite = async ({ name, description }) => {
   }
   let newSite = {
     _jv: {
-      type: 'Site',
+      type: "Site",
       id: siteId.value,
     },
     name,
     description,
   };
   try {
-    await store.dispatch('jv/patch', [newSite, { url: `sites/${siteId.value}/` }]);
-    toast.success(t('site.updateSuccess'));
+    await store.dispatch("jv/patch", [
+      newSite,
+      { url: `sites/${siteId.value}/` },
+    ]);
+    toast.success(t("site.updateSuccess"));
   } catch (e) {
-    toast.error(t('site.updateError'));
+    toast.error(t("site.updateError"));
     console.log(e);
   }
 };
@@ -91,7 +97,7 @@ const updateAddress = async ({ street1, street2, zip, city }) => {
   }
   let newAddress = {
     _jv: {
-      type: 'Address',
+      type: "Address",
       id: addressId.value,
     },
     street1,
@@ -100,10 +106,13 @@ const updateAddress = async ({ street1, street2, zip, city }) => {
     city,
   };
   try {
-    await store.dispatch('jv/patch', [newAddress, { url: `addresses/${addressId.value}/` }]);
-    toast.success(t('address.updateSuccess'));
+    await store.dispatch("jv/patch", [
+      newAddress,
+      { url: `addresses/${addressId.value}/` },
+    ]);
+    toast.success(t("address.updateSuccess"));
   } catch (e) {
-    toast.error(t('address.updateError'));
+    toast.error(t("address.updateError"));
   }
 };
 
@@ -139,11 +148,13 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
         modal-title="delete-room-modal.title"
       >
         <p class="text-sm text-gray-500">
-          {{ $t('delete-room-modal.message') }}
+          {{ $t("delete-room-modal.message") }}
         </p>
       </DeletionModal>
       <div class="flex items-center justify-between">
-        <h2 class="text-xl font-bold">{{ $t('rooms') }} {{ $t('of') }} {{ site.name }}</h2>
+        <h2 class="text-xl font-bold">
+          {{ $t("rooms") }} {{ $t("of") }} {{ site.name }}
+        </h2>
         <div class="flex flex-row">
           <router-link
             v-if="isOwner"
@@ -154,31 +165,45 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
             }"
           >
             <PlusIcon class="mr-2 h-4 w-4" />
-            <span>{{ $t('room.add') }}</span>
+            <span>{{ $t("room.add") }}</span>
           </router-link>
         </div>
       </div>
 
-      <table class="min-w-full divide-y divide-gray-200 overflow-hidden rounded-sm bg-white ring-1 ring-gray-300">
+      <table
+        class="min-w-full divide-y divide-gray-200 overflow-hidden rounded-sm bg-white ring-1 ring-gray-300"
+      >
         <thead class="bg-gray-50">
           <tr>
-            <th scope="col" class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
-              {{ $t('room.name') }}
+            <th
+              scope="col"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+            >
+              {{ $t("room.name") }}
             </th>
-            <th scope="col" class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6">
-              {{ $t('room.size') }} [m<sup>2</sup>]
+            <th
+              scope="col"
+              class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+            >
+              {{ $t("room.size") }} [m<sup>2</sup>]
             </th>
-            <th scope="col" class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6">
-              {{ $t('room.height') }} [m]
+            <th
+              scope="col"
+              class="py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+            >
+              {{ $t("room.height") }} [m]
             </th>
             <th
               scope="col"
               class="hidden py-3 text-right text-xs font-medium tracking-wider text-gray-500 sm:px-6 md:table-cell"
             >
-              {{ $t('room.maxOccupancy') }}
+              {{ $t("room.maxOccupancy") }}
             </th>
-            <th scope="col" class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
-              {{ $t('action') }}
+            <th
+              scope="col"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+            >
+              {{ $t("action") }}
             </th>
           </tr>
         </thead>
@@ -200,13 +225,15 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
               </router-link>
             </td>
             <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
-              {{ room.size_sqm ? $n(Number(room.size_sqm)) : '-' }}
+              {{ room.size_sqm ? $n(Number(room.size_sqm)) : "-" }}
             </td>
             <td class="whitespace-nowrap px-2 py-4 text-right sm:px-6">
-              {{ room.height_m ? $n(Number(room.height_m)) : '-' }}
+              {{ room.height_m ? $n(Number(room.height_m)) : "-" }}
             </td>
-            <td class="hidden whitespace-nowrap px-2 py-4 text-right sm:px-6 md:table-cell">
-              {{ room.max_occupancy || '-' }}
+            <td
+              class="hidden whitespace-nowrap px-2 py-4 text-right sm:px-6 md:table-cell"
+            >
+              {{ room.max_occupancy || "-" }}
             </td>
             <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               <div class="flex flex-col sm:flex-row">
@@ -221,7 +248,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
                   "
                 >
                   <TrashIcon class="mr-2 h-4 w-4" />
-                  <span>{{ $t('remove') }}</span>
+                  <span>{{ $t("remove") }}</span>
                 </div>
               </div>
             </td>
@@ -238,7 +265,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
           <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
         </div>
         <div class="ml-3">
-          {{ $t('site.noRooms') }}.
+          {{ $t("site.noRooms") }}.
           <router-link
             v-if="isOwner"
             class="font-medium text-yellow-700 underline hover:text-yellow-600"
@@ -246,7 +273,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
               name: 'addRoom',
               params: { siteId: siteId },
             }"
-            >{{ $t('room.add') }}.</router-link
+            >{{ $t("room.add") }}.</router-link
           >
         </div>
       </div>

@@ -1,15 +1,21 @@
 <script setup>
-import { Dialog, DialogOverlay, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue';
-import { ExclamationIcon, XIcon } from '@heroicons/vue/outline';
+import {
+  Dialog,
+  DialogOverlay,
+  DialogTitle,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import { ExclamationIcon, XIcon } from "@heroicons/vue/outline";
 
 defineProps({
   open: { type: Boolean, required: true },
   modalTitle: { type: String, required: true },
 });
-const emit = defineEmits(['closeModal', 'deleteClicked']);
-const close = () => emit('closeModal');
+const emit = defineEmits(["closeModal", "deleteClicked"]);
+const close = () => emit("closeModal");
 const deleteClick = () => {
-  emit('deleteClicked');
+  emit("deleteClicked");
   close();
 };
 </script>
@@ -17,7 +23,9 @@ const deleteClick = () => {
 <template>
   <TransitionRoot as="template" :show="open">
     <Dialog as="div" class="fixed inset-0 z-10 overflow-y-auto" @close="close">
-      <div class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+      <div
+        class="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0"
+      >
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
@@ -27,11 +35,17 @@ const deleteClick = () => {
           leave-from="opacity-100"
           leave-to="opacity-0"
         >
-          <DialogOverlay class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          <DialogOverlay
+            class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+          />
         </TransitionChild>
 
         <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">&#8203;</span>
+        <span
+          class="hidden sm:inline-block sm:h-screen sm:align-middle"
+          aria-hidden="true"
+          >&#8203;</span
+        >
         <TransitionChild
           as="template"
           enter="ease-out duration-300"
@@ -58,10 +72,16 @@ const deleteClick = () => {
               <div
                 class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10"
               >
-                <ExclamationIcon class="h-6 w-6 text-red-600" aria-hidden="true" />
+                <ExclamationIcon
+                  class="h-6 w-6 text-red-600"
+                  aria-hidden="true"
+                />
               </div>
               <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                <DialogTitle as="h3" class="text-lg font-medium leading-6 text-gray-900">
+                <DialogTitle
+                  as="h3"
+                  class="text-lg font-medium leading-6 text-gray-900"
+                >
                   {{ $t(modalTitle) }}
                 </DialogTitle>
                 <div class="mt-2">
@@ -75,14 +95,14 @@ const deleteClick = () => {
                 class="inline-flex w-full justify-center rounded-sm border border-transparent bg-red-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm"
                 @click="deleteClick"
               >
-                {{ $t('delete') }}
+                {{ $t("delete") }}
               </button>
               <button
                 type="button"
                 class="mt-3 inline-flex w-full justify-center rounded-sm border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:w-auto sm:text-sm"
                 @click="close"
               >
-                {{ $t('cancel') }}
+                {{ $t("cancel") }}
               </button>
             </div>
           </div>

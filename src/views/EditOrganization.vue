@@ -1,11 +1,11 @@
 <script setup>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
-import { useRoute } from 'vue-router';
-import { useToast } from 'vue-toastification';
-import { useI18n } from 'vue-i18n';
-import { BanIcon } from '@heroicons/vue/outline';
-import OrganizationForm from '@/components/forms/OrganizationForm.vue';
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+import { useToast } from "vue-toastification";
+import { useI18n } from "vue-i18n";
+import { BanIcon } from "@heroicons/vue/outline";
+import OrganizationForm from "@/components/forms/OrganizationForm.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -17,29 +17,32 @@ const currentOrgId = computed(() => {
 });
 
 const currentOrg = computed(() =>
-  store.getters['jv/get']({
-    _jv: { type: 'Organization', id: currentOrgId.value },
+  store.getters["jv/get"]({
+    _jv: { type: "Organization", id: currentOrgId.value },
   })
 );
 
 const isOwner = computed(() => {
-  return store.getters['nav/isOwner'];
+  return store.getters["nav/isOwner"];
 });
 
 const updateOrganization = async ({ name, description }) => {
   let updatedOrg = {
     _jv: {
-      type: 'Organization',
+      type: "Organization",
       id: route.params.orgId,
     },
     name,
     description,
   };
   try {
-    await store.dispatch('jv/patch', [updatedOrg, { url: `organizations/${route.params.orgId}/` }]);
-    toast.success(t('org.updateSuccess'));
+    await store.dispatch("jv/patch", [
+      updatedOrg,
+      { url: `organizations/${route.params.orgId}/` },
+    ]);
+    toast.success(t("org.updateSuccess"));
   } catch (e) {
-    toast.error(t('org.updateError'));
+    toast.error(t("org.updateError"));
   }
 };
 </script>
@@ -48,19 +51,23 @@ const updateOrganization = async ({ name, description }) => {
   <header class="bg-white shadow-md sm:rounded-sm" v-if="$route.meta.title">
     <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6">
       <h1 class="text-3xl font-bold leading-tight text-gray-900">
-        {{ $t('org.edit') }}
+        {{ $t("org.edit") }}
       </h1>
     </div>
   </header>
   <div class="mt-8 max-w-sm sm:max-w-lg">
-    <div v-if="!isOwner" class="mt-4 flex items-center rounded-sm border-l-4 border-red-400 bg-red-50 p-4 shadow-md">
+    <div
+      v-if="!isOwner"
+      class="mt-4 flex items-center rounded-sm border-l-4 border-red-400 bg-red-50 p-4 shadow-md"
+    >
       <div class="flex">
         <div class="flex-shrink-0">
           <BanIcon class="h-5 w-5 text-red-400" aria-hidden="true" />
         </div>
         <div class="ml-3">
-          Only the Owner of an organization can change the name and/or description. Contact the Owner of
-          {{ currentOrg.name }}. {{ ' ' }}
+          Only the Owner of an organization can change the name and/or
+          description. Contact the Owner of
+          {{ currentOrg.name }}. {{ " " }}
           <router-link
             :to="{
               name: 'org-management-detail',

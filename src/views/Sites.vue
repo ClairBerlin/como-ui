@@ -1,23 +1,23 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
-import { ExclamationIcon, PlusIcon, TrashIcon } from '@heroicons/vue/outline';
-import DeletionModal from '@/components/DeletionModal.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
+import { ExclamationIcon, PlusIcon, TrashIcon } from "@heroicons/vue/outline";
+import DeletionModal from "@/components/DeletionModal.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 // TODO: Add number of rooms to each site's table row.
 const store = useStore();
 
 const isLoading = computed(() => {
-  return store.getters['nav/isOrgContextLoading'];
+  return store.getters["nav/isOrgContextLoading"];
 });
 
 const isOwner = computed(() => {
-  return store.getters['nav/isOwner'];
+  return store.getters["nav/isOwner"];
 });
 
 const sites = computed(() => {
-  return store.getters['nav/getSites'];
+  return store.getters["nav/getSites"];
 });
 const hasSites = computed(() => sites.value?.length > 0);
 
@@ -27,9 +27,9 @@ const openDeleteSiteModal = () => (showDeleteSiteModal.value = true);
 
 const deleteSite = async () => {
   console.log(`Deleting site with ID ${deleteSiteId.value}`);
-  await store.dispatch('jv/delete', `sites/${deleteSiteId.value}`);
-  store.commit('jv/deleteRecord', {
-    _jv: { type: 'Site', id: deleteSiteId.value },
+  await store.dispatch("jv/delete", `sites/${deleteSiteId.value}`);
+  store.commit("jv/deleteRecord", {
+    _jv: { type: "Site", id: deleteSiteId.value },
   });
 };
 
@@ -47,7 +47,7 @@ const formatAdress = (address) => {
       @delete-clicked="deleteSite"
       modal-title="delete-site-modal.title"
     >
-      <p class="text-sm text-gray-500">{{ $t('delete-site-modal.message') }}</p>
+      <p class="text-sm text-gray-500">{{ $t("delete-site-modal.message") }}</p>
     </DeletionModal>
 
     <div class="sm:flex sm:items-center">
@@ -56,7 +56,9 @@ const formatAdress = (address) => {
           <!-- TODO: translate text -->
           Alle Standorte des Teams
         </h1>
-        <p class="mt-2 text-sm text-gray-700">Die Liste aller Standorte mit Namen und Adresse.</p>
+        <p class="mt-2 text-sm text-gray-700">
+          Die Liste aller Standorte mit Namen und Adresse.
+        </p>
       </div>
       <div class="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
         <router-link
@@ -67,7 +69,7 @@ const formatAdress = (address) => {
           }"
         >
           <PlusIcon class="mr-2 h-4 w-4" />
-          <span>{{ $t('site.add') }}</span>
+          <span>{{ $t("site.add") }}</span>
         </router-link>
       </div>
     </div>
@@ -75,18 +77,23 @@ const formatAdress = (address) => {
     <div class="mt-8 flex flex-col">
       <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-          <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-md">
+          <div
+            class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-md"
+          >
             <table class="min-w-full divide-y divide-gray-300">
               <thead class="bg-gray-50 text-sm font-medium text-gray-900">
                 <tr>
                   <th scope="col" class="px-2 py-3 text-left sm:px-6">
-                    {{ $t('site.name') }}
+                    {{ $t("site.name") }}
                   </th>
-                  <th scope="col" class="hidden py-3 text-left sm:table-cell sm:px-6">
-                    {{ $t('address.singular') }}
+                  <th
+                    scope="col"
+                    class="hidden py-3 text-left sm:table-cell sm:px-6"
+                  >
+                    {{ $t("address.singular") }}
                   </th>
                   <th scope="col" class="py-3 text-left sm:px-6">
-                    {{ $t('action') }}
+                    {{ $t("action") }}
                   </th>
                 </tr>
               </thead>
@@ -107,7 +114,9 @@ const formatAdress = (address) => {
                       {{ site.name }}
                     </router-link>
                   </td>
-                  <td class="hidden whitespace-nowrap px-2 py-4 sm:table-cell sm:px-6">
+                  <td
+                    class="hidden whitespace-nowrap px-2 py-4 sm:table-cell sm:px-6"
+                  >
                     {{ formatAdress(site.address) }}
                   </td>
                   <td class="whitespace-nowrap px-2 py-4 sm:px-6">
@@ -124,7 +133,7 @@ const formatAdress = (address) => {
                         "
                       >
                         <TrashIcon class="mr-2 h-4 w-4" />
-                        <span>{{ $t('remove') }}</span>
+                        <span>{{ $t("remove") }}</span>
                       </div>
                     </div>
                   </td>
@@ -145,14 +154,14 @@ const formatAdress = (address) => {
         <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
       </div>
       <div class="ml-3">
-        {{ $t('org.noSite') }}.
+        {{ $t("org.noSite") }}.
         <router-link
           :to="{
             name: 'addSite',
           }"
           class="font-medium text-yellow-700 underline hover:text-yellow-600"
         >
-          {{ $t('org.addSite') }}.
+          {{ $t("org.addSite") }}.
         </router-link>
       </div>
     </div>

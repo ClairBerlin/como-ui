@@ -1,10 +1,10 @@
 <script setup>
-import { HomeIcon } from '@heroicons/vue/solid';
+import { HomeIcon } from "@heroicons/vue/solid";
 
 // TODO: get this from props or better yet: from the route
 const pages = [
-  { name: 'Test-Team', href: '#', current: false },
-  { name: 'Standorte', href: '#', current: true },
+  { name: "Test-Team", href: "#", current: false },
+  { name: "Standorte", href: "#", current: true },
 ];
 </script>
 

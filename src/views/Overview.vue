@@ -1,15 +1,15 @@
 <script setup>
-import { computed } from 'vue';
-import { useStore } from 'vuex';
-import { ExclamationIcon } from '@heroicons/vue/outline';
-import InstallationCard from '@/components/InstallationCard.vue';
-import LoadingSpinner from '@/components/LoadingSpinner.vue';
-import dayjs from 'dayjs';
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { ExclamationIcon } from "@heroicons/vue/outline";
+import InstallationCard from "@/components/InstallationCard.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import dayjs from "dayjs";
 
 const store = useStore();
 
 const isLoading = computed(() => {
-  return store.getters['nav/isOrgContextLoading'];
+  return store.getters["nav/isOrgContextLoading"];
 });
 
 const currentOrgId = computed(() => {
@@ -17,16 +17,18 @@ const currentOrgId = computed(() => {
 });
 
 const installations = computed(() => {
-  return store.getters['nav/getInstallations'];
+  return store.getters["nav/getInstallations"];
 });
 
 const sensors = computed(() => {
-  return store.getters['nav/getSensors'];
+  return store.getters["nav/getSensors"];
 });
 
 const activeInstallations = computed(() =>
   installations.value?.filter(
-    (inst) => inst.from_timestamp_s <= inst.query_timestamp_s && inst.to_timestamp_s >= inst.query_timestamp_s
+    (inst) =>
+      inst.from_timestamp_s <= inst.query_timestamp_s &&
+      inst.to_timestamp_s >= inst.query_timestamp_s
   )
 );
 
@@ -39,7 +41,7 @@ const hasActiveSensors = computed(() => {
 });
 
 const isRecent = (sample) => {
-  return dayjs().diff(dayjs.unix(sample.timestamp_s), 'minute') < 30;
+  return dayjs().diff(dayjs.unix(sample.timestamp_s), "minute") < 30;
 };
 
 const getLatestMeasurement = (sample) => {
@@ -53,11 +55,18 @@ const getLatestMeasurement = (sample) => {
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="">
-    <h2 class="mt-8 text-xl font-bold">{{ $t('Active Installations') }}</h2>
+    <h2 class="mt-8 text-xl font-bold">{{ $t("Active Installations") }}</h2>
     <div class="">
       <div v-if="hasActiveSensors">
-        <ul role="list" class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-          <li v-for="inst in activeInstallations" :key="inst._jv.id" class="col-span-1 mt-4">
+        <ul
+          role="list"
+          class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
+        >
+          <li
+            v-for="inst in activeInstallations"
+            :key="inst._jv.id"
+            class="col-span-1 mt-4"
+          >
             <InstallationCard
               :installation-id="inst._jv.id"
               :sensor-name="inst.node?.alias || inst.node?.eui64"
@@ -76,11 +85,14 @@ const getLatestMeasurement = (sample) => {
       >
         <div class="flex">
           <div class="flex-shrink-0">
-            <ExclamationIcon class="h-5 w-5 text-yellow-400" aria-hidden="true" />
+            <ExclamationIcon
+              class="h-5 w-5 text-yellow-400"
+              aria-hidden="true"
+            />
           </div>
           <div class="ml-3">
             <div v-if="sensors && sensors.length !== 0">
-              {{ $t('createInstallationViaSensors') }}
+              {{ $t("createInstallationViaSensors") }}
               <router-link
                 :to="{
                   name: 'sensors',
@@ -88,12 +100,16 @@ const getLatestMeasurement = (sample) => {
                 }"
                 class="font-medium text-yellow-700 underline hover:text-yellow-600"
               >
-                {{ $t('clickToSensors') }}
+                {{ $t("clickToSensors") }}
               </router-link>
             </div>
             <span v-else>
-              {{ $t('node.noNodes') }} {{ ' ' }} {{ $t('contactSupportToGetSensors') }} {{ ' ' }}
-              <a href="mailto:info@como-berlin.de" class="font-medium text-yellow-700 underline hover:text-yellow-600">
+              {{ $t("node.noNodes") }} {{ " " }}
+              {{ $t("contactSupportToGetSensors") }} {{ " " }}
+              <a
+                href="mailto:info@como-berlin.de"
+                class="font-medium text-yellow-700 underline hover:text-yellow-600"
+              >
                 info@como-berlin.de
               </a>
             </span>

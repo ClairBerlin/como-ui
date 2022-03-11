@@ -1,10 +1,15 @@
 <script setup>
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
-import { roleToString } from '@/utils';
-import { ExclamationIcon, PlusIcon, PencilAltIcon, LogoutIcon } from '@heroicons/vue/outline';
-import { useI18n } from 'vue-i18n';
-import DeletionModal from '@/components/DeletionModal.vue';
+import { computed, ref } from "vue";
+import { useStore } from "vuex";
+import { roleToString } from "@/utils";
+import {
+  ExclamationIcon,
+  PlusIcon,
+  PencilAltIcon,
+  LogoutIcon,
+} from "@heroicons/vue/outline";
+import { useI18n } from "vue-i18n";
+import DeletionModal from "@/components/DeletionModal.vue";
 
 const { t } = useI18n();
 const store = useStore();
@@ -14,15 +19,18 @@ const hasMemberships = () => memberships.value?.length > 0;
 const orgOwnerMap = computed(() => {
   return Object.assign(
     ...memberships.value.map(({ orgId, orgName }) => {
-      const msObj = store.getters['jv/get']('Membership', `$[?(@.organization_name=="${orgName}")]`);
+      const msObj = store.getters["jv/get"](
+        "Membership",
+        `$[?(@.organization_name=="${orgName}")]`
+      );
       const msList = Object.entries(msObj).map(([, ms]) => ms);
-      return { [orgId]: msList.filter((m) => m.role === 'O') };
+      return { [orgId]: msList.filter((m) => m.role === "O") };
     })
   );
 });
 
 const hasMoreOwners = ({ orgId, role }) => {
-  if (role !== 'O') return false;
+  if (role !== "O") return false;
   if (orgOwnerMap.value[orgId].length > 1) return true;
   return false;
 };
@@ -32,26 +40,34 @@ const openOwnerLeaveModal = () => (showOwnerLeaveModal.value = true);
 const toRemove = ref({});
 const removeOwner = async () => {
   const { mId, orgId } = toRemove.value;
-  console.log(`Removing OWNER with ID ${mId} from the organization with ID ${orgId}`);
-  await store.dispatch('jv/delete', `memberships/${mId}`);
-  store.commit('jv/deleteRecord', { _jv: { type: 'Membership', id: mId } });
+  console.log(
+    `Removing OWNER with ID ${mId} from the organization with ID ${orgId}`
+  );
+  await store.dispatch("jv/delete", `memberships/${mId}`);
+  store.commit("jv/deleteRecord", { _jv: { type: "Membership", id: mId } });
 };
 </script>
 
 <template>
   <div class="text-black">
     <div class="flex items-center justify-between">
-      <h2 class="text-xl font-bold">{{ $t('org.all') }}</h2>
-      <router-link class="gray-button m-2 font-semibold" :to="{ name: 'org-management-add' }">
+      <h2 class="text-xl font-bold">{{ $t("org.all") }}</h2>
+      <router-link
+        class="gray-button m-2 font-semibold"
+        :to="{ name: 'org-management-add' }"
+      >
         <div class="flex items-center">
           <PlusIcon class="mr-2 h-5 w-5" />
           <span>
-            {{ $t('org.create') }}
+            {{ $t("org.create") }}
           </span>
         </div>
       </router-link>
     </div>
-    <div v-if="hasMemberships" class="text-md overflow-hidden rounded-sm bg-white ring-1 ring-gray-300">
+    <div
+      v-if="hasMemberships"
+      class="text-md overflow-hidden rounded-sm bg-white ring-1 ring-gray-300"
+    >
       <DeletionModal
         :open="showOwnerLeaveModal"
         @close-modal="showOwnerLeaveModal = false"
@@ -59,28 +75,38 @@ const removeOwner = async () => {
         modal-title="owner-leave-modal.title"
       >
         <p class="text-sm text-gray-500">
-          {{ $t('owner-leave-modal.message') }}
+          {{ $t("owner-leave-modal.message") }}
         </p>
       </DeletionModal>
       <table class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
           <tr>
-            <th scope="col" class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
-              {{ $t('org.name') }}
+            <th
+              scope="col"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+            >
+              {{ $t("org.name") }}
             </th>
             <th
               scope="col"
               class="hidden py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:table-cell sm:px-6"
             >
-              {{ $t('role.your') }}
+              {{ $t("role.your") }}
             </th>
-            <th scope="col" class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6">
-              {{ $t('options') }}
+            <th
+              scope="col"
+              class="px-2 py-3 text-left text-xs font-medium tracking-wider text-gray-500 sm:px-6"
+            >
+              {{ $t("options") }}
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(m, mIdx) in memberships" :key="m.orgId" :class="[mIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']">
+          <tr
+            v-for="(m, mIdx) in memberships"
+            :key="m.orgId"
+            :class="[mIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+          >
             <td class="whitespace-nowrap px-2 py-4 sm:px-6">
               <router-link
                 class="como-link"
