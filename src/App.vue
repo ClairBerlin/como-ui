@@ -176,11 +176,10 @@ watch(
                     }"
                     @click="sidebarOpen = false"
                     :class="[
-                      // TODO: replicate adjustments from desktop nav
                       isCurrentRoute(item.routeName)
-                        ? 'bg-indigo-50 text-indigo-900'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                      'como-focus group flex items-center rounded-sm px-2 py-2 text-base font-medium',
+                        ? 'border-l-4 border-indigo-600 bg-indigo-50 font-bold text-indigo-900'
+                        : 'text-gray-800 hover:bg-gray-100 hover:text-gray-900',
+                      'como-focus group flex items-center rounded-sm px-2 py-4 text-base font-medium',
                     ]"
                   >
                     <component
