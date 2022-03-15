@@ -60,7 +60,7 @@ const {
         !meta.valid
           ? '!important border-red-500 focus:ring-red-500'
           : '!important border-gray-300 focus:ring-indigo-500',
-        'w-full rounded-md text-gray-900 shadow-inner',
+        'w-full rounded-sm text-gray-900 shadow-inner',
         'disabled:cursor-not-allowed disabled:opacity-50',
       ]"
     />

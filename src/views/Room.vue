@@ -108,7 +108,7 @@ const terminateInstallation = async (installationId) => {
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
     <div class="mt-8 max-w-sm sm:max-w-lg">
-      <div class="rounded-md bg-white p-6 shadow-md">
+      <div class="rounded-sm bg-white p-6 shadow-md">
         <RoomForm
           :allow-edit="isOwner"
           :room-name="room.name"
@@ -124,7 +124,7 @@ const terminateInstallation = async (installationId) => {
 
     <div
       v-if="hasInstallations"
-      class="text-md mt-8 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
+      class="text-md mt-8 overflow-hidden rounded-sm bg-white ring-1 ring-gray-300"
     >
       <div class="flex items-center justify-end">
         <div class="flex flex-row">
@@ -220,7 +220,7 @@ const terminateInstallation = async (installationId) => {
     </div>
     <div
       v-else
-      class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+      class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">

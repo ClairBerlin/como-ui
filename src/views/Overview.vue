@@ -54,8 +54,10 @@ const getLatestMeasurement = (sample) => {
 
 <template>
   <LoadingSpinner v-if="isLoading" />
-  <div v-else class="mx-2">
-    <h2 class="mt-8 text-xl font-bold">{{ $t("Active Installations") }}</h2>
+  <div v-else class="">
+    <h2 class="mt-4 text-xl font-semibold text-gray-900">
+      {{ $t("Active Installations") }}
+    </h2>
     <div class="">
       <div v-if="hasActiveSensors">
         <ul
@@ -81,7 +83,7 @@ const getLatestMeasurement = (sample) => {
       </div>
       <div
         v-else
-        class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+        class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
       >
         <div class="flex">
           <div class="flex-shrink-0">

@@ -24,6 +24,12 @@ To run the frontend in local development mode:
 yarn dev
 ```
 
+`eslint` is set up to run linting, it will use prettier as well.
+
+```bash
+yarn lint
+```
+
 ## Recommended Reading
 
 - [Composition API](https://v3.vuejs.org/api/composition-api.html)

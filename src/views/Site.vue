@@ -126,7 +126,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="divide-y-2 divide-gray-300">
     <div class="mt-8 max-w-sm sm:max-w-lg">
-      <div class="rounded-md bg-white p-6 shadow-md">
+      <div class="rounded-sm bg-white p-6 shadow-md">
         <SiteForm
           :allow-edit="isOwner"
           :site-name="site.name"
@@ -171,7 +171,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
       </div>
 
       <table
-        class="min-w-full divide-y divide-gray-200 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
+        class="min-w-full divide-y divide-gray-200 overflow-hidden rounded-sm bg-white ring-1 ring-gray-300"
       >
         <thead class="bg-gray-50">
           <tr>
@@ -258,7 +258,7 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
     </div>
     <div
       v-else
-      class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+      class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">

@@ -50,7 +50,7 @@ const ppmColor = getColor();
         : ppm <= 1200
         ? 'bg-[#EBAC56]'
         : 'bg-[#E1665E]',
-      'max-w-xs rounded-md p-8 text-black shadow-md ring-1 ring-gray-300 ring-opacity-50 drop-shadow-md hover:shadow-lg hover:drop-shadow-lg',
+      'max-w-xs rounded-sm p-8 text-black shadow-md ring-1 ring-gray-300 ring-opacity-50 drop-shadow-md hover:shadow-lg hover:drop-shadow-lg',
     ]"
   >
     <div class="flex justify-between font-bold">
@@ -113,7 +113,7 @@ const ppmColor = getColor();
     <div class="mt-8">
       <router-link
         :to="{ name: 'installation', params: { installationId } }"
-        class="flex w-full items-center justify-center rounded-lg bg-black p-2 text-lg font-semibold text-gray-300 shadow-md drop-shadow-md hover:ring hover:ring-gray-300"
+        class="flex w-full items-center justify-center rounded-md bg-black p-2 text-lg font-semibold text-gray-300 shadow-md drop-shadow-md hover:ring-2 hover:ring-gray-300"
       >
         <ChartBarIcon class="mr-3 h-5 w-5" />
         <span>{{ $t("View") }} CO<sub>2</sub> {{ $t("Chart") }}</span>

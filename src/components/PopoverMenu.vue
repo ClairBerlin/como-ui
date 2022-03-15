@@ -5,6 +5,7 @@ import {
   ChevronDownIcon,
   ChevronUpIcon,
   XIcon,
+  DotsHorizontalIcon,
 } from "@heroicons/vue/solid";
 
 defineProps({
@@ -24,24 +25,23 @@ const iconClasses = () =>
     <Popover v-slot="{ open }" class="relative">
       <PopoverButton
         :class="open ? '' : 'text-opacity-90'"
-        class="como-focus group inline-flex w-full items-center justify-between rounded-md px-2 py-4 text-sm font-medium text-black hover:bg-gray-100 hover:text-opacity-100"
+        class="como-focus group inline-flex w-full items-center justify-between rounded-sm px-2 py-4 text-sm font-medium text-black hover:bg-gray-100 hover:text-opacity-100"
       >
         <div class="flex items-center">
           <component
             v-if="icon"
             :is="icon"
             :class="[
-              'text-gray-500 group-hover:text-gray-600',
+              'text-gray-600 group-hover:text-gray-700',
               'mr-3 h-6 w-6 flex-shrink-0',
             ]"
             aria-hidden="true"
           />
-          <span class="text-left">{{ title }}</span>
+          <span class="text-left text-gray-800">{{ title }}</span>
         </div>
         <component
-          :is="popOverAbove ? ChevronUpIcon : ChevronDownIcon"
-          :class="open ? '' : 'text-opacity-70'"
-          class="ml-2 h-5 w-5 transition duration-150 ease-in-out group-hover:text-opacity-80"
+          :is="popOverAbove ? DotsHorizontalIcon : ChevronDownIcon"
+          class="ml-2 h-5 w-5 text-gray-600 transition duration-150 ease-in-out group-hover:text-gray-700"
           aria-hidden="true"
         />
       </PopoverButton>
@@ -56,13 +56,13 @@ const iconClasses = () =>
       >
         <PopoverPanel
           :class="[
-            popOverAbove ? 'top-[-9rem]' : 'top-16',
+            popOverAbove ? 'top-[-9rem]' : 'top-[4rem]',
             'absolute z-10 w-full',
           ]"
           v-slot="{ close }"
         >
-          <div class="rounded-lg shadow-lg ring-1 ring-gray-300">
-            <div class="relative rounded-lg bg-white text-xs">
+          <div class="rounded-sm shadow-lg ring-1 ring-gray-300">
+            <div class="relative rounded-sm bg-white text-xs">
               <div class="flex items-center justify-between py-2 pl-4 pr-2">
                 <div class="font-semibold text-gray-500">
                   {{ $t(contextTitle) }}

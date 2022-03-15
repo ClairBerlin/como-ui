@@ -48,7 +48,7 @@ const updateOrganization = async ({ name, description }) => {
 </script>
 
 <template>
-  <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
+  <header class="bg-white shadow-md sm:rounded-sm" v-if="$route.meta.title">
     <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6">
       <h1 class="text-3xl font-bold leading-tight text-gray-900">
         {{ $t("org.edit") }}
@@ -58,7 +58,7 @@ const updateOrganization = async ({ name, description }) => {
   <div class="mt-8 max-w-sm sm:max-w-lg">
     <div
       v-if="!isOwner"
-      class="mt-4 flex items-center rounded-md border-l-4 border-red-400 bg-red-50 p-4 shadow-md"
+      class="mt-4 flex items-center rounded-sm border-l-4 border-red-400 bg-red-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">
@@ -66,7 +66,8 @@ const updateOrganization = async ({ name, description }) => {
         </div>
         <div class="ml-3">
           Only the Owner of an organization can change the name and/or
-          description. Contact the Owner of {{ currentOrg.name }}. {{ " " }}
+          description. Contact the Owner of
+          {{ currentOrg.name }}. {{ " " }}
           <router-link
             :to="{
               name: 'org-management-detail',
@@ -79,7 +80,7 @@ const updateOrganization = async ({ name, description }) => {
         </div>
       </div>
     </div>
-    <div v-else class="rounded-md bg-white p-6 shadow-md">
+    <div v-else class="rounded-sm bg-white p-6 shadow-md">
       <OrganizationForm
         :allow-edit="isOwner"
         :org-name="currentOrg?.name"

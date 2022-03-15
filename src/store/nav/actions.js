@@ -59,22 +59,30 @@ const actions = {
       const sitePromise = dispatch(
         "jv/get",
         ["sites", { params: { "filter[organization]": targetOrgId } }],
-        { root: true }
+        {
+          root: true,
+        }
       );
       const roomPromise = dispatch(
         "jv/get",
         ["rooms", { params: { "filter[organization]": targetOrgId } }],
-        { root: true }
+        {
+          root: true,
+        }
       );
       const sensorPromise = dispatch(
         "jv/get",
         ["nodes", { params: { "filter[organization]": targetOrgId } }],
-        { root: true }
+        {
+          root: true,
+        }
       );
       const instPromise = dispatch(
         "jv/get",
         ["installations", { params: { "filter[organization]": targetOrgId } }],
-        { root: true }
+        {
+          root: true,
+        }
       );
       await Promise.all([sitePromise, roomPromise, sensorPromise, instPromise]);
       commit("SET_LOADED_ORG", targetOrgId);

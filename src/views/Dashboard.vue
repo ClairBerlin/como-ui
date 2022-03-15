@@ -2,6 +2,7 @@
 import { onMounted, computed, watch, ref } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
+import Breadcrumbs from "@/components/Breadcrumbs.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -47,18 +48,24 @@ const changeSubheading = (value) => (subheading.value = value);
 </script>
 
 <template>
-  <div>
-    <header class="bg-white shadow-md sm:rounded-md" v-if="$route.meta.title">
-      <div class="mx-auto max-w-screen-xl px-4 py-6 sm:px-6">
-        <h1 class="text-3xl font-bold leading-tight text-gray-900">
-          {{ organization.orgName }} – {{ $t(route.meta.title) }}
-        </h1>
-        <h2 class="text-xl font-semibold text-gray-700" v-if="subheading">
-          {{ subheading }}
-        </h2>
-      </div>
-    </header>
-    <div class="mx-auto max-w-screen-xl rounded-md py-6">
+  <div class="">
+    <div class="border-b border-gray-200 bg-white">
+      <header
+        class="mx-auto flex w-full max-w-screen-xl px-4 pt-12 pb-4"
+        v-if="$route.meta.title"
+      >
+        <div class="">
+          <h1 class="text-3xl font-bold leading-tight text-gray-900">
+            {{ organization.orgName }} – {{ $t(route.meta.title) }}
+          </h1>
+          <h2 class="text-xl font-semibold text-gray-700" v-if="subheading">
+            {{ subheading }}
+          </h2>
+        </div>
+      </header>
+    </div>
+    <Breadcrumbs />
+    <div class="mx-auto max-w-screen-xl px-4 py-6">
       <router-view @change-subheading="changeSubheading" />
     </div>
   </div>

@@ -374,7 +374,7 @@ const terminateInstallation = async (installationId) => {
   <div v-else>
     <div v-if="isOwner">
       <div v-if="hasSensors" class="max-w-sm sm:max-w-lg">
-        <div class="space-y-6 rounded-md bg-white p-6 shadow-md">
+        <div class="space-y-6 rounded-sm bg-white p-6 shadow-md">
           <div>
             <label class="mb-1 block font-semibold text-gray-900">
               {{ $t("node.singular") }}
@@ -383,7 +383,7 @@ const terminateInstallation = async (installationId) => {
               id="sensor"
               name="sensor"
               v-model="selectedSensor"
-              class="w-full cursor-pointer rounded-md border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              class="w-full cursor-pointer rounded-sm border-2 border-gray-300 text-gray-900 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             >
               <option disabled :value="undefined">
                 {{ $t("installation.selectSensor") }}
@@ -463,7 +463,7 @@ const terminateInstallation = async (installationId) => {
             <textarea
               type="text"
               v-model.trim="installationDescription"
-              class="w-full rounded-md border-2 border-gray-300 text-gray-900 shadow-inner focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
+              class="w-full rounded-sm border-2 border-gray-300 text-gray-900 shadow-inner focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:opacity-50"
             />
           </div>
 
@@ -474,7 +474,7 @@ const terminateInstallation = async (installationId) => {
       </div>
       <div
         v-if="hasSensors"
-        class="text-md mt-8 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
+        class="text-md mt-8 overflow-hidden rounded-sm bg-white ring-1 ring-gray-300"
       >
         <div v-if="hasInstallations">
           <h3 class="p-2 text-xl font-semibold text-gray-800">
@@ -546,7 +546,7 @@ const terminateInstallation = async (installationId) => {
       </div>
       <div
         v-else
-        class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+        class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
       >
         <div class="flex">
           <div class="flex-shrink-0">
@@ -571,7 +571,7 @@ const terminateInstallation = async (installationId) => {
     </div>
     <div
       v-else
-      class="mt-4 flex max-w-sm items-center rounded-md border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+      class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">

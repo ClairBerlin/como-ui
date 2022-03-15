@@ -83,7 +83,7 @@ const createAddress = async ({ street1, street2, zip, city }) => {
 
 <template>
   <div class="mt-8 max-w-sm sm:max-w-lg">
-    <div class="rounded-md bg-white p-6 shadow-md">
+    <div class="rounded-sm bg-white p-6 shadow-md">
       <SiteForm
         :allow-edit="isOwner"
         button-text="site.add"

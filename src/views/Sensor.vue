@@ -141,7 +141,9 @@ const installNow = async () => {
         "installations",
         { params: { "filter[organization]": route.params.orgId } },
       ],
-      { root: true }
+      {
+        root: true,
+      }
     );
 
     toast.success(t("installation.successCreate"));
@@ -176,7 +178,7 @@ const installNow = async () => {
           id="location"
           name="room"
           v-model="selectedRoom"
-          class="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+          class="mt-1 block w-full rounded-sm border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
         >
           <option v-for="room in rooms" :key="room._jv.id" :value="room">
             {{ room.name }}
@@ -199,7 +201,7 @@ const installNow = async () => {
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
     <div class="mt-8 max-w-sm sm:max-w-lg">
-      <div class="rounded-md bg-white p-6 shadow-md">
+      <div class="rounded-sm bg-white p-6 shadow-md">
         <SensorForm
           :sensor-alias="sensor.alias"
           :sensor-description="sensor.description"
@@ -217,7 +219,7 @@ const installNow = async () => {
 
   <div
     v-if="hasInstallations"
-    class="text-md mt-8 overflow-hidden rounded-md bg-white ring-1 ring-gray-300"
+    class="text-md mt-8 overflow-hidden rounded-sm bg-white ring-1 ring-gray-300"
   >
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">

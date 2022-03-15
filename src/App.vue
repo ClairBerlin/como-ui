@@ -37,7 +37,7 @@ const orgNavigation = [
     icon: ChartBarIcon,
   },
   {
-    name: "team",
+    name: "team.name",
     routeName: "org-management-detail",
     icon: UserGroupIcon,
   },
@@ -177,9 +177,9 @@ watch(
                     @click="sidebarOpen = false"
                     :class="[
                       isCurrentRoute(item.routeName)
-                        ? 'bg-indigo-50 text-indigo-900'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                      'como-focus group flex items-center rounded-md px-2 py-2 text-base font-medium',
+                        ? 'border-l-4 border-indigo-600 bg-indigo-50 font-semibold text-indigo-900'
+                        : 'font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900',
+                      'como-focus group flex items-center rounded-sm px-2 py-4 text-base',
                     ]"
                   >
                     <component
@@ -211,15 +211,13 @@ watch(
     <div class="hidden lg:flex lg:flex-shrink-0">
       <div class="flex w-64 flex-col">
         <div
-          class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white shadow-md"
+          class="flex min-h-0 flex-1 flex-col border-r border-gray-200 bg-white"
         >
-          <div class="mx-2 flex flex-1 flex-col overflow-y-auto px-1 pt-6 pb-1">
+          <div class="flex flex-1 flex-col overflow-y-auto px-1 pt-6 pb-1">
             <Logo />
-            <div class="w-full border-b border-gray-200 px-3" />
             <nav class="mt-1 flex-1 space-y-1 bg-white">
               <OrganizationMenu />
               <LanguageSelect class="py-1" />
-              <div class="my-1 w-full border-b border-gray-200 px-3" />
               <div v-if="isOrgContext">
                 <router-link
                   v-for="item in orgNavigation"
@@ -230,9 +228,9 @@ watch(
                   }"
                   :class="[
                     isCurrentRoute(item.routeName)
-                      ? 'bg-indigo-50 font-bold text-indigo-900'
-                      : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900',
-                    'como-focus group my-1 flex items-center rounded-md px-2 py-4 text-sm font-medium',
+                      ? 'border-l-4 border-indigo-600 bg-indigo-50 font-semibold text-indigo-900'
+                      : 'font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900',
+                    'como-focus group my-1 flex items-center rounded-sm px-2 py-4 text-sm',
                   ]"
                 >
                   <component
@@ -255,11 +253,11 @@ watch(
         </div>
       </div>
     </div>
-    <div class="flex w-0 flex-1 flex-col overflow-hidden">
+    <div class="flex w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden">
       <div class="pl-1 pt-1 sm:pl-3 sm:pt-3 lg:hidden">
         <button
           type="button"
-          class="como-focus -ml-0.5 -mt-0.5 mb-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
+          class="como-focus -ml-0.5 -mt-0.5 mb-0.5 inline-flex h-12 w-12 items-center justify-center rounded-sm text-gray-500 hover:text-gray-900"
           @click="sidebarOpen = true"
         >
           <span class="sr-only">Open sidebar</span>
@@ -268,12 +266,9 @@ watch(
       </div>
       <main
         id="content"
-        class="relative z-0 flex-1 overflow-y-auto focus:outline-none"
+        class="relative z-0 flex-1 bg-white focus:outline-none"
       >
-        <div
-          class="mx-auto max-w-screen-xl rounded-md sm:py-6 sm:px-6"
-          v-if="!isLoading"
-        >
+        <div class="h-full w-full bg-gray-100" v-if="!isLoading">
           <router-view />
         </div>
       </main>

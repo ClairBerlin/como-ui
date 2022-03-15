@@ -119,6 +119,7 @@
     "create": "Organisation hinzufügen",
     "createError": "Fehler beim Anlegen der Organisation!",
     "delete": "Organisation löschen",
+    "description": "Die Liste all Ihrer Organisationen, mit Namen und Ihrer Rolle.",
     "details": "Organisationsdetails",
     "edit": "Organisation bearbeiten",
     "invite": "Mitglieder einladen",
@@ -134,6 +135,7 @@
     "singular": "Organisation",
     "successAddMember": "Neues Mitglied hinzugefügt:",
     "switch": "Organisation wechseln",
+    "title": "Alle Organisationen in denen Sie Mitglied sind",
     "unexpectedUserResult": "Etwas scheint nicht in Ordnung zu sein mit den Benutzerdaten, die der Server zurückgegeben hat.",
     "updateError": "Fehler beim Aktualisieren der Organisation!",
     "updateSuccess": "Details der Organisation wurden erfolgreich aktualsiert."
@@ -167,6 +169,7 @@
     "addInstallation": "Installation hinzufügen",
     "addRoomToSite": "Raum hinzufügen zum Standort",
     "createError": "Fehler beim Anlegen des Raumes!",
+    "description": "Die Liste aller Räume mit Namen, Standort, und weiteren Details. Ein neuer Raum kann über einen Standort eingelegt werden.",
     "details": "Raumdetails",
     "height": "Höhe",
     "invalidHeight": "Die Zahl muss zwischen 0 und 20 liegen, mit maximal einer Nachkommastelle.",
@@ -180,26 +183,37 @@
     "singular": "Raum",
     "siteForRoom": "Wählen Sie einen Standort aus, um in diesem Räume anzulegen",
     "size": "Größe",
+    "title": "Alle Räume",
     "updateError": "Fehler beim Aktualisieren des Raums!",
     "updateSuccess": "Raumdetails wurden erfolgreich akualisiert!"
   },
   "rooms": "Räume",
   "select": "Auswählen",
+  "sensor": {
+    "description": "Die Liste aller Sensoren mit Namen, ID, Modell and Anzahl der Messwerte. Um einen neuen Sensor zu erhalten, wenden Sie sich an:",
+    "title": "Alle Sensoren"
+  },
   "site": {
     "add": "Standort hinzufügen",
     "createError": "Fehler beim Anlegen des Standorts!",
+    "description": "Die Liste aller Standorte mit Namen und Adresse.",
     "details": "Standort-Details",
     "missingNameAddress": "Name und Adresse des Standorts müssen angegeben werden!",
     "name": "Name des Standorts",
     "noRooms": "Dieser Standort hat noch keine Räume.",
     "singular": "Standort",
+    "title": "Alle Standorte",
     "update": "Aktualisieren",
     "updateError": "Fehler beim Aktualisieren des Standorts!",
     "updateSuccess": "Details des Standorts wurden erfolgreich akualisiert!"
   },
   "sites": "Standorte",
   "skip": "Zum Hauptinhalt wechseln",
-  "team": "Team",
+  "team": {
+    "description": "Die Liste aller Mitglieder mit Namen, E-Mail und Rolle.",
+    "name": "Team",
+    "title": "Alle Mitglieder"
+  },
   "time": "Zeit",
   "update": "Aktualisieren",
   "user": {

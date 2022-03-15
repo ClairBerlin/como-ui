@@ -15,7 +15,7 @@ defineProps({
 
     <ul
       tabindex="0"
-      class="dropdown-content menu w-52 rounded-md bg-white text-xs shadow-lg ring-1 ring-gray-200"
+      class="dropdown-content menu w-52 rounded-sm bg-white text-xs shadow-lg ring-1 ring-gray-200"
     >
       <li
         v-for="option in options"
