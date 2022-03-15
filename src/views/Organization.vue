@@ -165,7 +165,7 @@ const changeRoleTooltip = (role) =>
     >
       <div class="">
         <h1 class="text-3xl font-bold leading-tight text-gray-900">
-          {{ $t("org.members") }} {{ $t("of") }} {{ orgName }}
+          {{ orgName }} - {{ $t("org.members") }}
         </h1>
       </div>
     </header>

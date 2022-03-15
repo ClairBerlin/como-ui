@@ -119,6 +119,7 @@
     "create": "Organisation hinzufügen",
     "createError": "Fehler beim Anlegen der Organisation!",
     "delete": "Organisation löschen",
+    "description": "Die Liste all Ihrer Organisationen, mit Namen und Ihrer Rolle.",
     "details": "Organisationsdetails",
     "edit": "Organisation bearbeiten",
     "invite": "Mitglieder einladen",
@@ -134,6 +135,7 @@
     "singular": "Organisation",
     "successAddMember": "Neues Mitglied hinzugefügt:",
     "switch": "Organisation wechseln",
+    "title": "Alle Organisationen in denen Sie Mitglied sind",
     "unexpectedUserResult": "Etwas scheint nicht in Ordnung zu sein mit den Benutzerdaten, die der Server zurückgegeben hat.",
     "updateError": "Fehler beim Aktualisieren der Organisation!",
     "updateSuccess": "Details der Organisation wurden erfolgreich aktualsiert."
@@ -188,7 +190,7 @@
   "rooms": "Räume",
   "select": "Auswählen",
   "sensor": {
-    "description": "Die Liste aller Sensoren mit Namen, ID, Modell and Anzahl der Messwerte. Um neue Sensoren zu erhalten, wenden Sie sich an info@como-berlin.de.",
+    "description": "Die Liste aller Sensoren mit Namen, ID, Modell and Anzahl der Messwerte. Um einen neuen Sensor zu erhalten, wenden Sie sich an:",
     "title": "Alle Sensoren"
   },
   "site": {

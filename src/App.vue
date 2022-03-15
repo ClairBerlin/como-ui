@@ -177,9 +177,9 @@ watch(
                     @click="sidebarOpen = false"
                     :class="[
                       isCurrentRoute(item.routeName)
-                        ? 'border-l-4 border-indigo-600 bg-indigo-50 font-bold text-indigo-900'
-                        : 'text-gray-800 hover:bg-gray-100 hover:text-gray-900',
-                      'como-focus group flex items-center rounded-sm px-2 py-4 text-base font-medium',
+                        ? 'border-l-4 border-indigo-600 bg-indigo-50 font-semibold text-indigo-900'
+                        : 'font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900',
+                      'como-focus group flex items-center rounded-sm px-2 py-4 text-base',
                     ]"
                   >
                     <component
@@ -228,9 +228,9 @@ watch(
                   }"
                   :class="[
                     isCurrentRoute(item.routeName)
-                      ? 'border-l-4 border-indigo-600 bg-indigo-50 font-bold text-indigo-900'
-                      : 'text-gray-800 hover:bg-gray-100 hover:text-gray-900',
-                    'como-focus group my-1 flex items-center rounded-sm px-2 py-4 text-sm font-medium',
+                      ? 'border-l-4 border-indigo-600 bg-indigo-50 font-semibold text-indigo-900'
+                      : 'font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900',
+                    'como-focus group my-1 flex items-center rounded-sm px-2 py-4 text-sm',
                   ]"
                 >
                   <component
@@ -253,7 +253,7 @@ watch(
         </div>
       </div>
     </div>
-    <div class="flex w-0 flex-1 flex-col overflow-hidden">
+    <div class="flex w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden">
       <div class="pl-1 pt-1 sm:pl-3 sm:pt-3 lg:hidden">
         <button
           type="button"

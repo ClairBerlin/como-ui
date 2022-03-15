@@ -27,6 +27,12 @@ const hasSensors = computed(() => sensors.value?.length > 0);
         </h1>
         <p class="mt-2 max-w-md text-sm text-gray-700">
           {{ $t("sensor.description") }}
+          <a
+            href="mailto:info@como-berlin.de"
+            class="font-medium text-gray-700 underline hover:text-gray-600"
+          >
+            info@como-berlin.de
+          </a>
         </p>
       </div>
     </div>

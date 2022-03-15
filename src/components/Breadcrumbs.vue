@@ -1,11 +1,25 @@
 <script setup>
 import { HomeIcon } from "@heroicons/vue/solid";
+import { computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
-// TODO: get this from props or better yet: from the route
-const pages = [
-  { name: "Test-Team", href: "#", current: false },
-  { name: "Standorte", href: "#", current: true },
-];
+const router = useRouter();
+const route = useRoute();
+const allRoutes = router.getRoutes();
+
+const getTitle = (routeName) => {
+  const route = allRoutes.find((route) => route.name === routeName);
+  return route.meta.title;
+};
+
+const breadcumbs = computed(() => route?.meta?.breadcrumbs || []);
+const pages = computed(() => [
+  ...breadcumbs.value.map((breadcumb) => ({
+    name: getTitle(breadcumb),
+    to: { name: breadcumb, params: route.params },
+  })),
+  { name: route.meta.title, to: { name: route.name, params: route.params } },
+]);
 </script>
 
 <template>
@@ -31,12 +45,12 @@ const pages = [
           >
             <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
           </svg>
-          <a
-            :href="page.href"
+          <router-link
+            :to="page.to"
             class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
             :aria-current="page.current ? 'page' : undefined"
-            >{{ page.name }}</a
-          >
+            >{{ $t(page.name) }}
+          </router-link>
         </div>
       </li>
     </ol>
