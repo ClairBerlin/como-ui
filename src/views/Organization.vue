@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
@@ -23,6 +23,10 @@ const { t } = useI18n();
 
 const currentOrgId = computed(() => {
   return store.state.nav.currentOrgId;
+});
+
+onMounted(async () => {
+  await store.dispatch("nav/loadInvetory", currentOrgId.value);
 });
 
 const org = computed(() => store.getters["nav/getOrgMembership"]);
