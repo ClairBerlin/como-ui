@@ -3,7 +3,6 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import {
   CheckIcon,
   ChevronDownIcon,
-  ChevronUpIcon,
   XIcon,
   DotsHorizontalIcon,
 } from "@heroicons/vue/solid";
