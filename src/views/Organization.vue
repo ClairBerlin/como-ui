@@ -234,9 +234,10 @@ const changeRoleTooltip = (role) =>
             @add-clicked="addMember"
             :modal-title="t('org.addMember')"
           >
+            <div class="my-1 italic">{{ $t("add-member-note") }}</div>
             <div class="form-control">
-              <label class="label">
-                <span class="label-text font-bold text-black">{{
+              <label class="label px-0">
+                <span class="label-text font-semibold">{{
                   $t("user.email")
                 }}</span>
               </label>

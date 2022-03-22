@@ -19,6 +19,7 @@
     "updateError": "Failed to update the address!",
     "updateSuccess": "Address has been updated!"
   },
+  "add-member-note": "Note: Only already registered users can be added to the organization via the email address.",
   "cancel": "Cancel",
   "clickToSensors": "Click here to get to your sensors.",
   "contactSupportToGetSensors": "To request sensors send an email to:",
@@ -210,7 +211,7 @@
   "sites": "Sites",
   "skip": "Skip to content",
   "team": {
-    "description": "List of all members with name, e-mail and role.",
+    "description": "List of all members with name, email and role.",
     "name": "Team",
     "title": "All members"
   },

@@ -19,6 +19,7 @@
     "updateError": "Fehler beim Aktualisieren der Addresse!",
     "updateSuccess": "Adresse wurde erfolgreich aktualisiert!"
   },
+  "add-member-note": "Hinweis: Nur bereits registrierten Nutzer können mittels E-Mail-Adresse der Organisation hinzugefügt werden.",
   "cancel": "Abbrechen",
   "clickToSensors": "Klicken Sie hier, um zu den bestehenden Sensoren zu gelangen.",
   "contactSupportToGetSensors": "Um Sensoren zu erhalten, wenden Sie sich an:",
