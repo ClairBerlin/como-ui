@@ -4,11 +4,14 @@ import { useStore } from "vuex";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import DayjsMinMax from "dayjs/plugin/minMax";
-dayjs.extend(DayjsMinMax);
+import utc from "dayjs/plugin/utc";
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import Co2Graph from "@/components/Co2Graph.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
+
+dayjs.extend(DayjsMinMax);
+dayjs.extend(utc);
 
 const store = useStore();
 
@@ -17,10 +20,10 @@ const samplePool = ref([]);
 const { t } = useI18n();
 
 // The window of sample data to display is taken relative to this day
-const referenceDay = ref(dayjs().startOf("day"));
-const referenceDayFormatted = computed(() =>
-  referenceDay.value.format("YYYY-MM-DD")
-);
+const referenceDay = ref(dayjs().utc().startOf("day"));
+// const referenceDayFormatted = computed(() =>
+//   referenceDay.value.format("YYYY-MM-DD")
+// );
 const props = defineProps({
   installationId: { type: String, required: true },
 });
@@ -239,7 +242,7 @@ const isTabActive = (index) => selectedTab.value === index;
         </TabPanel>
       </TabPanels>
     </TabGroup>
-    <div>Reference day for display: {{ referenceDayFormatted }}</div>
+    <!-- <div>Reference day for display: {{ referenceDayFormatted }}</div> -->
     <div class="flex justify-between">
       <div>
         <div class="gray-button btn-sm" @click="previousInstant">
