@@ -17,12 +17,18 @@ const Sensors = () => import("@/views/Sensors.vue");
 const Sensor = () => import("@/views/Sensor.vue");
 const AddSensor = () => import("@/views/AddSensor.vue");
 const Logout = () => import("@/views/Logout.vue");
+const Widget = () => import("@/views/Widget.vue");
 
 /** @type {import('vue-router').RouterOptions['routes']} */
 export const routes = [
   {
     path: "/",
     redirect: "/dashboard",
+  },
+  {
+    path: "/embed/:siteId",
+    name: "embed",
+    component: Widget,
   },
   {
     path: "/org-management",
