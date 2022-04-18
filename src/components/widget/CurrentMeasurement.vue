@@ -4,6 +4,16 @@ defineProps({
   ppm: { type: Number, required: true },
   timestamp: { type: Date, required: true },
 });
+
+const getText = (ppm) => {
+  if (ppm <= 1000) {
+    return `Der CO2-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem normalen Wert und einer niedrigen Aerosollast. Die Raumluft ist gut und du kannst durchatmen.`;
+  } else if (ppm <= 1600) {
+    return `Der CO2-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem leicht erhöhten Wert und somit auch einer erhöhten Aerosollast. Dem Raum würde etwas frischer Wind gut tun! `;
+  } else {
+    return `Der CO2-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!`;
+  }
+};
 </script>
 
 <template>
@@ -22,9 +32,7 @@ defineProps({
     </div>
     <MeasurementVisualization :ppm="ppm" />
     <div class="mt-4 font-medium text-[#3B3B3A]">
-      Der CO2-Gehalt des Raumes liegt bei {{ ppm }} ppm, dies entspricht einem
-      normalen Wert und einer niedrigen Aerosollast. Die Raumluft ist gut und du
-      kannst durchatmen.
+      {{ getText(ppm) }}
     </div>
   </div>
 </template>

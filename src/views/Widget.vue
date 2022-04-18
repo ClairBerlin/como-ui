@@ -5,8 +5,10 @@ import ComoLogo from "@/assets/como-logo.svg";
 import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import InstallationSwitch from "@/components/widget/InstallationSwitch.vue";
 import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const route = useRoute();
+const isLoading = ref(false);
 
 onMounted(async () => {
   const siteId = route.params.siteId;
@@ -23,18 +25,37 @@ watch(
 const location = ref("Zeiss Planetarium");
 const isFresh = ref(true);
 const roomName = ref("Großer Saal");
-const numberOfInstallations = ref(3);
-const currentInstallation = ref(1);
+const total = ref(3);
+const current = ref(1);
 const ppm = ref(673);
 const timestamp = ref("Sun, 17 Apr 2022 6:21:27 GMT");
 
-const prev = () => console.log("prev");
-const next = () => console.log("next");
+const prev = () => {
+  if (current.value - 1 <= 0) {
+    current.value = 3;
+  } else {
+    current.value -= 1;
+  }
+};
+const next = () => {
+  if (current.value + 1 > total.value) {
+    current.value = 1;
+  } else {
+    current.value += 1;
+  }
+};
 </script>
 
 <template>
   <div
+    v-if="isLoading"
+    class="mx-auto flex min-h-[359px] max-w-[359px] flex-col items-center justify-center gap-6 rounded-lg bg-white p-4 drop-shadow"
+  >
+    <LoadingSpinner additional-classes="border-[#1e398f]" />
+  </div>
+  <div
     class="mx-auto flex max-w-[359px] flex-col items-center gap-6 rounded-lg bg-white p-4 drop-shadow"
+    v-else
   >
     <img class="mt-6 h-12 w-auto" :src="ComoLogo" alt="COMo Logo" />
     <div class="mt-[-12px] mb-4 text-[#7886C2]">
@@ -58,8 +79,8 @@ const next = () => console.log("next");
     <CurrentMeasurement :ppm="ppm" :timestamp="new Date(timestamp)" />
     <FreshAirMedal v-if="isFresh" />
     <InstallationSwitch
-      :number-of-installations="numberOfInstallations"
-      :current-installation="currentInstallation"
+      :number-of-installations="total"
+      :current-installation="current"
       :room-name="roomName"
       @previous="prev"
       @next="next"

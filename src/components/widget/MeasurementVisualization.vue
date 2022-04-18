@@ -35,5 +35,6 @@ input[type="range"]::-moz-range-thumb {
   width: 8px;
   height: 24px;
   border-radius: 10px;
+  border: none;
 }
 </style>
