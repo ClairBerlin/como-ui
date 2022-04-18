@@ -1,8 +1,8 @@
 <script setup>
 import MeasurementVisualization from "./MeasurementVisualization.vue";
 defineProps({
-  ppm: { type: Number, required: true },
-  timestamp: { type: Date, required: true },
+  ppm: { type: Number, default: undefined },
+  timestamp: { type: Date, default: undefined },
 });
 
 const getText = (ppm) => {
@@ -18,21 +18,32 @@ const getText = (ppm) => {
 
 <template>
   <div
-    class="flex max-w-[327px] flex-col items-center gap-2 rounded bg-[#F1F9FE] px-7 pt-7 pb-4 drop-shadow-sm"
+    :class="[
+      'flex max-w-[327px] flex-col items-center gap-2 rounded px-7 pt-7 pb-4 drop-shadow-sm',
+      !ppm || !timestamp ? 'bg-[#F6F6F6]' : 'bg-[#F1F9FE]',
+    ]"
   >
     <div class="mt-2 text-lg font-bold leading-5 text-[#1E398F]">
       Aktueller Messwert
     </div>
-    <div class="text-sm leading-3 text-[#1E398F]">
+    <div class="text-sm leading-3 text-[#1E398F]" v-if="timestamp && ppm">
       von {{ timestamp.getHours() }}:{{ timestamp.getMinutes() }}h
     </div>
+    <div class="text-sm leading-3 text-[#1E398F]" v-else>von --:--h</div>
     <div class="mt-4 self-end text-[#1E398F]">
-      <span class="text-2xl font-bold">{{ ppm }}</span>
+      <span class="text-2xl font-bold">{{ ppm || "---" }}</span>
       <span class="text-sm"> ppm</span>
     </div>
-    <MeasurementVisualization :ppm="ppm" />
-    <div class="mt-4 font-medium text-[#3B3B3A]">
+    <MeasurementVisualization :ppm="ppm" v-if="timestamp && ppm" />
+    <div class="mt-4 font-medium text-[#3B3B3A]" v-if="timestamp && ppm">
       {{ getText(ppm) }}
+    </div>
+    <div class="mt-4 font-medium text-[#3B3B3A]" v-else>
+      <span class="text-[#E40032]">STÖRUNG </span>
+      <span>
+        - Der Sensor macht gerade ein Päuschen! Leider ist gerade keine Anzeige
+        möglich, da im Moment keine Daten gesendet werden.
+      </span>
     </div>
   </div>
 </template>

@@ -29,7 +29,7 @@ const next = () => emit("next");
       </svg>
     </div>
 
-    <div class="flex flex-col items-center text-[#385BA7]">
+    <div class="flex select-none flex-col items-center text-[#385BA7]">
       <div class="text-sm" v-if="numberOfInstallations > 1">
         {{ currentInstallation }}/{{ numberOfInstallations }}
       </div>

@@ -24,8 +24,7 @@ watch(
 
 const location = ref("Zeiss Planetarium");
 const isFresh = ref(true);
-const roomName = ref("Großer Saal");
-const total = ref(3);
+const rooms = ref(["Großer Saal", "Kleiner Saal", "Kleinster Saal"]);
 const current = ref(1);
 const ppm = ref(673);
 const timestamp = ref("Sun, 17 Apr 2022 6:21:27 GMT");
@@ -38,7 +37,7 @@ const prev = () => {
   }
 };
 const next = () => {
-  if (current.value + 1 > total.value) {
+  if (current.value + 1 > rooms.value.length) {
     current.value = 1;
   } else {
     current.value += 1;
@@ -79,9 +78,9 @@ const next = () => {
     <CurrentMeasurement :ppm="ppm" :timestamp="new Date(timestamp)" />
     <FreshAirMedal v-if="isFresh" />
     <InstallationSwitch
-      :number-of-installations="total"
+      :number-of-installations="rooms.length"
       :current-installation="current"
-      :room-name="roomName"
+      :room-name="rooms[current - 1]"
       @previous="prev"
       @next="next"
     />
