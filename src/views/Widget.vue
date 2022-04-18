@@ -9,7 +9,8 @@ import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
 const route = useRoute();
 
 onMounted(async () => {
-  console.log("widget mounted");
+  const siteId = route.params.siteId;
+  console.log(`widget for site ${siteId} is mounted`);
 });
 
 watch(

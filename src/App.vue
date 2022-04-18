@@ -1,5 +1,4 @@
 <script setup>
-import Logo from "@/components/Logo.vue";
 import { onMounted, ref, watch, computed } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
@@ -18,10 +17,12 @@ import {
   XIcon,
   UserGroupIcon,
 } from "@heroicons/vue/outline";
+import Cookies from "js-cookie";
+import Logo from "@/components/Logo.vue";
 import OrganizationMenu from "@/components/OrganizationMenu.vue";
 import ProfileMenu from "@/components/ProfileMenu.vue";
 import LanguageSelect from "@/components/LanguageSelect.vue";
-import Cookies from "js-cookie";
+import LoadingSpinner from "@/components/LoadingSpinner.vue";
 
 const store = useStore();
 const route = useRoute();
@@ -59,7 +60,8 @@ const orgNavigation = [
 ];
 
 const isCurrentRoute = (routeName) => route.name === routeName;
-const isEmbed = () => route.name === "embed";
+const isRouterReady = ref(false);
+const isEmbed = () => isRouterReady.value && route.name === "embed";
 
 const sidebarOpen = ref(false);
 
@@ -82,11 +84,13 @@ const isLoading = computed(() => {
 
 onMounted(async () => {
   console.log("Starting application...");
+  await router.isReady();
+  isRouterReady.value = true;
+  // don't fetch anything for the widget
   if (isEmbed()) {
-    const siteId = route.params.siteId;
-    console.log(`loading site ${siteId} data...`);
     return;
   }
+
   store.dispatch("nav/loadSensorTypes");
   await store.dispatch("authuser/fetchAuthenticatedUser");
   const memberships = store.getters["authuser/getMemberships"];
@@ -110,13 +114,16 @@ onMounted(async () => {
 watch(
   () => route.params.orgId,
   async (orgId) => {
-    await loadOrganization(orgId);
+    if (!isEmbed()) {
+      await loadOrganization(orgId);
+    }
   }
 );
 </script>
 
 <template>
-  <div v-if="isEmbed()" class="bg-gray-200 p-4">
+  <LoadingSpinner v-if="!isRouterReady" />
+  <div v-else-if="isEmbed()" class="bg-gray-200 p-4">
     <router-view />
   </div>
   <div v-else>
