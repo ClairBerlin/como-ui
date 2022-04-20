@@ -5,10 +5,11 @@ import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
 import { useI18n } from "vue-i18n";
 import { dayFormatTimestamp, isInstallationActive } from "@/utils";
-import { ExclamationIcon } from "@heroicons/vue/outline";
+import { ExclamationIcon, PlusIcon } from "@heroicons/vue/outline";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
 import dayjs from "dayjs";
 import RoomForm from "@/components/forms/RoomForm.vue";
+import PrivacyToggle from "@/components/PrivacyToggle.vue";
 
 const route = useRoute();
 const store = useStore();
@@ -102,6 +103,50 @@ const terminateInstallation = async (installationId) => {
     console.log(e);
   }
 };
+
+const createNewInstallation = async (installation) => {
+  let newInstallation = {
+    _jv: {
+      type: "Installation",
+      relationships: {
+        room: {
+          data: {
+            type: "Room",
+            id: installation.room._jv.id,
+          },
+        },
+        node: {
+          data: {
+            type: "Node",
+            id: installation.node._jv.id,
+          },
+        },
+      },
+    },
+    from_timestamp_s: dayjs().unix(),
+    to_timestamp_s: installation.to_timestamp_s,
+    is_public: !installation.is_public,
+    description: installation.description,
+  };
+  try {
+    await store.dispatch("jv/post", [
+      newInstallation,
+      { url: `installations/` },
+    ]);
+    toast.success(t("installation.newInstallationCreated"));
+  } catch (e) {
+    toast.error(t("installation.errorCreatingnewInstallation"));
+    console.log(e);
+  }
+};
+
+const toggle = async (installation) => {
+  console.log("toggle installation");
+  console.log({ installation });
+  // await terminateInstallation(installation._jv.id);
+  // await createNewInstallation(installation);
+  // TODO: reload installations
+};
 </script>
 
 <template>
@@ -130,13 +175,15 @@ const terminateInstallation = async (installationId) => {
         <div class="flex flex-row">
           <router-link
             v-if="isOwner"
-            class="gray-button btn-sm m-2 mr-0 w-max font-semibold"
+            class="indigo-button m-2"
             :to="{
               name: 'addInstallation',
               params: { roomId: roomId },
             }"
-            >{{ $t("installation.add") }}</router-link
           >
+            <PlusIcon class="mr-2 h-4 w-4" />
+            <span>{{ $t("installation.add") }}</span>
+          </router-link>
         </div>
       </div>
 
@@ -185,7 +232,14 @@ const terminateInstallation = async (installationId) => {
               {{ installation.node.alias }}
             </td>
             <td class="whitespace-nowrap px-2 py-4 text-left sm:px-6">
-              {{ $t(`installation.public.${installation.is_public}`) }}
+              <PrivacyToggle
+                :enabled="installation.is_public"
+                :on-toggle="() => toggle(installation)"
+                v-if="isOwner && isInstallationActive(installation)"
+              />
+              <div v-else>
+                {{ $t(`installation.public.${installation.is_public}`) }}
+              </div>
             </td>
             <td class="whitespace-nowrap px-2 py-4 text-left sm:px-6">
               {{ dayFormatTimestamp(installation.from_timestamp_s) }}

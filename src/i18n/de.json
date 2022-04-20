@@ -55,6 +55,7 @@
     "clickToAdd": "Klicken Sie hier um eine Installation hinzuzufügen.",
     "details": "Installationsdetails",
     "errorCreate": "Fehler beim Anlegen der Installation!",
+    "errorCreatingnewInstallation": "Fehler beim erstellen der neuen Installation!",
     "errorInvalidEnd": "Der Endzeitpunkt liegt vor dem Anfangszeitpunkt oder ist anderweitig ungültig!",
     "errorNoSensor": "Kein Sensor für die Installation ausgewählt!",
     "errorNoStart": "Kein Anfangszeitpunkt angegeben!",
@@ -67,6 +68,7 @@
     "installNow": "Sensor jetzt installieren",
     "isPublic": "Daten öffentlich?",
     "makePublic": "Installationsdaten veröffentlichen?",
+    "newInstallationCreated": "Neue Installation wurde erfolgreich angelegt!",
     "otherInstallations": "Andere Installationen des Sensors",
     "public": {
       "true": "Öffentlich",
