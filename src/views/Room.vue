@@ -141,11 +141,8 @@ const createNewInstallation = async (installation) => {
 };
 
 const toggle = async (installation) => {
-  console.log("toggle installation");
-  console.log({ installation });
-  // await terminateInstallation(installation._jv.id);
-  // await createNewInstallation(installation);
-  // TODO: reload installations
+  await terminateInstallation(installation._jv.id);
+  await createNewInstallation(installation);
 };
 </script>
 
