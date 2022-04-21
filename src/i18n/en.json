@@ -52,6 +52,7 @@
     "clickToAdd": "Click here to add one.",
     "details": "Installation Details",
     "errorCreate": "Failed to create the installation!",
+    "errorCreatingnewInstallation": "Failed to create a new installation!",
     "errorInvalidEnd": "The end time is earlier than the start time or otherwise invalid!",
     "errorNoSensor": "No sensor selected for the installation!",
     "errorNoStart": "No start time provided!",
@@ -64,6 +65,7 @@
     "installNow": "Install Sensor Now",
     "isPublic": "Data public?",
     "makePublic": "Make installation data public?",
+    "newInstallationCreated": "New installation was successfully set up!",
     "otherInstallations": "Other installations of sensor",
     "public": {
       "true": "Public",
