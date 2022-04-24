@@ -39,7 +39,7 @@ export const isInstallationActive = (installation) => {
   } else {
     let now_s = dayjs().unix();
     return (
-      installation.from_timestamp_s < now_s &&
+      installation.from_timestamp_s <= now_s &&
       installation.to_timestamp_s > now_s
     );
   }

@@ -154,6 +154,47 @@ const installNow = async () => {
     console.log(e);
   }
 };
+
+const createNewInstallation = async (installation) => {
+  let newInstallation = {
+    _jv: {
+      type: "Installation",
+      relationships: {
+        room: {
+          data: {
+            type: "Room",
+            id: installation.room._jv.id,
+          },
+        },
+        node: {
+          data: {
+            type: "Node",
+            id: installation.node._jv.id,
+          },
+        },
+      },
+    },
+    from_timestamp_s: dayjs().unix(),
+    to_timestamp_s: installation.to_timestamp_s,
+    is_public: !installation.is_public,
+    description: installation.description,
+  };
+  try {
+    await store.dispatch("jv/post", [
+      newInstallation,
+      { url: `installations/` },
+    ]);
+    toast.success(t("installation.newInstallationCreated"));
+  } catch (e) {
+    toast.error(t("installation.errorCreatingnewInstallation"));
+    console.log(e);
+  }
+};
+
+const toggle = async (installation) => {
+  await terminateInstallation(installation._jv.id);
+  await createNewInstallation(installation);
+};
 </script>
 
 <template>
@@ -266,7 +307,14 @@ const installNow = async () => {
             {{ installation.room.name }}
           </td>
           <td class="whitespace-nowrap px-2 py-4 text-left sm:px-6">
-            {{ $t(`installation.public.${installation.is_public}`) }}
+            <PrivacyToggle
+              :enabled="installation.is_public"
+              :on-toggle="() => toggle(installation)"
+              v-if="isOwner && isInstallationActive(installation)"
+            />
+            <div v-else>
+              {{ $t(`installation.public.${installation.is_public}`) }}
+            </div>
           </td>
           <td class="whitespace-nowrap px-2 py-4 text-left sm:px-6">
             {{ dayFormatTimestamp(installation.from_timestamp_s) }}

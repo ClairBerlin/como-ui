@@ -1,11 +1,16 @@
 <script setup>
 import { ref } from "vue";
 import { Switch } from "@headlessui/vue";
-const enabled = ref(false);
+const props = defineProps({
+  enabled: { type: Boolean, default: false },
+  onToggle: { type: Function, default: () => {} },
+});
+const enabled = ref(props.enabled);
 </script>
 
 <template>
   <Switch
+    @click="onToggle"
     v-model="enabled"
     :class="[
       enabled ? 'bg-indigo-600' : 'bg-gray-200',
