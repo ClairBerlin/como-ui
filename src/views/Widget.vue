@@ -68,7 +68,12 @@ const next = () => {
   >
     <LoadingSpinner additional-classes="border-[#1e398f]" />
   </div>
-  <div v-else-if="widgetData.length === 0">Keine Daten vorhanden.</div>
+  <div
+    v-else-if="widgetData.length === 0"
+    class="flex justify-center font-semibold"
+  >
+    Keine Daten vorhanden.
+  </div>
   <div
     class="mx-auto flex max-w-[359px] flex-col items-center gap-6 rounded-lg bg-white p-4"
     v-else
