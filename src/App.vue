@@ -123,7 +123,7 @@ watch(
 
 <template>
   <LoadingSpinner v-if="!isRouterReady" />
-  <div v-else-if="isEmbed()" class="bg-gray-200 p-12">
+  <div v-else-if="isEmbed()" class="">
     <router-view />
   </div>
   <div v-else>

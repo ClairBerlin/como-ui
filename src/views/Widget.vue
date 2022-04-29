@@ -64,13 +64,13 @@ const next = () => {
 <template>
   <div
     v-if="isLoading"
-    class="mx-auto flex min-h-[359px] max-w-[359px] flex-col items-center justify-center gap-6 rounded-lg bg-white p-4 drop-shadow"
+    class="mx-auto flex min-h-[359px] max-w-[359px] flex-col items-center justify-center gap-6 rounded-lg bg-white p-4"
   >
     <LoadingSpinner additional-classes="border-[#1e398f]" />
   </div>
   <div v-else-if="widgetData.length === 0">Keine Daten vorhanden.</div>
   <div
-    class="mx-auto flex max-w-[359px] flex-col items-center gap-6 rounded-lg bg-white p-4 drop-shadow"
+    class="mx-auto flex max-w-[359px] flex-col items-center gap-6 rounded-lg bg-white p-4"
     v-else
   >
     <img class="mt-6 h-12 w-auto" :src="ComoLogo" alt="COMo Logo" />
