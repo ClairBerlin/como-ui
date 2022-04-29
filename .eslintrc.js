@@ -7,6 +7,7 @@ module.exports = {
   rules: {
     "vue/no-unused-vars": "error",
     "vue/script-setup-uses-vars": "error",
+    "vue/multi-word-component-names": "off",
   },
   env: {
     "vue/setup-compiler-macros": true,
