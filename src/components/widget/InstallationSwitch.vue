@@ -30,7 +30,7 @@ const next = () => emit("next");
     </div>
 
     <div class="flex select-none flex-col items-center text-[#385BA7]">
-      <div class="text-sm" v-if="numberOfInstallations > 1">
+      <div class="text-sm">
         {{ currentInstallation }}/{{ numberOfInstallations }}
       </div>
       <div class="text-sm font-bold">{{ roomName }}</div>

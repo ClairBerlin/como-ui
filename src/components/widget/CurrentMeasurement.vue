@@ -14,6 +14,15 @@ const getText = (ppm) => {
     return `Der CO2-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!`;
   }
 };
+
+const getTimeString = (timestamp) => {
+  const hours = timestamp.getHours().toString();
+  const minutes =
+    timestamp.getMinutes() < 10
+      ? "0" + timestamp.getMinutes().toString()
+      : timestamp.getMinutes();
+  return `von ${hours}:${minutes}h`;
+};
 </script>
 
 <template>
@@ -27,7 +36,7 @@ const getText = (ppm) => {
       Aktueller Messwert
     </div>
     <div class="text-sm leading-3 text-[#1E398F]" v-if="timestamp && ppm">
-      von {{ timestamp.getHours() }}:{{ timestamp.getMinutes() }}h
+      {{ getTimeString(timestamp) }}
     </div>
     <div class="text-sm leading-3 text-[#1E398F]" v-else>von --:--h</div>
     <div class="mt-4 self-end text-[#1E398F]">

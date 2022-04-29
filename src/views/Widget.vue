@@ -1,33 +1,49 @@
 <script setup>
-import { onMounted, watch, ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 import ComoLogo from "@/assets/como-logo.svg";
 import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import InstallationSwitch from "@/components/widget/InstallationSwitch.vue";
 import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
+import { isInstallationActive } from "@/utils";
 
 const route = useRoute();
 const isLoading = ref(false);
+const store = useStore();
+const widgetData = ref([]);
 
 onMounted(async () => {
+  isLoading.value = true;
   const siteId = route.params.siteId;
-  console.log(`widget for site ${siteId} is mounted`);
+  const siteData = await store.dispatch("jv/get", `sites/${siteId}`);
+  const roomsResponse = await store.dispatch("jv/get", `sites/${siteId}/rooms`);
+  const promise = Object.entries(roomsResponse).map(
+    async ([roomId, roomData]) => {
+      const installationsResponse = await store.dispatch(
+        "jv/get",
+        `rooms/${roomId}/installations`
+      );
+      Object.entries(installationsResponse).map(([instId, instData]) => {
+        if (instData?.is_public && isInstallationActive(instData)) {
+          widgetData.value.push({
+            roomId,
+            site: siteData,
+            room: roomData,
+            installationId: instId,
+            installation: instData,
+          });
+        }
+      });
+    }
+  );
+  await Promise.all(promise);
+  isLoading.value = false;
 });
 
-watch(
-  () => route,
-  () => {
-    console.log({ route });
-  }
-);
-
-const location = ref("Zeiss Planetarium");
-const isFresh = ref(true);
-const rooms = ref(["Großer Saal", "Kleiner Saal", "Kleinster Saal"]);
 const current = ref(1);
-const ppm = ref(673);
-const timestamp = ref("Sun, 17 Apr 2022 6:21:27 GMT");
+const isFresh = ref(false);
 
 const prev = () => {
   if (current.value - 1 <= 0) {
@@ -37,7 +53,7 @@ const prev = () => {
   }
 };
 const next = () => {
-  if (current.value + 1 > rooms.value.length) {
+  if (current.value + 1 > widgetData.value.length) {
     current.value = 1;
   } else {
     current.value += 1;
@@ -52,6 +68,7 @@ const next = () => {
   >
     <LoadingSpinner additional-classes="border-[#1e398f]" />
   </div>
+  <div v-else-if="widgetData.length === 0">Keine Daten vorhanden.</div>
   <div
     class="mx-auto flex max-w-[359px] flex-col items-center gap-6 rounded-lg bg-white p-4 drop-shadow"
     v-else
@@ -72,15 +89,25 @@ const next = () => {
           />
         </svg>
 
-        <div class="text-lg font-bold">{{ location }}</div>
+        <div class="text-lg font-bold">
+          {{ widgetData[current - 1].site.name }}
+        </div>
       </div>
     </div>
-    <CurrentMeasurement :ppm="ppm" :timestamp="new Date(timestamp)" />
+    <CurrentMeasurement
+      :ppm="widgetData[current - 1].installation?.latest_sample?.co2_ppm"
+      :timestamp="
+        new Date(
+          widgetData[current - 1].installation?.latest_sample?.timestamp_s *
+            1000
+        )
+      "
+    />
     <FreshAirMedal v-if="isFresh" />
     <InstallationSwitch
-      :number-of-installations="rooms.length"
+      :number-of-installations="widgetData.length"
       :current-installation="current"
-      :room-name="rooms[current - 1]"
+      :room-name="widgetData[current - 1].room.name"
       @previous="prev"
       @next="next"
     />
