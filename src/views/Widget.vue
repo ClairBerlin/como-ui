@@ -47,7 +47,7 @@ const isFresh = ref(false);
 
 const prev = () => {
   if (current.value - 1 <= 0) {
-    current.value = 3;
+    current.value = widgetData.value.length;
   } else {
     current.value -= 1;
   }
