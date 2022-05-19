@@ -1,8 +1,10 @@
 <script setup>
+import { computed } from "vue";
+
 const props = defineProps({
   ppm: { type: Number, required: true },
 });
-const ppm = Math.max(400, Math.min(props.ppm, 2000));
+const ppm = computed(() => Math.max(400, Math.min(props.ppm, 2000)));
 </script>
 
 <template>
