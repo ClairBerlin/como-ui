@@ -7,11 +7,11 @@ defineProps({
 
 const getText = (ppm) => {
   if (ppm <= 1000) {
-    return `Der CO2-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem normalen Wert und einer niedrigen Aerosollast. Die Raumluft ist gut und du kannst durchatmen.`;
+    return `Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem normalen Wert und einer niedrigen Aerosollast. Die Raumluft ist gut und du kannst durchatmen.`;
   } else if (ppm <= 1600) {
-    return `Der CO2-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem leicht erhöhten Wert und somit auch einer erhöhten Aerosollast. Dem Raum würde etwas frischer Wind gut tun! `;
+    return `Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem leicht erhöhten Wert und somit auch einer erhöhten Aerosollast. Dem Raum würde etwas frischer Wind gut tun! `;
   } else {
-    return `Der CO2-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!`;
+    return `Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!`;
   }
 };
 
@@ -45,7 +45,7 @@ const getTimeString = (timestamp) => {
     </div>
     <MeasurementVisualization :ppm="ppm" v-if="timestamp && ppm" />
     <div class="mt-4 font-medium text-[#3B3B3A]" v-if="timestamp && ppm">
-      {{ getText(ppm) }}
+      <span v-html="getText(ppm)"></span>
     </div>
     <div class="mt-4 font-medium text-[#3B3B3A]" v-else>
       <span class="text-[#E40032]">STÖRUNG </span>
