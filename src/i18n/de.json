@@ -23,6 +23,12 @@
   "cancel": "Abbrechen",
   "clickToSensors": "Klicken Sie hier, um zu den bestehenden Sensoren zu gelangen.",
   "contactSupportToGetSensors": "Um Sensoren zu erhalten, wenden Sie sich an:",
+  "copy": {
+    "action": "Kopieren",
+    "success": "Kopiert!",
+    "failure": "Kopieren fehlgeschlagen!",
+    "snippet": "Mit diesem Code Snippet können Sie das Widget einfach in Ihre Webseite integrieren. Das Widget zeigt alle öffentlichen Installation dieses Standorts."
+  },
   "createInstallationViaSensors": "Um eine Installation zu erstellen, wählen Sie einen bestehenden Sensor und klicken Sie auf \"Sensor jetzt installieren\".",
   "day": "Tag",
   "delete": "Löschen",
@@ -148,6 +154,7 @@
     "message": "Möchten Sie diese Organisation wirklich verlassen? Dies kann nur von einem anderen Besitzer der Organisation rückgängig gemacht werden.",
     "title": "Organisation verlassen"
   },
+  "preview": "Vorschau",
   "previous": "Zurück",
   "ppm": "CO2 Gehalt in ppm",
   "remove": "Entfernen",

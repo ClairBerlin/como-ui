@@ -3,7 +3,12 @@ import { computed, ref, watchEffect } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { useToast } from "vue-toastification";
-import { ExclamationIcon, TrashIcon, PlusIcon } from "@heroicons/vue/outline";
+import {
+  ExclamationIcon,
+  TrashIcon,
+  PlusIcon,
+  InformationCircleIcon,
+} from "@heroicons/vue/outline";
 import { useI18n } from "vue-i18n";
 import DeletionModal from "@/components/DeletionModal.vue";
 import LoadingSpinner from "@/components/LoadingSpinner.vue";
@@ -120,24 +125,84 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
   updateSite({ name, description });
   updateAddress({ street1, street2, zip, city });
 };
+
+const getCodeSnippet = (siteId) => {
+  return `<iframe
+  src="https://como-berlin.de/embed/${siteId}/"
+  width="359px"
+  height="620px"
+></iframe>`;
+};
+
+const copyToClipboard = async () => {
+  try {
+    await navigator.clipboard.writeText(getCodeSnippet(siteId.value));
+    toast.success(t("copy.success"));
+  } catch (e) {
+    toast.error(t("copy.failure"));
+  }
+};
 </script>
 
 <template>
   <LoadingSpinner v-if="isLoading" />
   <div v-else class="divide-y-2 divide-gray-300">
-    <div class="mt-8 max-w-sm sm:max-w-lg">
-      <div class="rounded-sm bg-white p-6 shadow-md">
-        <SiteForm
-          :allow-edit="isOwner"
-          :site-name="site.name"
-          :site-description="site.description"
-          :address-street1="site.address.street1"
-          :address-street2="site.address.street2"
-          :address-zip="site.address.zip"
-          :address-city="site.address.city"
-          button-text="site.update"
-          :on-submit="update"
-        />
+    <div class="mt-8 flex flex-col gap-4 lg:flex-row">
+      <div class="max-w-sm sm:max-w-lg lg:min-w-[50%]">
+        <div class="rounded-sm bg-white p-6 shadow-md">
+          <SiteForm
+            :allow-edit="isOwner"
+            :site-name="site.name"
+            :site-description="site.description"
+            :address-street1="site.address.street1"
+            :address-street2="site.address.street2"
+            :address-zip="site.address.zip"
+            :address-city="site.address.city"
+            button-text="site.update"
+            :on-submit="update"
+          />
+        </div>
+      </div>
+      <div class="flex flex-col gap-4">
+        <div class="rounded-lg bg-indigo-100 p-4">
+          <div class="flex">
+            <div class="flex-shrink-0">
+              <InformationCircleIcon
+                class="h-5 w-5 text-indigo-600"
+                aria-hidden="true"
+              />
+            </div>
+            <div class="ml-3 max-w-md flex-1 md:flex">
+              <p class="text-sm text-indigo-900">
+                {{ $t("copy.snippet") }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="w-auto">
+          <pre
+            class="mockup-code relative rounded-lg bg-indigo-200 px-2 text-indigo-900"
+          >
+        <code>
+{{getCodeSnippet(siteId)}}
+        </code>
+        <button 
+        type="button" 
+        class="absolute bottom-0 right-0 m-2 p-2 pb-1 cursor-pointer rounded-md hover:bg-indigo-100 bg-indigo-50"
+        @click="copyToClipboard()"
+        >{{$t("copy.action")}}</button>
+        </pre>
+        </div>
+
+        <div>
+          <h2 class="pb-1 text-xl font-bold">{{ $t("preview") }}</h2>
+          <iframe
+            class="overflow-hidden rounded-lg bg-white shadow-sm"
+            src="https://como-berlin.de/embed/25/"
+            width="359px"
+            height="620px"
+          ></iframe>
+        </div>
       </div>
     </div>
     <div v-if="hasRooms" class="text-md mt-8 pt-8">
