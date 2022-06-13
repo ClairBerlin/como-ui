@@ -27,7 +27,7 @@
     "action": "Copy",
     "success": "Copied!",
     "failure": "Failed to copy!",
-    "snippet": "With this snippet you can integrate the widget into your own website. The widget shows all public installations of this site."
+    "snippet": "With this code snippet you can integrate the widget into your own website. When you made your data public, the widget will show the data of all public installations of this site."
   },
   "createInstallationViaSensors": "To create an installation select a sensor and click \"Install Sensor Now\".",
   "day": "Day",

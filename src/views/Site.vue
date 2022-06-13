@@ -198,7 +198,7 @@ const copyToClipboard = async () => {
           <h2 class="pb-1 text-xl font-bold">{{ $t("preview") }}</h2>
           <iframe
             class="overflow-hidden rounded-lg bg-white shadow-sm"
-            src="https://como-berlin.de/embed/25/"
+            src="https://como-berlin.de/embed/{{siteId}}/"
             width="359px"
             height="620px"
           ></iframe>
