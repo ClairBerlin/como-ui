@@ -78,8 +78,8 @@ const loadSamples = async (from, to) => {
 onMounted(async () => {
   await loadInstallation(); // Fetch installation information into the store.
   room.value = await loadRoom();
-  const from = referenceDay.value.startOf("month").unix();
-  const to = dayjs().unix();
+  const from = referenceDay.value.utc().startOf("month").unix();
+  const to = dayjs().utc().unix();
   // Fetch samples of the installation, bypass the store.
   samplePool.value = await loadSamples(from, to);
 });
@@ -149,7 +149,7 @@ const addNewSamplesToPool = async () => {
 
 const nowInstant = async () => {
   addNewSamplesToPool();
-  referenceDay.value = dayjs().startOf("day");
+  referenceDay.value = dayjs().utc().startOf("day");
 };
 
 const nextInstant = () => {
@@ -163,7 +163,7 @@ const nextInstant = () => {
     next = referenceDay.value.add(1, "M");
   }
   addNewSamplesToPool();
-  referenceDay.value = dayjs.min(next, dayjs().startOf("day"));
+  referenceDay.value = dayjs.min(next, dayjs().utc().startOf("day"));
   console.log(`New reference day: ${referenceDay.value}`);
 };
 
