@@ -23,6 +23,11 @@
   "cancel": "Cancel",
   "clickToSensors": "Click here to get to your sensors.",
   "contactSupportToGetSensors": "To request sensors send an email to:",
+  "copy": {
+    "action": "Copy",
+    "success": "Copied!",
+    "failure": "Failed to copy!"
+  },
   "createInstallationViaSensors": "To create an installation select a sensor and click \"Install Sensor Now\".",
   "day": "Day",
   "delete": "Delete",
@@ -149,6 +154,7 @@
     "title": "Leave Organization"
   },
   "ppm": "CO2-Concentration [PPM]",
+  "preview": "Preview",
   "previous": "Previous",
   "remove": "Remove",
   "remove-member-modal": {
@@ -212,6 +218,10 @@
   },
   "sites": "Sites",
   "skip": "Skip to content",
+  "snippet": {
+    "text": "With this code snippet you can integrate the widget into your own website. When you made your data public, the widget will show the data of all public installations of this site.",
+    "noPreview": "No preview possible. This site has no public installations."
+  },
   "team": {
     "description": "List of all members with name, email and role.",
     "name": "Team",

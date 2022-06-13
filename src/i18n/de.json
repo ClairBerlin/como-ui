@@ -21,21 +21,26 @@
   },
   "add-member-note": "Hinweis: Nur bereits registrierten Nutzer können mittels E-Mail-Adresse der Organisation hinzugefügt werden.",
   "cancel": "Abbrechen",
-  "clickToSensors": "Klicken Sie hier, um zu den bestehenden Sensoren zu gelangen.",
-  "contactSupportToGetSensors": "Um Sensoren zu erhalten, wenden Sie sich an:",
-  "createInstallationViaSensors": "Um eine Installation zu erstellen, wählen Sie einen bestehenden Sensor und klicken Sie auf \"Sensor jetzt installieren\".",
+  "clickToSensors": "Klicke hier, um zu den bestehenden Sensoren zu gelangen.",
+  "contactSupportToGetSensors": "Um Sensoren zu erhalten, wende dich an:",
+  "copy": {
+    "action": "Kopieren",
+    "success": "Kopiert!",
+    "failure": "Kopieren fehlgeschlagen!"
+  },
+  "createInstallationViaSensors": "Um eine Installation zu erstellen, wähle einen bestehenden Sensor und klicke auf \"Sensor jetzt installieren\".",
   "day": "Tag",
   "delete": "Löschen",
   "delete-org-modal": {
-    "message": "Sind Sie sicher, dass Sie diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "message": "Bist du sicher, dass diese Organisation gelöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
     "title": "Organisation löschen"
   },
   "delete-room-modal": {
-    "message": "Sind Sie sicher, dass Sie diesen Raum löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "message": "Bist du sicher, dass dieser Raum getlöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
     "title": "Raum löschen"
   },
   "delete-site-modal": {
-    "message": "Sind Sie sicher, dass Sie diesen Standort löschen möchten? Diese Aktion kann nicht rückgänging gemacht werden!",
+    "message": "Bist du sicher, dass dieser Standort getlöscht werden soll? Diese Aktion kann nicht rückgänging gemacht werden!",
     "title": "Standort löschen"
   },
   "description": "Beschreibung",
@@ -47,12 +52,12 @@
   "field_too_big": "{field} kann maximal {max} Zeichen haben.",
   "leave": "Verlassen",
   "loading...": "lädt...",
-  "logging-out": "Sie werden ausgeloggt...",
+  "logging-out": "Du wirst ausgeloggt...",
   "inspect": "Details",
   "installation": {
     "add": "Installation Hinzufügen",
     "addInRoom": "Installation hinzufügen im Raum",
-    "clickToAdd": "Klicken Sie hier um eine Installation hinzuzufügen.",
+    "clickToAdd": "Klicke hier um eine Installation hinzuzufügen.",
     "details": "Installationsdetails",
     "errorCreate": "Fehler beim Anlegen der Installation!",
     "errorCreatingnewInstallation": "Fehler beim erstellen der neuen Installation!",
@@ -90,7 +95,7 @@
   "node": {
     "add": "Sensor hinzufügen",
     "details": "Sensordetails",
-    "errorNotOwner": "Sie sind nicht berechtigt, Änderungen am Inventar der gewählten Organisation vorzunehmen!",
+    "errorNotOwner": "Du bist nicht berechtigt Änderungen am Inventar der gewählten Organisation vorzunehmen!",
     "eui": "LoRaWAN Gerätekennung (EUI)",
     "id": "COMo Sensor-ID",
     "identifier": "Sensor-ID",
@@ -138,21 +143,22 @@
     "singular": "Organisation",
     "successAddMember": "Neues Mitglied hinzugefügt:",
     "switch": "Organisation wechseln",
-    "title": "Alle Organisationen in denen Sie Mitglied sind",
+    "title": "Alle Organisationen in denen du Mitglied bist",
     "unexpectedUserResult": "Etwas scheint nicht in Ordnung zu sein mit den Benutzerdaten, die der Server zurückgegeben hat.",
     "updateError": "Fehler beim Aktualisieren der Organisation!",
     "updateSuccess": "Details der Organisation wurden erfolgreich aktualsiert."
   },
   "overview": "Überblick",
   "owner-leave-modal": {
-    "message": "Möchten Sie diese Organisation wirklich verlassen? Dies kann nur von einem anderen Besitzer der Organisation rückgängig gemacht werden.",
+    "message": "Möchtest du diese Organisation wirklich verlassen? Dies kann nur von einem anderen Besitzer der Organisation rückgängig gemacht werden.",
     "title": "Organisation verlassen"
   },
+  "preview": "Vorschau",
   "previous": "Zurück",
   "ppm": "CO2 Gehalt in ppm",
   "remove": "Entfernen",
   "remove-member-modal": {
-    "message": "Möchten Sie das Mitglied aus Ihrer Organisation entfernen? (Keine Sorge, das Benutzerkonto des Mitglieds wird nicht gelöscht.)",
+    "message": "Möchtest du das Mitglied aus Ihrer Organisation entfernen? (Keine Sorge, das Benutzerkonto des Mitglieds wird nicht gelöscht.)",
     "title": "Mitglied entfernen"
   },
   "role": {
@@ -184,7 +190,7 @@
     "noRoom": "Die gewählte Organisation hat keine Räume",
     "sensor": "Sensor",
     "singular": "Raum",
-    "siteForRoom": "Wählen Sie einen Standort aus, um in diesem Räume anzulegen",
+    "siteForRoom": "Wähle einen Standort aus, um in diesem Räume anzulegen",
     "size": "Größe",
     "title": "Alle Räume",
     "updateError": "Fehler beim Aktualisieren des Raums!",
@@ -193,7 +199,7 @@
   "rooms": "Räume",
   "select": "Auswählen",
   "sensor": {
-    "description": "Die Liste aller Sensoren mit Namen, ID, Modell and Anzahl der Messwerte. Um einen neuen Sensor zu erhalten, wenden Sie sich an:",
+    "description": "Die Liste aller Sensoren mit Namen, ID, Modell and Anzahl der Messwerte. Um einen neuen Sensor zu erhalten, wende dich an:",
     "title": "Alle Sensoren"
   },
   "site": {
@@ -212,6 +218,10 @@
   },
   "sites": "Standorte",
   "skip": "Zum Hauptinhalt wechseln",
+  "snippet": {
+    "text": "Mit diesem Code-Snippet kannst du das Widget ganz einfach in deine Website integrieren. Wenn du deine Daten veröffentlicht hast, zeigt das Widget alle öffentlichen Installationen des jeweiligen Standorts.",
+    "noPreview": "Kein Vorschau möglich. Dieser Standort hat keine öffentliche Installation."
+  },
   "team": {
     "description": "Die Liste aller Mitglieder mit Namen, E-Mail und Rolle.",
     "name": "Team",
