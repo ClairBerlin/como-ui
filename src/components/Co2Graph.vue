@@ -78,7 +78,10 @@ const displayUnit = computed(() => {
 
 const timeseries = computed(() =>
   props.samplePool?.map((s) => {
-    return { x: s.timestamp_s * 1000, y: s.co2_ppm };
+    return {
+      x: dayjs.unix(s.timestamp_s).add(dayjs().utcOffset(), "m"),
+      y: s.co2_ppm,
+    };
   })
 );
 
