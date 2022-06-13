@@ -126,12 +126,29 @@ const update = async ({ name, description, street1, street2, zip, city }) => {
   updateAddress({ street1, street2, zip, city });
 };
 
+const getWidgetUrl = (siteId) => `https://como-berlin.de/embed/${siteId}`;
+
 const getCodeSnippet = (siteId) => {
   return `<iframe
-  src="https://como-berlin.de/embed/${siteId}/"
+  src="${getWidgetUrl(siteId)}"
   width="359px"
   height="620px"
 ></iframe>`;
+};
+
+const hasPublicInstallations = () => {
+  const installations = rooms.value.map((room) => {
+    const instObj = store.getters["jv/get"](
+      "Installation",
+      `$[?(@.room._jv.id=="${room._jv.id}")]`
+    );
+    const instList = Object.entries(instObj);
+    return instList.map(([, inst]) => inst);
+  });
+  const publicInstallations = installations.map((roomInstallations) => {
+    return roomInstallations.some((inst) => inst.is_public);
+  });
+  return publicInstallations.some(Boolean);
 };
 
 const copyToClipboard = async () => {
@@ -163,8 +180,8 @@ const copyToClipboard = async () => {
           />
         </div>
       </div>
-      <div class="flex flex-col gap-4">
-        <div class="rounded-lg bg-indigo-100 p-4">
+      <div class="flex max-w-lg flex-col gap-4">
+        <div class="rounded-lg bg-indigo-100 p-4 shadow-sm">
           <div class="flex">
             <div class="flex-shrink-0">
               <InformationCircleIcon
@@ -174,14 +191,14 @@ const copyToClipboard = async () => {
             </div>
             <div class="ml-3 max-w-md flex-1 md:flex">
               <p class="text-sm text-indigo-900">
-                {{ $t("copy.snippet") }}
+                {{ $t("snippet.text") }}
               </p>
             </div>
           </div>
         </div>
         <div class="w-auto">
           <pre
-            class="mockup-code relative rounded-lg bg-indigo-200 px-2 text-indigo-900"
+            class="mockup-code relative rounded-lg bg-indigo-200 px-2 text-indigo-900 shadow-sm"
           >
         <code>
 {{getCodeSnippet(siteId)}}
@@ -197,11 +214,29 @@ const copyToClipboard = async () => {
         <div>
           <h2 class="pb-1 text-xl font-bold">{{ $t("preview") }}</h2>
           <iframe
+            v-if="hasPublicInstallations()"
             class="overflow-hidden rounded-lg bg-white shadow-sm"
-            src="https://como-berlin.de/embed/{{siteId}}/"
+            :src="getWidgetUrl(siteId)"
             width="359px"
             height="620px"
           ></iframe>
+
+          <div
+            v-else
+            class="mt-4 flex items-center rounded-lg border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-sm"
+          >
+            <div class="flex">
+              <div class="flex-shrink-0">
+                <ExclamationIcon
+                  class="h-5 w-5 text-yellow-400"
+                  aria-hidden="true"
+                />
+              </div>
+              <div class="ml-3">
+                {{ $t("snippet.noPreview") }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

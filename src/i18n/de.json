@@ -26,8 +26,7 @@
   "copy": {
     "action": "Kopieren",
     "success": "Kopiert!",
-    "failure": "Kopieren fehlgeschlagen!",
-    "snippet": "Mit diesem Code-Snippet kannst du das Widget ganz einfach in deine Website integrieren. Wenn du deine Daten veröffentlicht hast, zeigt das Widget alle öffentlichen Installationen des jeweiligen Standorts."
+    "failure": "Kopieren fehlgeschlagen!"
   },
   "createInstallationViaSensors": "Um eine Installation zu erstellen, wähle einen bestehenden Sensor und klicke auf \"Sensor jetzt installieren\".",
   "day": "Tag",
@@ -219,6 +218,10 @@
   },
   "sites": "Standorte",
   "skip": "Zum Hauptinhalt wechseln",
+  "snippet": {
+    "text": "Mit diesem Code-Snippet kannst du das Widget ganz einfach in deine Website integrieren. Wenn du deine Daten veröffentlicht hast, zeigt das Widget alle öffentlichen Installationen des jeweiligen Standorts.",
+    "noPreview": "Kein Vorschau möglich. Dieser Standort hat keine öffentliche Installation."
+  },
   "team": {
     "description": "Die Liste aller Mitglieder mit Namen, E-Mail und Rolle.",
     "name": "Team",
