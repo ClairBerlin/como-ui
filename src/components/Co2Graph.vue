@@ -5,6 +5,7 @@ import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";
 import {
   Chart,
+  Filler,
   PointElement,
   LineElement,
   LineController,
@@ -26,7 +27,8 @@ Chart.register(
   LinearScale,
   Legend,
   Title,
-  Tooltip
+  Tooltip,
+  Filler
 );
 
 const props = defineProps({
@@ -85,30 +87,52 @@ const timeseries = computed(() =>
   })
 );
 
+const colors = [
+  "#FC7057",
+  "#EAB150",
+  "#D9DF57",
+  "#CEDC73",
+  "#C2D990",
+  "#B8D6AC",
+  "#ADD3C6",
+  "#ADD3C8",
+];
+
+const getColor = (value) => {
+  if (value <= 600) return "#ADD3C6";
+  if (value <= 800) return "#B8D6AC";
+  if (value <= 1000) return "#C2D990";
+  if (value <= 1200) return "#CEDC73";
+  if (value <= 1400) return "#D9DF57";
+  if (value <= 1600) return "#EAB150";
+  if (value <= 1800) return "#FC7057";
+  return "#ADD3C8";
+};
+
 const chartData = computed(() => ({
   datasets: [
     {
+      fill: "origin",
       label: t("ppm"),
       pointRadius: 0,
       lineTension: 0,
-      borderWidth: 3,
-      backgroundColor: "#4338CA",
-      borderColor: "#4338CA",
+      borderWidth: 1,
+      borderColor: "#1E398F",
+      backgroundColor: (ctx) => {
+        const canvas = ctx.chart.ctx;
+        const gradient = canvas.createLinearGradient(0, 0, 0, ctx.chart.height);
+
+        colors.forEach((color, index) =>
+          gradient.addColorStop((1 / colors.length) * index, `${color}CC`)
+        );
+
+        return gradient;
+      },
       data: timeseries.value,
       parsing: false,
     },
   ],
 }));
-
-const getColor = (value) => {
-  if (value <= 600) return "#27ff00";
-  if (value <= 800) return "#95fe00";
-  if (value <= 1000) return "#d0fc00";
-  if (value <= 1200) return "#fff800";
-  if (value <= 1400) return "#ffd400";
-  if (value <= 1600) return "#ff8700";
-  return "#ff0000";
-};
 
 const chartOptions = computed(() => ({
   responsive: true,
@@ -116,6 +140,13 @@ const chartOptions = computed(() => ({
   animation: { duration: 600, easing: "easeOutCubic" },
   scales: {
     x: {
+      ticks: {
+        color: "#82B1E0",
+      },
+      grid: {
+        drawBorder: false,
+        color: "#A5DBF8",
+      },
       type: "time",
       time: {
         displayFormats: {
@@ -156,11 +187,12 @@ const chartOptions = computed(() => ({
       min: 400,
       max: 1800,
       ticks: {
-        stepSize: 100,
+        stepSize: 200,
+        color: (context) => getColor(context.tick.value),
       },
       grid: {
         drawBorder: false,
-        color: (context) => getColor(context.tick.value),
+        color: "#A5DBF8",
       },
     },
   },
