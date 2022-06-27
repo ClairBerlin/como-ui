@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import dayjs from "dayjs";
 import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";
@@ -19,6 +19,8 @@ import { useI18n } from "vue-i18n";
 import LoadingSpinner from "./LoadingSpinner.vue";
 
 const { t } = useI18n();
+
+const currentHoverVal = ref("");
 
 Chart.register(
   LineElement,
@@ -108,7 +110,7 @@ const chartData = computed(() => ({
   datasets: [
     {
       fill: "origin",
-      label: t("ppm"),
+      label: currentHoverVal.value,
       pointRadius: 0,
       lineTension: 0,
       borderWidth: 1,
@@ -139,6 +141,10 @@ const chartOptions = computed(() => ({
   interaction: {
     intersect: false,
     mode: "index",
+  },
+  onHover: (ctx) => {
+    currentHoverVal.value = ctx.y;
+    console.log(currentHoverVal.value);
   },
   scales: {
     x: {
@@ -202,6 +208,9 @@ const chartOptions = computed(() => ({
 
 const chartPlugins = [
   {
+    tooltip: {
+      enabled: false,
+    },
     afterDraw: (chart) => {
       if (chart.tooltip?._active?.length) {
         let x = chart.tooltip._active[0].element.x;
@@ -216,9 +225,7 @@ const chartPlugins = [
         ctx.stroke();
         ctx.restore();
       }
-    },
-    tooltip: {
-      enabled: false,
+      chart.tooltip.enabled = false;
     },
   },
 ];
@@ -232,6 +239,7 @@ const { lineChartProps } = useLineChart({
 
 <template>
   <div>
+    <h1>{{ currentHoverVal.value }}</h1>
     <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
     <div v-else class="flex h-96 w-96 items-center justify-center">
       <LoadingSpinner />
