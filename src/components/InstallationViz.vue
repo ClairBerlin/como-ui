@@ -21,9 +21,7 @@ const { t } = useI18n();
 
 // The window of sample data to display is taken relative to this day
 const referenceDay = ref(dayjs().utc().startOf("day"));
-// const referenceDayFormatted = computed(() =>
-//   referenceDay.value.format("YYYY-MM-DD")
-// );
+
 const props = defineProps({
   installationId: { type: String, required: true },
 });
@@ -78,7 +76,7 @@ const loadSamples = async (from, to) => {
 onMounted(async () => {
   await loadInstallation(); // Fetch installation information into the store.
   room.value = await loadRoom();
-  const from = referenceDay.value.utc().startOf("month").unix();
+  const from = referenceDay.value.utc().subtract(1, "M").unix();
   const to = dayjs().utc().unix();
   // Fetch samples of the installation, bypass the store.
   samplePool.value = await loadSamples(from, to);
@@ -122,7 +120,7 @@ const previousInstant = async () => {
   referenceDay.value = prev;
   console.log(`New reference day: ${referenceDay.value}`);
   if (oldestSampleInstant.value > prev.unix()) {
-    addOldSamplesToPool(prev.startOf("month").unix());
+    addOldSamplesToPool(prev.subtract(1, "M").unix());
   }
 };
 

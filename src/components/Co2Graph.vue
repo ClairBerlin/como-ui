@@ -16,6 +16,7 @@ import {
   Tooltip,
 } from "chart.js";
 import { useI18n } from "vue-i18n";
+import LoadingSpinner from "./LoadingSpinner.vue";
 
 const { t } = useI18n();
 
@@ -46,22 +47,16 @@ const props = defineProps({
 
 const displayFrom = computed(() => {
   if (props.displayScope === "month") {
-    return props.referenceInstant.startOf("month");
+    return props.referenceInstant.subtract(1, "M");
   } else if (props.displayScope === "week") {
-    return props.referenceInstant.startOf("week");
+    return props.referenceInstant.subtract(1, "w");
   } else {
     return props.referenceInstant.startOf("day");
   }
 });
 
 const displayTo = computed(() => {
-  if (props.displayScope === "month") {
-    return props.referenceInstant.endOf("month");
-  } else if (props.displayScope === "week") {
-    return props.referenceInstant.endOf("week");
-  } else {
-    return props.referenceInstant.endOf("day");
-  }
+  return props.referenceInstant.endOf("day");
 });
 
 const displayTimeRange = computed(() => {
@@ -128,6 +123,9 @@ const chartData = computed(() => ({
 
         return gradient;
       },
+      pointBackgroundColor: "#1E398F",
+      pointBorderWidth: 0,
+      pointHoverRadius: 8,
       data: timeseries.value,
       parsing: false,
     },
@@ -138,6 +136,10 @@ const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
   animation: { duration: 600, easing: "easeOutCubic" },
+  interaction: {
+    intersect: false,
+    mode: "index",
+  },
   scales: {
     x: {
       ticks: {
@@ -198,9 +200,33 @@ const chartOptions = computed(() => ({
   },
 }));
 
+const chartPlugins = [
+  {
+    afterDraw: (chart) => {
+      if (chart.tooltip?._active?.length) {
+        let x = chart.tooltip._active[0].element.x;
+        let yAxis = chart.scales.y;
+        let ctx = chart.ctx;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x, yAxis.top);
+        ctx.lineTo(x, yAxis.bottom);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#1E398F";
+        ctx.stroke();
+        ctx.restore();
+      }
+    },
+    tooltip: {
+      enabled: false,
+    },
+  },
+];
+
 const { lineChartProps } = useLineChart({
   chartData: chartData,
   options: chartOptions,
+  plugins: chartPlugins,
 });
 </script>
 
@@ -208,7 +234,7 @@ const { lineChartProps } = useLineChart({
   <div>
     <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
     <div v-else class="flex h-96 w-96 items-center justify-center">
-      <span>Loading...</span>
+      <LoadingSpinner />
     </div>
   </div>
 </template>
