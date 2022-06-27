@@ -205,5 +205,10 @@ const { lineChartProps } = useLineChart({
 </script>
 
 <template>
-  <LineChart v-bind="lineChartProps" />
+  <div>
+    <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
+    <div v-else class="flex h-96 w-96 items-center justify-center">
+      <span>Loading...</span>
+    </div>
+  </div>
 </template>
