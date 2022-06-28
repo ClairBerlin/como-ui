@@ -125,6 +125,9 @@ const chartData = computed(() => ({
       pointHoverRadius: 8,
       data: timeseries.value,
       parsing: false,
+      ticks: {
+        color: "red",
+      },
     },
   ],
 }));
@@ -172,6 +175,14 @@ const chartOptions = computed(() => ({
     x: {
       ticks: {
         color: "#82B1E0",
+        maxTicksLimit: () => {
+          return props.displayScope === "month" ? 6 : undefined;
+        },
+        callback: (label, index, tick) => {
+          return props.displayScope === "week"
+            ? dayjs(tick[index].value).format("dd")
+            : label;
+        },
       },
       grid: {
         drawBorder: false,
@@ -185,7 +196,7 @@ const chartOptions = computed(() => ({
           second: "H:mm:ss",
           minute: "H:mm",
           hour: "H",
-          day: "D. MMM",
+          day: "DD.MM",
           week: "ll",
           month: "MMM YYYY",
           quarter: "[Q]Q - YYYY",
