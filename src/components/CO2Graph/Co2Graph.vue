@@ -163,7 +163,7 @@ const chartOptions = computed(() => ({
       enabled: false,
       external: function (context) {
         consolingData.value = {
-          time: context.tooltip.title[0],
+          time: dayjs(context.tooltip.title[0]).format("DD.MM.YYYY | HH:mm"),
           value: context.tooltip.body[0].lines[0],
         };
       },
