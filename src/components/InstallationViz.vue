@@ -194,6 +194,9 @@ const isTabActive = (index) => selectedTab.value === index;
     </div>
   </div>
   <div class="card max-w-xs bg-white p-4 text-black sm:max-w-lg">
+    <h1 class="text-center text-lg font-bold text-[#1E398F]">
+      CO<sub>2</sub>-Messverlauf
+    </h1>
     <TabGroup @change="tabChanged">
       <TabList class="tabs flex justify-center py-2">
         <Tab
@@ -252,7 +255,7 @@ const isTabActive = (index) => selectedTab.value === index;
       </TabPanels>
     </TabGroup>
     <!-- <div>Reference day for display: {{ referenceDayFormatted }}</div> -->
-    <div class="flex justify-center gap-2">
+    <div class="mt-4 flex justify-center gap-2">
       <div>
         <div
           class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
