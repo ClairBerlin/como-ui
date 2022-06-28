@@ -11,16 +11,14 @@ import {
   LineController,
   TimeScale,
   LinearScale,
-  Legend,
   Title,
-  Tooltip,
+  Tooltip as TooltipChartJs,
 } from "chart.js";
-import { useI18n } from "vue-i18n";
-import LoadingSpinner from "./LoadingSpinner.vue";
+import LoadingSpinner from "../LoadingSpinner.vue";
+import Tooltip from "./Tooltip.vue";
 
-const { t } = useI18n();
-
-const currentHoverVal = ref("");
+const showTooltip = ref(false);
+const consolingData = ref(undefined);
 
 Chart.register(
   LineElement,
@@ -28,9 +26,8 @@ Chart.register(
   LineController,
   TimeScale,
   LinearScale,
-  Legend,
   Title,
-  Tooltip,
+  TooltipChartJs,
   Filler
 );
 
@@ -110,7 +107,6 @@ const chartData = computed(() => ({
   datasets: [
     {
       fill: "origin",
-      label: currentHoverVal.value,
       pointRadius: 0,
       lineTension: 0,
       borderWidth: 1,
@@ -134,6 +130,26 @@ const chartData = computed(() => ({
   ],
 }));
 
+const chartPlugins = [
+  {
+    afterDraw: (chart) => {
+      if (chart.tooltip?._active?.length) {
+        let x = chart.tooltip._active[0].element.x;
+        let yAxis = chart.scales.y;
+        let ctx = chart.ctx;
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(x, yAxis.top);
+        ctx.lineTo(x, yAxis.bottom);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "#1E398F";
+        ctx.stroke();
+        ctx.restore();
+      }
+    },
+  },
+];
+
 const chartOptions = computed(() => ({
   responsive: true,
   maintainAspectRatio: false,
@@ -142,9 +158,16 @@ const chartOptions = computed(() => ({
     intersect: false,
     mode: "index",
   },
-  onHover: (ctx) => {
-    currentHoverVal.value = ctx.y;
-    console.log(currentHoverVal.value);
+  plugins: {
+    tooltip: {
+      enabled: false,
+      external: function (context) {
+        consolingData.value = {
+          time: context.tooltip.title[0],
+          value: context.tooltip.body[0].lines[0],
+        };
+      },
+    },
   },
   scales: {
     x: {
@@ -174,24 +197,14 @@ const chartOptions = computed(() => ({
       },
       position: "bottom",
       alignToPixels: true,
-      title: {
-        color: "#4338CA",
-        display: true,
-        font: { weight: "bold", size: 16 },
-        text: t("time"),
-      },
+      title: false,
       ...displayTimeRange.value,
     },
     y: {
       type: "linear",
       position: "left",
       alignToPixels: true,
-      title: {
-        color: "#4338CA",
-        display: true,
-        font: { weight: "bold", size: 16 },
-        text: t("ppm"),
-      },
+      title: false,
       min: 400,
       max: 1800,
       ticks: {
@@ -206,30 +219,6 @@ const chartOptions = computed(() => ({
   },
 }));
 
-const chartPlugins = [
-  {
-    tooltip: {
-      enabled: false,
-    },
-    afterDraw: (chart) => {
-      if (chart.tooltip?._active?.length) {
-        let x = chart.tooltip._active[0].element.x;
-        let yAxis = chart.scales.y;
-        let ctx = chart.ctx;
-        ctx.save();
-        ctx.beginPath();
-        ctx.moveTo(x, yAxis.top);
-        ctx.lineTo(x, yAxis.bottom);
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = "#1E398F";
-        ctx.stroke();
-        ctx.restore();
-      }
-      chart.tooltip.enabled = false;
-    },
-  },
-];
-
 const { lineChartProps } = useLineChart({
   chartData: chartData,
   options: chartOptions,
@@ -239,7 +228,7 @@ const { lineChartProps } = useLineChart({
 
 <template>
   <div>
-    <h1>{{ currentHoverVal.value }}</h1>
+    <Tooltip :time="consolingData?.time" :value="consolingData?.value" />
     <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
     <div v-else class="flex h-96 w-96 items-center justify-center">
       <LoadingSpinner />
