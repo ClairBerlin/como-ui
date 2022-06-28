@@ -17,7 +17,6 @@ import {
 import LoadingSpinner from "../LoadingSpinner.vue";
 import Tooltip from "./Tooltip.vue";
 
-const showTooltip = ref(false);
 const consolingData = ref(undefined);
 
 Chart.register(

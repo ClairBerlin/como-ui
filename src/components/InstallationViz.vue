@@ -5,6 +5,7 @@ import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import DayjsMinMax from "dayjs/plugin/minMax";
 import utc from "dayjs/plugin/utc";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import Co2Graph from "@/components/Co2Graph.vue";
@@ -148,10 +149,11 @@ const addNewSamplesToPool = async () => {
   }
 };
 
-const nowInstant = async () => {
-  addNewSamplesToPool();
-  referenceDay.value = dayjs().utc().startOf("day");
-};
+// Disabled in current design
+// const nowInstant = async () => {
+//   addNewSamplesToPool();
+//   referenceDay.value = dayjs().utc().startOf("day");
+// };
 
 const nextInstant = () => {
   let next = referenceDay.value;
@@ -179,39 +181,45 @@ const isTabActive = (index) => selectedTab.value === index;
 </script>
 
 <template>
-  <div class="card max-w-xs bg-white p-4 text-black sm:max-w-lg">
-    <div class="flex justify-between">
-      <div class="card-title">
-        Installation #{{ installationId }} in {{ roomName }}
-      </div>
-      <div
-        :data-tip="installationTooltip(installation['is_public'])"
-        class="tooltip tooltip-left h-6 w-6"
-      >
-        <EyeIcon v-if="installation['is_public']" />
-        <EyeOffIcon v-else />
-      </div>
+  <div class="flex justify-between">
+    <div class="card-title">
+      Installation #{{ installationId }} in {{ roomName }}
     </div>
+    <div
+      :data-tip="installationTooltip(installation['is_public'])"
+      class="tooltip tooltip-left h-6 w-6"
+    >
+      <EyeIcon v-if="installation['is_public']" />
+      <EyeOffIcon v-else />
+    </div>
+  </div>
+  <div class="card max-w-xs bg-white p-4 text-black sm:max-w-lg">
     <TabGroup @change="tabChanged">
-      <TabList class="tabs py-2">
+      <TabList class="tabs flex justify-center py-2">
         <Tab
           :class="[
-            'tab tab-bordered flex-grow',
-            isTabActive(0) ? 'tab-active' : '',
+            'tab w-24 border duration-300 ease-in-out',
+            isTabActive(0)
+              ? 'border-[#1E398F] bg-[#1E398F] text-white'
+              : 'border-[#B1B2B3] text-[#B1B2B3]',
           ]"
           >{{ $t("day") }}</Tab
         >
         <Tab
           :class="[
-            'tab tab-bordered flex-grow',
-            isTabActive(1) ? 'tab-active' : '',
+            'tab w-24 border duration-300 ease-in-out',
+            isTabActive(1)
+              ? 'border-[#1E398F] bg-[#1E398F] text-white'
+              : 'border-[#B1B2B3] text-[#B1B2B3]',
           ]"
           >{{ $t("week") }}</Tab
         >
         <Tab
           :class="[
-            'tab tab-bordered flex-grow',
-            isTabActive(2) ? 'tab-active' : '',
+            'tab w-24 border duration-300 ease-in-out',
+            isTabActive(2)
+              ? 'border-[#1E398F] bg-[#1E398F] text-white'
+              : 'border-[#B1B2B3] text-[#B1B2B3]',
           ]"
           >{{ $t("month") }}</Tab
         >
@@ -244,20 +252,27 @@ const isTabActive = (index) => selectedTab.value === index;
       </TabPanels>
     </TabGroup>
     <!-- <div>Reference day for display: {{ referenceDayFormatted }}</div> -->
-    <div class="flex justify-between">
+    <div class="flex justify-center gap-2">
       <div>
-        <div class="gray-button btn-sm" @click="previousInstant">
+        <div
+          class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
+          @click="previousInstant"
+        >
+          <component :is="ChevronLeftIcon" class="h-5 w-5" aria-hidden="true" />
           {{ $t("previous") }}
         </div>
       </div>
       <div>
-        <div class="gray-button btn-sm" @click="nowInstant">
-          {{ $t("now") }}
-        </div>
-      </div>
-      <div>
-        <div class="gray-button btn-sm" @click="nextInstant">
+        <div
+          class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
+          @click="nextInstant"
+        >
           {{ $t("next") }}
+          <component
+            :is="ChevronRightIcon"
+            class="h-5 w-5"
+            aria-hidden="true"
+          />
         </div>
       </div>
     </div>
