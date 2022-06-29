@@ -3,6 +3,7 @@ import MeasurementVisualization from "./MeasurementVisualization.vue";
 defineProps({
   ppm: { type: Number, default: undefined },
   timestamp: { type: Date, default: undefined },
+  whiteBg: { type: Boolean, default: false },
 });
 
 const getText = (ppm) => {
@@ -29,7 +30,11 @@ const getTimeString = (timestamp) => {
   <div
     :class="[
       'flex h-[340px] max-w-[327px] flex-col items-center gap-2 rounded px-7 pt-7 pb-4 drop-shadow-sm',
-      !ppm || !timestamp ? 'bg-[#F6F6F6]' : 'bg-[#F1F9FE]',
+      !ppm || !timestamp
+        ? 'bg-[#F6F6F6]'
+        : whiteBg
+        ? 'bg-white'
+        : 'bg-[#F1F9FE]',
     ]"
   >
     <div class="mt-2 text-lg font-bold leading-5 text-[#1E398F]">

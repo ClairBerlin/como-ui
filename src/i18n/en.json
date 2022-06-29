@@ -88,6 +88,16 @@
   "field_length_mismatch": "{field} has to be exaclty {length} characters long.",
   "field_required": "{field} is required.",
   "field_too_big": "{field} must be at most {max} characters.",
+  "fresh-air-medal": {
+    "active": {
+      "header": "TODO",
+      "text": "TODO"
+    },
+    "inactive": {
+      "header": "TODO",
+      "text": "TODO"
+    }
+  },
   "inspect": "Inspect",
   "installation": {
     "add": "Add Installation",
