@@ -1,18 +1,22 @@
 <script setup>
 import AccordionItem from "./AccordionItem.vue";
-import { useI18n } from "vue-i18n";
 
-const { tm } = useI18n();
+defineProps({
+  title: { type: String, required: true },
+  data: { type: Object, required: true },
+});
 </script>
 
 <template>
-  <div class="flex w-full flex-col gap-8" @click="onClick">
-    <div class="text-2xl font-bold text-[#1E398F]">{{ tm("faq.title") }}</div>
+  <div class="w-full text-2xl font-bold text-[#1E398F]">
+    {{ title }}
+  </div>
+  <div class="mb-12 flex w-full flex-col gap-8" @click="onClick">
     <AccordionItem
-      v-for="(item, index) in tm('faq.accordion')"
+      v-for="(item, index) in data"
       :key="index"
-      :title="$t(item.title)"
-      :text="$t(item.text)"
+      :title="item.title"
+      :text="item.text"
     />
   </div>
 </template>

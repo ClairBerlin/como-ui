@@ -11,6 +11,8 @@ import Co2Graph from "@/components/Co2Graph.vue";
 import Accordion from "@/components/accordion/Accordion.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 
+const { tm } = useI18n();
+
 dayjs.extend(DayjsMinMax);
 dayjs.extend(utc);
 
@@ -262,5 +264,6 @@ const isTabActive = (index) => selectedTab.value === index;
       </div>
     </div>
   </div>
-  <Accordion />
+  <Accordion :title="tm('faq.title')" :data="tm('faq.accordion')" />
+  <Accordion :title="tm('faq.title')" :data="tm('faq.accordion')" />
 </template>

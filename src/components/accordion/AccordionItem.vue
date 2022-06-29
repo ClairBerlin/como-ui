@@ -4,13 +4,11 @@ import { ref } from "vue";
 const isOpen = ref(false);
 const panel = ref(null);
 
-const props = defineProps({
+defineProps({
   title: { type: String, required: true },
   text: { type: String, required: true },
 });
 
-console.log(props.title);
-console.log(props.text);
 const switchOpen = () => {
   isOpen.value = !isOpen.value;
 };
