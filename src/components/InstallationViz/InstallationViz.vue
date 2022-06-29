@@ -194,13 +194,17 @@ const isTabActive = (index) => selectedTab.value === index;
 
 <template>
   <div class="flex flex-col justify-between gap-5">
-    <h1>Installation #{{ installationId }} in {{ roomName }}</h1>
-    <div
-      :data-tip="installationTooltip(installation['is_public'])"
-      class="tooltip tooltip-left h-6 w-6"
-    >
-      <EyeIcon v-if="installation['is_public']" />
-      <EyeOffIcon v-else />
+    <div class="flex items-center gap-5">
+      <h2 class="text-lg font-bold">
+        Installation #{{ installationId }} in {{ roomName }}
+      </h2>
+      <div
+        :data-tip="installationTooltip(installation['is_public'])"
+        class="tooltip tooltip-left h-6 w-6"
+      >
+        <EyeIcon v-if="installation['is_public']" />
+        <EyeOffIcon v-else />
+      </div>
     </div>
     <div class="flex flex-wrap gap-5">
       <CurrentMeasurement
@@ -210,9 +214,9 @@ const isTabActive = (index) => selectedTab.value === index;
       <FreshAirMedal />
     </div>
     <div class="card w-full max-w-none bg-white p-4 text-black">
-      <h1 class="text-center text-lg font-bold text-[#1E398F]">
+      <h2 class="text-center text-lg font-bold text-[#1E398F]">
         CO<sub>2</sub>-{{ $t("measurement-process") }}
-      </h1>
+      </h2>
       <TabGroup @change="tabChanged">
         <TabList class="tabs flex justify-center py-2">
           <Tab
