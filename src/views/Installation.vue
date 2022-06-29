@@ -2,7 +2,7 @@
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import InstallationViz from "@/components/InstallationViz.vue";
+import InstallationViz from "@/components/InstallationViz/InstallationViz.vue";
 
 const route = useRoute();
 const store = useStore();
