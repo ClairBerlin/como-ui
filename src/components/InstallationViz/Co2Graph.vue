@@ -88,7 +88,7 @@ const colors = [
   "#C2D990",
   "#B8D6AC",
   "#ADD3C6",
-  "#ADD3C8",
+  "#9CCEF0",
 ];
 
 const getColor = (value) => {
@@ -99,7 +99,7 @@ const getColor = (value) => {
   if (value <= 1400) return "#D9DF57";
   if (value <= 1600) return "#EAB150";
   if (value <= 1800) return "#FC7057";
-  return "#ADD3C8";
+  return "#9CCEF0";
 };
 
 const chartData = computed(() => ({
@@ -240,7 +240,7 @@ const { lineChartProps } = useLineChart({
   <div>
     <Tooltip :time="consolingData?.time" :value="consolingData?.value" />
     <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
-    <div v-else class="flex h-96 w-96 items-center justify-center">
+    <div v-else class="flex h-96 w-full items-center justify-center">
       <LoadingSpinner />
     </div>
   </div>
