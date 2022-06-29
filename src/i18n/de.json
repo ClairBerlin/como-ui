@@ -50,6 +50,16 @@
   "field_length_mismatch": "{field} muss genau {length} Zeichen haben.",
   "field_required": "{field} ist erforderlich.",
   "field_too_big": "{field} kann maximal {max} Zeichen haben.",
+  "fresh-air-medal": {
+    "active": {
+      "header": "Frischluft Medaille",
+      "text": "Unsere Langzeitmessungen zeigen, dass an diesem Ort regelmäßig und ausreichend gelüftet wird. Es kann aufgeatmet werden!"
+    },
+    "inactive": {
+      "header": "Keine Frischluft Medaille",
+      "text": "Wenn ein Raum über 30 Tage lang am Stück gut gelüftet wird, erhält dieser als Auszeichnung unsere Frischluft Medaille."
+    }
+  },
   "leave": "Verlassen",
   "loading...": "lädt...",
   "logging-out": "Du wirst ausgeloggt...",
