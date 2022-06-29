@@ -9,6 +9,8 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import Co2Graph from "./Co2Graph.vue";
+import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
+import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 
 dayjs.extend(DayjsMinMax);
@@ -87,10 +89,18 @@ const oldestSampleInstant = computed(() => {
   // samples are ordered from oldest to latest
   return samplePool.value[0]?.timestamp_s;
 });
+
 const latestSampleInstant = computed(() => {
   // samples are ordered from oldest to latest
   const sc = samplePool.value.length;
   return samplePool.value[sc - 1]?.timestamp_s;
+});
+
+const currentMeasurement = computed(() => {
+  // samples are ordered from oldest to latest
+  const sc = samplePool.value.length;
+  console.log(samplePool.value[sc - 1]);
+  return samplePool.value[sc - 1]?.co2_ppm;
 });
 
 const tabChanged = (index) => {
@@ -178,10 +188,8 @@ const isTabActive = (index) => selectedTab.value === index;
 </script>
 
 <template>
-  <div class="flex justify-between">
-    <div class="card-title">
-      Installation #{{ installationId }} in {{ roomName }}
-    </div>
+  <div class="flex flex-col justify-between gap-5">
+    <h1>Installation #{{ installationId }} in {{ roomName }}</h1>
     <div
       :data-tip="installationTooltip(installation['is_public'])"
       class="tooltip tooltip-left h-6 w-6"
@@ -189,90 +197,101 @@ const isTabActive = (index) => selectedTab.value === index;
       <EyeIcon v-if="installation['is_public']" />
       <EyeOffIcon v-else />
     </div>
-  </div>
-  <div class="card max-w-xs bg-white p-4 text-black sm:max-w-lg">
-    <h1 class="text-center text-lg font-bold text-[#1E398F]">
-      CO<sub>2</sub>-Messverlauf
-    </h1>
-    <TabGroup @change="tabChanged">
-      <TabList class="tabs flex justify-center py-2">
-        <Tab
-          :class="[
-            'tab w-24 border duration-300 ease-in-out',
-            isTabActive(0)
-              ? 'border-[#1E398F] bg-[#1E398F] text-white'
-              : 'border-[#B1B2B3] text-[#B1B2B3]',
-          ]"
-          >{{ $t("day") }}</Tab
-        >
-        <Tab
-          :class="[
-            'tab w-24 border duration-300 ease-in-out',
-            isTabActive(1)
-              ? 'border-[#1E398F] bg-[#1E398F] text-white'
-              : 'border-[#B1B2B3] text-[#B1B2B3]',
-          ]"
-          >{{ $t("week") }}</Tab
-        >
-        <Tab
-          :class="[
-            'tab w-24 border duration-300 ease-in-out',
-            isTabActive(2)
-              ? 'border-[#1E398F] bg-[#1E398F] text-white'
-              : 'border-[#B1B2B3] text-[#B1B2B3]',
-          ]"
-          >{{ $t("month") }}</Tab
-        >
-      </TabList>
-      <TabPanels>
-        <TabPanel>
-          <Co2Graph
-            :installation-id="props.installationId"
-            :reference-instant="referenceDay"
-            display-scope="day"
-            :sample-pool="samplePool"
-          ></Co2Graph>
-        </TabPanel>
-        <TabPanel>
-          <Co2Graph
-            :installation-id="props.installationId"
-            :reference-instant="referenceDay"
-            display-scope="week"
-            :sample-pool="samplePool"
-          ></Co2Graph>
-        </TabPanel>
-        <TabPanel>
-          <Co2Graph
-            :installation-id="props.installationId"
-            :reference-instant="referenceDay"
-            display-scope="month"
-            :sample-pool="samplePool"
-          ></Co2Graph>
-        </TabPanel>
-      </TabPanels>
-    </TabGroup>
-    <!-- <div>Reference day for display: {{ referenceDayFormatted }}</div> -->
-    <div class="mt-4 flex justify-center gap-2">
-      <div>
-        <div
-          class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
-          @click="previousInstant"
-        >
-          <component :is="ChevronLeftIcon" class="h-5 w-5" aria-hidden="true" />
-          {{ $t("previous") }}
+    <div class="flex flex-wrap gap-5">
+      <CurrentMeasurement
+        :ppm="currentMeasurement"
+        :timestamp="new Date(latestSampleInstant)"
+      />
+      <FreshAirMedal />
+    </div>
+    <div class="card w-full max-w-none bg-white p-4 text-black">
+      <h1 class="text-center text-lg font-bold text-[#1E398F]">
+        CO<sub>2</sub>-{{ $t("measurement-process") }}
+      </h1>
+      <TabGroup @change="tabChanged">
+        <TabList class="tabs flex justify-center py-2">
+          <Tab
+            :class="[
+              'tab w-24 border duration-300 ease-in-out',
+              isTabActive(0)
+                ? 'border-[#1E398F] bg-[#1E398F] text-white'
+                : 'border-[#B1B2B3] text-[#B1B2B3]',
+            ]"
+            >{{ $t("day") }}</Tab
+          >
+          <Tab
+            :class="[
+              'tab w-24 border duration-300 ease-in-out',
+              isTabActive(1)
+                ? 'border-[#1E398F] bg-[#1E398F] text-white'
+                : 'border-[#B1B2B3] text-[#B1B2B3]',
+            ]"
+            >{{ $t("week") }}</Tab
+          >
+          <Tab
+            :class="[
+              'tab w-24 border duration-300 ease-in-out',
+              isTabActive(2)
+                ? 'border-[#1E398F] bg-[#1E398F] text-white'
+                : 'border-[#B1B2B3] text-[#B1B2B3]',
+            ]"
+            >{{ $t("month") }}</Tab
+          >
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            <Co2Graph
+              :installation-id="props.installationId"
+              :reference-instant="referenceDay"
+              display-scope="day"
+              :sample-pool="samplePool"
+            ></Co2Graph>
+          </TabPanel>
+          <TabPanel>
+            <Co2Graph
+              :installation-id="props.installationId"
+              :reference-instant="referenceDay"
+              display-scope="week"
+              :sample-pool="samplePool"
+            ></Co2Graph>
+          </TabPanel>
+          <TabPanel>
+            <Co2Graph
+              :installation-id="props.installationId"
+              :reference-instant="referenceDay"
+              display-scope="month"
+              :sample-pool="samplePool"
+            ></Co2Graph>
+          </TabPanel>
+        </TabPanels>
+      </TabGroup>
+      <!-- <div>Reference day for display: {{ referenceDayFormatted }}</div> -->
+      <div class="mt-4 flex justify-center gap-2">
+        <div>
+          <div
+            class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
+            @click="previousInstant"
+          >
+            <component
+              :is="ChevronLeftIcon"
+              class="h-5 w-5"
+              aria-hidden="true"
+            />
+            {{ $t("previous") }}
+          </div>
         </div>
-      </div>
-      <div>
-        <div
-          class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
-          @click="nextInstant"
-        >
-          {{ $t("next") }}
-          <component
-            :is="ChevronRightIcon"
-            class="h-5 w-5"
-            aria-hidden="true"
-          />
+        <div>
+          <div
+            class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
+            @click="nextInstant"
+          >
+            {{ $t("next") }}
+            <component
+              :is="ChevronRightIcon"
+              class="h-5 w-5"
+              aria-hidden="true"
+            />
+          </div>
         </div>
       </div>
     </div>
