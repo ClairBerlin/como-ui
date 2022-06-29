@@ -1,5 +1,7 @@
 <script setup>
 import MeasurementVisualization from "./MeasurementVisualization.vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 defineProps({
   ppm: { type: Number, default: undefined },
