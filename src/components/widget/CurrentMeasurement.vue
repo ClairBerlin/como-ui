@@ -36,7 +36,7 @@ const getTimeString = (timestamp) => {
       !ppm || !timestamp
         ? 'bg-[#F6F6F6]'
         : whiteBg
-        ? 'bg-white'
+        ? 'bg-white shadow-sm'
         : 'bg-[#F1F9FE]',
     ]"
   >
