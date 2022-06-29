@@ -1,27 +1,49 @@
 <script setup>
 import { ref } from "vue";
-const isOpen = ref(false);
 
+const isOpen = ref(false);
+const panel = ref(null);
+
+const props = defineProps({
+  title: { type: String, required: true },
+  text: { type: String, required: true },
+});
+
+console.log(props.title);
+console.log(props.text);
 const switchOpen = () => {
-  console.log("click");
   isOpen.value = !isOpen.value;
 };
 </script>
 
 <template>
-  <div class="{cn.clickable}" :click="switchOpen">
-    <p class="{cn.title}">Title</p>
-    <div class="flex h-5 w-5 items-center">
-      <div class="absolute h-1 w-5 bg-black"></div>
-      <div
-        :class="[
-          'bg-black duration-300 ease-in-out',
-          isOpen ? 'rotate-0' : 'rotate-90',
-        ]"
-      ></div>
+  <div>
+    <div
+      class="flex cursor-pointer items-center justify-between py-4"
+      @click="switchOpen"
+    >
+      <p class="font-bold text-[#3B3B3A]">{{ title }}</p>
+      <div class="mr-5 flex h-5 w-5 items-center sm:mr-10">
+        <div class="absolute h-0.5 w-5 rounded bg-black"></div>
+        <div
+          :class="[
+            'absolute h-0.5 w-5 rounded bg-black duration-300 ease-in-out',
+            isOpen ? 'rotate-0' : 'rotate-90',
+          ]"
+        ></div>
+      </div>
     </div>
-  </div>
-  <div :class="['overflow-hidden', isOpen ? 'max-h-max' : 'max-h-0']">
-    <div ref="{panelEl}" class="{cn.paragraph}">Dummy Text</div>
+    <div
+      :class="[
+        'h-0.5 bg-[#DADADA] duration-150 ease-in-out',
+        isOpen ? 'w-0' : 'w-full',
+      ]"
+    />
+    <div
+      :class="['overflow-hidden duration-300 ease-in-out']"
+      :style="{ 'max-height': [isOpen ? `${panel.clientHeight}px` : 0] }"
+    >
+      <div ref="panel" class="mr-5 sm:mr-10" v-html="text" />
+    </div>
   </div>
 </template>

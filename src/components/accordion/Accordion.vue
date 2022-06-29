@@ -1,11 +1,18 @@
 <script setup>
 import AccordionItem from "./AccordionItem.vue";
-const persons = ["1", "2", "3"];
+import { useI18n } from "vue-i18n";
+
+const { tm } = useI18n();
 </script>
 
 <template>
-  <div class="w-full">
-    <div class="text-2xl font-bold text-[#1E398F]">Lorem Ipsum</div>
-    <AccordionItem v-for="(person, index) in persons" :key="index" />
+  <div class="flex w-full flex-col gap-8" @click="onClick">
+    <div class="text-2xl font-bold text-[#1E398F]">{{ tm("faq.title") }}</div>
+    <AccordionItem
+      v-for="(item, index) in tm('faq.accordion')"
+      :key="index"
+      :title="$t(item.title)"
+      :text="$t(item.text)"
+    />
   </div>
 </template>

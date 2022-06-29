@@ -46,6 +46,23 @@
   "description": "Beschreibung",
   "edit": "Bearbeiten",
   "email": "E-Mail",
+  "faq": {
+    "title": "FAQ",
+    "accordion": [
+      {
+        "title": "Lorem Ipsum",
+        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
+      },
+      {
+        "title": "Lorem Ipsum",
+        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
+      },
+      {
+        "title": "Lorem Ipsum",
+        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
+      }
+    ]
+  },
   "field_invalid": "Die Angabe ist ungültig.",
   "field_length_mismatch": "{field} muss genau {length} Zeichen haben.",
   "field_required": "{field} ist erforderlich.",
