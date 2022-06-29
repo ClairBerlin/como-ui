@@ -25,6 +25,7 @@ const store = useStore();
 
 const selectedTab = ref(0);
 const samplePool = ref([]);
+const endOfScale = ref(true);
 const { t } = useI18n();
 
 // The window of sample data to display is taken relative to this day
@@ -104,7 +105,6 @@ const latestSampleInstant = computed(() => {
 const currentMeasurement = computed(() => {
   // samples are ordered from oldest to latest
   const sc = samplePool.value.length;
-  console.log(samplePool.value[sc - 1]);
   return samplePool.value[sc - 1]?.co2_ppm;
 });
 
@@ -138,15 +138,19 @@ const previousInstant = async () => {
   if (oldestSampleInstant.value > prev.unix()) {
     addOldSamplesToPool(prev.subtract(1, "M").unix());
   }
+  endOfScale.value = false;
 };
 
 const addNewSamplesToPool = async () => {
   if (!latestSampleInstant.value) {
     // In case the sample pool is still empty.
     return;
+  } else {
+    endOfScale.value = true;
   }
   const now = dayjs().unix();
   if (latestSampleInstant.value < now) {
+    // endOfScale.value = false;
     console.log(
       `Current time: ${dayjs.unix(now)}. Latest sample instant: ${dayjs.unix(
         latestSampleInstant.value
@@ -168,18 +172,22 @@ const addNewSamplesToPool = async () => {
 // };
 
 const nextInstant = () => {
-  let next = referenceDay.value;
-  console.log(`Current reference day: ${next}`);
-  if (selectedTab.value == 0) {
-    next = referenceDay.value.add(1, "d");
-  } else if (selectedTab.value == 1) {
-    next = referenceDay.value.add(1, "w");
+  if (!endOfScale.value) {
+    let next = referenceDay.value;
+    console.log(`Current reference day: ${next}`);
+    if (selectedTab.value == 0) {
+      next = referenceDay.value.add(1, "d");
+    } else if (selectedTab.value == 1) {
+      next = referenceDay.value.add(1, "w");
+    } else {
+      next = referenceDay.value.add(1, "M");
+    }
+    addNewSamplesToPool();
+    referenceDay.value = dayjs.min(next, dayjs().utc().startOf("day"));
+    console.log(`New reference day: ${referenceDay.value}`);
   } else {
-    next = referenceDay.value.add(1, "M");
+    console.log(`${referenceDay.value} already is the most recent measurement`);
   }
-  addNewSamplesToPool();
-  referenceDay.value = dayjs.min(next, dayjs().utc().startOf("day"));
-  console.log(`New reference day: ${referenceDay.value}`);
 };
 
 const installationTooltip = (isPublic) => {
@@ -294,8 +302,10 @@ const isTabActive = (index) => selectedTab.value === index;
         </div>
         <div>
           <div
-            class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
+            class="btn-sm flex cursor-pointer items-center rounded shadow-sm shadow-[#1E398F29]"
+            :class="endOfScale ? 'text-[#B1B2B3]' : 'text-[#1E398F]'"
             @click="nextInstant"
+            :aria-disabled="endOfScale ? true : false"
           >
             {{ $t("next") }}
             <component
