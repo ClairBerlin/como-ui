@@ -8,7 +8,7 @@ import utc from "dayjs/plugin/utc";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import Co2Graph from "@/components/CO2Graph/Co2Graph.vue";
+import Co2Graph from "./Co2Graph.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 
 dayjs.extend(DayjsMinMax);
