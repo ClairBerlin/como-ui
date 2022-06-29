@@ -251,6 +251,21 @@
     "username": "Username"
   },
   "week": "Week",
+  "widget": {
+    "title": "EMPTY",
+    "text": {
+      "low_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "low_p2": "EMPTY",
+      "medium_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "medium_p2": "EMPTY",
+      "high_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "high_p2": "EMPTY!"
+    },
+    "error": {
+      "title": "EMPTY",
+      "text": "EMPTY"
+    }
+  },
   "404": {
     "home": "Back to home",
     "msg": "Oops! Nothing to see here"

@@ -1,5 +1,6 @@
 <script setup>
 import MeasurementVisualization from "./MeasurementVisualization.vue";
+
 defineProps({
   ppm: { type: Number, default: undefined },
   timestamp: { type: Date, default: undefined },
@@ -8,11 +9,11 @@ defineProps({
 
 const getText = (ppm) => {
   if (ppm <= 1000) {
-    return `Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem normalen Wert und einer niedrigen Aerosollast. Die Raumluft ist gut und du kannst durchatmen.`;
+    return t("widget.text.low_p1") + ppm + t("widget.text.low_p2");
   } else if (ppm <= 1600) {
-    return `Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem leicht erhöhten Wert und somit auch einer erhöhten Aerosollast. Dem Raum würde etwas frischer Wind gut tun! `;
+    return t("widget.text.medium_p1") + ppm + t("widget.text.medium_p2");
   } else {
-    return `Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ${ppm} ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!`;
+    return t("widget.text.high_p1") + ppm + t("widget.text.high_p2");
   }
 };
 
@@ -38,7 +39,7 @@ const getTimeString = (timestamp) => {
     ]"
   >
     <div class="mt-2 text-lg font-bold leading-5 text-[#1E398F]">
-      Aktueller Messwert
+      {{ $t("widget.title") }}
     </div>
     <div class="text-sm leading-3 text-[#1E398F]" v-if="timestamp && ppm">
       {{ getTimeString(timestamp) }}
@@ -53,10 +54,9 @@ const getTimeString = (timestamp) => {
       <span v-html="getText(ppm)"></span>
     </div>
     <div class="mt-4 font-medium text-[#3B3B3A]" v-else>
-      <span class="text-[#E40032]">STÖRUNG </span>
+      <span class="text-[#E40032]">{{ $t("widget.error.title") }} </span>
       <span>
-        - Der Sensor macht gerade ein Päuschen! Leider ist gerade keine Anzeige
-        möglich, da im Moment keine Daten gesendet werden.
+        {{ $t("widget.error.text") }}
       </span>
     </div>
   </div>

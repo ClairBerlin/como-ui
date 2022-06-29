@@ -251,6 +251,21 @@
     "username": "Benutzername"
   },
   "week": "Woche",
+  "widget": {
+    "title": "Aktueller Messwert",
+    "text": {
+      "low_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "low_p2": " ppm, dies entspricht einem normalen Wert und einer niedrigen Aerosollast. Die Raumluft ist gut und du kannst durchatmen.",
+      "medium_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "medium_p2": " ppm, dies entspricht einem leicht erhöhten Wert und somit auch einer erhöhten Aerosollast. Dem Raum würde etwas frischer Wind gut tun!",
+      "high_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "high_p2": " ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!"
+    },
+    "error": {
+      "title": "STÖRUNG",
+      "text": "- Der Sensor macht gerade ein Päuschen! Leider ist gerade keine Anzeige möglich, da im Moment keine Daten gesendet werden."
+    }
+  },
   "404": {
     "home": "Zurück zur Startseite",
     "msg": "Huch! Hier ist nichts"

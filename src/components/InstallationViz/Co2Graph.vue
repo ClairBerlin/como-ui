@@ -16,6 +16,9 @@ import {
 } from "chart.js";
 import LoadingSpinner from "../LoadingSpinner.vue";
 import Tooltip from "./Tooltip.vue";
+import { useI18n } from "vue-i18n";
+
+const { locale } = useI18n();
 
 const consolingData = ref(undefined);
 
@@ -165,7 +168,11 @@ const chartOptions = computed(() => ({
       enabled: false,
       external: function (context) {
         consolingData.value = {
-          time: dayjs(context.tooltip.title[0]).format("DD.MM.YYYY | HH:mm"),
+          time:
+            locale.value === "de"
+              ? dayjs(context.tooltip.title[0]).format("DD.MM.YYYY | HH:mm") +
+                " Uhr"
+              : dayjs(context.tooltip.title[0]).format("MM/DD/YYYY | h:m a"),
           value: context.tooltip.body[0].lines[0],
         };
       },
