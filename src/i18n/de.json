@@ -137,6 +137,7 @@
   "month": "Monat",
   "name": "Name",
   "next": "Weiter",
+  "no-data": "Messdaten momentan nicht verfügbar",
   "node": {
     "add": "Sensor hinzufügen",
     "details": "Sensordetails",

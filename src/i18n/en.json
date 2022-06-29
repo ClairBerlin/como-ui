@@ -141,6 +141,7 @@
   "measurement-process": "measurement process",
   "name": "Name",
   "next": "Next",
+  "no-data": "Measurement data currently not available",
   "node": {
     "add": "Add a sensor",
     "details": "Sensor Details",

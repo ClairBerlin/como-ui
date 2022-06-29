@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from "vue";
+import { useStore } from "vuex";
 import dayjs from "dayjs";
 import "chartjs-adapter-dayjs";
 import { LineChart, useLineChart } from "vue-chart-3";
@@ -21,6 +22,11 @@ import { useI18n } from "vue-i18n";
 const { locale } = useI18n();
 
 const consolingData = ref(undefined);
+const store = useStore();
+
+const isLoading = computed(() => {
+  return store.getters["nav/isOrgContextLoading"];
+});
 
 Chart.register(
   LineElement,
@@ -95,6 +101,7 @@ const colors = [
 ];
 
 const getColor = (value) => {
+  if (value <= 400) return "#9CCEF0";
   if (value <= 600) return "#ADD3C6";
   if (value <= 800) return "#B8D6AC";
   if (value <= 1000) return "#C2D990";
@@ -102,7 +109,7 @@ const getColor = (value) => {
   if (value <= 1400) return "#D9DF57";
   if (value <= 1600) return "#EAB150";
   if (value <= 1800) return "#FC7057";
-  return "#9CCEF0";
+  return "#FC7057";
 };
 
 const chartData = computed(() => ({
@@ -248,7 +255,8 @@ const { lineChartProps } = useLineChart({
     <Tooltip :time="consolingData?.time" :value="consolingData?.value" />
     <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
     <div v-else class="flex h-96 w-full items-center justify-center">
-      <LoadingSpinner />
+      <LoadingSpinner v-if="isLoading" />
+      <div v-else>{{ $t("no-data") }}</div>
     </div>
   </div>
 </template>
