@@ -8,6 +8,7 @@ import utc from "dayjs/plugin/utc";
 
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import Co2Graph from "@/components/Co2Graph.vue";
+import Accordion from "@/components/accordion/Accordion.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 
 dayjs.extend(DayjsMinMax);
@@ -261,4 +262,5 @@ const isTabActive = (index) => selectedTab.value === index;
       </div>
     </div>
   </div>
+  <Accordion />
 </template>
