@@ -12,6 +12,12 @@ defineProps({
 const switchOpen = () => {
   isOpen.value = !isOpen.value;
 };
+
+const onKeyDown = (e) => {
+  if ((e.key === "Space") | (e.key === "Enter")) {
+    switchOpen();
+  }
+};
 </script>
 
 <template>
@@ -19,6 +25,9 @@ const switchOpen = () => {
     <div
       class="flex cursor-pointer items-center justify-between py-4"
       @click="switchOpen"
+      @keydown="(e) => onKeyDown(e)"
+      role="button"
+      tabindex="0"
     >
       <p class="font-bold text-[#3B3B3A]">{{ title }}</p>
       <div class="mr-5 flex h-5 w-5 items-center sm:mr-10">
