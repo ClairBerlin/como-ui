@@ -145,12 +145,9 @@ const addNewSamplesToPool = async () => {
   if (!latestSampleInstant.value) {
     // In case the sample pool is still empty.
     return;
-  } else {
-    endOfScale.value = true;
   }
   const now = dayjs().unix();
   if (latestSampleInstant.value < now) {
-    // endOfScale.value = false;
     console.log(
       `Current time: ${dayjs.unix(now)}. Latest sample instant: ${dayjs.unix(
         latestSampleInstant.value
@@ -162,29 +159,34 @@ const addNewSamplesToPool = async () => {
       console.log(`Appending ${nextSamples.length} to the sample pool`);
       samplePool.value = [...samplePool.value, ...nextSamples];
     }
+  } else {
+    endOfScale.value = true;
   }
 };
-
-// Disabled in current design
-// const nowInstant = async () => {
-//   addNewSamplesToPool();
-//   referenceDay.value = dayjs().utc().startOf("day");
-// };
 
 const nextInstant = () => {
   if (!endOfScale.value) {
     let next = referenceDay.value;
+    let secondNext;
     console.log(`Current reference day: ${next}`);
     if (selectedTab.value == 0) {
       next = referenceDay.value.add(1, "d");
+      secondNext = next.add(1, "d");
     } else if (selectedTab.value == 1) {
       next = referenceDay.value.add(1, "w");
+      secondNext = next.add(1, "w");
     } else {
       next = referenceDay.value.add(1, "M");
+      secondNext = next.add(1, "M");
     }
     addNewSamplesToPool();
     referenceDay.value = dayjs.min(next, dayjs().utc().startOf("day"));
     console.log(`New reference day: ${referenceDay.value}`);
+
+    // Disable button at most recent value
+    if (dayjs(secondNext).unix() >= dayjs(new Date()).unix()) {
+      endOfScale.value = true;
+    }
   } else {
     console.log(`${referenceDay.value} already is the most recent measurement`);
   }
@@ -288,7 +290,7 @@ const isTabActive = (index) => selectedTab.value === index;
       <!-- <div>Reference day for display: {{ referenceDayFormatted }}</div> -->
       <div class="mt-4 flex justify-center gap-2">
         <div>
-          <div
+          <button
             class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
             @click="previousInstant"
           >
@@ -298,10 +300,10 @@ const isTabActive = (index) => selectedTab.value === index;
               aria-hidden="true"
             />
             {{ $t("previous") }}
-          </div>
+          </button>
         </div>
         <div>
-          <div
+          <button
             class="btn-sm flex cursor-pointer items-center rounded shadow-sm shadow-[#1E398F29]"
             :class="endOfScale ? 'text-[#B1B2B3]' : 'text-[#1E398F]'"
             @click="nextInstant"
@@ -313,7 +315,7 @@ const isTabActive = (index) => selectedTab.value === index;
               class="h-5 w-5"
               aria-hidden="true"
             />
-          </div>
+          </button>
         </div>
       </div>
     </div>
