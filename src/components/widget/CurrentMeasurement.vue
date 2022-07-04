@@ -32,11 +32,11 @@ const getTimeString = (timestamp) => {
 <template>
   <div
     :class="[
-      'flex h-[340px] max-w-[327px] flex-col items-center gap-2 rounded px-7 pt-7 pb-4 drop-shadow-sm',
+      'flex h-[340px] max-w-[327px] flex-col items-center gap-2 rounded-lg px-7 pt-7 pb-4 shadow-md',
       !ppm || !timestamp
         ? 'bg-[#F6F6F6]'
         : whiteBg
-        ? 'bg-white shadow-sm'
+        ? 'bg-white'
         : 'bg-[#F1F9FE]',
     ]"
   >
