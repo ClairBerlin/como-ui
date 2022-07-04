@@ -220,7 +220,7 @@ const isTabActive = (index) => selectedTab.value === index;
       <FreshAirMedal :inactive="true" :white-bg="true" />
     </div>
     <div
-      class="max-w-none card w-full rounded bg-white p-4 text-black shadow-md"
+      class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
     >
       <h2 class="text-center text-lg font-bold text-[#1E398F]">
         CO<sub>2</sub>-{{ $t("measurement-process") }}

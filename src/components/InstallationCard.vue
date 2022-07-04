@@ -27,7 +27,7 @@ const installationTooltip = (isPublic) => {
 <template>
   <div
     :class="[
-      'card max-h-80 w-full max-w-2xs rounded bg-white text-[#1E398F] shadow-md',
+      'card max-h-80 w-60 max-w-2xs rounded-lg bg-white text-[#1E398F] shadow-md',
     ]"
   >
     <div class="flex h-40 flex-col px-4 pt-5">

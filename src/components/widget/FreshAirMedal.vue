@@ -11,7 +11,7 @@ defineProps({
 <template>
   <div
     v-if="inactive"
-    class="flex max-w-[327px] flex-col items-center gap-2 rounded px-6 pt-7 pb-4 drop-shadow-sm"
+    class="flex max-w-[327px] flex-col items-center gap-2 rounded-lg px-6 pt-7 pb-4 shadow-sm"
     :class="[whiteBg ? 'bg-white' : 'bg-[#F1F9FE]']"
   >
     <img
@@ -28,7 +28,7 @@ defineProps({
   </div>
   <div
     v-else
-    class="flex max-w-[327px] flex-col items-center gap-2 rounded px-6 pt-7 pb-4 shadow-md"
+    class="flex max-w-[327px] flex-col items-center gap-2 rounded-lg px-6 pt-7 pb-4 shadow-md"
     :class="[whiteBg ? 'bg-white' : 'bg-[#F1F9FE]']"
   >
     <img class="mb-4 h-12 w-12" :src="medal" alt="Frischluft Medaille" />
