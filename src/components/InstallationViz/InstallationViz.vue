@@ -10,7 +10,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 
 import Accordion from "@/components/accordion/Accordion.vue";
-import Co2Graph from "@/components/Co2Graph.vue";
+import Co2Graph from "@/components/InstallationViz/Co2Graph.vue";
 import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
 // import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
