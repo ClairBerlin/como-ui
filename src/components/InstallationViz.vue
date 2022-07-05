@@ -264,6 +264,10 @@ const isTabActive = (index) => selectedTab.value === index;
       </div>
     </div>
   </div>
-  <Accordion :title="tm('faq.title')" :data="tm('faq.accordion')" />
-  <Accordion :title="tm('faq.title')" :data="tm('faq.accordion')" />
+  <Accordion
+    v-for="(section, index) in tm('faq.sections')"
+    :key="index"
+    :title="section.title"
+    :data="section.accordion"
+  />
 </template>

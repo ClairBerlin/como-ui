@@ -47,19 +47,40 @@
   "edit": "Edit",
   "email": "Email",
   "faq": {
-    "title": "FAQ",
-    "accordion": [
+    "sections": [
       {
-        "title": "Lorem Ipsum",
-        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
+        "title": "Rund um den Messwert",
+        "accordion": [
+          {
+            "title": "EMPTY",
+            "text": "EMPTY."
+          },
+          {
+            "title": "EMPTY",
+            "text": "EMPTY)"
+          },
+          {
+            "title": "EMPTY",
+            "text": "EMPTY>"
+          }
+        ]
       },
       {
-        "title": "Lorem Ipsum",
-        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
-      },
-      {
-        "title": "Lorem Ipsum",
-        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
+        "title": "FAQ_2",
+        "accordion": [
+          {
+            "title": "EMPTY",
+            "text": "EMPTY."
+          },
+          {
+            "title": "EMPTY",
+            "text": "EMPTY."
+          },
+          {
+            "title": "EMPTY",
+            "text": "EMPTY."
+          }
+        ]
       }
     ]
   },

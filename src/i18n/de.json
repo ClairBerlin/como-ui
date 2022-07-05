@@ -47,19 +47,36 @@
   "edit": "Bearbeiten",
   "email": "E-Mail",
   "faq": {
-    "title": "FAQ",
-    "accordion": [
+    "sections": [
       {
-        "title": "Lorem Ipsum",
-        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
+        "title": "Rund um den Messwert",
+        "accordion": [
+          {
+            "title": "Welcher Wert wird angezeigt?",
+            "text": "Angezeigt wird der zuletzt gemessene Wert. Im Idealfall sollte alle 15 Minuten eine Datenübertragung stattfinden. Durch diese konstante Übertragung von Messwerten lässt sich eine gute Aussage über die Raumluft und die daraus folgenden Konsequenzen ableiten."
+          },
+          {
+            "title": "An welchen Richtwerten orientieren wir uns? ",
+            "text": "Wir orientieren uns an folgenden Richtwerten, die wir farblich gekennzeichnet haben: <br>CO2 < 1000 ppm -> „hygienisch unbedenklich“ (blau)<br>1000 < CO2 < 2000 ppm -> „hygienisch auffällig“ (gelb)<br>CO2 > 2000 ppm -> „hygienisch inakzeptabel“ (rot)"
+          },
+          {
+            "title": "Mir wird kein Wert angezeigt?",
+            "text": "Leider können technische Störungen immer wieder vorkommen. Sollte dein Problem jedoch länger als 48 Stunden bestehen, informiere bitte unser COMo-Team damit wir es für dich lösen können. Schick uns eine Nachricht an: <a href='mailto: info@como-berlin.de' class='text-[#1E398F]' >info@como-berlin.de</a>"
+          }
+        ]
       },
       {
-        "title": "Lorem Ipsum",
-        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
-      },
-      {
-        "title": "Lorem Ipsum",
-        "text": "<strong>Lorem ipsum dolor sit amet</strong><br>consectetur adipisicing elit. Incidunt idnon deleniti doloribus est natus, voluptate eos delectus, aliquidnesciunt officiis, optio magnam! Soluta repellat unde libero quosdistinctio odio repudiandae! Repellendus laborum ratione possimus. Idquibusdam adipisci corrupti, nulla soluta praesentium possimus doloresquisquam obcaecati iusto sequi aliquid? Dolorem."
+        "title": "Rund um die Luftqualität",
+        "accordion": [
+          {
+            "title": "Wieso soll ich mich mit meiner Raumluft auseinandersetzen?",
+            "text": "Wir verbringen fast 90 Prozent unserer Zeit in Innenräumen und werden von der uns umgebenden Raumluft beeinflusst. Eine gute Raumluft steigert nicht nur unser Wohlbefinden, sondern erhöht auch die Lern - und Arbeitsproduktivität, das Konzentrationsvermögen und minimiert das Risiko einer Virusinfektion. Die CO2-Konzentration gilt dabei als guter Indikator für die allgemeine Raumluftqualität. Wer genau weiss, wann sich die Luftqualität verschlechtert, kann bedarfsgerecht lüften und sorgt dafür, dass die eigenen Räumlichkeiten als behaglich empfunden werden."
+          },
+          {
+            "title": "Welche Vorteile ergeben sich durch das Teilen deiner Ergebnisse?",
+            "text": "Die öffentliche Kommunikation deiner Daten ermöglicht den Besucher:innen nicht nur, sich zu informieren, welche Betreiber:innen sich nachhaltig um gute Luftqualität kümmern, sondern hilft auch dabei, das wichtige Thema Raumluft in die Gesellschaft zu tragen. Eine CO2-Ampel kann lediglich eine Aussage über die aktuelle Luftqualität treffen. Werden Messdaten jedoch konstant und über längere Zeit übermittelt, eröffnet das die Möglichkeit, Veränderungen und verschiedene im Raum stattfindende Aktivitäten miteinander vergleichen zu können."
+          }
+        ]
       }
     ]
   },
