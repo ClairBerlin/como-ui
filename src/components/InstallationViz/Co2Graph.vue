@@ -21,7 +21,12 @@ import { useI18n } from "vue-i18n";
 
 const { locale } = useI18n();
 
-const consolingData = ref(undefined);
+const consolingData = ref({
+  time:
+    locale.value === "de"
+      ? dayjs(new Date()).format("DD.MM.YYYY | HH:mm") + " Uhr"
+      : dayjs(new Date()).format("MM/DD/YYYY | h:m a"),
+});
 const store = useStore();
 
 const isLoading = computed(() => {
