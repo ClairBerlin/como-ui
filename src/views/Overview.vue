@@ -62,7 +62,7 @@ const getLatestMeasurement = (sample) => {
       <div v-if="hasActiveSensors">
         <ul
           role="list"
-          class="lg:max-w-3xl flex w-full gap-6 overflow-scroll lg:flex-wrap"
+          class="lg:max-w-3xl flex w-full gap-6 overflow-auto lg:flex-wrap lg:overflow-hidden"
         >
           <li
             v-for="inst in activeInstallations"
