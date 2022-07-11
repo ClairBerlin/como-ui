@@ -10,6 +10,9 @@ module.exports = {
         sans: ['"Inter var"', ...defaultTheme.fontFamily.sans],
       },
     },
+    maxWidth: {
+      "2xs": "242px",
+    },
   },
   plugins: [
     require("@tailwindcss/forms"),

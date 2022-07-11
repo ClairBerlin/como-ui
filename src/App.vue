@@ -155,7 +155,7 @@ watch(
             leave-from="translate-x-0"
             leave-to="-translate-x-full"
           >
-            <div class="relative flex w-full max-w-xs flex-1 flex-col bg-white">
+            <div class="max-w-xs relative flex w-full flex-1 flex-col bg-white">
               <TransitionChild
                 as="template"
                 enter="ease-in-out duration-300"

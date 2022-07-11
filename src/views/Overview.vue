@@ -62,7 +62,7 @@ const getLatestMeasurement = (sample) => {
       <div v-if="hasActiveSensors">
         <ul
           role="list"
-          class="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3"
+          class="lg:max-w-3xl flex w-full gap-6 overflow-auto lg:flex-wrap lg:overflow-hidden"
         >
           <li
             v-for="inst in activeInstallations"
@@ -83,7 +83,7 @@ const getLatestMeasurement = (sample) => {
       </div>
       <div
         v-else
-        class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+        class="max-w-sm mt-4 flex items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
       >
         <div class="flex">
           <div class="flex-shrink-0">
