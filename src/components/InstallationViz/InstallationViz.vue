@@ -104,8 +104,19 @@ const latestSampleInstant = computed(() => {
 const currentMeasurement = computed(() => {
   // samples are ordered from oldest to latest
   const sc = samplePool.value.length;
-  return samplePool.value[sc - 1]?.co2_ppm;
+  return samplePool.value[sc - 1];
 });
+
+const isRecent = (sample) => {
+  return dayjs().diff(dayjs.unix(sample.timestamp_s), "minute") < 30;
+};
+
+const getLatestMeasurement = (sample) => {
+  if (sample && isRecent(sample) && sample.co2_ppm) {
+    return sample.co2_ppm.toString();
+  }
+  return undefined;
+};
 
 const tabChanged = (index) => {
   // 0 = day, 1 = week, 2 = month
@@ -217,7 +228,7 @@ const isTabActive = (index) => selectedTab.value === index;
     </div>
     <div class="flex flex-wrap gap-5">
       <CurrentMeasurement
-        :ppm="currentMeasurement"
+        :ppm="getLatestMeasurement(currentMeasurement)"
         :timestamp="new Date(latestSampleInstant)"
         :white-bg="true"
       />
