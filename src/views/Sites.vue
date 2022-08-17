@@ -141,7 +141,7 @@ const formatAdress = (address) => {
   </div>
   <div
     v-else
-    class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+    class="max-w-sm mt-4 flex items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
   >
     <div class="flex">
       <div class="flex-shrink-0">

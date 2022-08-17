@@ -3,9 +3,11 @@
   "This installation is not public.": "Diese Installation ist nicht öffentlich.",
   "Active Installations": "Aktive Installationen",
   "Latest": "Aktueller",
-  "View": "Zum",
-  "Chart": "Diagramm",
+  "View": "Zur",
+  "Chart": "Detailansicht",
   "Value": "Wert",
+  "public": "Daten veröffentlicht",
+  "not-public": "Keine Daten veröffentlicht",
   "action": "Aktion",
   "actions": "Aktionen",
   "add": "Hinzufügen",
@@ -46,10 +48,54 @@
   "description": "Beschreibung",
   "edit": "Bearbeiten",
   "email": "E-Mail",
+  "faq": {
+    "sections": [
+      {
+        "title": "Rund um den Messwert",
+        "accordion": [
+          {
+            "title": "Welcher Wert wird angezeigt?",
+            "text": "Angezeigt wird der zuletzt gemessene Wert. Im Idealfall sollte alle 15 Minuten eine Datenübertragung stattfinden. Durch diese konstante Übertragung von Messwerten lässt sich eine gute Aussage über die Raumluft und die daraus folgenden Konsequenzen ableiten."
+          },
+          {
+            "title": "An welchen Richtwerten orientieren wir uns? ",
+            "text": "Wir orientieren uns an folgenden Richtwerten, die wir farblich gekennzeichnet haben: <br>CO2 < 1000 ppm -> „hygienisch unbedenklich“ (blau)<br>1000 < CO2 < 2000 ppm -> „hygienisch auffällig“ (gelb)<br>CO2 > 2000 ppm -> „hygienisch inakzeptabel“ (rot)"
+          },
+          {
+            "title": "Mir wird kein Wert angezeigt?",
+            "text": "Leider können technische Störungen immer wieder vorkommen. Sollte dein Problem jedoch länger als 48 Stunden bestehen, informiere bitte unser COMo-Team damit wir es für dich lösen können. Schick uns eine Nachricht an: <a href='mailto: info@como-berlin.de' class='text-[#1E398F]' >info@como-berlin.de</a>"
+          }
+        ]
+      },
+      {
+        "title": "Rund um die Luftqualität",
+        "accordion": [
+          {
+            "title": "Wieso soll ich mich mit meiner Raumluft auseinandersetzen?",
+            "text": "Wir verbringen fast 90 Prozent unserer Zeit in Innenräumen und werden von der uns umgebenden Raumluft beeinflusst. Eine gute Raumluft steigert nicht nur unser Wohlbefinden, sondern erhöht auch die Lern - und Arbeitsproduktivität, das Konzentrationsvermögen und minimiert das Risiko einer Virusinfektion. Die CO2-Konzentration gilt dabei als guter Indikator für die allgemeine Raumluftqualität. Wer genau weiss, wann sich die Luftqualität verschlechtert, kann bedarfsgerecht lüften und sorgt dafür, dass die eigenen Räumlichkeiten als behaglich empfunden werden."
+          },
+          {
+            "title": "Welche Vorteile ergeben sich durch das Teilen deiner Ergebnisse?",
+            "text": "Die öffentliche Kommunikation deiner Daten ermöglicht den Besucher:innen nicht nur, sich zu informieren, welche Betreiber:innen sich nachhaltig um gute Luftqualität kümmern, sondern hilft auch dabei, das wichtige Thema Raumluft in die Gesellschaft zu tragen. Eine CO2-Ampel kann lediglich eine Aussage über die aktuelle Luftqualität treffen. Werden Messdaten jedoch konstant und über längere Zeit übermittelt, eröffnet das die Möglichkeit, Veränderungen und verschiedene im Raum stattfindende Aktivitäten miteinander vergleichen zu können."
+          }
+        ]
+      }
+    ]
+  },
   "field_invalid": "Die Angabe ist ungültig.",
   "field_length_mismatch": "{field} muss genau {length} Zeichen haben.",
   "field_required": "{field} ist erforderlich.",
   "field_too_big": "{field} kann maximal {max} Zeichen haben.",
+  "fresh-air-medal": {
+    "active": {
+      "header": "Frischluft Medaille",
+      "text": "Unsere Langzeitmessungen zeigen, dass an diesem Ort regelmäßig und ausreichend gelüftet wird. Es kann aufgeatmet werden!"
+    },
+    "inactive": {
+      "header": "Keine Frischluft Medaille",
+      "text": "Wenn ein Raum über 30 Tage lang am Stück gut gelüftet wird, erhält dieser als Auszeichnung unsere Frischluft Medaille."
+    }
+  },
   "leave": "Verlassen",
   "loading...": "lädt...",
   "logging-out": "Du wirst ausgeloggt...",
@@ -89,9 +135,11 @@
     "to": "Datum und Zeit der Deinstallation"
   },
   "installations": "Installationen",
+  "measurement-process": "Messverlauf",
   "month": "Monat",
   "name": "Name",
   "next": "Weiter",
+  "no-data": "Messdaten momentan nicht verfügbar",
   "node": {
     "add": "Sensor hinzufügen",
     "details": "Sensordetails",
@@ -240,6 +288,21 @@
     "username": "Benutzername"
   },
   "week": "Woche",
+  "widget": {
+    "title": "Aktueller Messwert",
+    "text": {
+      "low_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "low_p2": " ppm, dies entspricht einem normalen Wert und einer niedrigen Aerosollast. Die Raumluft ist gut und du kannst durchatmen.",
+      "medium_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "medium_p2": " ppm, dies entspricht einem leicht erhöhten Wert und somit auch einer erhöhten Aerosollast. Dem Raum würde etwas frischer Wind gut tun!",
+      "high_p1": "Der CO<sub>2</sub>-Gehalt des Raumes liegt bei ",
+      "high_p2": " ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!"
+    },
+    "error": {
+      "title": "STÖRUNG",
+      "text": "- Der Sensor macht gerade ein Päuschen! Leider ist gerade keine Anzeige möglich, da im Moment keine Daten gesendet werden."
+    }
+  },
   "404": {
     "home": "Zurück zur Startseite",
     "msg": "Huch! Hier ist nichts"
