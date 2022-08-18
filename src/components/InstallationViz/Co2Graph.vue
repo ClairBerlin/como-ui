@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
 import "chartjs-adapter-dayjs";
@@ -21,12 +21,12 @@ import { useI18n } from "vue-i18n";
 
 const { locale } = useI18n();
 
-const consolingData = ref({
-  time:
-    locale.value === "de"
-      ? dayjs(new Date()).format("DD.MM.YYYY | HH:mm") + " Uhr"
-      : dayjs(new Date()).format("MM/DD/YYYY | h:m a"),
-});
+// const currentTimeStamp = computed(() => {
+//   return props.samplePool
+//     ? props.samplePool[props.samplePool.length - 1].timestamp_s
+//     : new Date();
+// });
+
 const store = useStore();
 
 const isLoading = computed(() => {
@@ -92,6 +92,29 @@ const timeseries = computed(() =>
       y: s.co2_ppm,
     };
   })
+);
+
+const consolingData = ref({
+  time:
+    locale.value === "de"
+      ? dayjs(new Date()).format("DD.MM.YYYY | HH:mm") + " Uhr"
+      : dayjs(new Date()).format("MM/DD/YYYY | h:m a"),
+});
+
+watch(
+  () => props.referenceInstant,
+  async (instant) => {
+    consolingData.value = {
+      time:
+        locale.value === "de"
+          ? dayjs(new Date(instant.endOf("day") - 86400000)).format(
+              "DD.MM.YYYY | HH:mm"
+            ) + " Uhr"
+          : dayjs(new Date(instant.endOf("day") - 86400000)).format(
+              "MM/DD/YYYY | h:m a"
+            ),
+    };
+  }
 );
 
 const colors = [
