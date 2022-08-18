@@ -299,7 +299,7 @@
       "high_p2": " ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!"
     },
     "error": {
-      "title": "STÖRUNG",
+      "title": "STÖRUNG ",
       "text": "- Der Sensor macht gerade ein Päuschen! Leider ist gerade keine Anzeige möglich, da im Moment keine Daten gesendet werden."
     }
   },

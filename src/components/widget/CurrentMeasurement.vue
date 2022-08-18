@@ -56,7 +56,9 @@ const getTimeString = (timestamp) => {
       <span v-html="getText(ppm)"></span>
     </div>
     <div class="mt-4 font-medium text-[#3B3B3A]" v-else>
-      <span class="text-[#E40032]">{{ $t("widget.error.title") }} </span>
+      <span class="font-bold text-[#E40032]"
+        >{{ $t("widget.error.title") }}
+      </span>
       <span>
         {{ $t("widget.error.text") }}
       </span>
