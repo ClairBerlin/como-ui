@@ -16,6 +16,7 @@ import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
 import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 import CSVDownload from "./CSVDownload.vue";
+import BumpTimesPlot from "./BumpTimesPlot.vue";
 
 const { tm } = useI18n();
 
@@ -56,7 +57,6 @@ const InstallationAlias = computed(
   () => InstallationData.value[Object.keys(InstallationData.value)[0]]
 );
 
-console.log(InstallationAlias);
 const room = ref();
 const roomName = computed(() => room.value?.name);
 
@@ -253,6 +253,12 @@ const isTabActive = (index) => selectedTab.value === index;
       <CSVDownload
         :load-samples-function="loadSamples"
         :alias="InstallationAlias"
+      />
+      <BumpTimesPlot
+        :installation-id="props.installationId"
+        :reference-instant="referenceDay"
+        display-scope="day"
+        :sample-pool="samplePool"
       />
     </div>
     <div
