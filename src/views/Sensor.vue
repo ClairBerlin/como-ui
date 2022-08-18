@@ -241,7 +241,7 @@ const toggle = async (installation) => {
 
   <LoadingSpinner v-if="isLoading" />
   <div v-else>
-    <div class="mt-8 max-w-sm sm:max-w-lg">
+    <div class="max-w-sm sm:max-w-lg mt-8">
       <div class="rounded-sm bg-white p-6 shadow-md">
         <SensorForm
           :sensor-alias="sensor.alias"

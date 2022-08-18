@@ -2,9 +2,16 @@
 import dayjs from "dayjs";
 const props = defineProps({
   loadSamplesFunction: { type: Function, required: true },
+  alias: { type: Object, required: true },
 });
 
 const downloadCSV = () => {
+  const filename = props.alias?.alias
+    ? props.alias?.alias
+    : props.alias?.eui64
+    ? props.alias?.eui64
+    : "Installation-data";
+
   props
     .loadSamplesFunction(0, dayjs().utc().unix())
     .then((res) => {
@@ -29,7 +36,7 @@ const downloadCSV = () => {
       const blob = new Blob(["\ufeff", csv]);
       const url = URL.createObjectURL(blob);
       downloadLink.href = url;
-      downloadLink.download = "DataDump.csv"; //Name the file here
+      downloadLink.download = `${filename}.csv`; //Name the file here
       document.body.appendChild(downloadLink);
       downloadLink.click();
       document.body.removeChild(downloadLink);
@@ -43,7 +50,11 @@ const downloadCSV = () => {
     class="flex max-w-[327px] flex-col items-center gap-2 rounded-lg bg-white px-6 pt-7 pb-4 shadow-sm"
   >
     <p>Hier können sie die gesamten Daten als CSV herunterladen</p>
-    <button class="indigo-button" @click="downloadCSV" :class="disabled">
+    <button
+      class="indigo-button w-full bg-[#1E398F]"
+      @click="downloadCSV"
+      :class="disabled"
+    >
       Download CSV
     </button>
   </div>

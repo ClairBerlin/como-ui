@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import DayjsMinMax from "dayjs/plugin/minMax";
@@ -41,6 +42,21 @@ const installation = computed(() =>
   })
 );
 
+const route = useRoute();
+
+const sensorId = computed(() => route.params.sensorId);
+
+const InstallationData = computed(() =>
+  store.getters["jv/get"]({
+    _jv: { type: "Node", id: sensorId.value },
+  })
+);
+
+const InstallationAlias = computed(
+  () => InstallationData.value[Object.keys(InstallationData.value)[0]]
+);
+
+console.log(InstallationAlias);
 const room = ref();
 const roomName = computed(() => room.value?.name);
 
@@ -234,7 +250,10 @@ const isTabActive = (index) => selectedTab.value === index;
         :white-bg="true"
       />
       <FreshAirMedal :inactive="true" :white-bg="true" />
-      <CSVDownload :load-samples-function="loadSamples" />
+      <CSVDownload
+        :load-samples-function="loadSamples"
+        :alias="InstallationAlias"
+      />
     </div>
     <div
       class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
