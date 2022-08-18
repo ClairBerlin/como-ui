@@ -14,6 +14,7 @@ import Co2Graph from "@/components/InstallationViz/Co2Graph.vue";
 import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
 import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
+import CSVDownload from "./CSVDownload.vue";
 
 const { tm } = useI18n();
 
@@ -233,6 +234,7 @@ const isTabActive = (index) => selectedTab.value === index;
         :white-bg="true"
       />
       <FreshAirMedal :inactive="true" :white-bg="true" />
+      <CSVDownload :load-samples-function="loadSamples" />
     </div>
     <div
       class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"

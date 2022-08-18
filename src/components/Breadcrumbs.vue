@@ -24,7 +24,7 @@ const pages = computed(() => [
 
 <template>
   <nav class="flex border-b border-gray-200 bg-white" aria-label="Breadcrumb">
-    <ol role="list" class="mx-auto flex w-full max-w-screen-xl space-x-4 px-4">
+    <ol role="list" class="max-w-screen-xl mx-auto flex w-full space-x-4 px-4">
       <li class="flex">
         <div class="flex items-center">
           <a href="/" class="text-gray-400 hover:text-gray-500">
