@@ -138,7 +138,7 @@
   "measurement-process": "Messverlauf",
   "month": "Monat",
   "name": "Name",
-  "next": "Weiter",
+  "next": "Später",
   "no-data": "Messdaten momentan nicht verfügbar",
   "node": {
     "add": "Sensor hinzufügen",
@@ -202,7 +202,7 @@
     "title": "Organisation verlassen"
   },
   "preview": "Vorschau",
-  "previous": "Zurück",
+  "previous": "Früher",
   "ppm": "CO2 Gehalt in ppm",
   "remove": "Entfernen",
   "remove-member-modal": {

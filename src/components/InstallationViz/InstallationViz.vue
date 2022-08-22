@@ -269,33 +269,37 @@ const isTabActive = (index) => selectedTab.value === index;
       </h2>
       <TabGroup @change="tabChanged">
         <TabList class="tabs flex justify-center py-2">
-          <Tab
-            :class="[
-              'tab w-24 border duration-300 ease-in-out',
-              isTabActive(0)
-                ? 'border-[#1E398F] bg-[#1E398F] text-white'
-                : 'border-[#B1B2B3] text-[#B1B2B3]',
-            ]"
-            >{{ $t("day") }}</Tab
+          <div
+            class="flex justify-center gap-px overflow-hidden rounded-lg bg-[#B1B2B3]"
           >
-          <Tab
-            :class="[
-              'tab w-24 border duration-300 ease-in-out',
-              isTabActive(1)
-                ? 'border-[#1E398F] bg-[#1E398F] text-white'
-                : 'border-[#B1B2B3] text-[#B1B2B3]',
-            ]"
-            >{{ $t("week") }}</Tab
-          >
-          <Tab
-            :class="[
-              'tab w-24 border duration-300 ease-in-out',
-              isTabActive(2)
-                ? 'border-[#1E398F] bg-[#1E398F] text-white'
-                : 'border-[#B1B2B3] text-[#B1B2B3]',
-            ]"
-            >{{ $t("month") }}</Tab
-          >
+            <Tab
+              :class="[
+                'tab w-24 rounded-l-lg border border-r-0 duration-300 ease-in-out',
+                isTabActive(0)
+                  ? 'border-[#1E398F] bg-[#1E398F] text-white'
+                  : 'border-[#B1B2B3] bg-white text-[#B1B2B3] shadow-inner',
+              ]"
+              >{{ $t("day") }}</Tab
+            >
+            <Tab
+              :class="[
+                'tab w-24 border border-x-0 duration-300 ease-in-out',
+                isTabActive(1)
+                  ? 'border-[#1E398F] bg-[#1E398F] text-white'
+                  : 'border-[#B1B2B3] bg-white text-[#B1B2B3] shadow-inner',
+              ]"
+              >{{ $t("week") }}</Tab
+            >
+            <Tab
+              :class="[
+                'tab w-24 rounded-r-lg border border-l-0 duration-300 ease-in-out',
+                isTabActive(2)
+                  ? 'border border-[#1E398F] bg-[#1E398F] text-white'
+                  : 'border-[#B1B2B3] bg-white text-[#B1B2B3] shadow-inner',
+              ]"
+              >{{ $t("month") }}</Tab
+            >
+          </div>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -333,7 +337,7 @@ const isTabActive = (index) => selectedTab.value === index;
           >
             <component
               :is="ChevronLeftIcon"
-              class="h-5 w-5"
+              class="h-6 w-6"
               aria-hidden="true"
             />
             {{ $t("previous") }}
@@ -349,7 +353,7 @@ const isTabActive = (index) => selectedTab.value === index;
             {{ $t("next") }}
             <component
               :is="ChevronRightIcon"
-              class="h-5 w-5"
+              class="h-6 w-6"
               aria-hidden="true"
             />
           </button>

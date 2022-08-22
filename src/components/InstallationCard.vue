@@ -85,7 +85,10 @@ const installationTooltip = (isPublic) => {
         <MeasurementVisualization :ppm="latestMeasurement" />
       </div>
     </div>
-    <div v-else class="flex h-20 items-end justify-center pb-7 text-[#E40032]">
+    <div
+      v-else
+      class="flex h-20 items-end justify-center pb-7 font-bold text-[#E40032]"
+    >
       <span>– {{ $t("widget.error.title") }} –</span>
     </div>
     <div>
