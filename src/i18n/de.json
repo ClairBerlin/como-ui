@@ -137,6 +137,15 @@
   "installations": "Installationen",
   "measurement-process": "Messverlauf",
   "month": "Monat",
+  "weekdays": [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag"
+  ],
   "name": "Name",
   "next": "Später",
   "no-data": "Messdaten momentan nicht verfügbar",

@@ -249,7 +249,11 @@ const isTabActive = (index) => selectedTab.value === index;
         :timestamp="new Date(latestSampleInstant)"
         :white-bg="true"
       />
-      <FreshAirMedal :inactive="true" :white-bg="true" />
+      <FreshAirMedal :inactive="false" :white-bg="true" />
+    </div>
+    <div
+      class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
+    >
       <BumpTimesPlot />
     </div>
     <div

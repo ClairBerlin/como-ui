@@ -1,6 +1,8 @@
 <script setup>
-import { computed, onMounted } from "vue";
+import { computed, ref } from "vue";
 import { Bar } from "vue-chartjs";
+import { useI18n } from "vue-i18n";
+
 import {
   Chart as ChartJS,
   Title,
@@ -11,6 +13,8 @@ import {
   LinearScale,
 } from "chart.js";
 
+const { t, tm } = useI18n();
+
 ChartJS.register(
   Title,
   Tooltip,
@@ -20,7 +24,7 @@ ChartJS.register(
   LinearScale
 );
 
-const props = defineProps({
+defineProps({
   chartId: {
     type: String,
     default: "bar-chart",
@@ -51,10 +55,7 @@ const props = defineProps({
   },
 });
 
-onMounted(async () => {
-  const chart = document.getElementById(props.chartId);
-  window.addEventListener("resize", () => chart.resize());
-});
+const selectedWeekday = ref(0);
 
 const hoursArray = [];
 for (let i = 0; i < 24; i++) {
@@ -69,26 +70,70 @@ const gaussRand = () => {
   return r / 8;
 };
 
+const weekdays = {
+  0: {
+    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    name: t("monday"),
+  },
+  1: {
+    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    name: t("next"),
+  },
+  2: {
+    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    name: t("next"),
+  },
+  3: {
+    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    name: t("next"),
+  },
+  4: {
+    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    name: t("next"),
+  },
+  5: {
+    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    name: t("next"),
+  },
+  6: {
+    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    name: t("next"),
+  },
+};
+
+const weekdayIds = [0, 1, 2, 3, 4, 5, 6];
+
+weekdayIds.forEach((index) => {
+  const dataset = weekdays[index].dataset;
+  weekdays[index].lowest = dataset.findIndex(
+    (item) => Math.min(...dataset) === item
+  );
+  weekdays[index].highest = dataset.findIndex(
+    (item) => Math.max(...dataset) === item
+  );
+});
+
 const dataset = hoursArray.map(() => Math.floor(gaussRand() * 2000));
 
 const lowest = dataset.findIndex((item) => Math.min(...dataset) === item);
 const highest = dataset.findIndex((item) => Math.max(...dataset) === item);
 
-const chartData = {
+const chartData = computed(() => ({
   labels: hoursArray,
   datasets: [
     {
-      data: dataset,
+      data: weekdays[selectedWeekday.value].dataset,
       backgroundColor: (ctx) => {
         return ctx.dataIndex === highest || ctx.dataIndex === lowest
           ? "red"
           : "white";
       },
       borderColor: "red",
+      borderRadius: 50,
       borderWidth: 1,
     },
   ],
-};
+}));
 
 const chartOptions = computed(() => ({
   responsive: true,
@@ -99,11 +144,16 @@ const chartOptions = computed(() => ({
     },
   },
 }));
+
+const toggleWeekday = (index) => {
+  console.log("CLICK", index);
+  selectedWeekday.value = index;
+};
 </script>
 
 <template>
   <div
-    class="card relative h-full w-full rounded-lg bg-white p-4 text-black shadow-sm"
+    class="card relative h-full w-full rounded-lg bg-white p-4 text-black"
     id="barChartWrapper"
   >
     <Bar
@@ -115,5 +165,14 @@ const chartOptions = computed(() => ({
       :css-classes="cssClasses"
       :styles="styles"
     />
+    <div>
+      <button
+        v-for="(weekday, index) in tm('weekdays')"
+        :key="index"
+        :onclick="() => toggleWeekday(index)"
+      >
+        {{ weekday }}
+      </button>
+    </div>
   </div>
 </template>

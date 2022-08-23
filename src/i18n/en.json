@@ -136,6 +136,15 @@
   "loading...": "loading...",
   "logging-out": "You are being logged out",
   "month": "Month",
+  "weekdays": [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ],
   "measurement-process": "measurement process",
   "name": "Name",
   "next": "Later",
