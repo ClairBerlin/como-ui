@@ -21,12 +21,6 @@ import { useI18n } from "vue-i18n";
 
 const { locale } = useI18n();
 
-// const currentTimeStamp = computed(() => {
-//   return props.samplePool
-//     ? props.samplePool[props.samplePool.length - 1].timestamp_s
-//     : new Date();
-// });
-
 const store = useStore();
 
 const isLoading = computed(() => {
@@ -43,6 +37,8 @@ Chart.register(
   TooltipChartJs,
   Filler
 );
+
+console.log("Chart", Chart);
 
 const props = defineProps({
   installationId: { type: String, required: true },
@@ -145,7 +141,7 @@ const chartData = computed(() => ({
     {
       fill: "origin",
       pointRadius: 0,
-      lineTension: 0,
+      // showLine: false,
       borderWidth: 1,
       borderColor: "#1E398F",
       backgroundColor: (ctx) => {
@@ -165,6 +161,14 @@ const chartData = computed(() => ({
       parsing: false,
       ticks: {
         color: "red",
+      },
+      options: {
+        plugins: {
+          decimation: {
+            enabled: true,
+            algorithm: "min-max",
+          },
+        },
       },
     },
   ],
