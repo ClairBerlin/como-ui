@@ -14,7 +14,7 @@ import {
   LinearScale,
 } from "chart.js";
 
-const { t, tm } = useI18n();
+const { tm } = useI18n();
 
 ChartJS.register(
   Title,
@@ -29,30 +29,6 @@ defineProps({
   chartId: {
     type: String,
     default: "bar-chart",
-  },
-  datasetIdKey: {
-    type: String,
-    default: "label",
-  },
-  height: {
-    type: Number,
-    default: 300,
-  },
-  width: {
-    type: Number,
-    default: 300,
-  },
-  cssClasses: {
-    default: "",
-    type: String,
-  },
-  styles: {
-    type: Object,
-    default: () => {},
-  },
-  plugins: {
-    type: Object,
-    default: () => {},
   },
 });
 
@@ -144,10 +120,6 @@ const toggleWeekday = (index) => {
       :chart-options="chartOptions"
       :chart-data="chartData"
       :chart-id="chartId"
-      :dataset-id-key="datasetIdKey"
-      :plugins="plugins"
-      :css-classes="cssClasses"
-      :styles="styles"
     />
     <div class="flex w-full flex-wrap justify-center gap-2">
       <button
