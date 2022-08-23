@@ -16,7 +16,7 @@ import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
 import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 import CSVDownload from "./CSVDownload.vue";
-// import BumpTimesPlot from "./BumpTimesPlot.vue";
+import BumpTimesPlot from "./BumpTimesPlot.vue";
 
 const { tm } = useI18n();
 
@@ -250,16 +250,7 @@ const isTabActive = (index) => selectedTab.value === index;
         :white-bg="true"
       />
       <FreshAirMedal :inactive="true" :white-bg="true" />
-      <CSVDownload
-        :load-samples-function="loadSamples"
-        :alias="InstallationAlias"
-      />
-      <!-- <BumpTimesPlot
-        :installation-id="props.installationId"
-        :reference-instant="referenceDay"
-        display-scope="day"
-        :sample-pool="samplePool"
-      /> -->
+      <BumpTimesPlot />
     </div>
     <div
       class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
@@ -361,6 +352,10 @@ const isTabActive = (index) => selectedTab.value === index;
       </div>
     </div>
   </div>
+  <CSVDownload
+    :load-samples-function="loadSamples"
+    :alias="InstallationAlias"
+  />
   <Accordion
     v-for="(section, index) in tm('faq.sections')"
     :key="index"

@@ -38,8 +38,6 @@ Chart.register(
   Filler
 );
 
-console.log("Chart", Chart);
-
 const props = defineProps({
   installationId: { type: String, required: true },
   // day, week, month
@@ -142,6 +140,7 @@ const chartData = computed(() => ({
       fill: "origin",
       pointRadius: 0,
       // showLine: false,
+      lineTension: 0,
       borderWidth: 1,
       borderColor: "#1E398F",
       backgroundColor: (ctx) => {
@@ -215,6 +214,9 @@ const chartOptions = computed(() => ({
           value: context.tooltip.body[0].lines[0],
         };
       },
+    },
+    legend: {
+      display: false,
     },
   },
   scales: {
