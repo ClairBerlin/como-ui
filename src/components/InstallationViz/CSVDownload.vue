@@ -46,16 +46,17 @@ const downloadCSV = () => {
 </script>
 
 <template>
-  <div
-    class="flex max-w-[327px] flex-col items-center gap-2 rounded-lg bg-white px-6 pt-7 pb-4 shadow-sm"
-  >
-    <p>Hier können sie die gesamten Daten als CSV herunterladen</p>
+  <div class="mt-16 flex flex-col gap-4">
+    <h2 class="text-left text-2xl font-bold leading-10 text-[#1E398F]">
+      {{ $t("download.header") }}
+    </h2>
+    <p class="pb-2.5 font-bold text-[#3B3B3A]">{{ $t("download.text") }}</p>
     <button
-      class="indigo-button w-full bg-[#1E398F]"
+      class="indigo-button w-fit bg-[#385BA7] py-3 px-8 font-bold"
       @click="downloadCSV"
       :class="disabled"
     >
-      Download CSV
+      {{ $t("download.button") }}
     </button>
   </div>
 </template>

@@ -136,15 +136,6 @@
   "loading...": "loading...",
   "logging-out": "You are being logged out",
   "month": "Month",
-  "weekdays": [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday"
-  ],
   "measurement-process": "measurement process",
   "name": "Name",
   "next": "Later",
@@ -297,6 +288,20 @@
     "username": "Username"
   },
   "week": "Week",
+  "weekdays": [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ],
+  "download": {
+    "button": "download data",
+    "header": "Sensor data download",
+    "text": "Here you can download all the data recorded by the sensor at once, for browsing and discovering in the convenient CSV file format."
+  },
   "widget": {
     "title": "Current measured value",
     "text": {

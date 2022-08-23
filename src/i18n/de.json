@@ -137,15 +137,6 @@
   "installations": "Installationen",
   "measurement-process": "Messverlauf",
   "month": "Monat",
-  "weekdays": [
-    "Sonntag",
-    "Montag",
-    "Dienstag",
-    "Mittwoch",
-    "Donnerstag",
-    "Freitag",
-    "Samstag"
-  ],
   "name": "Name",
   "next": "Später",
   "no-data": "Messdaten momentan nicht verfügbar",
@@ -297,6 +288,20 @@
     "username": "Benutzername"
   },
   "week": "Woche",
+  "weekdays": [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag"
+  ],
+  "download": {
+    "button": "Daten downloaden",
+    "header": "Download der Sensordaten",
+    "text": "Hier können sie alle Daten die der Sensor aufgezeichnet hat auf einmal herunterladen, zum Stöbern und Entdecken im praktischen CSV-Dateiformat."
+  },
   "widget": {
     "title": "Aktueller Messwert",
     "text": {
