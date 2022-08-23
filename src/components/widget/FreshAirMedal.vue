@@ -33,10 +33,10 @@ defineProps({
   >
     <img class="mb-4 h-12 w-12" :src="medal" alt="Frischluft Medaille" />
     <div class="mx-0 text-lg font-bold text-[#1E398F]">
-      {{ $t("fresh-air-medal.inactive.header") }}
+      {{ $t("fresh-air-medal.active.header") }}
     </div>
     <div class="h-1/2 font-medium text-[#3B3B3A]">
-      {{ $t("fresh-air-medal.inactive.text") }}
+      {{ $t("fresh-air-medal.active.text") }}
     </div>
   </div>
 </template>

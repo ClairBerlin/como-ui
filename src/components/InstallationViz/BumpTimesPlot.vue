@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import { Bar } from "vue-chartjs";
 import { useI18n } from "vue-i18n";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/solid";
 
 import {
   Chart as ChartJS,
@@ -70,38 +71,16 @@ const gaussRand = () => {
   return r / 8;
 };
 
-const weekdays = {
-  0: {
-    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
-    name: t("monday"),
-  },
-  1: {
-    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
-    name: t("next"),
-  },
-  2: {
-    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
-    name: t("next"),
-  },
-  3: {
-    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
-    name: t("next"),
-  },
-  4: {
-    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
-    name: t("next"),
-  },
-  5: {
-    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
-    name: t("next"),
-  },
-  6: {
-    dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
-    name: t("next"),
-  },
-};
-
 const weekdayIds = [0, 1, 2, 3, 4, 5, 6];
+
+const weekdays = {};
+
+weekdayIds.forEach(
+  (id) =>
+    (weekdays[id] = {
+      dataset: hoursArray.map(() => Math.floor(gaussRand() * 2000)),
+    })
+);
 
 weekdayIds.forEach((index) => {
   const dataset = weekdays[index].dataset;
@@ -113,24 +92,18 @@ weekdayIds.forEach((index) => {
   );
 });
 
-const dataset = hoursArray.map(() => Math.floor(gaussRand() * 2000));
-
-const lowest = dataset.findIndex((item) => Math.min(...dataset) === item);
-const highest = dataset.findIndex((item) => Math.max(...dataset) === item);
-
 const chartData = computed(() => ({
   labels: hoursArray,
   datasets: [
     {
       data: weekdays[selectedWeekday.value].dataset,
       backgroundColor: (ctx) => {
-        return ctx.dataIndex === highest || ctx.dataIndex === lowest
-          ? "red"
-          : "white";
+        return ctx.dataIndex === weekdays[selectedWeekday.value].highest ||
+          ctx.dataIndex === weekdays[selectedWeekday.value].lowest
+          ? "#1E398F"
+          : "#DADADA";
       },
-      borderColor: "red",
       borderRadius: 50,
-      borderWidth: 1,
     },
   ],
 }));
@@ -143,11 +116,22 @@ const chartOptions = computed(() => ({
       display: false,
     },
   },
+  scales: {
+    x: {
+      grid: {
+        display: false,
+      },
+    },
+    y: {
+      grid: {
+        display: false,
+      },
+    },
+  },
 }));
 
 const toggleWeekday = (index) => {
-  console.log("CLICK", index);
-  selectedWeekday.value = index;
+  selectedWeekday.value = index === -1 ? 6 : index === 7 ? 0 : index;
 };
 </script>
 
@@ -165,13 +149,36 @@ const toggleWeekday = (index) => {
       :css-classes="cssClasses"
       :styles="styles"
     />
-    <div>
+    <div class="flex w-full flex-wrap justify-center gap-2">
       <button
         v-for="(weekday, index) in tm('weekdays')"
         :key="index"
         :onclick="() => toggleWeekday(index)"
+        class="tab w-24 rounded-lg border duration-300 ease-in-out"
+        :class="
+          index === selectedWeekday
+            ? 'border-[#1E398F] bg-[#1E398F] text-white'
+            : 'border-[#B1B2B3] bg-white text-[#B1B2B3] shadow-inner'
+        "
       >
         {{ weekday }}
+      </button>
+    </div>
+    <div class="flex w-full flex-wrap items-center justify-center gap-2">
+      <button
+        class="flex h-8 w-10 items-center justify-center rounded-md shadow-md"
+        :onclick="() => toggleWeekday(selectedWeekday - 1)"
+      >
+        <component :is="ChevronLeftIcon" class="h-6 w-6" aria-hidden="true" />
+      </button>
+      <div class="w-40 text-center text-lg text-[#1E398F]">
+        <p>{{ tm("weekdays")[selectedWeekday] }}</p>
+      </div>
+      <button
+        class="flex h-8 w-10 items-center justify-center rounded-md shadow-md"
+        :onclick="() => toggleWeekday(selectedWeekday + 1)"
+      >
+        <component :is="ChevronRightIcon" class="h-6 w-6" aria-hidden="true" />
       </button>
     </div>
   </div>
