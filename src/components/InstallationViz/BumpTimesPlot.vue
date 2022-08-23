@@ -20,7 +20,7 @@ ChartJS.register(
   LinearScale
 );
 
-defineProps({
+const props = defineProps({
   chartId: {
     type: String,
     default: "bar-chart",
@@ -52,8 +52,8 @@ defineProps({
 });
 
 onMounted(async () => {
-  const wrapper = document.getElementById("barChartWrapper");
-  window.addEventListener("resize", () => console.log(wrapper.offsetWidth));
+  const chart = document.getElementById(props.chartId);
+  window.addEventListener("resize", () => chart.resize());
 });
 
 const hoursArray = [];
@@ -102,20 +102,18 @@ const chartOptions = computed(() => ({
 </script>
 
 <template>
-  <div class="h-90 w-full">
-    <div
-      class="card relative h-full w-full rounded-lg bg-white p-4 text-black shadow-sm"
-      id="barChartWrapper"
-    >
-      <Bar
-        :chart-options="chartOptions"
-        :chart-data="chartData"
-        :chart-id="chartId"
-        :dataset-id-key="datasetIdKey"
-        :plugins="plugins"
-        :css-classes="cssClasses"
-        :styles="styles"
-      />
-    </div>
+  <div
+    class="card relative h-full w-full rounded-lg bg-white p-4 text-black shadow-sm"
+    id="barChartWrapper"
+  >
+    <Bar
+      :chart-options="chartOptions"
+      :chart-data="chartData"
+      :chart-id="chartId"
+      :dataset-id-key="datasetIdKey"
+      :plugins="plugins"
+      :css-classes="cssClasses"
+      :styles="styles"
+    />
   </div>
 </template>

@@ -230,7 +230,7 @@ const isTabActive = (index) => selectedTab.value === index;
 </script>
 
 <template>
-  <div class="flex flex-col justify-between gap-5">
+  <div class="flex w-full flex-col justify-between gap-5">
     <div class="flex items-center gap-5">
       <h2 class="text-lg font-bold">
         Installation #{{ installationId }} in {{ roomName }}
