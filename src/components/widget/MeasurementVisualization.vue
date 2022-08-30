@@ -2,7 +2,7 @@
 import { computed } from "vue";
 
 const props = defineProps({
-  ppm: { type: Number, required: true },
+  ppm: { type: String, required: true },
 });
 const ppm = computed(() => Math.max(400, Math.min(props.ppm, 2000)));
 </script>

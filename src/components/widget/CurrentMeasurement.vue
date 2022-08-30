@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 defineProps({
-  ppm: { type: Number, default: undefined },
+  ppm: { type: String || undefined, default: undefined },
   timestamp: { type: Date, default: undefined },
   whiteBg: { type: Boolean, default: false },
 });

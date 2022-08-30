@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 const props = defineProps({
   loadSamplesFunction: { type: Function, required: true },
-  alias: { type: Object, required: true },
+  alias: { type: Object || undefined, required: true },
 });
 
 const downloadCSV = () => {
@@ -54,7 +54,6 @@ const downloadCSV = () => {
     <button
       class="indigo-button w-fit bg-[#385BA7] py-3 px-8 font-bold"
       @click="downloadCSV"
-      :class="disabled"
     >
       {{ $t("download.button") }}
     </button>
