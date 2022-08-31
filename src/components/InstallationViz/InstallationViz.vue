@@ -58,13 +58,25 @@ const InstallationAlias = computed(
 );
 
 const room = ref();
+const roomId = ref();
 const roomName = computed(() => room.value?.name);
+const roomQuality = ref();
 
 const loadRoom = async () => {
   return await store.dispatch(
     "jv/get",
     `installations/${props.installationId}/room`,
     { root: true }
+  );
+};
+
+const loadQuality = async () => {
+  return await store.dispatch(
+    "jv/get",
+    `rooms/${roomId.value}/airquality/2022-07`,
+    {
+      root: true,
+    }
   );
 };
 
@@ -101,6 +113,9 @@ const loadSamples = async (from, to) => {
 onMounted(async () => {
   await loadInstallation(); // Fetch installation information into the store.
   room.value = await loadRoom();
+  roomId.value = await room.value._jv.id;
+  roomQuality.value = await loadQuality();
+  console.log("DATA", roomQuality.value);
   const from = referenceDay.value.utc().subtract(1, "M").unix();
   const to = dayjs().utc().unix();
   // Fetch samples of the installation, bypass the store.
