@@ -30,6 +30,43 @@ const samplePool = ref([]);
 const endOfScale = ref(true);
 const { t } = useI18n();
 
+const sampleHistogram = {
+  Mo: [
+    0.0, 0.0, 0.0, 4.444444444444447, 24.722222222222218, 51.944444444444436,
+    79.44444444444446, 11.666666666666666, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 4.444444444444447,
+  ],
+  Tu: [
+    0.0, 0.0, 0.0, 0.0, 0.0, 3.333333333333333, 20.972222222222218, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  ],
+  We: [
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.8333333333333333, 21.111111111111114,
+    6.805555555555557, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0,
+  ],
+  Th: [
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 8.888888888888886, 26.944444444444446,
+    6.111111111111114, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0,
+  ],
+  Fr: [
+    0.0, 0.0, 0.0, 0.0, 2.5555555555555545, 16.444444444444443,
+    39.88888888888888, 8.666666666666666, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  ],
+  Sa: [
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.2222222222222245, 14.888888888888891,
+    24.0, 5.111111111111109, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0,
+  ],
+  Su: [
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.3333333333333333, 10.666666666666668,
+    15.999999999999996, 4.2222222222222205, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+    0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+  ],
+};
+
 // The window of sample data to display is taken relative to this day
 const referenceDay = ref(dayjs().utc().startOf("day"));
 
@@ -60,6 +97,7 @@ const InstallationAlias = computed(
 const room = ref();
 const roomId = ref();
 const roomName = computed(() => room.value?.name);
+const roomMedal = ref();
 const roomQuality = ref();
 
 const loadRoom = async () => {
@@ -70,12 +108,28 @@ const loadRoom = async () => {
   );
 };
 
-const loadQuality = async () => {
+const loadMedal = async () => {
+  // const params = {
+  //   include_histogram: 1,
+  // };
   return await store.dispatch(
     "jv/get",
-    `rooms/${roomId.value}/airquality/2022-07`,
+    `rooms/${roomId.value}/airquality/2022-06`,
     {
       root: true,
+    }
+  );
+};
+
+const loadHistogram = async () => {
+  const params = {
+    include_histogram: 1,
+  };
+  return await store.dispatch(
+    "jv/get",
+    `rooms/${roomId.value}/airquality/2022-06`,
+    {
+      params: params,
     }
   );
 };
@@ -114,13 +168,21 @@ onMounted(async () => {
   await loadInstallation(); // Fetch installation information into the store.
   room.value = await loadRoom();
   roomId.value = await room.value._jv.id;
-  roomQuality.value = await loadQuality();
-  console.log("DATA", roomQuality.value);
+  roomMedal.value = await loadMedal();
+  roomQuality.value = await loadHistogram();
   const from = referenceDay.value.utc().subtract(1, "M").unix();
   const to = dayjs().utc().unix();
   // Fetch samples of the installation, bypass the store.
   samplePool.value = await loadSamples(from, to);
 });
+
+const cleanAirMedal = computed(() => {
+  return roomMedal.value?.clean_air_medal;
+});
+
+// const histogram = computed(() => {
+//   return roomMedal.value?.clean_air_medal;
+// });
 
 const oldestSampleInstant = computed(() => {
   // samples are ordered from oldest to latest
@@ -264,12 +326,7 @@ const isTabActive = (index) => selectedTab.value === index;
         :timestamp="new Date(latestSampleInstant)"
         :white-bg="true"
       />
-      <FreshAirMedal :inactive="true" :white-bg="true" />
-    </div>
-    <div
-      class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
-    >
-      <BumpTimesPlot />
+      <FreshAirMedal :inactive="!cleanAirMedal" :white-bg="true" />
     </div>
     <div
       class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
@@ -369,6 +426,11 @@ const isTabActive = (index) => selectedTab.value === index;
           </button>
         </div>
       </div>
+    </div>
+    <div
+      class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
+    >
+      <BumpTimesPlot :data="sampleHistogram" />
     </div>
   </div>
   <CSVDownload

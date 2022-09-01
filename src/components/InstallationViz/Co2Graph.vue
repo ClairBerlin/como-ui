@@ -285,7 +285,7 @@ const { lineChartProps } = useLineChart({
 </script>
 
 <template>
-  <div>
+  <div class="px-4 py-8 md:px-14">
     <Tooltip :time="consolingData?.time" :value="consolingData?.value" />
     <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
     <div v-else class="flex h-96 w-full items-center justify-center">
