@@ -1,6 +1,6 @@
 # COMo UI
 
-This is the frontend for the [Clair Platform](https://github.com/ClairBerlin/clair-stack), a system to collect measurements from networked CO2-sensors for indoor air-quality monitoring.[^como-note]
+This is the frontend for the [COMO Platform](https://github.com/ClairBerlin/clair-stack), a system to collect measurements from networked CO2-sensors for indoor air-quality monitoring.[^como-note]
 
 The frontend is a [Vue 3](https://v3.vuejs.org/) single page application. [Tailwind CSS](https://tailwindcss.com/) is used for styling, [Headless UI](https://headlessui.dev/) for accessible UI components, and [Heroicons](https://heroicons.com/) as the icon library.
 
