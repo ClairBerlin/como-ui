@@ -229,7 +229,7 @@ const isTabActive = (index) => selectedTab.value === index;
     <div class="flex flex-wrap gap-5">
       <CurrentMeasurement
         :ppm="getLatestMeasurement(currentMeasurement)"
-        :timestamp="new Date(latestSampleInstant)"
+        :timestamp="new Date(latestSampleInstant * 1000)"
         :white-bg="true"
       />
       <!-- <FreshAirMedal :inactive="true" :white-bg="true" /> -->
