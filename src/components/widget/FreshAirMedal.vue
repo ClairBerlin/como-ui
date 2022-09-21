@@ -11,7 +11,7 @@ defineProps({
 <template>
   <div
     v-if="inactive"
-    class="flex max-w-[327px] flex-col items-center justify-end gap-2 rounded-lg px-6 pt-7 pb-4 shadow-sm"
+    class="flex max-w-[327px] flex-col items-center justify-end gap-2 rounded-lg px-6 pt-7 pb-4 shadow-md"
     :class="[whiteBg ? 'bg-white' : 'bg-[#F1F9FE]']"
   >
     <img

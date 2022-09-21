@@ -137,7 +137,7 @@
   "logging-out": "You are being logged out",
   "month": "Month",
   "measurement-process": "measurement process",
-  "bump-times": "bump times",
+  "histogram": "histogram",
   "name": "Name",
   "next": "Later",
   "no-data": "Measurement data currently not available",
@@ -300,7 +300,7 @@
   ],
   "download": {
     "button": "download data",
-    "header": "Sensor data download",
+    "header": "Download sensor data",
     "text": "Here you can download all the data recorded by the sensor at once, for browsing and discovering in the convenient CSV file format."
   },
   "widget": {

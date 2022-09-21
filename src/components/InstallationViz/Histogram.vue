@@ -101,12 +101,12 @@ const toggleWeekday = (index) => {
     id="barChartWrapper"
   >
     <h2 class="header-h2 mb-6 text-center text-lg font-bold text-[#1E398F]">
-      CO<sub>2</sub>-{{ $t("measurement-process") }}
+      CO<sub>2</sub>-{{ $t("histogram") }}
     </h2>
     <div class="flex flex-col-reverse md:flex-col">
       <div class="flex w-full flex-wrap items-center justify-center gap-2">
         <button
-          class="flex h-8 w-10 items-center justify-center rounded-md shadow-md"
+          class="flex h-8 w-10 items-center justify-center rounded-md text-[#1E398F] shadow-round"
           :onclick="() => toggleWeekday(selectedWeekday - 1)"
         >
           <component :is="ChevronLeftIcon" class="h-6 w-6" aria-hidden="true" />
@@ -115,7 +115,7 @@ const toggleWeekday = (index) => {
           <p>{{ tm("weekdays")[selectedWeekday] }}</p>
         </div>
         <button
-          class="flex h-8 w-10 items-center justify-center rounded-md shadow-md"
+          class="flex h-8 w-10 items-center justify-center rounded-md text-[#1E398F] shadow-round"
           :onclick="() => toggleWeekday(selectedWeekday + 1)"
         >
           <component
@@ -132,63 +132,68 @@ const toggleWeekday = (index) => {
           :chart-id="chartId"
         />
         <div class="mt-4 flex">
-          <div class="w-1 md:w-2 xl:w-3"></div>
+          <div class="w-1/48"></div>
           <vue-slider
             min="0"
             max="23"
             :value="selectedHour"
             @change="(value) => rangeHandler(value)"
           />
-          <div class="w-1 md:w-2 xl:w-3"></div>
+          <div class="w-1/48"></div>
         </div>
       </div>
-
-      <p v-if="locale === `de`" class="text-center">
-        An
-        <span class="font-bold text-[#1E398F]"
-          >{{ tm("weekdays")[selectedWeekday] }}en</span
-        >
-        werden <br class="md:hidden" />
-        um
-        <span class="font-bold text-[#1E398F]">{{ selectedHour }}.00Uhr</span>
-        durchschnittlich <br class="md:hidden" />
-        <span class="font-bold text-[#1E398F]"
-          >{{
-            Math.round(
-              (data?.[weekdayIds[selectedWeekday]]?.[selectedHour] +
-                Number.EPSILON) *
-                100
-            ) /
-              100 +
-            ""
-          }}ppm</span
-        >
-        gemessen.
-      </p>
-      <p v-else class="text-center">
-        On
-        <span class="font-bold text-[#1E398F]"
-          >{{ tm("weekdays")[selectedWeekday] }}s</span
-        >, an average <br class="md:hidden" />of
-        <span class="font-bold text-[#1E398F]"
-          >{{
-            Math.round(
-              (data?.[weekdayIds[selectedWeekday]]?.[selectedHour] +
-                Number.EPSILON) *
-                100
-            ) /
-              100 +
-            ""
-          }}ppm <br class="md:hidden" /></span
-        >is measured at
-        <span class="font-bold text-[#1E398F]">
-          {{
-            selectedHour > 12
-              ? `${selectedHour - 12} + p.m.`
-              : `${selectedHour} + a.m.`
-          }}
-        </span>
-      </p>
+      <div v-if="data?.[weekdayIds[selectedWeekday]]?.[selectedHour]">
+        <p v-if="locale === `de`" class="text-center">
+          An
+          <span class="font-bold text-[#1E398F]"
+            >{{ tm("weekdays")[selectedWeekday] }}en</span
+          >
+          werden <br class="md:hidden" />
+          um
+          <span class="font-bold text-[#1E398F]"
+            >{{ selectedHour }}.00 Uhr</span
+          >
+          durchschnittlich <br class="md:hidden" />
+          <span class="font-bold text-[#1E398F]"
+            >{{
+              Math.round(
+                (data?.[weekdayIds[selectedWeekday]]?.[selectedHour] +
+                  Number.EPSILON) *
+                  100
+              ) /
+                100 +
+              ""
+            }}
+            ppm</span
+          >
+          gemessen.
+        </p>
+        <p v-else class="text-center">
+          On
+          <span class="font-bold text-[#1E398F]"
+            >{{ tm("weekdays")[selectedWeekday] }}s</span
+          >, an average <br class="md:hidden" />of
+          <span class="font-bold text-[#1E398F]"
+            >{{
+              Math.round(
+                (data?.[weekdayIds[selectedWeekday]]?.[selectedHour] +
+                  Number.EPSILON) *
+                  100
+              ) /
+                100 +
+              ""
+            }}
+            ppm <br class="md:hidden" /></span
+          >is measured at
+          <span class="font-bold text-[#1E398F]">
+            {{
+              selectedHour > 12
+                ? `${selectedHour - 12} p.m.`
+                : `${selectedHour} a.m.`
+            }}
+          </span>
+        </p>
+      </div>
     </div>
   </div>
 </template>

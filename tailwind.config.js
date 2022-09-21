@@ -9,6 +9,13 @@ module.exports = {
       fontFamily: {
         sans: ['"Inter var"', ...defaultTheme.fontFamily.sans],
       },
+      width: {
+        "1/48": "2.1%",
+      },
+      boxShadow: {
+        round:
+          "0px 0px 1px rgba(30, 57, 143, 0.16), 0px 0px 16px rgba(30, 57, 143, 0.08)",
+      },
     },
     maxWidth: {
       "2xs": "242px",
