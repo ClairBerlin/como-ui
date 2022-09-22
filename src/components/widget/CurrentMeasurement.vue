@@ -4,7 +4,7 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
 defineProps({
-  ppm: { type: Number, default: undefined },
+  ppm: { type: String || undefined, default: undefined },
   timestamp: { type: Date, default: undefined },
   whiteBg: { type: Boolean, default: false },
 });
@@ -32,7 +32,7 @@ const getTimeString = (timestamp) => {
 <template>
   <div
     :class="[
-      'flex h-[340px] max-w-[327px] flex-col items-center gap-2 rounded-lg px-7 pt-7 pb-4 shadow-md',
+      'flex h-[340px] max-w-[327px] flex-col items-center justify-end gap-2 rounded-lg px-7 pt-7 pb-4 shadow-md',
       !ppm || !timestamp
         ? 'bg-[#F6F6F6]'
         : whiteBg
@@ -52,11 +52,13 @@ const getTimeString = (timestamp) => {
       <span class="text-sm"> ppm</span>
     </div>
     <MeasurementVisualization :ppm="ppm" v-if="timestamp && ppm" />
-    <div class="mt-4 font-medium text-[#3B3B3A]" v-if="timestamp && ppm">
+    <div class="mt-4 h-1/2 font-medium text-[#3B3B3A]" v-if="timestamp && ppm">
       <span v-html="getText(ppm)"></span>
     </div>
-    <div class="mt-4 font-medium text-[#3B3B3A]" v-else>
-      <span class="text-[#E40032]">{{ $t("widget.error.title") }} </span>
+    <div class="mt-4 h-1/2 font-medium text-[#3B3B3A]" v-else>
+      <span class="font-bold text-[#E40032]"
+        >{{ $t("widget.error.title") }}
+      </span>
       <span>
         {{ $t("widget.error.text") }}
       </span>

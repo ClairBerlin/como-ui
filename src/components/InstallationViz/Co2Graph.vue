@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { useStore } from "vuex";
 import dayjs from "dayjs";
 import "chartjs-adapter-dayjs";
@@ -21,12 +21,6 @@ import { useI18n } from "vue-i18n";
 
 const { locale } = useI18n();
 
-const consolingData = ref({
-  time:
-    locale.value === "de"
-      ? dayjs(new Date()).format("DD.MM.YYYY | HH:mm") + " Uhr"
-      : dayjs(new Date()).format("MM/DD/YYYY | h:m a"),
-});
 const store = useStore();
 
 const isLoading = computed(() => {
@@ -94,6 +88,29 @@ const timeseries = computed(() =>
   })
 );
 
+const consolingData = ref({
+  time:
+    locale.value === "de"
+      ? dayjs(new Date()).format("DD.MM.YYYY | HH:mm") + " Uhr"
+      : dayjs(new Date()).format("MM/DD/YYYY | h:m a"),
+});
+
+watch(
+  () => props.referenceInstant,
+  async (instant) => {
+    consolingData.value = {
+      time:
+        locale.value === "de"
+          ? dayjs(new Date(instant.endOf("day") - 86400000)).format(
+              "DD.MM.YYYY | HH:mm"
+            ) + " Uhr"
+          : dayjs(new Date(instant.endOf("day") - 86400000)).format(
+              "MM/DD/YYYY | h:m a"
+            ),
+    };
+  }
+);
+
 const colors = [
   "#FC7057",
   "#EAB150",
@@ -122,6 +139,7 @@ const chartData = computed(() => ({
     {
       fill: "origin",
       pointRadius: 0,
+      // showLine: false,
       lineTension: 0,
       borderWidth: 1,
       borderColor: "#1E398F",
@@ -142,6 +160,14 @@ const chartData = computed(() => ({
       parsing: false,
       ticks: {
         color: "red",
+      },
+      options: {
+        plugins: {
+          decimation: {
+            enabled: true,
+            algorithm: "min-max",
+          },
+        },
       },
     },
   ],
@@ -188,6 +214,9 @@ const chartOptions = computed(() => ({
           value: context.tooltip.body[0].lines[0],
         };
       },
+    },
+    legend: {
+      display: false,
     },
   },
   scales: {
@@ -256,7 +285,7 @@ const { lineChartProps } = useLineChart({
 </script>
 
 <template>
-  <div>
+  <div class="px-4 py-8 md:px-14">
     <Tooltip :time="consolingData?.time" :value="consolingData?.value" />
     <LineChart v-if="props.samplePool.length" v-bind="lineChartProps" />
     <div v-else class="flex h-96 w-full items-center justify-center">

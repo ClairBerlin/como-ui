@@ -8,9 +8,9 @@ defineProps({
 </script>
 
 <template>
-  <div class="mt-12 w-full text-2xl font-bold text-[#1E398F]">
+  <h2 class="mt-16 w-full text-2xl font-bold text-[#1E398F]">
     {{ title }}
-  </div>
+  </h2>
   <div class="flex w-full flex-col gap-7" @click="onClick">
     <AccordionItem
       v-for="(item, index) in data"

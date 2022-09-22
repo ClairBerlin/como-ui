@@ -2,10 +2,15 @@
 import { HomeIcon } from "@heroicons/vue/solid";
 import { computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 const router = useRouter();
 const route = useRoute();
 const allRoutes = router.getRoutes();
+const store = useStore();
+const currentOrgId = computed(() => {
+  return store.state.nav.currentOrgId;
+});
 
 const getTitle = (routeName) => {
   const route = allRoutes.find((route) => route.name === routeName);
@@ -24,13 +29,20 @@ const pages = computed(() => [
 
 <template>
   <nav class="flex border-b border-gray-200 bg-white" aria-label="Breadcrumb">
-    <ol role="list" class="mx-auto flex w-full max-w-screen-xl space-x-4 px-4">
+    <ol role="list" class="max-w-screen-xl mx-auto flex w-full space-x-4 px-4">
       <li class="flex">
         <div class="flex items-center">
-          <a href="/" class="text-gray-400 hover:text-gray-500">
+          <router-link
+            :to="{
+              name: 'overview',
+              params: { orgId: currentOrgId || 1 },
+            }"
+            href="/"
+            class="text-gray-400 hover:text-gray-500"
+          >
             <HomeIcon class="h-5 w-5 flex-shrink-0" aria-hidden="true" />
             <span class="sr-only">Home</span>
-          </a>
+          </router-link>
         </div>
       </li>
       <li v-for="page in pages" :key="page.name" class="flex">

@@ -51,7 +51,7 @@ const changeSubheading = (value) => (subheading.value = value);
   <div class="">
     <div class="border-b border-gray-200 bg-white">
       <header
-        class="mx-auto flex w-full max-w-screen-xl px-4 pt-12 pb-4"
+        class="max-w-screen-xl mx-auto flex w-full px-4 pt-12 pb-4"
         v-if="$route.meta.title"
       >
         <div class="">
@@ -65,7 +65,7 @@ const changeSubheading = (value) => (subheading.value = value);
       </header>
     </div>
     <Breadcrumbs />
-    <div class="mx-auto max-w-screen-xl px-4 py-6">
+    <div class="max-w-screen-xl mx-auto px-4 py-6">
       <router-view @change-subheading="changeSubheading" />
     </div>
   </div>
