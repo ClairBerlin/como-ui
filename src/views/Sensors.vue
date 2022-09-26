@@ -25,7 +25,7 @@ const hasSensors = computed(() => sensors.value?.length > 0);
         <h1 class="text-xl font-semibold text-gray-900">
           {{ $t("sensor.title") }}
         </h1>
-        <p class="mt-2 max-w-md text-sm text-gray-700">
+        <p class="max-w-md mt-2 text-sm text-gray-700">
           {{ $t("sensor.description") }}
           <a
             href="mailto:info@como-berlin.de"
@@ -96,7 +96,7 @@ const hasSensors = computed(() => sensors.value?.length > 0);
   </div>
   <div
     v-else
-    class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+    class="max-w-sm mt-4 flex items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
   >
     <div class="flex">
       <div class="flex-shrink-0">

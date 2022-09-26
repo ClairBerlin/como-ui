@@ -136,9 +136,10 @@
   },
   "installations": "Installationen",
   "measurement-process": "Messverlauf",
+  "histogram": "Stoßzeiten",
   "month": "Monat",
   "name": "Name",
-  "next": "Weiter",
+  "next": "Später",
   "no-data": "Messdaten momentan nicht verfügbar",
   "node": {
     "add": "Sensor hinzufügen",
@@ -202,7 +203,7 @@
     "title": "Organisation verlassen"
   },
   "preview": "Vorschau",
-  "previous": "Zurück",
+  "previous": "Früher",
   "ppm": "CO2 Gehalt in ppm",
   "remove": "Entfernen",
   "remove-member-modal": {
@@ -288,6 +289,20 @@
     "username": "Benutzername"
   },
   "week": "Woche",
+  "weekdays": [
+    "Sonntag",
+    "Montag",
+    "Dienstag",
+    "Mittwoch",
+    "Donnerstag",
+    "Freitag",
+    "Samstag"
+  ],
+  "download": {
+    "button": "Daten downloaden",
+    "header": "Download der Sensordaten",
+    "text": "Hier können sie alle Daten die der Sensor aufgezeichnet hat auf einmal herunterladen, zum Stöbern und Entdecken im praktischen CSV-Dateiformat."
+  },
   "widget": {
     "title": "Aktueller Messwert",
     "text": {
@@ -299,7 +314,7 @@
       "high_p2": " ppm, dies entspricht einem sehr hohen Wert und deutet auf eine hohe Aerosollast hin. Halte lieber die Luft an!"
     },
     "error": {
-      "title": "STÖRUNG",
+      "title": "STÖRUNG ",
       "text": "- Der Sensor macht gerade ein Päuschen! Leider ist gerade keine Anzeige möglich, da im Moment keine Daten gesendet werden."
     }
   },

@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   time: { type: String, required: true },
-  value: { type: String, required: true },
+  value: { type: String || undefined, required: true },
 });
 </script>
 

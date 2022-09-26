@@ -180,7 +180,7 @@ const copyToClipboard = async () => {
           />
         </div>
       </div>
-      <div class="flex max-w-lg flex-col gap-4">
+      <div class="max-w-lg flex flex-col gap-4">
         <div class="rounded-lg bg-indigo-100 p-4 shadow-sm">
           <div class="flex">
             <div class="flex-shrink-0">
@@ -189,7 +189,7 @@ const copyToClipboard = async () => {
                 aria-hidden="true"
               />
             </div>
-            <div class="ml-3 max-w-md flex-1 md:flex">
+            <div class="max-w-md ml-3 flex-1 md:flex">
               <p class="text-sm text-indigo-900">
                 {{ $t("snippet.text") }}
               </p>
@@ -358,7 +358,7 @@ const copyToClipboard = async () => {
     </div>
     <div
       v-else
-      class="mt-4 flex max-w-sm items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
+      class="max-w-sm mt-4 flex items-center rounded-sm border-l-4 border-yellow-400 bg-yellow-50 p-4 shadow-md"
     >
       <div class="flex">
         <div class="flex-shrink-0">

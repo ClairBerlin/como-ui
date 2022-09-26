@@ -164,7 +164,7 @@ const changeRoleTooltip = (role) =>
 <template>
   <div class="border-b border-gray-200 bg-white">
     <header
-      class="mx-auto max-w-screen-xl px-4 pt-12 pb-4"
+      class="max-w-screen-xl mx-auto px-4 pt-12 pb-4"
       v-if="$route.meta.title"
     >
       <div class="">
@@ -176,7 +176,7 @@ const changeRoleTooltip = (role) =>
   </div>
   <Breadcrumbs />
   <LoadingSpinner v-if="isLoading" />
-  <div v-else class="mx-auto mt-4 max-w-screen-xl px-4 py-6">
+  <div v-else class="max-w-screen-xl mx-auto mt-4 px-4 py-6">
     <DeletionModal
       :open="showDeleteOrgModal"
       @close-modal="showDeleteOrgModal = false"

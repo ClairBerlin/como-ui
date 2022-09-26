@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, ref, computed } from "vue";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import DayjsMinMax from "dayjs/plugin/minMax";
@@ -12,8 +13,10 @@ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
 import Accordion from "@/components/accordion/Accordion.vue";
 import Co2Graph from "@/components/InstallationViz/Co2Graph.vue";
 import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
-// import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
+import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
+import CSVDownload from "./CSVDownload.vue";
+import Histogram from "./Histogram.vue";
 
 const { tm } = useI18n();
 
@@ -40,8 +43,25 @@ const installation = computed(() =>
   })
 );
 
+const route = useRoute();
+
+const sensorId = computed(() => route.params.sensorId);
+
+const InstallationData = computed(() =>
+  store.getters["jv/get"]({
+    _jv: { type: "Node", id: sensorId.value },
+  })
+);
+
+const InstallationAlias = computed(
+  () => InstallationData.value[Object.keys(InstallationData.value)[0]]
+);
+
 const room = ref();
+const roomId = ref();
 const roomName = computed(() => room.value?.name);
+const roomMedal = ref(false);
+const roomQualityHistogramData = ref({});
 
 const loadRoom = async () => {
   return await store.dispatch(
@@ -49,6 +69,16 @@ const loadRoom = async () => {
     `installations/${props.installationId}/room`,
     { root: true }
   );
+};
+
+const loadMedal = async () => {
+  const data = await store.dispatch(
+    "jv/get",
+    `rooms/${roomId.value}/airquality?include_histogram=True`,
+    { root: true }
+  );
+  roomQualityHistogramData.value = data.airq_hist ? data.airq_hist : {};
+  return data.clean_air_medal;
 };
 
 const loadInstallation = async () => {
@@ -84,6 +114,8 @@ const loadSamples = async (from, to) => {
 onMounted(async () => {
   await loadInstallation(); // Fetch installation information into the store.
   room.value = await loadRoom();
+  roomId.value = await room.value._jv.id;
+  roomMedal.value = await loadMedal();
   const from = referenceDay.value.utc().subtract(1, "M").unix();
   const to = dayjs().utc().unix();
   // Fetch samples of the installation, bypass the store.
@@ -213,7 +245,7 @@ const isTabActive = (index) => selectedTab.value === index;
 </script>
 
 <template>
-  <div class="flex flex-col justify-between gap-5">
+  <div class="flex w-full flex-col justify-between gap-5">
     <div class="flex items-center gap-5">
       <h2 class="text-lg font-bold">
         Installation #{{ installationId }} in {{ roomName }}
@@ -232,43 +264,47 @@ const isTabActive = (index) => selectedTab.value === index;
         :timestamp="new Date(latestSampleInstant * 1000)"
         :white-bg="true"
       />
-      <!-- <FreshAirMedal :inactive="true" :white-bg="true" /> -->
+      <FreshAirMedal :inactive="!roomMedal" :white-bg="true" />
     </div>
     <div
-      class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
+      class="max-w-none card w-full rounded-lg bg-white p-4 py-8 text-black shadow-md"
     >
-      <h2 class="text-center text-lg font-bold text-[#1E398F]">
+      <h2 class="mb-6 text-center text-lg font-bold text-[#1E398F]">
         CO<sub>2</sub>-{{ $t("measurement-process") }}
       </h2>
       <TabGroup @change="tabChanged">
         <TabList class="tabs flex justify-center py-2">
-          <Tab
-            :class="[
-              'tab w-24 border duration-300 ease-in-out',
-              isTabActive(0)
-                ? 'border-[#1E398F] bg-[#1E398F] text-white'
-                : 'border-[#B1B2B3] text-[#B1B2B3]',
-            ]"
-            >{{ $t("day") }}</Tab
+          <div
+            class="flex justify-center gap-px overflow-hidden rounded-lg bg-[#B1B2B3]"
           >
-          <Tab
-            :class="[
-              'tab w-24 border duration-300 ease-in-out',
-              isTabActive(1)
-                ? 'border-[#1E398F] bg-[#1E398F] text-white'
-                : 'border-[#B1B2B3] text-[#B1B2B3]',
-            ]"
-            >{{ $t("week") }}</Tab
-          >
-          <Tab
-            :class="[
-              'tab w-24 border duration-300 ease-in-out',
-              isTabActive(2)
-                ? 'border-[#1E398F] bg-[#1E398F] text-white'
-                : 'border-[#B1B2B3] text-[#B1B2B3]',
-            ]"
-            >{{ $t("month") }}</Tab
-          >
+            <Tab
+              :class="[
+                'tab w-24 rounded-l-lg border border-r-0 duration-300 ease-in-out',
+                isTabActive(0)
+                  ? 'border-[#1E398F] bg-[#1E398F] text-white'
+                  : 'border-[#B1B2B3] bg-white text-[#B1B2B3] shadow-inner',
+              ]"
+              >{{ $t("day") }}</Tab
+            >
+            <Tab
+              :class="[
+                'tab w-24 border border-x-0 duration-300 ease-in-out',
+                isTabActive(1)
+                  ? 'border-[#1E398F] bg-[#1E398F] text-white'
+                  : 'border-[#B1B2B3] bg-white text-[#B1B2B3] shadow-inner',
+              ]"
+              >{{ $t("week") }}</Tab
+            >
+            <Tab
+              :class="[
+                'tab w-24 rounded-r-lg border border-l-0 duration-300 ease-in-out',
+                isTabActive(2)
+                  ? 'border border-[#1E398F] bg-[#1E398F] text-white'
+                  : 'border-[#B1B2B3] bg-white text-[#B1B2B3] shadow-inner',
+              ]"
+              >{{ $t("month") }}</Tab
+            >
+          </div>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -297,16 +333,15 @@ const isTabActive = (index) => selectedTab.value === index;
           </TabPanel>
         </TabPanels>
       </TabGroup>
-      <!-- <div>Reference day for display: {{ referenceDayFormatted }}</div> -->
       <div class="mt-4 flex justify-center gap-2">
         <div>
           <button
-            class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-sm shadow-[#1E398F29]"
+            class="btn-sm flex cursor-pointer items-center rounded text-[#1E398F] shadow-round shadow-[#1E398F29]"
             @click="previousInstant"
           >
             <component
               :is="ChevronLeftIcon"
-              class="h-5 w-5"
+              class="h-6 w-6"
               aria-hidden="true"
             />
             {{ $t("previous") }}
@@ -314,7 +349,7 @@ const isTabActive = (index) => selectedTab.value === index;
         </div>
         <div>
           <button
-            class="btn-sm flex cursor-pointer items-center rounded shadow-sm shadow-[#1E398F29]"
+            class="btn-sm flex cursor-pointer items-center rounded shadow-round shadow-[#1E398F29]"
             :class="endOfScale ? 'text-[#B1B2B3]' : 'text-[#1E398F]'"
             @click="nextInstant"
             :aria-disabled="endOfScale ? true : false"
@@ -322,14 +357,24 @@ const isTabActive = (index) => selectedTab.value === index;
             {{ $t("next") }}
             <component
               :is="ChevronRightIcon"
-              class="h-5 w-5"
+              class="h-6 w-6"
               aria-hidden="true"
             />
           </button>
         </div>
       </div>
     </div>
+    <div
+      class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
+      v-if="Object.keys(roomQualityHistogramData).length !== 0"
+    >
+      <Histogram :data="roomQualityHistogramData" />
+    </div>
   </div>
+  <CSVDownload
+    :load-samples-function="loadSamples"
+    :alias="InstallationAlias"
+  />
   <Accordion
     v-for="(section, index) in tm('faq.sections')"
     :key="index"

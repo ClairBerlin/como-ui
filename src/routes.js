@@ -76,7 +76,7 @@ export const routes = [
         path: "installation/:installationId",
         name: "installation",
         component: Installation,
-        meta: { title: "installation.details", breadcrumbs: ["installation"] },
+        meta: { title: "installation.details" },
       },
       {
         path: "sites",

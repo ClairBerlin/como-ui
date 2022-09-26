@@ -45,12 +45,12 @@ const onKeyDown = (e) => {
         'h-0.5 bg-[#DADADA] duration-150 ease-in-out',
         isOpen ? 'w-0' : 'w-full',
       ]"
-    />
+    ></div>
     <div
       :class="['overflow-hidden duration-300 ease-in-out']"
       :style="{ 'max-height': [isOpen ? `${panel.clientHeight}px` : 0] }"
     >
-      <div ref="panel" class="mr-5 sm:mr-10" v-html="text" />
+      <div ref="panel" class="mr-5 sm:mr-10" v-html="text"></div>
     </div>
   </div>
 </template>
