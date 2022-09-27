@@ -1,15 +1,19 @@
 <script setup>
 import dayjs from "dayjs";
+import { ref } from "vue";
 const props = defineProps({
   loadSamplesFunction: { type: Function, required: true },
   alias: { type: Object || undefined, required: true },
 });
 
+const loadingStatus = ref("default");
+
 const downloadCSV = () => {
-  const filename = props.alias?.alias
-    ? props.alias?.alias
-    : props.alias?.eui64
+  loadingStatus.value = "loading";
+  const filename = props.alias?.eui64
     ? props.alias?.eui64
+    : props.alias?.alias
+    ? props.alias?.alias
     : "Installation-data";
 
   props
@@ -32,6 +36,7 @@ const downloadCSV = () => {
     })
     .then((csv) => {
       //Download the file as CSV
+      loadingStatus.value = "started";
       const downloadLink = document.createElement("a");
       const blob = new Blob(["\ufeff", csv]);
       const url = URL.createObjectURL(blob);
@@ -51,11 +56,22 @@ const downloadCSV = () => {
       {{ $t("download.header") }}
     </h2>
     <p class="pb-2.5 font-bold text-[#3B3B3A]">{{ $t("download.text") }}</p>
+
     <button
+      v-if="loadingStatus === `default`"
       class="indigo-button w-fit bg-[#385BA7] py-3 px-8 font-bold"
       @click="downloadCSV"
     >
-      {{ $t("download.button") }}
+      {{ $t("download.button.default") }}
+    </button>
+
+    <button
+      v-else
+      class="gray-button w-fit cursor-default py-3 px-8 font-bold hover:bg-gray-300 hover:ring-0"
+      disabled
+      @click="downloadCSV"
+    >
+      {{ $t(`download.button.${loadingStatus}`) }}
     </button>
   </div>
 </template>
