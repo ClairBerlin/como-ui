@@ -212,8 +212,7 @@ const toggleWeekday = (index) => {
           On
           <span class="font-bold text-[#1E398F]"
             >{{ tm("weekdays")[selectedWeekday] }}s</span
-          >
-          , the limit has not been exceeded once at
+          >, the limit has not been exceeded once at
           <span class="font-bold text-[#1E398F]">
             {{
               selectedHour > 12
