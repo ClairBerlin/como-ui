@@ -267,7 +267,7 @@ const isTabActive = (index) => selectedTab.value === index;
       <FreshAirMedal :inactive="!roomMedal" :white-bg="true" />
     </div>
     <div
-      class="max-w-none card w-full rounded-lg bg-white p-4 py-8 text-black shadow-md"
+      class="card w-full max-w-two-cards rounded-lg bg-white p-4 py-8 text-black shadow-md"
     >
       <h2 class="mb-6 text-center text-lg font-bold text-[#1E398F]">
         CO<sub>2</sub>-{{ $t("measurement-process") }}
@@ -365,7 +365,7 @@ const isTabActive = (index) => selectedTab.value === index;
       </div>
     </div>
     <div
-      class="max-w-none card w-full rounded-lg bg-white p-4 text-black shadow-md"
+      class="card w-full max-w-two-cards rounded-lg bg-white p-4 text-black shadow-md"
       v-if="Object.keys(roomQualityHistogramData).length !== 0"
     >
       <Histogram :data="roomQualityHistogramData" />

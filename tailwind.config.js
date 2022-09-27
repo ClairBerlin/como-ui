@@ -19,6 +19,7 @@ module.exports = {
     },
     maxWidth: {
       "2xs": "242px",
+      "two-cards": "674px",
     },
   },
   plugins: [
