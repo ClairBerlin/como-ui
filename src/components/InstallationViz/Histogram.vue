@@ -142,49 +142,63 @@ const toggleWeekday = (index) => {
           <div class="w-1/48"></div>
         </div>
       </div>
-      <div v-if="data?.[weekdayIds[selectedWeekday]]?.[selectedHour]">
-        <p v-if="locale === `de`" class="text-center">
+      <div v-if="data && locale === `de`">
+        <p
+          v-if="data[weekdayIds[selectedWeekday]]?.[selectedHour] >= 1"
+          class="text-center"
+        >
           An
           <span class="font-bold text-[#1E398F]"
             >{{ tm("weekdays")[selectedWeekday] }}en</span
           >
-          werden <br class="md:hidden" />
-          um
+          wurde <br class="md:hidden" />in den letzten 30 Tagen
+          <br class="md:hidden" />um
           <span class="font-bold text-[#1E398F]"
             >{{ selectedHour }}.00 Uhr</span
           >
-          durchschnittlich <br class="md:hidden" />
+          ein Überschreitungsscore <br class="md:hidden" />von
           <span class="font-bold text-[#1E398F]"
             >{{
               Math.round(
-                (data?.[weekdayIds[selectedWeekday]]?.[selectedHour] +
-                  Number.EPSILON) *
-                  100
-              ) /
-                100 +
-              ""
+                data[weekdayIds[selectedWeekday]]?.[selectedHour] +
+                  Number.EPSILON
+              ) + ""
             }}
-            ppm</span
-          >
+          </span>
           gemessen.
         </p>
         <p v-else class="text-center">
+          An
+          <span class="font-bold text-[#1E398F]"
+            >{{ tm("weekdays")[selectedWeekday] }}en</span
+          >
+          wurde <br class="sm:hidden" />in den letzten 30 Tagen
+          <br class="sm:hidden" />um
+          <span class="font-bold text-[#1E398F]"
+            >{{ selectedHour }}.00 Uhr</span
+          >
+          der Grenzwert kein einziges mal überschritten.
+        </p>
+      </div>
+      <div v-else-if="data && locale === `en`">
+        <p
+          v-if="data[weekdayIds[selectedWeekday]]?.[selectedHour] >= 1"
+          class="text-center"
+        >
           On
           <span class="font-bold text-[#1E398F]"
             >{{ tm("weekdays")[selectedWeekday] }}s</span
-          >, an average <br class="md:hidden" />of
+          >, <br class="sm:hidden" />an exceedance score
+          <br class="sm:hidden" />of
           <span class="font-bold text-[#1E398F]"
             >{{
               Math.round(
-                (data?.[weekdayIds[selectedWeekday]]?.[selectedHour] +
-                  Number.EPSILON) *
-                  100
-              ) /
-                100 +
-              ""
+                data[weekdayIds[selectedWeekday]]?.[selectedHour] +
+                  Number.EPSILON
+              ) + ""
             }}
-            ppm <br class="md:hidden" /></span
-          >is measured at
+            <br class="md:hidden" /></span
+          >has been measured <br class="md:hidden" />at
           <span class="font-bold text-[#1E398F]">
             {{
               selectedHour > 12
@@ -192,6 +206,21 @@ const toggleWeekday = (index) => {
                 : `${selectedHour} a.m.`
             }}
           </span>
+          for the past 30 days.
+        </p>
+        <p v-else class="text-center">
+          On
+          <span class="font-bold text-[#1E398F]"
+            >{{ tm("weekdays")[selectedWeekday] }}s</span
+          >, the limit has not been exceeded once at
+          <span class="font-bold text-[#1E398F]">
+            {{
+              selectedHour > 12
+                ? `${selectedHour - 12} p.m.`
+                : `${selectedHour} a.m.`
+            }}
+          </span>
+          in the last 30 days.
         </p>
       </div>
     </div>

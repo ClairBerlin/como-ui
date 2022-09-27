@@ -299,7 +299,11 @@
     "Samstag"
   ],
   "download": {
-    "button": "Daten downloaden",
+    "button": {
+      "default": "Daten downloaden",
+      "loading": "wird geladen",
+      "started": "download gestartet"
+    },
     "header": "Download der Sensordaten",
     "text": "Hier können sie alle Daten die der Sensor aufgezeichnet hat auf einmal herunterladen, zum Stöbern und Entdecken im praktischen CSV-Dateiformat."
   },
