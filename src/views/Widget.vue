@@ -13,6 +13,7 @@ const route = useRoute();
 const isLoading = ref(false);
 const store = useStore();
 const widgetData = ref([]);
+const isFresh = ref(false);
 
 onMounted(async () => {
   isLoading.value = true;
@@ -25,6 +26,13 @@ onMounted(async () => {
         "jv/get",
         `rooms/${roomId}/installations`
       );
+      const freshness = await store.dispatch(
+        "jv/get",
+        `rooms/${roomId}/airquality`,
+        { root: true }
+      );
+
+      isFresh.value = freshness.clean_air_medal;
       Object.entries(installationsResponse).map(([instId, instData]) => {
         if (instData?.is_public && isInstallationActive(instData)) {
           widgetData.value.push({
@@ -38,12 +46,11 @@ onMounted(async () => {
       });
     }
   );
-  await Promise.all(promise);
   isLoading.value = false;
+  await Promise.all(promise);
 });
 
 const current = ref(1);
-const isFresh = ref(false);
 
 const prev = () => {
   if (current.value - 1 <= 0) {
@@ -108,7 +115,7 @@ const next = () => {
         )
       "
     />
-    <FreshAirMedal v-if="isFresh" />
+    <FreshAirMedal :inactive="false" v-if="isFresh" />
     <InstallationSwitch
       :number-of-installations="widgetData.length"
       :current-installation="current"

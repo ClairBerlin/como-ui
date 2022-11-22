@@ -75,6 +75,10 @@
             "text": "We spend nearly 90% of our time indoors. Good indoor air not only enhances our well-being, but also increases learning and work productivity, improves concentration and minimises the risk of viral infections. The CO2 concentration is widely considered a good indicator for general indoor air quality. If you know exactly when the air quality is deteriorating, you can ventilate as needed and ensure that your own premises are perceived as comfortable."
           },
           {
+            "title": "How is the fresh air medal calculated?",
+            "text": "If a room is well ventilated for more than 30 days, it is awarded the Fresh Air Medal. We award the Fresh Air Medal if the instantaneous values are in the yellow range (1000 ppm < CO2 < 1500 ppm) less than 30 percent of the time over the course of a day and not a single instantaneous value exceeds a hygienically unacceptable value within the 30 days (CO2 > 2000 ppm)."
+          },
+          {
             "title": "What are the benefits of sharing your results?",
             "text": "Public communication of your indoor air quality data not only allows visitors to find out which operators are sustainably taking care of good air quality, but also helps to bring the important topic of indoor air quality into society. A CO2 traffic light system can only provide information about the current air quality. However, if measurement data is transmitted constantly and over a longer period of time, it allows changes and different activities taking place in the room to be compared."
           }

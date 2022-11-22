@@ -59,7 +59,7 @@
           },
           {
             "title": "An welchen Richtwerten orientieren wir uns? ",
-            "text": "Wir orientieren uns an folgenden Richtwerten, die wir farblich gekennzeichnet haben: <br>CO2 < 1000 ppm -> „hygienisch unbedenklich“ (blau)<br>1000 < CO2 < 2000 ppm -> „hygienisch auffällig“ (gelb)<br>CO2 > 2000 ppm -> „hygienisch inakzeptabel“ (rot)"
+            "text": "Wir orientieren uns an folgenden Richtwerten, die wir   farblich gekennzeichnet haben: <br>CO2 < 1000 ppm -> „hygienisch unbedenklich“ (blau)<br>1000 < CO2 < 2000 ppm -> „hygienisch auffällig“ (gelb)<br>CO2 > 2000 ppm -> „hygienisch inakzeptabel“ (rot)"
           },
           {
             "title": "Mir wird kein Wert angezeigt?",
@@ -73,6 +73,10 @@
           {
             "title": "Wieso soll ich mich mit meiner Raumluft auseinandersetzen?",
             "text": "Wir verbringen fast 90 Prozent unserer Zeit in Innenräumen und werden von der uns umgebenden Raumluft beeinflusst. Eine gute Raumluft steigert nicht nur unser Wohlbefinden, sondern erhöht auch die Lern - und Arbeitsproduktivität, das Konzentrationsvermögen und minimiert das Risiko einer Virusinfektion. Die CO2-Konzentration gilt dabei als guter Indikator für die allgemeine Raumluftqualität. Wer genau weiss, wann sich die Luftqualität verschlechtert, kann bedarfsgerecht lüften und sorgt dafür, dass die eigenen Räumlichkeiten als behaglich empfunden werden."
+          },
+          {
+            "title": "Wie wird die Frischluft Medaille berechnet?",
+            "text": "Wird ein Raum über 30 Tage lang gut gelüftet, wird dieser mit der Frischluft-Medaille ausgezeichnet. Wir vergeben die Frischluft-Medaille, wenn die Momentanwerte im Verlauf eines Tages in weniger als 30 Prozent der Fälle im gelben Bereich (1000 ppm < CO2 < 1500 ppm) liegen und kein einziger Momentanwert einen hygienisch inakzeptablen Wert innerhalb der 30 Tage (CO2 > 2000 ppm) überschreitet."
           },
           {
             "title": "Welche Vorteile ergeben sich durch das Teilen deiner Ergebnisse?",
