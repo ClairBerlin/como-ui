@@ -115,7 +115,7 @@ const next = () => {
         )
       "
     />
-    <FreshAirMedal :inactive="false" v-if="isFresh" />
+    <FreshAirMedal :inactive="false" :class="[isFresh ? '' : 'hidden']" />
     <InstallationSwitch
       :number-of-installations="widgetData.length"
       :current-installation="current"
