@@ -16,7 +16,7 @@ import CurrentMeasurement from "@/components/widget/CurrentMeasurement.vue";
 import FreshAirMedal from "@/components/widget/FreshAirMedal.vue";
 import { EyeIcon, EyeOffIcon } from "@heroicons/vue/outline";
 import CSVDownload from "./CSVDownload.vue";
-import Histogram from "./Histogram.vue";
+// import Histogram from "./Histogram.vue";
 
 const { tm } = useI18n();
 
@@ -364,12 +364,12 @@ const isTabActive = (index) => selectedTab.value === index;
         </div>
       </div>
     </div>
-    <div
+    <!-- <div
       class="card w-full max-w-two-cards rounded-lg bg-white p-4 text-black shadow-md"
       v-if="Object.keys(roomQualityHistogramData).length !== 0"
     >
       <Histogram :data="roomQualityHistogramData" />
-    </div>
+    </div> -->
   </div>
   <CSVDownload
     :load-samples-function="loadSamples"

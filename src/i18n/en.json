@@ -76,7 +76,7 @@
           },
           {
             "title": "How is the fresh air medal calculated?",
-            "text": "If a room is well ventilated for more than 30 days, it is awarded the Fresh Air Medal. We award the Fresh Air Medal if the instantaneous values are in the yellow range (1000 ppm < CO2 < 1500 ppm) less than 30 percent of the time over the course of a day and not a single instantaneous value exceeds a hygienically unacceptable value within the 30 days (CO2 > 2000 ppm)."
+            "text": "If a room is well ventilated for more than 30 days, it is awarded the Fresh Air Medal. We award the Fresh Air Medal if the instantaneous values are in the yellow range (1000 ppm < CO2 < 1500 ppm) less than 30 percent of the time over the course of a day and not a single instantaneous value exceeds a hygienically unacceptable value within the last 30 days (CO2 > 2000 ppm)."
           },
           {
             "title": "What are the benefits of sharing your results?",
